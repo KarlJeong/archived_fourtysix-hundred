@@ -28,8 +28,8 @@
     <nav class="navbar horizontal-layout col-lg-12 col-12 p-0">
       <div class="container d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-top">
-          <a class="navbar-brand brand-logo" href="index.html"><img src="images/logo-inverse.svg" alt="logo"/></a>
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo"/></a>
+          <a class="navbar-brand brand-logo" href="index.html"><img src="images/logo-inverse.svg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="images/logo-mini.svg" alt="logo" /></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-center">
           <ul class="navbar-nav navbar-nav-right ml-auto mr-0">
@@ -100,7 +100,10 @@
                     <div class="py-3 px-4 d-flex align-items-center justify-content-center flex-grow-1"><i class="fa fa-clock-o mr-0 text-gray"></i></div>
                   </div>
                 </a>
-                <a class="dropdown-item mt-2">
+                <a href="diaryC.html" class="dropdown-item mt-2">
+                  Write Diary
+                </a>
+                <a class="dropdown-item">
                   Manage Accounts
                 </a>
                 <a class="dropdown-item">
@@ -213,228 +216,272 @@
     <div class="container-fluid page-body-wrapper">
       <div class="main-panel">
         <div class="content-wrapper">
-          <div class="row mb-5">
-              <div class="col-12">
-                  <h2>DIARY</h2>
-                  <div class="separator-2"></div>
-                  <p class="lead">
-                    Meet real experience and daily life of Malaysian-Korean Couples.
-                  </p>
+          <div class="row">
+            <div class="col-12">
+              <div class="card px-2">
+                <div class="card-body">
+                  <div class="row mb-5">
+                    <div class="col-12">
+                      <h2>DIARY</h2>
+                      <div class="separator-2"></div>
+                      <p class="lead">
+                        Meet real experience and daily life of Malaysian-Korean Couples.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6">
+                        <div class="dataTables_length" id="order-listing_length">
+                          <label>Show
+                            <select name="order-listing_length" aria-controls="order-listing" class="form-control">
+                              <option value="5">10</option>
+                              <option value="10">20</option>
+                              <option value="15">50</option>
+                            </select> entries
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6">
+                        <div id="order-listing_filter" class="dataTables_filter form-group row">
+                          <label class="col-4">
+                            <select name="order-listing_length" aria-controls="order-listing" class="form-control">
+                              <option value="title">제목</option>
+                              <option value="writer">작성자</option>
+                              <option value="contents">제목+내용</option>
+                            </select>
+                          </label>
+                          <div class="input-group col-8">
+                            <input type="text" class="form-control">
+                            <span class="input-group-append">
+                              <button class="btn btn-info" type="button">Search</button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="masonry-grid row">
+                    <!-- masonry grid item start -->
+                    <div class="masonry-grid-item col-md-6 col-lg-4">
+                      <!-- blogpost start -->
+                      <article class="blogpost shadow-2 light-gray-bg bordered">
+                        <div id="carousel-blog-post" class="carousel slide" data-ride="carousel">
+                          <div class="owl-carousel owl-theme full-width">
+                            <div class="item">
+                              <img src="https://placehold.it/330x320" alt="banner image" />
+                            </div>
+                            <div class="item">
+                              <img src="https://placehold.it/330x320" alt="banner image" />
+                            </div>
+                            <div class="item">
+                              <img src="https://placehold.it/330x320" alt="banner image" />
+                            </div>
+                          </div>
+                        </div>
+                        <header>
+                          <h3><a class="diary-title-link" href="#">Blogpost with slider</a></h3>
+                          <div class="post-info">
+                            <span class="post-date">
+                              <i class="fa fa-calendar-o pr-1"></i>
+                              <span class="day">12</span>
+                              <span class="month">May 2017</span>
+                            </span>
+                            <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
+                            <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
+                          </div>
+                        </header>
+                        <div class="blogpost-content">
+                          <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas ullamcorper commodo
+                            rutrum.
+                          </p>
+                        </div>
+                        <footer class="clearfix">
+                          <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
+                          <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
+                        </footer>
+                      </article>
+                      <!-- blogpost end -->
+                    </div>
+                    <!-- masonry grid item end -->
+
+                    <div class="masonry-grid-item col-md-6 col-lg-4">
+                      <!-- blogpost start -->
+                      <article class="blogpost shadow-2 light-gray-bg bordered">
+                        <div class="overlay-container">
+                          <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
+                        </div>
+                        <header>
+                          <h2><a class="diary-title-link" href="#">Cute Robot</a></h2>
+                          <div class="post-info">
+                            <span class="post-date">
+                              <i class="fa fa-calendar-o pr-1"></i>
+                              <span class="day">10</span>
+                              <span class="month">May 2017</span>
+                            </span>
+                            <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
+                            <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
+                          </div>
+                        </header>
+                        <div class="blogpost-content">
+                          <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas ullamcorper commodo
+                            rutrum. In
+                            iaculis lectus vel augue eleifend dignissim. Aenean viverra semper sollicitudin.</p>
+                          <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas ullamcorper commodo
+                            rutrum. In
+                            iaculis lectus vel augue eleifend dignissim. Aenean viverra semper sollicitudin.</p>
+                        </div>
+                        <footer class="clearfix">
+                          <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
+                          <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
+                        </footer>
+                      </article>
+                      <!-- blogpost end -->
+                    </div>
+                    <!-- masonry grid item end -->
+
+                    <!-- masonry grid item start -->
+                    <div class="masonry-grid-item col-md-6 col-lg-4">
+                      <!-- blogpost start -->
+                      <article class="blogpost shadow-2 light-gray-bg bordered object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
+                        <div class="overlay-container">
+                          <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
+                        </div>
+                        <header>
+                          <h2><a class="diary-title-link" href="#">Nunc interdum mi neque</a></h2>
+                          <div class="post-info">
+                            <span class="post-date">
+                              <i class="fa fa-calendar-o pr-1"></i>
+                              <span class="day">07</span>
+                              <span class="month">May 2017</span>
+                            </span>
+                            <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
+                            <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
+                          </div>
+                        </header>
+                        <div class="blogpost-content">
+                          <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas ullamcorper commodo
+                            rutrum. In
+                            iaculis lectus vel augue eleifend dignissim. Aenean viverra semper sollicitudin.</p>
+                        </div>
+                        <footer class="clearfix">
+                          <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
+                          <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
+                        </footer>
+                      </article>
+                      <!-- blogpost end -->
+                    </div>
+                    <!-- masonry grid item end -->
+
+                    <!-- masonry grid item start -->
+                    <div class="masonry-grid-item col-md-6 col-lg-4">
+                      <!-- blogpost start -->
+                      <article class="blogpost shadow-2 light-gray-bg bordered object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
+                        <div class="overlay-container">
+                          <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
+                        </div>
+                        <header>
+                          <h2><a class="diary-title-link" href="#">Successful business ideas</a></h2>
+                          <div class="post-info">
+                            <span class="post-date">
+                              <i class="fa fa-calendar-o pr-1"></i>
+                              <span class="day">06</span>
+                              <span class="month">May 2017</span>
+                            </span>
+                            <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
+                            <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
+                          </div>
+                        </header>
+                        <div class="blogpost-content">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto veniam, perspiciatis libero quasi, iusto delectus sed accusantium fugit inventore iure molestiae amet voluptatem, ut dolorem ex dolorum ea impedit quae!
+                          </p>
+                        </div>
+                        <footer class="clearfix">
+                          <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
+                          <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
+                        </footer>
+                      </article>
+                      <!-- blogpost end -->
+                    </div>
+                    <!-- masonry grid item end -->
+
+                    <!-- masonry grid item start -->
+                    <div class="masonry-grid-item col-md-6 col-lg-4">
+                      <!-- blogpost start -->
+                      <article class="blogpost shadow-2 light-gray-bg bordered object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
+                        <div class="overlay-container">
+                          <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
+                        </div>
+                        <header>
+                          <h2><a class="diary-title-link" href="#">Successful business ideas</a></h2>
+                          <div class="post-info">
+                            <span class="post-date">
+                              <i class="fa fa-calendar-o pr-1"></i>
+                              <span class="day">06</span>
+                              <span class="month">May 2017</span>
+                            </span>
+                            <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
+                            <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
+                          </div>
+                        </header>
+                        <div class="blogpost-content">
+                          <p>Lorem ipsum dolor sit ametut dolorem ex dolorum ea impedit quae!</p>
+                        </div>
+                        <footer class="clearfix">
+                          <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
+                          <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
+                        </footer>
+                      </article>
+                      <!-- blogpost end -->
+                    </div>
+                    <!-- masonry grid item end -->
+
+                    <!-- masonry grid item start -->
+                    <div class="masonry-grid-item col-md-6 col-lg-4">
+                      <!-- blogpost start -->
+                      <article class="blogpost shadow-2 light-gray-bg bordered object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
+                        <div class="overlay-container">
+                          <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
+                        </div>
+                        <header>
+                          <h2><a class="diary-title-link" href="#">Successful business ideas</a></h2>
+                          <div class="post-info">
+                            <span class="post-date">
+                              <i class="fa fa-calendar-o pr-1"></i>
+                              <span class="day">06</span>
+                              <span class="month">May 2017</span>
+                            </span>
+                            <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
+                            <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
+                          </div>
+                        </header>
+                        <div class="blogpost-content">
+                          <p>Lorem ipsum dolor sit ametut dolorem ex dolorum ea impedit quae!</p>
+                        </div>
+                        <footer class="clearfix">
+                          <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
+                          <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
+                        </footer>
+                      </article>
+                      <!-- blogpost end -->
+                    </div>
+                    <!-- masonry grid item end -->
+                  </div>
+                  <nav>
+                    <ul class="pagination rounded-flat d-flex justify-content-center pagination-primary">
+                      <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-left"></i></a></li>
+                      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">4</a></li>
+                      <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-right"></i></a></li>
+                    </ul>
+                  </nav>
+                </div>
               </div>
-          </div>
-          <div class="masonry-grid row">
-            <!-- masonry grid item start -->
-            <div class="masonry-grid-item col-md-6 col-lg-4">
-              <!-- blogpost start -->
-              <article class="blogpost shadow-2 light-gray-bg bordered">
-                <div id="carousel-blog-post" class="carousel slide" data-ride="carousel">
-                  <div class="owl-carousel owl-theme full-width">
-                    <div class="item">
-                      <img src="https://placehold.it/330x320" alt="banner image"/>
-                    </div>
-                    <div class="item">
-                      <img src="https://placehold.it/330x320" alt="banner image"/>
-                    </div>
-                    <div class="item">
-                      <img src="https://placehold.it/330x320" alt="banner image"/>
-                    </div>
-                  </div>
-                </div>
-                <header>
-                  <h3><a class="diary-title-link" href="#">Blogpost with slider</a></h3>
-                  <div class="post-info">
-                    <span class="post-date">
-                      <i class="fa fa-calendar-o pr-1"></i>
-                      <span class="day">12</span>
-                      <span class="month">May 2017</span>
-                    </span>
-                    <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                    <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                  </div>
-                </header>
-                <div class="blogpost-content">
-                  <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et  sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas  ullamcorper commodo rutrum.</p>
-                </div>
-                <footer class="clearfix">
-                  <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                  <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
-                </footer>
-              </article>
-              <!-- blogpost end -->
             </div>
-            <!-- masonry grid item end -->
-
-            <div class="masonry-grid-item col-md-6 col-lg-4">
-              <!-- blogpost start -->
-              <article class="blogpost shadow-2 light-gray-bg bordered">
-                <div class="overlay-container">
-                  <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
-                </div>
-                <header>
-                  <h2><a class="diary-title-link" href="#">Cute Robot</a></h2>
-                  <div class="post-info">
-                    <span class="post-date">
-                      <i class="fa fa-calendar-o pr-1"></i>
-                      <span class="day">10</span>
-                      <span class="month">May 2017</span>
-                    </span>
-                    <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                    <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                  </div>
-                </header>
-                <div class="blogpost-content">
-                  <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et  sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas  ullamcorper commodo rutrum. In iaculis lectus vel augue eleifend dignissim. Aenean viverra semper sollicitudin.</p>
-                  <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et  sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas  ullamcorper commodo rutrum. In iaculis lectus vel augue eleifend dignissim. Aenean viverra semper sollicitudin.</p>
-                </div>
-                <footer class="clearfix">
-                  <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                  <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
-                </footer>
-              </article>
-              <!-- blogpost end -->
-            </div>
-            <!-- masonry grid item end -->
-
-            <!-- masonry grid item start -->
-            <div class="masonry-grid-item col-md-6 col-lg-4">
-              <!-- blogpost start -->
-              <article class="blogpost shadow-2 light-gray-bg bordered object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-                <div class="overlay-container">
-                  <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
-                </div>
-                <header>
-                  <h2><a class="diary-title-link" href="#">Nunc interdum mi neque</a></h2>
-                  <div class="post-info">
-                    <span class="post-date">
-                      <i class="fa fa-calendar-o pr-1"></i>
-                      <span class="day">07</span>
-                      <span class="month">May 2017</span>
-                    </span>
-                    <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                    <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                  </div>
-                </header>
-                <div class="blogpost-content">
-                  <p>Mauris dolor sapien, malesuada at interdum ut, hendrerit eget lorem. Nunc interdum mi neque, et  sollicitudin purus fermentum ut. Suspendisse faucibus nibh odio, a vehicula eros pharetra in. Maecenas  ullamcorper commodo rutrum. In iaculis lectus vel augue eleifend dignissim. Aenean viverra semper sollicitudin.</p>
-                </div>
-                <footer class="clearfix">
-                  <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                  <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
-                </footer>
-              </article>
-              <!-- blogpost end -->
-            </div>
-            <!-- masonry grid item end -->
-
-            <!-- masonry grid item start -->
-            <div class="masonry-grid-item col-md-6 col-lg-4">
-              <!-- blogpost start -->
-              <article class="blogpost shadow-2 light-gray-bg bordered object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-                <div class="overlay-container">
-                  <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
-                </div>
-                <header>
-                  <h2><a class="diary-title-link" href="#">Successful business ideas</a></h2>
-                  <div class="post-info">
-                    <span class="post-date">
-                      <i class="fa fa-calendar-o pr-1"></i>
-                      <span class="day">06</span>
-                      <span class="month">May 2017</span>
-                    </span>
-                    <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                    <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                  </div>
-                </header>
-                <div class="blogpost-content">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto veniam, perspiciatis libero quasi, iusto delectus sed accusantium fugit inventore iure molestiae amet voluptatem, ut dolorem ex dolorum ea impedit quae!</p>
-                </div>
-                <footer class="clearfix">
-                  <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                  <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
-                </footer>
-              </article>
-              <!-- blogpost end -->
-            </div>
-            <!-- masonry grid item end -->
-
-            <!-- masonry grid item start -->
-            <div class="masonry-grid-item col-md-6 col-lg-4">
-              <!-- blogpost start -->
-              <article class="blogpost shadow-2 light-gray-bg bordered object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-                <div class="overlay-container">
-                  <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
-                </div>
-                <header>
-                  <h2><a class="diary-title-link" href="#">Successful business ideas</a></h2>
-                  <div class="post-info">
-                    <span class="post-date">
-                      <i class="fa fa-calendar-o pr-1"></i>
-                      <span class="day">06</span>
-                      <span class="month">May 2017</span>
-                    </span>
-                    <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                    <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                  </div>
-                </header>
-                <div class="blogpost-content">
-                  <p>Lorem ipsum dolor sit ametut dolorem ex dolorum ea impedit quae!</p>
-                </div>
-                <footer class="clearfix">
-                  <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                  <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
-                </footer>
-              </article>
-              <!-- blogpost end -->
-            </div>
-            <!-- masonry grid item end -->
-
-            <!-- masonry grid item start -->
-            <div class="masonry-grid-item col-md-6 col-lg-4">
-              <!-- blogpost start -->
-              <article class="blogpost shadow-2 light-gray-bg bordered object-non-visible" data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-                <div class="overlay-container">
-                  <img class="w-100" src="https://placehold.it/330x320" alt="tab Preview">
-                </div>
-                <header>
-                  <h2><a class="diary-title-link" href="#">Successful business ideas</a></h2>
-                  <div class="post-info">
-                    <span class="post-date">
-                      <i class="fa fa-calendar-o pr-1"></i>
-                      <span class="day">06</span>
-                      <span class="month">May 2017</span>
-                    </span>
-                    <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i> by <a href="#">John Doe</a></span>
-                    <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22 comments</a></span>
-                  </div>
-                </header>
-                <div class="blogpost-content">
-                  <p>Lorem ipsum dolor sit ametut dolorem ex dolorum ea impedit quae!</p>
-                </div>
-                <footer class="clearfix">
-                  <div class="tags pull-left"><i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                  <div class="link pull-right"><i class="fa fa-link pr-1"></i><a href="#">Read More</a></div>
-                </footer>
-              </article>
-              <!-- blogpost end -->
-            </div>
-            <!-- masonry grid item end -->
-
-
           </div>
         </div>
-        <nav>
-          <ul class="pagination rounded-flat d-flex justify-content-center pagination-primary">
-            <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-left"></i></a></li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-right"></i></a></li>
-          </ul>
-        </nav>
-      </div>
-
-
         <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
