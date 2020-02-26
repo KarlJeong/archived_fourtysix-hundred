@@ -13,6 +13,7 @@
   <!-- endinject -->
   <!-- plugin css for this page -->
   <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../../vendors/summernote/dist/summernote-bs4.css">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="css/style.css">
@@ -217,58 +218,49 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-12">
-                      <h2>CODE GROUP LIST</h2>
-                      <div class="separator-2"></div>
-    									<div class="wrapper d-flex align-items-center py-3">
-    										<form class="forms-sample w-100 mr-5">
-                          <div class="form-group row">
-                            <div class="col">
-                              <label>Code Group Value</label>
-                              <input type="text" class="form-control">
-                            </div>
-                            <div class="col">
-                              <label>Code Group Name</label>
-                              <input type="text" class="form-control">
-                            </div>
-                            <div class="col">
-                              <label>Use YN</label>
-                              <select class="form-control" id="exampleFormControlSelect2">
-                                <option>All</option>
-                                <option>Yes</option>
-                                <option>No</option>
-                              </select>
-                            </div>
-                          </div>
-                        </form>
-    										<div class="ml-auto px-1 py-1"><button class="btn btn-info mt-3 mb-4">Search</button></div>
-    									</div>
-                    </div>
-                  </div>
-								</div>
-              </div>
-            </div>
-
-            <div class="col-12 grid-margin stretch-card">
-              <div class="card">
+            <div class="col-12">
+              <div class="card px-2">
                 <div class="card-body">
                   <div class="row mb-5">
                     <div class="col-12">
-                      <table id="codeGroup-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
-                          <thead>
-                              <tr>
-                                  <th>Code Group Name</th>
-                                  <th>Code Group Value</th>
-                                  <th>Code Count</th>
-                                  <th>Created at</th>
-                                  <th>Use Yn</th>
-                              </tr>
-                          </thead>
-                      </table>
+                      <h2>CODE GROUP DETAIL</h2>
+                      <div class="separator-2"></div>
+                      <form>
+                        <div class="form-group">
+                          <label for="codeGgroupValue">Code Group Value</label>
+                          <input type="text" class="form-control" id="codeGgroupValue">
+                        </div>
+                        <div class="form-group">
+                          <label for="codeGgroupName">Code Group Name</label>
+                          <input type="text" class="form-control" id="codeGgroupName">
+                        </div>
+                        <div class="form-group">
+                          <label for="includingCodes">Including Codes</label>
+                          <select class="js-example-basic-multiple" multiple="multiple" style="width:100%">
+                            <option value="AL">Code001</option>
+                            <option value="WY">Code002</option>
+                            <option value="AM">Code003</option>
+                            <option value="CA">Code004</option>
+                            <option value="RU">Code005</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="Description">Description</label>
+                          <textarea class="form-control" id="Description" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="useYn">Use YN</label>
+                          <select class="form-control" id="useYn">
+                            <option>Use</option>
+                            <option>Disuse</option>
+                          </select>
+                        </div>
+                      </form>
+
+                      <div class="container-fluid w-100">
+                        <a href="#" class="btn btn-success float-right mt-4 ml-2">Save</a>
+                        <a href="#" class="btn btn-secondary float-right mt-4">List</a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -297,85 +289,16 @@
   <script src="vendors/js/vendor.bundle.addons.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
+  <script src="../../vendors/tinymce/tinymce.min.js"></script>
+  <script src="../../vendors/tinymce/themes/modern/theme.js"></script>
+  <script src="../../vendors/summernote/dist/summernote-bs4.min.js"></script>
   <!-- End plugin js for this page-->
   <!-- inject:js -->
   <script src="js/template.js"></script>
+  <script src="../../js/select2.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <!-- End custom js for this page-->
-  <script defer type="text/javascript">
-  $(function() {
-    fnRetrieveCodeGroup();
-  });
-
-  var fnRetrieveCodeGroup = function() {
-    // Ajax 조회 로직
-
-    var data = "{ \
-      [ \
-      {'codeGroupValue' : 'CODEGROUP001', 'codeGroupName' : '코드그룹001', 'codeCountAll' : 5, 'codeCountUse': 4, 'createDatetime' : '2020-02-10 13:25:15', 'useYn' : 1}, \
-      {'codeGroupValue' : 'CODEGROUP002', 'codeGroupName' : '코드그룹002', 'codeCountAll' : 3, 'codeCountUse': 2, 'createDatetime' : '2020-02-11 13:25:15', 'useYn' : 1}, \
-      {'codeGroupValue' : 'CODEGROUP003', 'codeGroupName' : '코드그룹003', 'codeCountAll' : 3, 'codeCountUse': 3, 'createDatetime' : '2020-02-12 13:25:15', 'useYn' : 0}, \
-      ] \
-    }";
-
-    fnCreateCodeGroupTable(eval(data));
-  }
-
-  var fnCreateCodeGroupTable = function(data){
-    var useYnStatus = {
-      0: ['Disuse', 'danger'],
-      1: ['Use', 'success']
-    };
-
-    $('#codeGroup-table').dataTable({
-        data: data,
-        "columns": [
-          { "data": "codeGroupValue" },
-          { "data": "codeGroupName" },
-          { "data": "codeCountAll" },
-          { "data": "createDatetime" },
-          { "data": "useYn" }
-        ],
-        order: [[ 4, 'desc' ]],
-        columnDefs: [{
-            targets: [2],
-            width: 80,
-            className: 'text-center'
-        }, {
-            targets: [3],
-            width: 120,
-            className: 'text-center'
-        }, {
-            targets: [4],
-            width: 80,
-            className: 'text-center'
-        }],
-        searching: false,
-        createdRow: function (row, data, index) {
-          $('td', row).eq(0).html('').append(
-          '<a class="dt-alink" href="codeGrpC.html">'+data["codeGroupValue"]+'</a>'
-          );
-
-          $('td', row).eq(1).html('').append(
-          '<a class="dt-alink" href="codeGrpC.html">'+data["codeGroupName"]+'</a>'
-          );
-
-          $('td', row).eq(2).html('').append(
-          data["codeCountUse"] + " / " + data["codeCountAll"]
-          );
-
-          $('td', row).eq(3).html('').append(
-          data["createDatetime"]
-          );
-
-          $('td', row).eq(4).html('').append(
-          '<label class="badge badge-' + useYnStatus[data["useYn"]][1] + '">' + useYnStatus[data["useYn"]][0] + '</label>'
-          );
-        }
-      });
-  }
-  </script>
 </body>
 
 </html>

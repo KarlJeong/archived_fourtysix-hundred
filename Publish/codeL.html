@@ -222,7 +222,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-12">
-                      <h2>CODE GROUP LIST</h2>
+                      <h2>CODE LIST</h2>
                       <div class="separator-2"></div>
     									<div class="wrapper d-flex align-items-center py-3">
     										<form class="forms-sample w-100 mr-5">
@@ -231,8 +231,16 @@
                               <label>Code Group Value</label>
                               <input type="text" class="form-control">
                             </div>
+                              <div class="col">
+                                <label>Code Group Name</label>
+                                <input type="text" class="form-control">
+                              </div>
                             <div class="col">
-                              <label>Code Group Name</label>
+                              <label>Code Value</label>
+                              <input type="text" class="form-control">
+                            </div>
+                            <div class="col">
+                              <label>Code Name</label>
                               <input type="text" class="form-control">
                             </div>
                             <div class="col">
@@ -258,12 +266,13 @@
                 <div class="card-body">
                   <div class="row mb-5">
                     <div class="col-12">
-                      <table id="codeGroup-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
+                      <table id="code-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
                           <thead>
                               <tr>
                                   <th>Code Group Name</th>
                                   <th>Code Group Value</th>
-                                  <th>Code Count</th>
+                                  <th>Code Name</th>
+                                  <th>Code Value</th>
                                   <th>Created at</th>
                                   <th>Use Yn</th>
                               </tr>
@@ -305,17 +314,17 @@
   <!-- End custom js for this page-->
   <script defer type="text/javascript">
   $(function() {
-    fnRetrieveCodeGroup();
+    fnRetrieveCode();
   });
 
-  var fnRetrieveCodeGroup = function() {
+  var fnRetrieveCode = function() {
     // Ajax 조회 로직
 
     var data = "{ \
       [ \
-      {'codeGroupValue' : 'CODEGROUP001', 'codeGroupName' : '코드그룹001', 'codeCountAll' : 5, 'codeCountUse': 4, 'createDatetime' : '2020-02-10 13:25:15', 'useYn' : 1}, \
-      {'codeGroupValue' : 'CODEGROUP002', 'codeGroupName' : '코드그룹002', 'codeCountAll' : 3, 'codeCountUse': 2, 'createDatetime' : '2020-02-11 13:25:15', 'useYn' : 1}, \
-      {'codeGroupValue' : 'CODEGROUP003', 'codeGroupName' : '코드그룹003', 'codeCountAll' : 3, 'codeCountUse': 3, 'createDatetime' : '2020-02-12 13:25:15', 'useYn' : 0}, \
+      {'codeGroupValue' : 'CODEGROUP001', 'codeGroupName' : '코드그룹001', 'codeValue' : 'CODE001', 'codeName' : '코드001', 'createDatetime' : '2020-02-10 13:25:15', 'useYn' : 1}, \
+      {'codeGroupValue' : 'CODEGROUP001', 'codeGroupName' : '코드그룹001', 'codeValue' : 'CODE002', 'codeName' : '코드002', 'createDatetime' : '2020-02-11 13:25:15', 'useYn' : 1}, \
+      {'codeGroupValue' : 'CODEGROUP001', 'codeGroupName' : '코드그룹001', 'codeValue' : 'CODE003', 'codeName' : '코드003', 'createDatetime' : '2020-02-12 13:25:15', 'useYn' : 0}, \
       ] \
     }";
 
@@ -328,48 +337,45 @@
       1: ['Use', 'success']
     };
 
-    $('#codeGroup-table').dataTable({
+    $('#code-table').dataTable({
         data: data,
         "columns": [
           { "data": "codeGroupValue" },
           { "data": "codeGroupName" },
-          { "data": "codeCountAll" },
+          { "data": "codeValue" },
+          { "data": "codeName" },
           { "data": "createDatetime" },
           { "data": "useYn" }
         ],
-        order: [[ 4, 'desc' ]],
+        order: [[ 5, 'desc' ]],
         columnDefs: [{
-            targets: [2],
-            width: 80,
-            className: 'text-center'
-        }, {
-            targets: [3],
-            width: 120,
-            className: 'text-center'
-        }, {
-            targets: [4],
+            targets: [5],
             width: 80,
             className: 'text-center'
         }],
         searching: false,
         createdRow: function (row, data, index) {
           $('td', row).eq(0).html('').append(
-          '<a class="dt-alink" href="codeGrpC.html">'+data["codeGroupValue"]+'</a>'
+          data["codeGroupValue"]
           );
 
           $('td', row).eq(1).html('').append(
-          '<a class="dt-alink" href="codeGrpC.html">'+data["codeGroupName"]+'</a>'
+          data["codeGroupName"]
           );
 
           $('td', row).eq(2).html('').append(
-          data["codeCountUse"] + " / " + data["codeCountAll"]
+          '<a class="dt-alink" href="codeC.html">'+data["codeValue"]+'</a>'
           );
 
           $('td', row).eq(3).html('').append(
-          data["createDatetime"]
+          '<a class="dt-alink" href="codeC.html">'+data["codeName"]+'</a>'
           );
 
           $('td', row).eq(4).html('').append(
+          data["createDatetime"]
+          );
+
+          $('td', row).eq(5).html('').append(
           '<label class="badge badge-' + useYnStatus[data["useYn"]][1] + '">' + useYnStatus[data["useYn"]][0] + '</label>'
           );
         }

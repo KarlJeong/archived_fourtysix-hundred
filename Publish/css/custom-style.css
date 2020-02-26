@@ -55,6 +55,14 @@ a.diary-title-link:hover {
   color: #223C61;
 }
 
+table tbody tr td a.dt-alink {
+  color: #223C61;
+}
+
+table tbody tr td a.dt-alink:hover {
+  color: #223C61;
+}
+
 
 /*shadow*/
 .shadow,
