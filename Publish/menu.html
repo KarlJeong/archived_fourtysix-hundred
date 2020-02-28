@@ -228,30 +228,30 @@
                       <div class="separator-2"></div>
                       <div class="row">
                         <div class="col-5">
-                          <div id="jstree-example-1" style="margin-top:20px;min-height:200px;border:1px solid #ddd;padding:20px;">
+                          <div id="menu-jstree" style="margin-top:20px;min-height:200px;border:1px solid #ddd;padding:20px;">
                             <ul>
-                              <li>css
+                              <li class="jstree-open" data-jstree="{&quot;type&quot; : &quot;th-list&quot;}">css
                                 <ul>
-                                  <li data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}">app.css</li>
-                                  <li data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}">style.css</li>
+                                  <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">app.css</li>
+                                  <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">style.css</li>
                                 </ul>
                               </li>
-                              <li class="jstree-open">img
+                              <li class="jstree-open" data-jstree="{&quot;type&quot; : &quot;th-list&quot;}">img
                                 <ul>
-                                  <li data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}">bg.jpg</li>
-                                  <li data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}">logo.png</li>
-                                  <li data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}">avatar.png</li>
+                                  <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">bg.jpg</li>
+                                  <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">logo.png</li>
+                                  <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">avatar.png</li>
                                 </ul>
                               </li>
-                              <li class="jstree-open">js
+                              <li class="jstree-open" data-jstree="{&quot;type&quot; : &quot;th-list&quot;}">js
                                 <ul>
-                                  <li data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}">jquery.js</li>
-                                  <li data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}">app.js</li>
+                                  <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">jquery.js</li>
+                                  <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">app.js</li>
                                 </ul>
                               </li>
-                              <li class="text-primary" data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}"> index.html</li>
-                              <li class="text-primary" data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}"> page-one.html</li>
-                              <li data-jstree="{&quot;icon&quot; : &quot;jstree-file&quot;}"> page-two.html</li>
+                              <li data-jstree="{&quot;type&quot; : &quot;page&quot;}"> index.html</li>
+                              <li data-jstree="{&quot;type&quot; : &quot;page&quot;}"> page-one.html</li>
+                              <li data-jstree="{&quot;type&quot; : &quot;page&quot;}"> page-two.html</li>
                             </ul>
                           </div>
                         </div>
@@ -301,7 +301,49 @@
   <!-- End custom js for this page-->
   <script defer type="text/javascript">
   $(function() {
-    $('#jstree-example-1').jstree();
+    $('#menu-jstree').jstree({
+      "core" : {
+        "check_callback" : true
+    },
+    "types" : {
+      "th-list" : {
+        "icon" : "fa fa-th-list"
+      },
+      "page" : {
+        "icon" : "fa fa-check"
+      },
+      "unsaved" : {
+        "icon" : "fa fa-unlock"
+      }
+    },
+    "contextmenu":{
+      "items": function($node) {
+        var tree = $("#menu-jstree").jstree(true);
+        return {
+          "Create": {
+            "separator_before": false,
+            "separator_after": false,
+            "label": "Create",
+            "action": function (obj) {
+              $node = tree.create_node($node, {text : 'New', type : 'unsaved'});
+              tree.edit($node);
+            }
+          },
+          "Remove": {
+            "separator_before": false,
+            "separator_after": false,
+            "label": "Remove",
+            "action": function (obj) {
+              tree.delete_node($node);
+            }
+          }
+        };
+      }
+    },
+    "plugins" : [
+      "contextmenu", "unique", "types"
+    ]
+    });
   });
   </script>
 </body>
