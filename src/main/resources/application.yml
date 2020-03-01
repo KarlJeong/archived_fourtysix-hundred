@@ -22,5 +22,7 @@ spring:
   jpa:    open-in-view: true
   devtools:    livereload:      enabled: true
   http:    encoding:      charset: UTF-8
-  thymeleaf:    encoding: UTF-8  servlet:    multipart:      max-file-size: -1
+  thymeleaf:    encoding: UTF-8
+    cache: false
+    mode: HTML  servlet:    multipart:      max-file-size: -1
       max-request-size: -1
