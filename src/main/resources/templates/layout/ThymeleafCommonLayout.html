@@ -28,10 +28,13 @@
 <!-- COMMON CSS END -->
 
 <!-- COMMON JS START -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script th:src="@{/vendors/jquery/3.4.1/jquery.min.js}"></script>
 <script defer th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
 <script defer th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
 <!-- COMMON JS END -->
+
+<script defer th:src="@{/js/common.js}"></script>
+<script defer th:src="@{/js/common.utils.js}"></script>
 
 </head>
 

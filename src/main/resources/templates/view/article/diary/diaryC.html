@@ -29,6 +29,10 @@
                 [ 'help', [ 'help' ] ] ]
         });
     })
+
+    function fnPublish() {
+        $("#baseForm").serializeObject();
+    }
     </script>
 </head>
 
@@ -42,28 +46,25 @@
                             <div class="col-12">
                                 <h2>DIARY WRITING</h2>
                                 <div class="separator-2"></div>
-                                <form>
+                                <form id="baseForm">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect2">Diary
-                                            Category</label> <select class="form-control"
-                                            id="exampleFormControlSelect2">
-                                            <option>--SELECT--</option>
-                                            <option>FOOD</option>
-                                            <option>LIFE</option>
-                                            <option>LANGUAGE</option>
-                                            <option>TRIP</option>
-                                            <option>HOT POTATO</option>
+                                        <label for="diaryCategory">Diary Category</label>
+                                        <select class="form-control" id="diaryCategory" name="">
+                                            <option value=" ">--SELECT--</option>
+                                            <option value="FOOD">FOOD</option>
+                                            <option value="LIFE">LIFE</option>
+                                            <option value="LANGUAGE">LANGUAGE</option>
+                                            <option value="TRIP">TRIP</option>
+                                            <option value="HOT POTATO">HOT POTATO</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputName1">Title</label> <input
-                                            type="text" class="form-control" id="exampleInputName1"
-                                            placeholder="Title">
+                                        <label for="title">Title</label>
+                                        <input type="text" class="form-control" id="title" name="title" placeholder="Title">
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleTextarea1">Summary</label>
-                                        <textarea class="form-control" id="exampleTextarea1"
-                                            rows="5"></textarea>
+                                        <label for="summary">Summary</label>
+                                        <textarea class="form-control" id="summary" name="summary" rows="5"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="summernoteExample">Contents</label>
@@ -72,7 +73,7 @@
                                 </form>
 
                                 <div class="container-fluid w-100">
-                                    <a href="#" class="btn btn-primary float-right mt-4 ml-2">Publish</a>
+                                    <a href="#" class="btn btn-primary float-right mt-4 ml-2" onclick="fnPublish()">Publish</a>
                                     <a href="#" class="btn btn-success float-right mt-4 ml-2">Temporary Save</a>
                                     <a href="#" class="btn btn-danger float-right mt-4 ml-2">Delete</a>
                                     <a href="#" class="btn btn-secondary float-right mt-4">List</a>
