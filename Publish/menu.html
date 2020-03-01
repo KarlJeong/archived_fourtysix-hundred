@@ -224,10 +224,10 @@
                 <div class="card-body">
                   <div class="row mb-5">
                     <div class="col-12">
-                      <h2>CODE DETAIL</h2>
+                      <h2>MENU MANAGEMENT</h2>
                       <div class="separator-2"></div>
                       <div class="row">
-                        <div class="col-5">
+                        <div class="col-6">
                           <div id="menu-jstree" style="margin-top:20px;min-height:200px;border:1px solid #ddd;padding:20px;">
                             <ul>
                               <li class="jstree-open" data-jstree="{&quot;type&quot; : &quot;th-list&quot;}">css
@@ -255,14 +255,48 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="col-6 offset-1">
-                          aa
+                        <div class="col-6">
+                          <form style="margin-top:20px;">
+                            <div class="form-group">
+                              <label for="priorMenuName">Prior Menu Name</label>
+                              <input type="text" class="form-control" id="priorMenuName" readonly>
+                            </div>
+                            <div class="form-group">
+                              <label for="menuName">Menu Name</label>
+                              <input type="text" class="form-control" id="menuName">
+                            </div>
+                            <div class="form-group">
+                              <label for="menuPath">Menu Path</label>
+                              <input type="text" class="form-control" id="menuPath">
+                            </div>
+                            <div class="form-group">
+                              <label for="menuOrder">Menu Order</label>
+                              <input type="number" class="form-control" id="menuOrder">
+                            </div>
+                            <div class="form-group">
+                              <label for="description">Description</label>
+                              <textarea class="form-control" id="description" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                              <label for="menuType">Menu Type</label>
+                              <select class="form-control" id="menuType">
+                                <option>COMMON</option>
+                                <option>SYSTEM</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label for="useYn">Use YN</label>
+                              <select class="form-control" id="useYn">
+                                <option>USE</option>
+                                <option>DISUSE</option>
+                              </select>
+                            </div>
+                          </form>
+                          <div class="container-fluid w-100">
+                            <a href="#" class="btn btn-success float-right mt-4 ml-2">Save</a>
+                            <a href="#" class="btn btn-warning float-right mt-4">Delete</a>
+                          </div>
                         </div>
-                      </div>
-
-                      <div class="container-fluid w-100">
-                        <a href="#" class="btn btn-success float-right mt-4 ml-2">Save</a>
-                        <a href="#" class="btn btn-secondary float-right mt-4">List</a>
                       </div>
                     </div>
                   </div>
@@ -294,57 +328,59 @@
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="js/template.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="vendors/jstree/jstree.js"></script>
   <!-- End custom js for this page-->
   <script defer type="text/javascript">
-  $(function() {
-    $('#menu-jstree').jstree({
-      "core" : {
-        "check_callback" : true
-    },
-    "types" : {
-      "th-list" : {
-        "icon" : "fa fa-th-list"
-      },
-      "page" : {
-        "icon" : "fa fa-check"
-      },
-      "unsaved" : {
-        "icon" : "fa fa-unlock"
-      }
-    },
-    "contextmenu":{
-      "items": function($node) {
-        var tree = $("#menu-jstree").jstree(true);
-        return {
-          "Create": {
-            "separator_before": false,
-            "separator_after": false,
-            "label": "Create",
-            "action": function (obj) {
-              $node = tree.create_node($node, {text : 'New', type : 'unsaved'});
-              tree.edit($node);
-            }
+    $(function() {
+      $('#menu-jstree').jstree({
+        "core": {
+          "check_callback": true
+        },
+        "types": {
+          "th-list": {
+            "icon": "fa fa-th-list"
           },
-          "Remove": {
-            "separator_before": false,
-            "separator_after": false,
-            "label": "Remove",
-            "action": function (obj) {
-              tree.delete_node($node);
-            }
+          "page": {
+            "icon": "fa fa-check"
+          },
+          "unsaved": {
+            "icon": "fa fa-unlock"
           }
-        };
-      }
-    },
-    "plugins" : [
-      "contextmenu", "unique", "types"
-    ]
+        },
+        "contextmenu": {
+          "items": function($node) {
+            var tree = $("#menu-jstree").jstree(true);
+            return {
+              "Create": {
+                "separator_before": false,
+                "separator_after": false,
+                "label": "Create",
+                "action": function(obj) {
+                  $node = tree.create_node($node, {
+                    text: 'New',
+                    type: 'unsaved'
+                  });
+                  tree.edit($node);
+                }
+              },
+              "Remove": {
+                "separator_before": false,
+                "separator_after": false,
+                "label": "Remove",
+                "action": function(obj) {
+                  tree.delete_node($node);
+                }
+              }
+            };
+          }
+        },
+        "plugins": [
+          "contextmenu", "unique", "types"
+        ]
+      });
     });
-  });
   </script>
 </body>
 
