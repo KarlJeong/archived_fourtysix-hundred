@@ -32,6 +32,7 @@
 
     function fnPublish() {
         $("#baseForm").serializeObject();
+        PromiseUtils
     }
     </script>
 </head>
@@ -60,11 +61,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="title">Title</label>
-                                        <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+                                        <input type="text" class="form-control" id="articleTitle" name="articleTitle" placeholder="Title">
                                     </div>
                                     <div class="form-group">
                                         <label for="summary">Summary</label>
-                                        <textarea class="form-control" id="summary" name="summary" rows="5"></textarea>
+                                        <textarea class="form-control" id="articleContents" name="articleContents" rows="5"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="summernoteExample">Contents</label>
