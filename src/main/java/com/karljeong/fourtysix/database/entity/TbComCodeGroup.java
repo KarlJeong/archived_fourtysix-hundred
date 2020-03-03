@@ -16,8 +16,11 @@ import lombok.ToString;
 //@Table(name = "TB_COM_CODE_GROUP")
 public class TbComCodeGroup extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codeGroupId;
+    private Long createUserId;
+    private Long updateUserId;
     private String codeGroupValue;
     private String codeGroupName;
     private String codeGroupType;

@@ -8,6 +8,15 @@ public class TableNamingStrategy extends SpringPhysicalNamingStrategy {
 
     @Override
     public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment jdbcEnvironment) {
-        return new Identifier(name.getText().toUpperCase(), true);
+        return convertToSnakeCase(name);
+    }
+
+    private Identifier convertToSnakeCase(final Identifier identifier) {
+        final String regex = "([a-z])([A-Z])";
+        final String replacement = "$1_$2";
+        final String newName = identifier.getText()
+          .replaceAll(regex, replacement)
+          .toUpperCase();
+        return Identifier.toIdentifier(newName);
     }
 }
