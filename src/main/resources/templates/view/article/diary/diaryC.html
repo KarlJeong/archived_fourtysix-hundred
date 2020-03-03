@@ -12,7 +12,7 @@
     <script defer type="text/javascript">
     $(function() {
         'use strict';
-        $('#summernoteExample').summernote({
+        $('#articleContents').summernote({
             height : 500,
             tabsize : 2,
             toolbar : [
@@ -26,13 +26,17 @@
                 [ 'table', [ 'table' ] ],
                 [ 'insert', [ 'link', 'picture', 'video', 'hr' ] ],
                 [ 'view', [ 'fullscreen', 'codeview' ] ],
-                [ 'help', [ 'help' ] ] ]
+                [ 'help', [ 'help' ] ]
+            ]
         });
     })
 
     function fnPublish() {
-        $("#baseForm").serializeObject();
-        PromiseUtils
+        var params = $("#baseForm").serializeObject();
+        params.articleContents = $("#articleContents").summernote('code');
+        PromiseUtil.post("/v1/api/diary", params)
+        .then(JSON.parse)
+        .then(d => console.log(d));
     }
     </script>
 </head>
@@ -65,11 +69,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="summary">Summary</label>
-                                        <textarea class="form-control" id="articleContents" name="articleContents" rows="5"></textarea>
+                                        <textarea class="form-control" id="articleSummary" name="articleSummary" rows="5"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="summernoteExample">Contents</label>
-                                        <div id="summernoteExample"></div>
+                                        <label for="articleContents">Contents</label>
+                                        <div id="articleContents"></div>
                                     </div>
                                 </form>
 

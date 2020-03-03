@@ -5,7 +5,7 @@ $.fn.serializeObject = function() {
             var arr = this.serializeArray();
             if (!!arr) {
                 o = {};
-                jQuery.each(arr, function(idx, item) {
+                $.each(arr, function(idx, item) {
                     o[item.name] = item.value;
                 });
             }

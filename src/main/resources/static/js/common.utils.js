@@ -36,7 +36,7 @@ PromiseUtil.post = function(url, params) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
         req.open('POST', url);
-
+        req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         req.onload = function() {
             // This is called even on 404 etc
             // so check the status

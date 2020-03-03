@@ -7,14 +7,16 @@ import javax.persistence.Id;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-@Entity
 @Getter
 @Setter
+@ToString
+@Entity
+//@Table(name = "TB_ARTICLE_DIARY")
 public class TbArticleDiary extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long articleId;
     private Long articleCategoryId;
     private String articleTitle;
