@@ -49,7 +49,7 @@ public class TbComCodeGroupSpec {
             case USEYN:
                 predicate.add(builder.equal(root.get(key.value), Integer.valueOf(searchKeyword.get(key).toString())));
                 break;
-            default :
+            default:
                 break;
             }
         }

@@ -20,6 +20,7 @@ spring:
       auto-commit: true
   data:    rest:      base-path: api
   jpa:    open-in-view: true
+    show-sql: true
     hibernate:
       naming:        physical-strategy: com.karljeong.fourtysix.config.TableNamingStrategy  devtools:    livereload:      enabled: true
   http:    encoding:      charset: UTF-8

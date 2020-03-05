@@ -14,14 +14,35 @@
         // Ajax 조회 로직
 
         var data = "{ \
-      [ \
-      {'codeGroupValue' : 'CODEGROUP001', 'codeGroupName' : '코드그룹001', 'codeCountAll' : 5, 'codeCountUse': 4, 'createDatetime' : '2020-02-10 13:25:15', 'useYn' : 1}, \
-      {'codeGroupValue' : 'CODEGROUP002', 'codeGroupName' : '코드그룹002', 'codeCountAll' : 3, 'codeCountUse': 2, 'createDatetime' : '2020-02-11 13:25:15', 'useYn' : 1}, \
-      {'codeGroupValue' : 'CODEGROUP003', 'codeGroupName' : '코드그룹003', 'codeCountAll' : 3, 'codeCountUse': 3, 'createDatetime' : '2020-02-12 13:25:15', 'useYn' : 0}, \
-      ] \
-    }";
+          [ \
+          {'codeGroupValue' : 'CODEGROUP001', 'codeGroupName' : '코드그룹001', 'codeCountAll' : 5, 'codeCountUse': 4, 'createDatetime' : '2020-02-10 13:25:15', 'useYn' : 1}, \
+          {'codeGroupValue' : 'CODEGROUP002', 'codeGroupName' : '코드그룹002', 'codeCountAll' : 3, 'codeCountUse': 2, 'createDatetime' : '2020-02-11 13:25:15', 'useYn' : 1}, \
+          {'codeGroupValue' : 'CODEGROUP003', 'codeGroupName' : '코드그룹003', 'codeCountAll' : 3, 'codeCountUse': 3, 'createDatetime' : '2020-02-12 13:25:15', 'useYn' : 0}, \
+          ] \
+        }";
 
-        fnCreateCodeGroupTable(eval(data));
+        let searchForm = $("#searchForm");
+
+        if(searchForm[0] == null) {return;}
+
+        let url = "/v1/api/admin/codegroup";
+        console.log($("#searchForm").serializeObject());
+        $.ajax({
+            type: "GET",
+            data: $("#searchForm").serializeObject(),
+            url: url
+        }).done(function(result) {
+            if ( $.fn.DataTable.isDataTable('#codeGroup-table') ) {
+                  $('#codeGroup-table').DataTable().destroy();
+                }
+            console.log(result.content);
+            fnCreateCodeGroupTable(result.content)
+        }).fail(function(error) {
+            alert("error");
+            console.log(error);
+        });
+
+        //fnCreateCodeGroupTable(eval(data));
     }
 
     var fnCreateCodeGroupTable = function(data) {
@@ -38,7 +59,7 @@
                     }, {
                         "data" : "codeGroupName"
                     }, {
-                        "data" : "codeCountAll"
+                        "data" : "tbComCode"
                     }, {
                         "data" : "createDatetime"
                     }, {
@@ -69,8 +90,7 @@
                                         + data["codeGroupName"] + '</a>');
 
                         $('td', row).eq(2).html('').append(
-                                data["codeCountUse"] + " / "
-                                        + data["codeCountAll"]);
+                                data["tbComCode"].filter(v => v.useYn == 1).length + " / " +data["tbComCode"].length);
 
                         $('td', row).eq(3).html('').append(
                                 data["createDatetime"]);
@@ -96,19 +116,19 @@
                                 <h2>CODE GROUP LIST</h2>
                                 <div class="separator-2"></div>
                                 <div class="wrapper d-flex align-items-center py-3">
-                                    <form class="forms-sample w-100 mr-5">
+                                    <form class="forms-sample w-100 mr-5" id="searchForm">
                                         <div class="form-group row">
                                             <div class="col">
-                                                <label>Code Group Value</label> <input type="text" class="form-control">
+                                                <label>Code Group Value</label> <input type="text" name="codeGroupValue" class="form-control">
                                             </div>
                                             <div class="col">
-                                                <label>Code Group Name</label> <input type="text" class="form-control">
+                                                <label>Code Group Name</label> <input type="text" name="codeGroupName" class="form-control">
                                             </div>
                                             <div class="col">
-                                                <label>Use YN</label> <select class="form-control" id="exampleFormControlSelect2">
+                                                <label>Use YN</label> <select class="form-control" id="useYn">
                                                     <option>All</option>
-                                                    <option>Yes</option>
-                                                    <option>No</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
                                                 </select>
                                             </div>
                                         </div>

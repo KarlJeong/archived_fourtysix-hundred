@@ -22,8 +22,10 @@ public class CodeGroupService {
     public Page<TbComCodeGroup> readList(Map<String, Object> searchRequest, Pageable pageable) {
         Map<SearchKey, Object> searchKeys = new HashMap<>();
         for (String key : searchRequest.keySet()) {
-            if (!Arrays.asList(new String[] { "SIZE",  "PAGE", "SORT" }).contains(key.toUpperCase())) {
-                searchKeys.put(SearchKey.valueOf(key.toUpperCase()), searchRequest.get(key));
+            if (searchRequest.get(key) != null && !"".equals(searchRequest.get(key))) {
+                if (!Arrays.asList(new String[] { "SIZE",  "PAGE", "SORT" }).contains(key.toUpperCase())) {
+                    searchKeys.put(SearchKey.valueOf(key.toUpperCase()), searchRequest.get(key));
+                }
             }
         }
         return searchKeys.isEmpty()
