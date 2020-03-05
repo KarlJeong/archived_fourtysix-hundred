@@ -13,7 +13,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-//@Table(name = "TB_ARTICLE_DIARY")
 public class TbArticleDiary extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
