@@ -13,20 +13,11 @@
     var fnRetrieveCodeGroup = function() {
         // Ajax 조회 로직
 
-        var data = "{ \
-          [ \
-          {'codeGroupValue' : 'CODEGROUP001', 'codeGroupName' : '코드그룹001', 'codeCountAll' : 5, 'codeCountUse': 4, 'createDatetime' : '2020-02-10 13:25:15', 'useYn' : 1}, \
-          {'codeGroupValue' : 'CODEGROUP002', 'codeGroupName' : '코드그룹002', 'codeCountAll' : 3, 'codeCountUse': 2, 'createDatetime' : '2020-02-11 13:25:15', 'useYn' : 1}, \
-          {'codeGroupValue' : 'CODEGROUP003', 'codeGroupName' : '코드그룹003', 'codeCountAll' : 3, 'codeCountUse': 3, 'createDatetime' : '2020-02-12 13:25:15', 'useYn' : 0}, \
-          ] \
-        }";
-
         let searchForm = $("#searchForm");
 
         if(searchForm[0] == null) {return;}
 
         let url = "/v1/api/admin/codegroup";
-        console.log($("#searchForm").serializeObject());
         $.ajax({
             type: "GET",
             data: $("#searchForm").serializeObject(),
@@ -35,7 +26,6 @@
             if ( $.fn.DataTable.isDataTable('#codeGroup-table') ) {
                   $('#codeGroup-table').DataTable().destroy();
                 }
-            console.log(result.content);
             fnCreateCodeGroupTable(result.content)
         }).fail(function(error) {
             alert("error");
@@ -82,11 +72,11 @@
                     searching : false,
                     createdRow : function(row, data, index) {
                         $('td', row).eq(0).html('').append(
-                                '<a class="dt-alink" href="codeGrpC.html">'
+                                '<a class="dt-alink" href="/admin/codegroup/viewupdate/'+data["codeGroupId"]+'">'
                                         + data["codeGroupValue"] + '</a>');
 
                         $('td', row).eq(1).html('').append(
-                                '<a class="dt-alink" href="codeGrpC.html">'
+                        		'<a class="dt-alink" href="/admin/codegroup/viewupdate/'+data["codeGroupId"]+'">'
                                         + data["codeGroupName"] + '</a>');
 
                         $('td', row).eq(2).html('').append(
@@ -113,7 +103,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <h2>CODE GROUP LIST</h2>
+                            	<div class="d-flex justify-content-between">
+	                                <h2>CODE GROUP LIST</h2>
+	                                <a href="/admin/codegroup/viewcreate" class="btn btn-sm btn-outline-info btn-fw mt-3"><i class="fa fa-plus-circle pr-2"></i>Create</a>
+                            	</div>
                                 <div class="separator-2"></div>
                                 <div class="wrapper d-flex align-items-center py-3">
                                     <form class="forms-sample w-100 mr-5" id="searchForm">
