@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}">
+<head>
+<title>Diary</title>
+<script defer th:src="@{/vendors/isotope/imagesloaded.pkgd.min.js}"></script>
+<script defer th:src="@{/vendors/isotope/isotope.pkgd.min.js}"></script>
+<script defer th:src="@{/vendors/liverty-admin/js/owl-carousel.js}"></script>
+<script defer th:src="@{/vendors/liverty-admin/js/template.js}"></script>
+<script defer type="text/javascript">
+    $(function() {
+        fnRetrieveCodeGroup();
+    });
+    var fnRetrieveCodeGroup = function() {
+        // Ajax 조회 로직
+
+        let searchForm = $("#searchForm");
+
+        if(searchForm[0] == null) {return;}
+
+        let url = "/v1/api/admin/codegroup";
+        $.ajax({
+            type: "GET",
+            data: $("#searchForm").serializeObject(),
+            url: url
+        }).done(function(result) {
+            if ( $.fn.DataTable.isDataTable('#codeGroup-table') ) {
+                  $('#codeGroup-table').DataTable().destroy();
+                }
+            fnCreateCodeGroupTable(result.content)
+        }).fail(function(error) {
+            alert("error");
+            console.log(error);
+        });
+
+        //fnCreateCodeGroupTable(eval(data));
+    }
+
+    var fnCreateCodeGroupTable = function(data) {
+        var useYnStatus = {
+            0 : [ 'Disuse', 'danger' ],
+            1 : [ 'Use', 'success' ]
+        };
+
+        $('#codeGroup-table').dataTable(
+                {
+                    data : data,
+                    "columns" : [ {
+                        "data" : "codeGroupValue"
+                    }, {
+                        "data" : "codeGroupName"
+                    }, {
+                        "data" : "tbComCode"
+                    }, {
+                        "data" : "createDatetime"
+                    }, {
+                        "data" : "useYn"
+                    } ],
+                    order : [ [ 4, 'desc' ] ],
+                    columnDefs : [ {
+                        targets : [ 2 ],
+                        width : 80,
+                        className : 'text-center'
+                    }, {
+                        targets : [ 3 ],
+                        width : 120,
+                        className : 'text-center'
+                    }, {
+                        targets : [ 4 ],
+                        width : 80,
+                        className : 'text-center'
+                    } ],
+                    searching : false,
+                    createdRow : function(row, data, index) {
+                        $('td', row).eq(0).html('').append(
+                                '<a class="dt-alink" href="/admin/codegroup/viewupdate/'+data["codeGroupId"]+'">'
+                                        + data["codeGroupValue"] + '</a>');
+
+                        $('td', row).eq(1).html('').append(
+                        		'<a class="dt-alink" href="/admin/codegroup/viewupdate/'+data["codeGroupId"]+'">'
+                                        + data["codeGroupName"] + '</a>');
+
+                        $('td', row).eq(2).html('').append(
+                                data["tbComCode"].filter(v => v.useYn == 1).length + " / " +data["tbComCode"].length);
+
+                        $('td', row).eq(3).html('').append(
+                                data["createDatetime"]);
+
+                        $('td', row).eq(4).html('').append(
+                                '<label class="badge badge-' + useYnStatus[data["useYn"]][1] + '">'
+                                        + useYnStatus[data["useYn"]][0]
+                                        + '</label>');
+                    }
+                });
+    }
+</script>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                            	<div class="d-flex justify-content-between">
+	                                <h2>CODE GROUP LIST</h2>
+	                                <a href="/admin/codegroup/viewcreate" class="btn btn-sm btn-outline-info btn-fw mt-3"><i class="fa fa-plus-circle pr-2"></i>Create</a>
+                            	</div>
+                                <div class="separator-2"></div>
+                                <div class="wrapper d-flex align-items-center py-3">
+                                    <form class="forms-sample w-100 mr-5" id="searchForm">
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                <label>Code Group Value</label> <input type="text" name="codeGroupValue" class="form-control">
+                                            </div>
+                                            <div class="col">
+                                                <label>Code Group Name</label> <input type="text" name="codeGroupName" class="form-control">
+                                            </div>
+                                            <div class="col">
+                                                <label>Use YN</label> <select class="form-control" id="useYn">
+                                                    <option>All</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="ml-auto px-1 py-1">
+                                        <button class="btn btn-info mt-3 mb-4">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <table id="codeGroup-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Code Group Name</th>
+                                            <th>Code Group Value</th>
+                                            <th>Code Count</th>
+                                            <th>Created at</th>
+                                            <th>Use Yn</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

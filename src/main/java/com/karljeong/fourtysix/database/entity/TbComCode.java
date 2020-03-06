@@ -1,5 +1,6 @@
 package com.karljeong.fourtysix.database.entity;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,23 +22,29 @@ import lombok.ToString;
 //@Table(name = "TB_COM_CODE")
 public class TbComCode extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codeId;
-    private Long createUserId;
-    private Long updateUserId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codeId;
 
-    @Column(name = "codeGroupId", insertable = false, updatable = false)
-    private Long codeGroupId;
-    private String codeValue;
-    private String codeName;
-    private String codeDescription;
-    private Integer codeOrder;
-    private Integer useYn;
+	@Basic(optional = false)
+	@Column(name = "createDatetime", insertable = false, updatable = false)
+	private String createDatetime;
+	private Long createUserId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "codeGroupId" )
-    private TbComCodeGroup tbComCodeGroup;
+	@Basic(optional = false)
+	@Column(name = "updateDatetime", insertable = false, updatable = false)
+	private String updateDatetime;
+	private Long updateUserId;
+	private Long codeGroupId;
+	private String codeValue;
+	private String codeName;
+	private String codeDescription;
+	private Integer codeOrder;
+	private Integer useYn;
+
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "codeGroupId")
+	private TbComCodeGroup tbComCodeGroup;
 
 }
