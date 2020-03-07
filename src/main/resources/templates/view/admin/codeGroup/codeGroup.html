@@ -26,13 +26,12 @@
             if ( $.fn.DataTable.isDataTable('#codeGroup-table') ) {
                   $('#codeGroup-table').DataTable().destroy();
                 }
+            console.log(result);
             fnCreateCodeGroupTable(result.content)
         }).fail(function(error) {
             alert("error");
             console.log(error);
         });
-
-        //fnCreateCodeGroupTable(eval(data));
     }
 
     var fnCreateCodeGroupTable = function(data) {

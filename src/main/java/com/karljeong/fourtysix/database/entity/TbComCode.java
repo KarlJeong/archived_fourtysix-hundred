@@ -35,6 +35,8 @@ public class TbComCode extends BaseEntity {
 	@Column(name = "updateDatetime", insertable = false, updatable = false)
 	private String updateDatetime;
 	private Long updateUserId;
+
+    @Column(name = "codeGroupId", insertable = false, updatable = false)
 	private Long codeGroupId;
 	private String codeValue;
 	private String codeName;
@@ -45,6 +47,6 @@ public class TbComCode extends BaseEntity {
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "codeGroupId")
-	private TbComCodeGroup tbComCodeGroup;
+	private TbComCodeGroup tbComCodeGroup = new TbComCodeGroup();
 
 }
