@@ -22,7 +22,7 @@ spring:
   jpa:    open-in-view: true
     show-sql: true
     hibernate:
-      naming:        physical-strategy: com.karljeong.fourtysix.config.TableNamingStrategy  devtools:    livereload:      enabled: true
+      naming:        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl  devtools:    livereload:      enabled: true
   http:    encoding:      charset: UTF-8
   thymeleaf:    encoding: UTF-8
     cache: false

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbArticleDiary;
 import com.karljeong.fourtysix.database.repository.TbArticleDiaryRepository;
+import com.karljeong.fourtysix.utils.DateUtil;
 
 @Service
 public class DiaryService {
@@ -12,6 +13,7 @@ public class DiaryService {
     TbArticleDiaryRepository tbArticleDiaryRepository;
 
     public TbArticleDiary create(TbArticleDiary tbArticleDiary) {
+        tbArticleDiary.setCreateDatetime(DateUtil.getTimestamp());
         TbArticleDiary save = tbArticleDiaryRepository.save(tbArticleDiary);
         return save;
     }

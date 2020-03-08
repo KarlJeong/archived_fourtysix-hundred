@@ -7,17 +7,17 @@ import java.math.BigInteger;
 
 
 /**
- * The persistent class for the TB_COM_FILE database table.
+ * The persistent class for the TB_ARTICLE_DIARY_FILE database table.
  * 
  */
 @Entity
-@Table(name="TB_COM_FILE")
-@NamedQuery(name="TbComFile.findAll", query="SELECT t FROM TbComFile t")
-public class TbComFile implements Serializable {
+@Table(name="TB_ARTICLE_DIARY_FILE")
+@NamedQuery(name="TbArticleDiaryFile.findAll", query="SELECT t FROM TbArticleDiaryFile t")
+public class TbArticleDiaryFile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private TbComFilePK id;
+	private TbArticleDiaryFilePK id;
 
 	@Column(name="CREATE_DATETIME")
 	private Timestamp createDatetime;
@@ -34,8 +34,8 @@ public class TbComFile implements Serializable {
 	@Column(name="FILE_NAME")
 	private String fileName;
 
-	@Column(name="FILE_ORGINAL_NAME")
-	private String fileOrginalName;
+	@Column(name="FILE_ORIGINAL_NAME")
+	private String fileOriginalName;
 
 	@Column(name="FILE_PARAM_NAME")
 	private String fileParamName;
@@ -55,14 +55,19 @@ public class TbComFile implements Serializable {
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
 
-	public TbComFile() {
+	//bi-directional many-to-one association to TbArticleDiary
+	@ManyToOne
+	@JoinColumn(name="FILE_REF_ID", insertable = false, updatable = false)
+	private TbArticleDiary tbArticleDiary;
+
+	public TbArticleDiaryFile() {
 	}
 
-	public TbComFilePK getId() {
+	public TbArticleDiaryFilePK getId() {
 		return this.id;
 	}
 
-	public void setId(TbComFilePK id) {
+	public void setId(TbArticleDiaryFilePK id) {
 		this.id = id;
 	}
 
@@ -106,12 +111,12 @@ public class TbComFile implements Serializable {
 		this.fileName = fileName;
 	}
 
-	public String getFileOrginalName() {
-		return this.fileOrginalName;
+	public String getFileOriginalName() {
+		return this.fileOriginalName;
 	}
 
-	public void setFileOrginalName(String fileOrginalName) {
-		this.fileOrginalName = fileOrginalName;
+	public void setFileOriginalName(String fileOriginalName) {
+		this.fileOriginalName = fileOriginalName;
 	}
 
 	public String getFileParamName() {
@@ -160,6 +165,14 @@ public class TbComFile implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
+	}
+
+	public TbArticleDiary getTbArticleDiary() {
+		return this.tbArticleDiary;
+	}
+
+	public void setTbArticleDiary(TbArticleDiary tbArticleDiary) {
+		this.tbArticleDiary = tbArticleDiary;
 	}
 
 }

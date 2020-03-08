@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/diary")
 public class DiaryController {
 
-    @GetMapping("/viewMain")
+    @GetMapping("/viewmain")
     public String viewMain() {
         return "/view/article/diary/diary";
     }
 
-    @GetMapping("/viewCreate")
+    @GetMapping("/viewcreate")
     public String viewCreate() {
         return "/view/article/diary/diaryC";
     }
 
-    @GetMapping("/viewDetail")
+    @GetMapping("/viewdetail")
     public String viewDetail() {
         return "/view/article/diary/diaryR";
     }

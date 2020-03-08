@@ -1,5 +1,6 @@
 package com.karljeong.fourtysix.application.admin.codeGroup.service;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class CodeGroupService {
 	}
 
 	public TbComCodeGroup create(TbComCodeGroup tbComCodeGroup) {
-		tbComCodeGroup.setCreateUserId(Long.valueOf(11111));
+		tbComCodeGroup.setCreateUserId(BigInteger.valueOf(11111));
 		TbComCodeGroup save = tbComCodeGroupRepository.save(tbComCodeGroup);
 		return save;
 	}

@@ -17,7 +17,7 @@ public class DiaryRestController {
     DiaryService diaryService;
 
     @PostMapping
-    public TbArticleDiary insert(@RequestBody TbArticleDiary tbArticleDiary) {
+    public TbArticleDiary save(@RequestBody TbArticleDiary tbArticleDiary) {
         return diaryService.create(tbArticleDiary);
     }
 }
