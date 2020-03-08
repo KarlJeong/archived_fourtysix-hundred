@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}">
+<head>
+<title>Diary</title>
+<script defer th:src="@{/vendors/isotope/imagesloaded.pkgd.min.js}"></script>
+<script defer th:src="@{/vendors/isotope/isotope.pkgd.min.js}"></script>
+<script defer th:src="@{/vendors/liverty-admin/js/owl-carousel.js}"></script>
+<script defer th:src="@{/vendors/liverty-admin/js/template.js}"></script>
+<script defer type="text/javascript">
+    $(function() {
+        fnRetrieveCode();
+    });
+    var fnRetrieveCode = function() {
+        let searchForm = $("#searchForm");
+
+        if (searchForm[0] == null) {
+            return;
+        }
+
+        let url = "/v1/api/admin/code";
+        $.ajax({
+            type : "GET",
+            data : $("#searchForm").serializeObject(),
+            url : url
+        }).done(function(result) {
+            if ($.fn.DataTable.isDataTable('#code-table')) {
+                $('#code-table').DataTable().destroy();
+            }
+            console.log(result.content);
+//             fnCreateCodeTable(result.content);
+            var columns = [
+                {title: 'Code Group Name', data: 'tbComCodeGroup', render: 'codeGroupName'},
+                {title: 'Code Group Value', data: 'tbComCodeGroup.codeGroupValue'},
+                {title: 'Code Name', data: 'codeValue', render: function(data, type, row) {
+                    return '<a class="dt-alink" href="codeC.html">' + data + '</a>'
+                }},
+                {title: 'Code Value', data: 'codeName', render: function(data, item, row, a, b) {
+                    console.log(data, item, row, a, b);
+                    return '<a class="dt-alink" href="codeC.html">' + data + '</a>'
+                }},
+                {title: 'Created at', data: 'createDatetime'},
+                {title: 'Use Yn', data: 'useYn', render: function(data, item, row, a, b) {
+                    var className = !data ? 'badge-danger' : 'badge-success';
+                    var value = !data ? 'Disuse' : 'Use';
+                    return '<label class="badge ' + className + '">' + value + '</label>';
+                }},
+                {data: 'codeOrder', visible: false}
+            ];
+            DataTableUtil.loadData("#code-table", result.content, columns, 'codeOrder', 'DESC');
+        }).fail(function(error) {
+            alert("error");
+            console.log(error);
+        });
+
+    }
+
+    var fnCreateCodeTable = function(data) {
+        var useYnStatus = {
+            0 : [ 'Disuse', 'danger' ],
+            1 : [ 'Use', 'success' ]
+        };
+
+        $('#code-table').dataTable(
+                {
+                    data : data,
+                    "columns" : [
+                        {"data" : "codeDescription"}
+                      , {"data" : "codeOrder"}, {
+                        "data" : "codeValue"                    }, {
+                        "data" : "codeName"                    }, {
+                        "data" : "createDatetime"                    }, {
+                        "data" : "useYn"                    } ],
+                    order : [ [ 5, 'desc' ] ],
+                    columnDefs : [ {
+                        targets : [ 5 ],
+                        width : 80,
+                        className : 'text-center'
+                    } ],
+                    searching : false,
+                    createdRow : function(row, data, index) {
+                        $('td', row).eq(0).html('').append(
+                                data["tbComCodeGroup"]["codeGroupValue"]);
+
+                        $('td', row).eq(1).html('').append(
+                                data["tbComCodeGroup"]["codeGroupName"]);
+
+                        $('td', row).eq(2).html('').append(
+                                '<a class="dt-alink" href="codeC.html">'
+                                        + data["codeValue"] + '</a>');
+
+                        $('td', row).eq(3).html('').append(
+                                '<a class="dt-alink" href="codeC.html">'
+                                        + data["codeName"] + '</a>');
+
+                        $('td', row).eq(4).html('').append(
+                                data["createDatetime"]);
+
+                        $('td', row).eq(5).html('').append(
+                                '<label class="badge badge-' + useYnStatus[data["useYn"]][1] + '">'
+                                        + useYnStatus[data["useYn"]][0]
+                                        + '</label>');
+                    }
+                });
+    }
+</script>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h2>CODE LIST</h2>
+                                <div class="separator-2"></div>
+                                <div class="wrapper d-flex align-items-center py-3">
+                                    <form class="forms-sample w-100 mr-5" id="searchForm">
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                <label>Code Group Value</label> <input type="text" name="codeGroupValue" class="form-control">
+                                            </div>
+                                            <div class="col">
+                                                <label>Code Group Name</label> <input type="text" name="codeGroupName" class="form-control">
+                                            </div>
+                                            <div class="col">
+                                                <label>Code Value</label> <input type="text" name="codeValue" class="form-control">
+                                            </div>
+                                            <div class="col">
+                                                <label>Code Name</label> <input type="text" name="codeName" class="form-control">
+                                            </div>
+                                            <div class="col">
+                                                <label>Use YN</label> <select class="form-control" name="useYn">
+                                                    <option value="">All</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="ml-auto px-1 py-1">
+                                        <button class="btn btn-info mt-3 mb-4">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <table id="code-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>
