@@ -15,13 +15,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 /**
  * The persistent class for the TB_COM_CODE_GROUP database table.
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class)
 @Entity
 @Table(name="TB_COM_CODE_GROUP")
 @NamedQuery(name="TbComCodeGroup.findAll", query="SELECT t FROM TbComCodeGroup t")
@@ -62,7 +64,6 @@ public class TbComCodeGroup implements Serializable {
 	private byte useYn;
 
 	//bi-directional many-to-one association to TbComCode
-	@JsonBackReference
 	@OneToMany(mappedBy="tbComCodeGroup")
 	private List<TbComCode> tbComCodes;
 
