@@ -12,7 +12,7 @@ import com.karljeong.fourtysix.database.entity.TbComCodeGroup;
 
 @RepositoryRestResource(collectionResourceRel = "codeGroupEntity", path = "tbComCodeGroupRepository")
 public interface TbComCodeGroupRepository
-		extends PagingAndSortingRepository<TbComCodeGroup, Long>, JpaSpecificationExecutor<TbComCodeGroup> {
+		extends PagingAndSortingRepository<TbComCodeGroup, String>, JpaSpecificationExecutor<TbComCodeGroup> {
 
 	@Override
 	List<TbComCodeGroup> findAll();

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.karljeong.fourtysix.application.admin.code.service.CodeService;
 import com.karljeong.fourtysix.application.admin.codeGroup.service.CodeGroupService;
 
 @Controller
@@ -13,9 +14,11 @@ import com.karljeong.fourtysix.application.admin.codeGroup.service.CodeGroupServ
 public class CodeGroupController {
 
 	final CodeGroupService codeGroupService;
+	final CodeService codeService;
 
-	CodeGroupController(CodeGroupService codeGroupService) {
+	CodeGroupController(CodeGroupService codeGroupService, CodeService codeService) {
 		this.codeGroupService = codeGroupService;
+		this.codeService = codeService;
 	}
 
 	@GetMapping("/viewmain")
@@ -24,13 +27,15 @@ public class CodeGroupController {
 	}
 
 	@GetMapping("/viewcreate")
-	public String viewCreate() {
+	public String viewCreate(Model model) {
+		model.addAttribute("unselectedCodeList", codeService.findByCodeGroupIdNull());
 		return "/view/admin/codeGroup/codeGroupC";
 	}
 
 	@GetMapping("/viewupdate/{codeGroupId}")
-	public String viewUpdate(Model model, @PathVariable("codeGroupId") Long codeGroupId) {
+	public String viewUpdate(Model model, @PathVariable("codeGroupId") String codeGroupId) {
 		model.addAttribute("mainInfo", codeGroupService.findById(codeGroupId));
+		model.addAttribute("unselectedCodeList", codeService.findByCodeGroupIdNull());
 		return "/view/admin/codeGroup/codeGroupU";
 	}
 

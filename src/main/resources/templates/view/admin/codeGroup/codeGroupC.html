@@ -11,6 +11,7 @@
 
     function fnSave() {
         var params = $("#baseForm").serializeObject();
+        console.log(params);
         PromiseUtil.post("/v1/api/admin/codegroup", params)
         .then(JSON.parse)
         .then(d => console.log(d));
@@ -43,12 +44,8 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="includingCodes">Including Codes</label> <select class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
-                                            <option value="AL">Code001</option>
-                                            <option value="WY">Code002</option>
-                                            <option value="AM">Code003</option>
-                                            <option value="CA">Code004</option>
-                                            <option value="RU">Code005</option>
+                                        <label for="includingCodes">Including Codes</label> <select name="tbComCodes.codeId"class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
+                                            <option th:each="unselectedCodes : ${unselectedCodeList}" th:value="${unselectedCodes.codeId}" th:text="${unselectedCodes.codeName}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">

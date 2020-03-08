@@ -48,7 +48,7 @@
                     }, {
                         "data" : "codeGroupName"
                     }, {
-                        "data" : "tbComCode"
+                        "data" : "tbComCodes"
                     }, {
                         "data" : "createDatetime"
                     }, {
@@ -79,7 +79,7 @@
                                         + data["codeGroupName"] + '</a>');
 
                         $('td', row).eq(2).html('').append(
-                                data["tbComCode"].filter(v => v.useYn == 1).length + " / " +data["tbComCode"].length);
+                                data["tbComCodes"].filter(v => v.useYn == 1).length + " / " +data["tbComCodes"].length);
 
                         $('td', row).eq(3).html('').append(
                                 data["createDatetime"]);
