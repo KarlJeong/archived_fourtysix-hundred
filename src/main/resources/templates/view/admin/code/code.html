@@ -66,10 +66,10 @@
                     searching : false,
                     createdRow : function(row, data, index) {
                         $('td', row).eq(0).html('').append(
-                                data["codeGroupValue"]);
+                                data["tbComCodeGroup"]["codeGroupValue"]);
 
                         $('td', row).eq(1).html('').append(
-                                data["codeGroupName"]);
+                                data["tbComCodeGroup"]["codeGroupName"]);
 
                         $('td', row).eq(2).html('').append(
                                 '<a class="dt-alink" href="codeC.html">'
