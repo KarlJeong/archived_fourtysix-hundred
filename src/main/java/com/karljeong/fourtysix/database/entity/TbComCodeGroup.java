@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * The persistent class for the TB_COM_CODE_GROUP database table.
  *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codeGroupId")
 @Entity
 @Table(name="TB_COM_CODE_GROUP")
 @NamedQuery(name="TbComCodeGroup.findAll", query="SELECT t FROM TbComCodeGroup t")
