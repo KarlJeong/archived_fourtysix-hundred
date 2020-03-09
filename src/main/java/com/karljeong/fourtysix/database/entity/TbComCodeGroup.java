@@ -1,62 +1,77 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * The persistent class for the TB_COM_CODE_GROUP database table.
- * 
+ *
  */
 @Entity
-@Table(name="TB_COM_CODE_GROUP")
-@NamedQuery(name="TbComCodeGroup.findAll", query="SELECT t FROM TbComCodeGroup t")
+@Table(name = "TB_COM_CODE_GROUP")
+@NamedQuery(name = "TbComCodeGroup.findAll", query = "SELECT t FROM TbComCodeGroup t")
 public class TbComCodeGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="CODE_GROUP_ID")
-	private String codeGroupId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "CODE_GROUP_ID")
+	private BigInteger codeGroupId;
 
 	@Lob
-	@Column(name="CODE_GROUP_DESCRIPTION")
+	@Column(name = "CODE_GROUP_DESCRIPTION")
 	private String codeGroupDescription;
 
-	@Column(name="CODE_GROUP_NAME")
+	@Column(name = "CODE_GROUP_NAME")
 	private String codeGroupName;
 
-	@Column(name="CODE_GROUP_TYPE")
+	@Column(name = "CODE_GROUP_TYPE")
 	private String codeGroupType;
 
-	@Column(name="CODE_GROUP_VALUE")
+	@Column(name = "CODE_GROUP_VALUE")
 	private String codeGroupValue;
 
-	@Column(name="CREATE_DATETIME")
+	@Column(name = "CREATE_DATETIME", insertable = false, updatable = false)
 	private Timestamp createDatetime;
 
-	@Column(name="CREATE_USER_ID")
+	@Column(name = "CREATE_USER_ID")
 	private BigInteger createUserId;
 
-	@Column(name="UPDATE_DATETIME")
+	@Column(name = "UPDATE_DATETIME", insertable = false, updatable = false)
 	private Timestamp updateDatetime;
 
-	@Column(name="UPDATE_USER_ID")
+	@Column(name = "UPDATE_USER_ID")
 	private BigInteger updateUserId;
 
-	@Column(name="USE_YN")
+	@Column(name = "USE_YN")
 	private byte useYn;
+
+	@Transient
+	private BigInteger[] codeIds;
+
+	@Transient
+	private List<TbComCode> tbComCodes;
 
 	public TbComCodeGroup() {
 	}
 
-	public String getCodeGroupId() {
-		return this.codeGroupId;
+	public BigInteger getCodeGroupId() {
+		return codeGroupId;
 	}
 
-	public void setCodeGroupId(String codeGroupId) {
+	public void setCodeGroupId(BigInteger codeGroupId) {
 		this.codeGroupId = codeGroupId;
 	}
 
@@ -130,6 +145,22 @@ public class TbComCodeGroup implements Serializable {
 
 	public void setUseYn(byte useYn) {
 		this.useYn = useYn;
+	}
+
+	public BigInteger[] getCodeIds() {
+		return codeIds;
+	}
+
+	public void setCodeIds(BigInteger[] codeIds) {
+		this.codeIds = codeIds;
+	}
+
+	public List<TbComCode> getTbComCodes() {
+		return tbComCodes;
+	}
+
+	public void setTbComCodes(List<TbComCode> tbComCodes) {
+		this.tbComCodes = tbComCodes;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.karljeong.fourtysix.application.admin.codeGroup.controller;
 
+import java.math.BigInteger;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,7 @@ public class CodeGroupController {
 	}
 
 	@GetMapping("/viewupdate/{codeGroupId}")
-	public String viewUpdate(Model model, @PathVariable("codeGroupId") String codeGroupId) {
+	public String viewUpdate(Model model, @PathVariable("codeGroupId") BigInteger codeGroupId) {
 		model.addAttribute("mainInfo", codeGroupService.findById(codeGroupId));
 		model.addAttribute("unselectedCodeList", codeService.findByCodeGroupIdNull());
 		return "/view/admin/codeGroup/codeGroupU";

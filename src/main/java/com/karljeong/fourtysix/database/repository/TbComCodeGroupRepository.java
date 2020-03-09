@@ -1,11 +1,11 @@
 package com.karljeong.fourtysix.database.repository;
 
-import java.util.List;
+import java.math.BigInteger;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.karljeong.fourtysix.database.entity.TbComCodeGroup;
@@ -14,9 +14,6 @@ import com.karljeong.fourtysix.database.entity.TbComCodeGroup;
 public interface TbComCodeGroupRepository
 		extends PagingAndSortingRepository<TbComCodeGroup, String>, JpaSpecificationExecutor<TbComCodeGroup> {
 
-	@Override
-	List<TbComCodeGroup> findAll();
-
-	@Override
-	Page<TbComCodeGroup> findAll(Pageable pageable);
+	@Query("SELECT c FROM TbComCodeGroup c WHERE c.codeGroupId = :codeGroupId")
+	TbComCodeGroup findById(@Param("codeGroupId") BigInteger codeGroupId);
 }

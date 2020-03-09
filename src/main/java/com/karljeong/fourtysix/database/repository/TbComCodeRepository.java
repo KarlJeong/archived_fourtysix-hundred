@@ -1,9 +1,10 @@
 package com.karljeong.fourtysix.database.repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,16 +18,16 @@ import com.karljeong.fourtysix.database.entity.TbComCode;
 public interface TbComCodeRepository
 		extends PagingAndSortingRepository<TbComCode, Long>, JpaSpecificationExecutor<TbComCode> {
 
-	@Override
-	List<TbComCode> findAll();
-
-	@Override
-	Page<TbComCode> findAll(Pageable pageable);
-
 	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId IS NULL")
 	List<TbComCode> findByCodeGroupIdNull();
 
+	@Transactional
 	@Modifying
-	@Query("UPDATE TbComCode c SET c.codeGroupId = :codeGroupId WHERE c.codeId = :codeId")
-	int setCodeGroupId(@Param("codeId") String codeId, @Param("codeGroupId") String codeGroupId);
+	@Query("UPDATE TbComCode c SET c.updateUserId = :updateUserId, c.codeGroupId = :codeGroupId WHERE c.codeId = :codeId")
+	int saveCodeGroupId(@Param("updateUserId") BigInteger updateUserId, @Param("codeId") BigInteger codeId,
+			@Param("codeGroupId") BigInteger codeGroupId);
+
+	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId = :codeGroupId")
+	List<TbComCode> findByCodeGroupId(@Param("codeGroupId") BigInteger codeGroupId);
+
 }
