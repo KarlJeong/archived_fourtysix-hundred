@@ -1,72 +1,53 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
+import java.math.BigInteger;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * The persistent class for the TB_COM_CODE_GROUP database table.
- *
+ * 
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codeGroupId")
 @Entity
-@Table(name = "TB_COM_CODE_GROUP")
-@NamedQuery(name = "TbComCodeGroup.findAll", query = "SELECT t FROM TbComCodeGroup t")
+@Table(name="TB_COM_CODE_GROUP")
+@NamedQuery(name="TbComCodeGroup.findAll", query="SELECT t FROM TbComCodeGroup t")
 public class TbComCodeGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "CODE_GROUP_ID")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="CODE_GROUP_ID")
 	private String codeGroupId;
 
 	@Lob
-	@Column(name = "CODE_GROUP_DESCRIPTION")
+	@Column(name="CODE_GROUP_DESCRIPTION")
 	private String codeGroupDescription;
 
-	@Column(name = "CODE_GROUP_NAME")
+	@Column(name="CODE_GROUP_NAME")
 	private String codeGroupName;
 
-	@Column(name = "CODE_GROUP_TYPE")
+	@Column(name="CODE_GROUP_TYPE")
 	private String codeGroupType;
 
-	@Column(name = "CODE_GROUP_VALUE")
+	@Column(name="CODE_GROUP_VALUE")
 	private String codeGroupValue;
 
-	@Column(name = "CREATE_DATETIME", insertable = false, updatable = false)
+	@Column(name="CREATE_DATETIME")
 	private Timestamp createDatetime;
 
-	@Column(name = "CREATE_USER_ID")
+	@Column(name="CREATE_USER_ID")
 	private BigInteger createUserId;
 
-	@Column(name = "UPDATE_DATETIME", insertable = false, updatable = false)
+	@Column(name="UPDATE_DATETIME")
 	private Timestamp updateDatetime;
 
-	@Column(name = "UPDATE_USER_ID")
+	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
 
-	@Column(name = "USE_YN")
+	@Column(name="USE_YN")
 	private byte useYn;
-
-	// bi-directional many-to-one association to TbComCode
-	@JsonManagedReference
-	@OneToMany(mappedBy = "tbComCodeGroup")
-	private List<TbComCode> tbComCodes;
 
 	public TbComCodeGroup() {
 	}
@@ -149,28 +130,6 @@ public class TbComCodeGroup implements Serializable {
 
 	public void setUseYn(byte useYn) {
 		this.useYn = useYn;
-	}
-
-	public List<TbComCode> getTbComCodes() {
-		return this.tbComCodes;
-	}
-
-	public void setTbComCodes(List<TbComCode> tbComCodes) {
-		this.tbComCodes = tbComCodes;
-	}
-
-	public TbComCode addTbComCode(TbComCode tbComCode) {
-		getTbComCodes().add(tbComCode);
-		tbComCode.setTbComCodeGroup(this);
-
-		return tbComCode;
-	}
-
-	public TbComCode removeTbComCode(TbComCode tbComCode) {
-		getTbComCodes().remove(tbComCode);
-		tbComCode.setTbComCodeGroup(null);
-
-		return tbComCode;
 	}
 
 }

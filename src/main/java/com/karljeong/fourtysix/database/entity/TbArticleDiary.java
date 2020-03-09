@@ -1,26 +1,14 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.math.BigInteger;
 
 
 /**
  * The persistent class for the TB_ARTICLE_DIARY database table.
- *
+ * 
  */
 @Entity
 @Table(name="TB_ARTICLE_DIARY")
@@ -35,6 +23,9 @@ public class TbArticleDiary implements Serializable {
 
 	@Column(name="ARTICLE_BAN_YN")
 	private byte articleBanYn;
+
+	@Column(name="ARTICLE_CATEGORY_ID")
+	private BigInteger articleCategoryId;
 
 	@Lob
 	@Column(name="ARTICLE_CONTENTS")
@@ -85,23 +76,6 @@ public class TbArticleDiary implements Serializable {
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
 
-	//bi-directional many-to-one association to TbComCategory
-	@ManyToOne
-	@JoinColumn(name="ARTICLE_CATEGORY_ID", insertable = false, updatable = false)
-	private TbComCategory tbComCategory;
-
-	//bi-directional many-to-one association to TbArticleDiaryFile
-	@OneToMany(mappedBy="tbArticleDiary")
-	private List<TbArticleDiaryFile> tbArticleDiaryFiles;
-
-	//bi-directional many-to-one association to TbArticleDiaryLike
-	@OneToMany(mappedBy="tbArticleDiary")
-	private List<TbArticleDiaryLike> tbArticleDiaryLikes;
-
-	//bi-directional many-to-one association to TbArticleDiaryReply
-	@OneToMany(mappedBy="tbArticleDiary")
-	private List<TbArticleDiaryReply> tbArticleDiaryReplies;
-
 	public TbArticleDiary() {
 	}
 
@@ -119,6 +93,14 @@ public class TbArticleDiary implements Serializable {
 
 	public void setArticleBanYn(byte articleBanYn) {
 		this.articleBanYn = articleBanYn;
+	}
+
+	public BigInteger getArticleCategoryId() {
+		return this.articleCategoryId;
+	}
+
+	public void setArticleCategoryId(BigInteger articleCategoryId) {
+		this.articleCategoryId = articleCategoryId;
 	}
 
 	public String getArticleContents() {
@@ -247,80 +229,6 @@ public class TbArticleDiary implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
-	}
-
-	public TbComCategory getTbComCategory() {
-		return this.tbComCategory;
-	}
-
-	public void setTbComCategory(TbComCategory tbComCategory) {
-		this.tbComCategory = tbComCategory;
-	}
-
-	public List<TbArticleDiaryFile> getTbArticleDiaryFiles() {
-		return this.tbArticleDiaryFiles;
-	}
-
-	public void setTbArticleDiaryFiles(List<TbArticleDiaryFile> tbArticleDiaryFiles) {
-		this.tbArticleDiaryFiles = tbArticleDiaryFiles;
-	}
-
-	public TbArticleDiaryFile addTbArticleDiaryFile(TbArticleDiaryFile tbArticleDiaryFile) {
-		getTbArticleDiaryFiles().add(tbArticleDiaryFile);
-		tbArticleDiaryFile.setTbArticleDiary(this);
-
-		return tbArticleDiaryFile;
-	}
-
-	public TbArticleDiaryFile removeTbArticleDiaryFile(TbArticleDiaryFile tbArticleDiaryFile) {
-		getTbArticleDiaryFiles().remove(tbArticleDiaryFile);
-		tbArticleDiaryFile.setTbArticleDiary(null);
-
-		return tbArticleDiaryFile;
-	}
-
-	public List<TbArticleDiaryLike> getTbArticleDiaryLikes() {
-		return this.tbArticleDiaryLikes;
-	}
-
-	public void setTbArticleDiaryLikes(List<TbArticleDiaryLike> tbArticleDiaryLikes) {
-		this.tbArticleDiaryLikes = tbArticleDiaryLikes;
-	}
-
-	public TbArticleDiaryLike addTbArticleDiaryLike(TbArticleDiaryLike tbArticleDiaryLike) {
-		getTbArticleDiaryLikes().add(tbArticleDiaryLike);
-		tbArticleDiaryLike.setTbArticleDiary(this);
-
-		return tbArticleDiaryLike;
-	}
-
-	public TbArticleDiaryLike removeTbArticleDiaryLike(TbArticleDiaryLike tbArticleDiaryLike) {
-		getTbArticleDiaryLikes().remove(tbArticleDiaryLike);
-		tbArticleDiaryLike.setTbArticleDiary(null);
-
-		return tbArticleDiaryLike;
-	}
-
-	public List<TbArticleDiaryReply> getTbArticleDiaryReplies() {
-		return this.tbArticleDiaryReplies;
-	}
-
-	public void setTbArticleDiaryReplies(List<TbArticleDiaryReply> tbArticleDiaryReplies) {
-		this.tbArticleDiaryReplies = tbArticleDiaryReplies;
-	}
-
-	public TbArticleDiaryReply addTbArticleDiaryReply(TbArticleDiaryReply tbArticleDiaryReply) {
-		getTbArticleDiaryReplies().add(tbArticleDiaryReply);
-		tbArticleDiaryReply.setTbArticleDiary(this);
-
-		return tbArticleDiaryReply;
-	}
-
-	public TbArticleDiaryReply removeTbArticleDiaryReply(TbArticleDiaryReply tbArticleDiaryReply) {
-		getTbArticleDiaryReplies().remove(tbArticleDiaryReply);
-		tbArticleDiaryReply.setTbArticleDiary(null);
-
-		return tbArticleDiaryReply;
 	}
 
 }

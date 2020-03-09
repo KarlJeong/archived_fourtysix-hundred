@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.math.BigInteger;
-import java.util.List;
 
 
 /**
@@ -47,6 +46,9 @@ public class TbComMenu implements Serializable {
 	@Column(name="MENU_TYPE")
 	private String menuType;
 
+	@Column(name="PRIOR_MENU_ID")
+	private BigInteger priorMenuId;
+
 	@Column(name="UPDATE_DATETIME")
 	private Timestamp updateDatetime;
 
@@ -55,15 +57,6 @@ public class TbComMenu implements Serializable {
 
 	@Column(name="USE_YN")
 	private byte useYn;
-
-	//bi-directional many-to-one association to TbComMenu
-	@ManyToOne
-	@JoinColumn(name="PRIOR_MENU_ID", insertable = false, updatable = false)
-	private TbComMenu tbComMenu;
-
-	//bi-directional many-to-one association to TbComMenu
-	@OneToMany(mappedBy="tbComMenu")
-	private List<TbComMenu> tbComMenus;
 
 	public TbComMenu() {
 	}
@@ -140,6 +133,14 @@ public class TbComMenu implements Serializable {
 		this.menuType = menuType;
 	}
 
+	public BigInteger getPriorMenuId() {
+		return this.priorMenuId;
+	}
+
+	public void setPriorMenuId(BigInteger priorMenuId) {
+		this.priorMenuId = priorMenuId;
+	}
+
 	public Timestamp getUpdateDatetime() {
 		return this.updateDatetime;
 	}
@@ -162,36 +163,6 @@ public class TbComMenu implements Serializable {
 
 	public void setUseYn(byte useYn) {
 		this.useYn = useYn;
-	}
-
-	public TbComMenu getTbComMenu() {
-		return this.tbComMenu;
-	}
-
-	public void setTbComMenu(TbComMenu tbComMenu) {
-		this.tbComMenu = tbComMenu;
-	}
-
-	public List<TbComMenu> getTbComMenus() {
-		return this.tbComMenus;
-	}
-
-	public void setTbComMenus(List<TbComMenu> tbComMenus) {
-		this.tbComMenus = tbComMenus;
-	}
-
-	public TbComMenu addTbComMenus(TbComMenu tbComMenus) {
-		getTbComMenus().add(tbComMenus);
-		tbComMenus.setTbComMenu(this);
-
-		return tbComMenus;
-	}
-
-	public TbComMenu removeTbComMenus(TbComMenu tbComMenus) {
-		getTbComMenus().remove(tbComMenus);
-		tbComMenus.setTbComMenu(null);
-
-		return tbComMenus;
 	}
 
 }

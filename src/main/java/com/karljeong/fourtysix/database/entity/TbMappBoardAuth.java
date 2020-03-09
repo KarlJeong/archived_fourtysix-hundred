@@ -1,19 +1,12 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 /**
  * The persistent class for the TB_MAPP_BOARD_AUTH database table.
- *
+ * 
  */
 @Entity
 @Table(name="TB_MAPP_BOARD_AUTH")
@@ -29,16 +22,6 @@ public class TbMappBoardAuth implements Serializable {
 
 	@Column(name="WRITABLE_YN")
 	private byte writableYn;
-
-	//bi-directional many-to-one association to TbComAuth
-	@ManyToOne
-	@JoinColumn(name="AUTH_ID", insertable = false, updatable = false)
-	private TbComAuth tbComAuth;
-
-	//bi-directional many-to-one association to TbComBoard
-	@ManyToOne
-	@JoinColumn(name="BOARD_ID", insertable = false, updatable = false)
-	private TbComBoard tbComBoard;
 
 	public TbMappBoardAuth() {
 	}
@@ -65,22 +48,6 @@ public class TbMappBoardAuth implements Serializable {
 
 	public void setWritableYn(byte writableYn) {
 		this.writableYn = writableYn;
-	}
-
-	public TbComAuth getTbComAuth() {
-		return this.tbComAuth;
-	}
-
-	public void setTbComAuth(TbComAuth tbComAuth) {
-		this.tbComAuth = tbComAuth;
-	}
-
-	public TbComBoard getTbComBoard() {
-		return this.tbComBoard;
-	}
-
-	public void setTbComBoard(TbComBoard tbComBoard) {
-		this.tbComBoard = tbComBoard;
 	}
 
 }

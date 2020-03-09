@@ -55,11 +55,6 @@ public class TbArticleDiaryFile implements Serializable {
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
 
-	//bi-directional many-to-one association to TbArticleDiary
-	@ManyToOne
-	@JoinColumn(name="FILE_REF_ID", insertable = false, updatable = false)
-	private TbArticleDiary tbArticleDiary;
-
 	public TbArticleDiaryFile() {
 	}
 
@@ -165,14 +160,6 @@ public class TbArticleDiaryFile implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
-	}
-
-	public TbArticleDiary getTbArticleDiary() {
-		return this.tbArticleDiary;
-	}
-
-	public void setTbArticleDiary(TbArticleDiary tbArticleDiary) {
-		this.tbArticleDiary = tbArticleDiary;
 	}
 
 }

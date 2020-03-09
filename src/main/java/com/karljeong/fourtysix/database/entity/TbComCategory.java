@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.math.BigInteger;
-import java.util.List;
 
 
 /**
@@ -43,23 +42,6 @@ public class TbComCategory implements Serializable {
 
 	@Column(name="USE_YN")
 	private byte useYn;
-
-	//bi-directional many-to-one association to TbArticleDiary
-	@OneToMany(mappedBy="tbComCategory")
-	private List<TbArticleDiary> tbArticleDiaries;
-
-	//bi-directional many-to-many association to TbComBoard
-	@ManyToMany
-	@JoinTable(
-		name="TB_MAPP_BOARD_CATEGORY"
-		, joinColumns={
-			@JoinColumn(name="ARTICLE_CATEGORY_ID", insertable = false, updatable = false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="BOARD_ID", insertable = false, updatable = false)
-			}
-		)
-	private List<TbComBoard> tbComBoards;
 
 	public TbComCategory() {
 	}
@@ -126,36 +108,6 @@ public class TbComCategory implements Serializable {
 
 	public void setUseYn(byte useYn) {
 		this.useYn = useYn;
-	}
-
-	public List<TbArticleDiary> getTbArticleDiaries() {
-		return this.tbArticleDiaries;
-	}
-
-	public void setTbArticleDiaries(List<TbArticleDiary> tbArticleDiaries) {
-		this.tbArticleDiaries = tbArticleDiaries;
-	}
-
-	public TbArticleDiary addTbArticleDiary(TbArticleDiary tbArticleDiary) {
-		getTbArticleDiaries().add(tbArticleDiary);
-		tbArticleDiary.setTbComCategory(this);
-
-		return tbArticleDiary;
-	}
-
-	public TbArticleDiary removeTbArticleDiary(TbArticleDiary tbArticleDiary) {
-		getTbArticleDiaries().remove(tbArticleDiary);
-		tbArticleDiary.setTbComCategory(null);
-
-		return tbArticleDiary;
-	}
-
-	public List<TbComBoard> getTbComBoards() {
-		return this.tbComBoards;
-	}
-
-	public void setTbComBoards(List<TbComBoard> tbComBoards) {
-		this.tbComBoards = tbComBoards;
 	}
 
 }

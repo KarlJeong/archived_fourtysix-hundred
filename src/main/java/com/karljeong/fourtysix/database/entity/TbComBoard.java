@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.math.BigInteger;
-import java.util.List;
 
 
 /**
@@ -52,18 +51,6 @@ public class TbComBoard implements Serializable {
 
 	@Column(name="USE_YN")
 	private byte useYn;
-
-	//bi-directional many-to-one association to TbComArticle
-	@OneToMany(mappedBy="tbComBoard")
-	private List<TbComArticle> tbComArticles;
-
-	//bi-directional many-to-many association to TbComCategory
-	@ManyToMany(mappedBy="tbComBoards")
-	private List<TbComCategory> tbComCategories;
-
-	//bi-directional many-to-one association to TbMappBoardAuth
-	@OneToMany(mappedBy="tbComBoard")
-	private List<TbMappBoardAuth> tbMappBoardAuths;
 
 	public TbComBoard() {
 	}
@@ -154,58 +141,6 @@ public class TbComBoard implements Serializable {
 
 	public void setUseYn(byte useYn) {
 		this.useYn = useYn;
-	}
-
-	public List<TbComArticle> getTbComArticles() {
-		return this.tbComArticles;
-	}
-
-	public void setTbComArticles(List<TbComArticle> tbComArticles) {
-		this.tbComArticles = tbComArticles;
-	}
-
-	public TbComArticle addTbComArticle(TbComArticle tbComArticle) {
-		getTbComArticles().add(tbComArticle);
-		tbComArticle.setTbComBoard(this);
-
-		return tbComArticle;
-	}
-
-	public TbComArticle removeTbComArticle(TbComArticle tbComArticle) {
-		getTbComArticles().remove(tbComArticle);
-		tbComArticle.setTbComBoard(null);
-
-		return tbComArticle;
-	}
-
-	public List<TbComCategory> getTbComCategories() {
-		return this.tbComCategories;
-	}
-
-	public void setTbComCategories(List<TbComCategory> tbComCategories) {
-		this.tbComCategories = tbComCategories;
-	}
-
-	public List<TbMappBoardAuth> getTbMappBoardAuths() {
-		return this.tbMappBoardAuths;
-	}
-
-	public void setTbMappBoardAuths(List<TbMappBoardAuth> tbMappBoardAuths) {
-		this.tbMappBoardAuths = tbMappBoardAuths;
-	}
-
-	public TbMappBoardAuth addTbMappBoardAuth(TbMappBoardAuth tbMappBoardAuth) {
-		getTbMappBoardAuths().add(tbMappBoardAuth);
-		tbMappBoardAuth.setTbComBoard(this);
-
-		return tbMappBoardAuth;
-	}
-
-	public TbMappBoardAuth removeTbMappBoardAuth(TbMappBoardAuth tbMappBoardAuth) {
-		getTbMappBoardAuths().remove(tbMappBoardAuth);
-		tbMappBoardAuth.setTbComBoard(null);
-
-		return tbMappBoardAuth;
 	}
 
 }

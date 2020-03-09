@@ -37,6 +37,9 @@ public class TbComUserBan implements Serializable {
 	@Column(name="BAN_TYPE")
 	private String banType;
 
+	@Column(name="BAN_USER_ID")
+	private BigInteger banUserId;
+
 	@Column(name="BAN_YN")
 	private byte banYn;
 
@@ -51,11 +54,6 @@ public class TbComUserBan implements Serializable {
 
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
-
-	//bi-directional many-to-one association to TbComUser
-	@ManyToOne
-	@JoinColumn(name="BAN_USER_ID", insertable = false, updatable = false)
-	private TbComUser tbComUser;
 
 	public TbComUserBan() {
 	}
@@ -108,6 +106,14 @@ public class TbComUserBan implements Serializable {
 		this.banType = banType;
 	}
 
+	public BigInteger getBanUserId() {
+		return this.banUserId;
+	}
+
+	public void setBanUserId(BigInteger banUserId) {
+		this.banUserId = banUserId;
+	}
+
 	public byte getBanYn() {
 		return this.banYn;
 	}
@@ -146,14 +152,6 @@ public class TbComUserBan implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
-	}
-
-	public TbComUser getTbComUser() {
-		return this.tbComUser;
-	}
-
-	public void setTbComUser(TbComUser tbComUser) {
-		this.tbComUser = tbComUser;
 	}
 
 }

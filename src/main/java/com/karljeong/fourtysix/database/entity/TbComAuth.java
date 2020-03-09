@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.math.BigInteger;
-import java.util.List;
 
 
 /**
@@ -43,14 +42,6 @@ public class TbComAuth implements Serializable {
 
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
-
-	//bi-directional many-to-many association to TbComUser
-	@ManyToMany(mappedBy="tbComAuths")
-	private List<TbComUser> tbComUsers;
-
-	//bi-directional many-to-one association to TbMappBoardAuth
-	@OneToMany(mappedBy="tbComAuth")
-	private List<TbMappBoardAuth> tbMappBoardAuths;
 
 	public TbComAuth() {
 	}
@@ -117,36 +108,6 @@ public class TbComAuth implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
-	}
-
-	public List<TbComUser> getTbComUsers() {
-		return this.tbComUsers;
-	}
-
-	public void setTbComUsers(List<TbComUser> tbComUsers) {
-		this.tbComUsers = tbComUsers;
-	}
-
-	public List<TbMappBoardAuth> getTbMappBoardAuths() {
-		return this.tbMappBoardAuths;
-	}
-
-	public void setTbMappBoardAuths(List<TbMappBoardAuth> tbMappBoardAuths) {
-		this.tbMappBoardAuths = tbMappBoardAuths;
-	}
-
-	public TbMappBoardAuth addTbMappBoardAuth(TbMappBoardAuth tbMappBoardAuth) {
-		getTbMappBoardAuths().add(tbMappBoardAuth);
-		tbMappBoardAuth.setTbComAuth(this);
-
-		return tbMappBoardAuth;
-	}
-
-	public TbMappBoardAuth removeTbMappBoardAuth(TbMappBoardAuth tbMappBoardAuth) {
-		getTbMappBoardAuths().remove(tbMappBoardAuth);
-		tbMappBoardAuth.setTbComAuth(null);
-
-		return tbMappBoardAuth;
 	}
 
 }

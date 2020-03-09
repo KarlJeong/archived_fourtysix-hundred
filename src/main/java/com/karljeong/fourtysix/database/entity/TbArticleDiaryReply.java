@@ -1,26 +1,14 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.math.BigInteger;
 
 
 /**
  * The persistent class for the TB_ARTICLE_DIARY_REPLY database table.
- *
+ * 
  */
 @Entity
 @Table(name="TB_ARTICLE_DIARY_REPLY")
@@ -33,11 +21,17 @@ public class TbArticleDiaryReply implements Serializable {
 	@Column(name="REPLY_ID")
 	private String replyId;
 
+	@Column(name="ARTICLE_ID")
+	private BigInteger articleId;
+
 	@Column(name="CREATE_DATETIME")
 	private Timestamp createDatetime;
 
 	@Column(name="CREATE_USER_ID")
 	private BigInteger createUserId;
+
+	@Column(name="PRIOR_REPLY_ID")
+	private BigInteger priorReplyId;
 
 	@Column(name="REPLY_BAN_YN")
 	private byte replyBanYn;
@@ -76,20 +70,6 @@ public class TbArticleDiaryReply implements Serializable {
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
 
-	//bi-directional many-to-one association to TbArticleDiary
-	@ManyToOne
-	@JoinColumn(name="ARTICLE_ID", insertable = false, updatable = false)
-	private TbArticleDiary tbArticleDiary;
-
-	//bi-directional many-to-one association to TbArticleDiaryReply
-	@ManyToOne
-	@JoinColumn(name="PRIOR_REPLY_ID", insertable = false, updatable = false)
-	private TbArticleDiaryReply tbArticleDiaryReply;
-
-	//bi-directional many-to-one association to TbArticleDiaryReply
-	@OneToMany(mappedBy="tbArticleDiaryReply")
-	private List<TbArticleDiaryReply> tbArticleDiaryReplies;
-
 	public TbArticleDiaryReply() {
 	}
 
@@ -99,6 +79,14 @@ public class TbArticleDiaryReply implements Serializable {
 
 	public void setReplyId(String replyId) {
 		this.replyId = replyId;
+	}
+
+	public BigInteger getArticleId() {
+		return this.articleId;
+	}
+
+	public void setArticleId(BigInteger articleId) {
+		this.articleId = articleId;
 	}
 
 	public Timestamp getCreateDatetime() {
@@ -115,6 +103,14 @@ public class TbArticleDiaryReply implements Serializable {
 
 	public void setCreateUserId(BigInteger createUserId) {
 		this.createUserId = createUserId;
+	}
+
+	public BigInteger getPriorReplyId() {
+		return this.priorReplyId;
+	}
+
+	public void setPriorReplyId(BigInteger priorReplyId) {
+		this.priorReplyId = priorReplyId;
 	}
 
 	public byte getReplyBanYn() {
@@ -211,44 +207,6 @@ public class TbArticleDiaryReply implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
-	}
-
-	public TbArticleDiary getTbArticleDiary() {
-		return this.tbArticleDiary;
-	}
-
-	public void setTbArticleDiary(TbArticleDiary tbArticleDiary) {
-		this.tbArticleDiary = tbArticleDiary;
-	}
-
-	public TbArticleDiaryReply getTbArticleDiaryReply() {
-		return this.tbArticleDiaryReply;
-	}
-
-	public void setTbArticleDiaryReply(TbArticleDiaryReply tbArticleDiaryReply) {
-		this.tbArticleDiaryReply = tbArticleDiaryReply;
-	}
-
-	public List<TbArticleDiaryReply> getTbArticleDiaryReplies() {
-		return this.tbArticleDiaryReplies;
-	}
-
-	public void setTbArticleDiaryReplies(List<TbArticleDiaryReply> tbArticleDiaryReplies) {
-		this.tbArticleDiaryReplies = tbArticleDiaryReplies;
-	}
-
-	public TbArticleDiaryReply addTbArticleDiaryReply(TbArticleDiaryReply tbArticleDiaryReply) {
-		getTbArticleDiaryReplies().add(tbArticleDiaryReply);
-		tbArticleDiaryReply.setTbArticleDiaryReply(this);
-
-		return tbArticleDiaryReply;
-	}
-
-	public TbArticleDiaryReply removeTbArticleDiaryReply(TbArticleDiaryReply tbArticleDiaryReply) {
-		getTbArticleDiaryReplies().remove(tbArticleDiaryReply);
-		tbArticleDiaryReply.setTbArticleDiaryReply(null);
-
-		return tbArticleDiaryReply;
 	}
 
 }

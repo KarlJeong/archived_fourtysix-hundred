@@ -1,21 +1,14 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+import javax.persistence.*;
 import java.sql.Timestamp;
-
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import java.math.BigInteger;
 
 
 /**
  * The persistent class for the TB_ARTICLE_DIARY_LIKE database table.
- *
+ * 
  */
 @Entity
 @Table(name="TB_ARTICLE_DIARY_LIKE")
@@ -40,11 +33,6 @@ public class TbArticleDiaryLike implements Serializable {
 
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
-
-	//bi-directional many-to-one association to TbArticleDiary
-	@ManyToOne
-	@JoinColumn(name="ARTICLE_ID", insertable = false, updatable = false)
-	private TbArticleDiary tbArticleDiary;
 
 	public TbArticleDiaryLike() {
 	}
@@ -95,14 +83,6 @@ public class TbArticleDiaryLike implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
-	}
-
-	public TbArticleDiary getTbArticleDiary() {
-		return this.tbArticleDiary;
-	}
-
-	public void setTbArticleDiary(TbArticleDiary tbArticleDiary) {
-		this.tbArticleDiary = tbArticleDiary;
 	}
 
 }

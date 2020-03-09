@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.math.BigInteger;
-import java.util.List;
 
 
 /**
@@ -69,23 +68,6 @@ public class TbComUser implements Serializable {
 
 	@Column(name="USER_NICKNAME")
 	private String userNickname;
-
-	//bi-directional many-to-many association to TbComAuth
-	@ManyToMany
-	@JoinTable(
-		name="TB_MAPP_USER_AUTH"
-		, joinColumns={
-			@JoinColumn(name="USER_ID", insertable = false, updatable = false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="AUTH_ID", insertable = false, updatable = false)
-			}
-		)
-	private List<TbComAuth> tbComAuths;
-
-	//bi-directional many-to-one association to TbComUserBan
-	@OneToMany(mappedBy="tbComUser")
-	private List<TbComUserBan> tbComUserBans;
 
 	public TbComUser() {
 	}
@@ -224,36 +206,6 @@ public class TbComUser implements Serializable {
 
 	public void setUserNickname(String userNickname) {
 		this.userNickname = userNickname;
-	}
-
-	public List<TbComAuth> getTbComAuths() {
-		return this.tbComAuths;
-	}
-
-	public void setTbComAuths(List<TbComAuth> tbComAuths) {
-		this.tbComAuths = tbComAuths;
-	}
-
-	public List<TbComUserBan> getTbComUserBans() {
-		return this.tbComUserBans;
-	}
-
-	public void setTbComUserBans(List<TbComUserBan> tbComUserBans) {
-		this.tbComUserBans = tbComUserBans;
-	}
-
-	public TbComUserBan addTbComUserBan(TbComUserBan tbComUserBan) {
-		getTbComUserBans().add(tbComUserBan);
-		tbComUserBan.setTbComUser(this);
-
-		return tbComUserBan;
-	}
-
-	public TbComUserBan removeTbComUserBan(TbComUserBan tbComUserBan) {
-		getTbComUserBans().remove(tbComUserBan);
-		tbComUserBan.setTbComUser(null);
-
-		return tbComUserBan;
 	}
 
 }

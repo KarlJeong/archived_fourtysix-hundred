@@ -49,6 +49,9 @@ public class TbComArticle implements Serializable {
 	@Column(name="ARTICLE_WRITER_ID")
 	private BigInteger articleWriterId;
 
+	@Column(name="BOARD_ID")
+	private BigInteger boardId;
+
 	@Column(name="CREATE_DATETIME")
 	private Timestamp createDatetime;
 
@@ -60,11 +63,6 @@ public class TbComArticle implements Serializable {
 
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
-
-	//bi-directional many-to-one association to TbComBoard
-	@ManyToOne
-	@JoinColumn(name="BOARD_ID", insertable = false, updatable = false)
-	private TbComBoard tbComBoard;
 
 	public TbComArticle() {
 	}
@@ -149,6 +147,14 @@ public class TbComArticle implements Serializable {
 		this.articleWriterId = articleWriterId;
 	}
 
+	public BigInteger getBoardId() {
+		return this.boardId;
+	}
+
+	public void setBoardId(BigInteger boardId) {
+		this.boardId = boardId;
+	}
+
 	public Timestamp getCreateDatetime() {
 		return this.createDatetime;
 	}
@@ -179,14 +185,6 @@ public class TbComArticle implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
-	}
-
-	public TbComBoard getTbComBoard() {
-		return this.tbComBoard;
-	}
-
-	public void setTbComBoard(TbComBoard tbComBoard) {
-		this.tbComBoard = tbComBoard;
 	}
 
 }
