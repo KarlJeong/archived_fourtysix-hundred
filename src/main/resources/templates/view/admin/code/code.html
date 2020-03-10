@@ -45,19 +45,19 @@
                 {
                     data : data,
                     "columns" : [ {
-                        "data" : "codeDescription"
+                        "data" : "tbComCodeGroup"
                     }, {
-                        "data" : "codeOrder"
-                    }, {
-                        "data" : "codeValue"
+                        "data" : "tbComCodeGroup"
                     }, {
                         "data" : "codeName"
+                    }, {
+                        "data" : "codeValue"
                     }, {
                         "data" : "createDatetime"
                     }, {
                         "data" : "useYn"
                     } ],
-                    order : [ [ 5, 'desc' ] ],
+                    order : [ [ 4, 'desc' ] ],
                     columnDefs : [ {
                         targets : [ 5 ],
                         width : 80,
@@ -66,10 +66,12 @@
                     searching : false,
                     createdRow : function(row, data, index) {
                         $('td', row).eq(0).html('').append(
-                                data["tbComCodeGroup"]["codeGroupValue"]);
+                        		('undefined' !== typeof data["tbComCodeGroup"] && data["tbComCodeGroup"] !== null) ?
+                        				data["tbComCodeGroup"]["codeGroupName"] : '<label class="badge badge-warning">Not Selected</label>');
 
                         $('td', row).eq(1).html('').append(
-                                data["tbComCodeGroup"]["codeGroupName"]);
+                        		('undefined' !== typeof data["tbComCodeGroup"] && data["tbComCodeGroup"] !== null) ?
+                        				data["tbComCodeGroup"]["codeGroupValue"] : '<label class="badge badge-warning">Not Selected</label>');
 
                         $('td', row).eq(2).html('').append(
                                 '<a class="dt-alink" href="codeC.html">'

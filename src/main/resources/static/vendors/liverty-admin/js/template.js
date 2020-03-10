@@ -4,7 +4,8 @@
     var body = $('body');
     var footer = $('.footer');
 
-    var current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+    //var current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+    var current = location.pathname;
     $('.navbar.horizontal-layout .nav-bottom .page-navigation .nav-item').each(function() {
       var $this = $(this);
       if (current === "") {

@@ -59,9 +59,6 @@ public class TbComCodeGroup implements Serializable {
 	private byte useYn;
 
 	@Transient
-	private List<BigInteger> codeIds;
-
-	@Transient
 	private List<TbComCode> tbComCodes;
 
 	public TbComCodeGroup() {
@@ -145,14 +142,6 @@ public class TbComCodeGroup implements Serializable {
 
 	public void setUseYn(byte useYn) {
 		this.useYn = useYn;
-	}
-
-	public List<BigInteger> getCodeIds() {
-		return codeIds;
-	}
-
-	public void setCodeIds(List<BigInteger> codeIds) {
-		this.codeIds = codeIds;
 	}
 
 	public List<TbComCode> getTbComCodes() {

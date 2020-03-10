@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbComCode;
+import com.karljeong.fourtysix.database.repository.TbComCodeGroupRepository;
 import com.karljeong.fourtysix.database.repository.TbComCodeRepository;
 import com.karljeong.fourtysix.database.specification.TbComCodeSpec;
 import com.karljeong.fourtysix.database.specification.TbComCodeSpec.SearchKey;
@@ -18,9 +19,11 @@ import com.karljeong.fourtysix.database.specification.TbComCodeSpec.SearchKey;
 public class CodeService {
 
 	TbComCodeRepository tbComCodeRepository;
+	TbComCodeGroupRepository tbComCodeGroupRepository;
 
-	CodeService(TbComCodeRepository tbComCodeRepository) {
+	CodeService(TbComCodeRepository tbComCodeRepository, TbComCodeGroupRepository tbComCodeGroupRepository) {
 		this.tbComCodeRepository = tbComCodeRepository;
+		this.tbComCodeGroupRepository = tbComCodeGroupRepository;
 	}
 
 	public Page<TbComCode> readList(Map<String, Object> searchRequest, Pageable pageable) {
@@ -32,8 +35,15 @@ public class CodeService {
 				}
 			}
 		}
-		return searchKeys.isEmpty() ? tbComCodeRepository.findAll(pageable)
+
+		Page<TbComCode> tbComCodeList = searchKeys.isEmpty() ? tbComCodeRepository.findAll(pageable)
 				: tbComCodeRepository.findAll(TbComCodeSpec.searchWithKeys(searchKeys), pageable);
+
+		for (TbComCode tbComCode : tbComCodeList) {
+			tbComCode.setTbComCodeGroup(tbComCodeGroupRepository.findByCodeGroupId(tbComCode.getCodeGroupId()));
+		}
+
+		return tbComCodeList;
 	}
 
 	public TbComCode findById(Long codeId) {

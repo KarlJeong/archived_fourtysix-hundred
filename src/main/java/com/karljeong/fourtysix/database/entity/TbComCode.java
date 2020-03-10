@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * The persistent class for the TB_COM_CODE database table.
@@ -47,7 +48,7 @@ public class TbComCode implements Serializable {
 	@Column(name = "CREATE_DATETIME", insertable = false, updatable = false)
 	private Timestamp createDatetime;
 
-	@Column(name = "CREATE_USER_ID")
+	@Column(name = "CREATE_USER_ID", updatable = false)
 	private BigInteger createUserId;
 
 	@Column(name = "UPDATE_DATETIME", insertable = false, updatable = false)
@@ -58,6 +59,9 @@ public class TbComCode implements Serializable {
 
 	@Column(name = "USE_YN")
 	private byte useYn;
+
+	@Transient
+	private TbComCodeGroup tbComCodeGroup;
 
 	public TbComCode() {
 	}
@@ -148,6 +152,14 @@ public class TbComCode implements Serializable {
 
 	public void setUseYn(byte useYn) {
 		this.useYn = useYn;
+	}
+
+	public TbComCodeGroup getTbComCodeGroup() {
+		return tbComCodeGroup;
+	}
+
+	public void setTbComCodeGroup(TbComCodeGroup tbComCodeGroup) {
+		this.tbComCodeGroup = tbComCodeGroup;
 	}
 
 }

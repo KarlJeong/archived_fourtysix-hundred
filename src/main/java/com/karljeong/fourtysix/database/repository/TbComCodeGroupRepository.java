@@ -16,4 +16,7 @@ public interface TbComCodeGroupRepository
 
 	@Query("SELECT c FROM TbComCodeGroup c WHERE c.codeGroupId = :codeGroupId")
 	TbComCodeGroup findById(@Param("codeGroupId") BigInteger codeGroupId);
+
+	@Query("SELECT c FROM TbComCodeGroup c WHERE c.codeGroupId = :codeGroupId")
+	TbComCodeGroup findByCodeGroupId(@Param("codeGroupId") BigInteger codeGroupId);
 }
