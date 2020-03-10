@@ -3,12 +3,14 @@ package com.karljeong.fourtysix.application.admin.codeGroup.service;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.karljeong.fourtysix.database.entity.TbComCode;
 import com.karljeong.fourtysix.database.entity.TbComCodeGroup;
 import com.karljeong.fourtysix.database.repository.TbComCodeGroupRepository;
 import com.karljeong.fourtysix.database.repository.TbComCodeRepository;
@@ -48,11 +50,29 @@ public class CodeGroupService {
 	public TbComCodeGroup create(TbComCodeGroup tbComCodeGroup) {
 		tbComCodeGroup.setCreateUserId(BigInteger.valueOf(11111));
 		TbComCodeGroup save = tbComCodeGroupRepository.save(tbComCodeGroup);
-		BigInteger[] codeIds = tbComCodeGroup.getCodeIds(); // FIXME: 기존 코드 -> tbComCodeGroup.getTbComCodes()
-		for (BigInteger codeId : codeIds) {
-			tbComCodeRepository.saveCodeGroupId(new BigInteger("000000"), codeId, tbComCodeGroup.getCodeGroupId());
+		List<TbComCode> tbComCodes = tbComCodeGroup.getTbComCodes();
+		for (TbComCode tbComCode : tbComCodes) {
+			tbComCodeRepository.saveCodeGroupId(BigInteger.valueOf(11111), tbComCode.getCodeId(),
+					tbComCodeGroup.getCodeGroupId());
 		}
 		return save;
+	}
+
+	public TbComCodeGroup update(TbComCodeGroup tbComCodeGroup) {
+		tbComCodeGroup.setUpdateUserId(BigInteger.valueOf(11111));
+		TbComCodeGroup save = tbComCodeGroupRepository.save(tbComCodeGroup);
+		List<TbComCode> tbComCodes = tbComCodeGroup.getTbComCodes();
+
+		if (tbComCodes.size() > 0) {
+			tbComCodeRepository.deleteCodeGroupId(BigInteger.valueOf(11111), tbComCodeGroup.getCodeGroupId());
+
+			for (TbComCode tbComCode : tbComCodes) {
+				tbComCodeRepository.saveCodeGroupId(BigInteger.valueOf(11111), tbComCode.getCodeId(),
+						tbComCodeGroup.getCodeGroupId());
+			}
+		}
+		return save;
+
 	}
 
 	public TbComCodeGroup findById(BigInteger codeGroupId) {

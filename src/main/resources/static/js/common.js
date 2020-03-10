@@ -26,13 +26,28 @@ $.fn.serializeObject = function() {
         if ('undefined' !== typeof node && node !== null) {
             if ($.isArray(node)) {
                 node.push(element.value);
-            } else {
+            }else {
                 result[element.name] = [ node, element.value ];
             }
+        } else if (element.name.includes(".")) {
+        	var els = element.name.split(".");
+        	var node = result[els[0]];
+        	var obj = els[0], key = els[1], tmp = {};
+        	if ('undefined' !== typeof node && node !== null) {
+        		tmp[key] = element.value;
+             	result[obj].push(tmp);
+            } else {
+            	result[obj] = [];
+             	tmp[key] = element.value;
+             	result[obj].push(tmp);
+            }
+
         } else {
-            result[element.name] = element.value;
+        	result[element.name] = element.value;
         }
     };
+
+    console.log(this.serializeArray());
 
     $.each(this.serializeArray(), extend);
     return result;

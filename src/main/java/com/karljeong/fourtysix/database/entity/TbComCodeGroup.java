@@ -46,7 +46,7 @@ public class TbComCodeGroup implements Serializable {
 	@Column(name = "CREATE_DATETIME", insertable = false, updatable = false)
 	private Timestamp createDatetime;
 
-	@Column(name = "CREATE_USER_ID")
+	@Column(name = "CREATE_USER_ID", updatable = false)
 	private BigInteger createUserId;
 
 	@Column(name = "UPDATE_DATETIME", insertable = false, updatable = false)
@@ -59,7 +59,7 @@ public class TbComCodeGroup implements Serializable {
 	private byte useYn;
 
 	@Transient
-	private BigInteger[] codeIds;
+	private List<BigInteger> codeIds;
 
 	@Transient
 	private List<TbComCode> tbComCodes;
@@ -147,11 +147,11 @@ public class TbComCodeGroup implements Serializable {
 		this.useYn = useYn;
 	}
 
-	public BigInteger[] getCodeIds() {
+	public List<BigInteger> getCodeIds() {
 		return codeIds;
 	}
 
-	public void setCodeIds(BigInteger[] codeIds) {
+	public void setCodeIds(List<BigInteger> codeIds) {
 		this.codeIds = codeIds;
 	}
 

@@ -9,6 +9,13 @@
 <script defer th:src="@{/vendors/liverty-admin/js/select2.js}"></script>
 <script defer type="text/javascript">
 
+    function fnSave() {
+        var params = $("#baseForm").serializeObject();
+        PromiseUtil.post("/v1/api/admin/codegroup/"+$("#codeGroupId").val(), params)
+        .then(JSON.parse)
+        .then(d => console.log(d));
+    }
+
 </script>
 </head>
 
@@ -22,12 +29,12 @@
                             <div class="col-12">
                                 <h2>CODE GROUP DETAIL</h2>
                                 <div class="separator-2"></div>
-                                <form>
+                                <form id="baseForm">
                                     <div class="form-group">
-                                        <label for="codeGroupValue">Code Group Value</label> <input type="text" class="form-control" id="codeGroupValue" th:field="${mainInfo.codeGroupValue}">
+                                        <label for="codeGroupValue">Code Group Value</label> <input type="text" class="form-control" name="codeGroupValue" id="codeGroupValue" th:field="${mainInfo.codeGroupValue}"> <input type="hidden" class="form-control" name="codeGroupId" id="codeGroupId" th:field="${mainInfo.codeGroupId}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="codeGroupName">Code Group Name</label> <input type="text" class="form-control" id="codeGroupName" th:field="${mainInfo.codeGroupName}">
+                                        <label for="codeGroupName">Code Group Name</label> <input type="text" class="form-control" name="codeGroupName" id="codeGroupName" th:field="${mainInfo.codeGroupName}">
                                     </div>
                                     <div class="form-group">
                                         <label for="useYn">Code Group Type</label> <select class="form-control" name="codeGroupType" id="codeGroupType" th:field="${mainInfo.codeGroupType}">
@@ -36,7 +43,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="includingCodes">Including Codes</label> <select name="tbComCodes.codeId"class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
+                                        <label for="includingCodes">Including Codes</label> <select name="tbComCodes.codeId" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
                                         	<option th:each="tbComCodes : ${mainInfo.tbComCodes}" th:value="${tbComCodes.codeId}" th:selected="${tbComCodes.codeName}" th:text="${tbComCodes.codeName}"></option>
                                             <option th:each="unselectedCodes : ${unselectedCodeList}" th:value="${unselectedCodes.codeId}" th:text="${unselectedCodes.codeName}"></option>
                                         </select>
@@ -54,7 +61,7 @@
                                 </form>
 
                                 <div class="container-fluid w-100">
-                                    <a href="#" class="btn btn-success float-right mt-4 ml-2">Save</a> <a href="/admin/codegroup/viewmain" class="btn btn-secondary float-right mt-4">List</a>
+                                    <a href="javascript:void(0);" class="btn btn-success float-right mt-4 ml-2" onclick="fnSave()">Save</a> <a href="/admin/codegroup/viewmain" class="btn btn-secondary float-right mt-4">List</a>
                                 </div>
                             </div>
                         </div>

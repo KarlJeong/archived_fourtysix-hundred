@@ -1,10 +1,12 @@
 package com.karljeong.fourtysix.application.admin.codeGroup.controller;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +34,13 @@ public class CodeGroupRestController {
 	}
 
 	@PostMapping
-	public TbComCodeGroup insert(@RequestBody TbComCodeGroup tbComCodeGroup) {
+	public TbComCodeGroup create(@RequestBody TbComCodeGroup tbComCodeGroup) {
 		return codeGroupService.create(tbComCodeGroup);
+	}
+
+	@PostMapping("/{codeGroupId}")
+	public TbComCodeGroup update(@RequestBody TbComCodeGroup tbComCodeGroup,
+			@PathVariable("codeGroupId") BigInteger codeGroupId) {
+		return codeGroupService.update(tbComCodeGroup);
 	}
 }

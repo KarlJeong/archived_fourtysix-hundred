@@ -21,13 +21,18 @@ public interface TbComCodeRepository
 	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId IS NULL")
 	List<TbComCode> findByCodeGroupIdNull();
 
+	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId = :codeGroupId")
+	List<TbComCode> findByCodeGroupId(@Param("codeGroupId") BigInteger codeGroupId);
+
 	@Transactional
 	@Modifying
 	@Query("UPDATE TbComCode c SET c.updateUserId = :updateUserId, c.codeGroupId = :codeGroupId WHERE c.codeId = :codeId")
 	int saveCodeGroupId(@Param("updateUserId") BigInteger updateUserId, @Param("codeId") BigInteger codeId,
 			@Param("codeGroupId") BigInteger codeGroupId);
 
-	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId = :codeGroupId")
-	List<TbComCode> findByCodeGroupId(@Param("codeGroupId") BigInteger codeGroupId);
+	@Transactional
+	@Modifying
+	@Query("UPDATE TbComCode c SET c.updateUserId = :updateUserId, c.codeGroupId = NULL WHERE c.codeGroupId = :codeGroupId")
+	int deleteCodeGroupId(@Param("updateUserId") BigInteger updateUserId, @Param("codeGroupId") BigInteger codeGroupId);
 
 }
