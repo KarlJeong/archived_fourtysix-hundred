@@ -54,27 +54,22 @@
             <div class="container d-flex flex-row">
                 <div class="text-center navbar-brand-wrapper d-flex align-items-top">
                     <a class="navbar-brand brand-logo" href="index.html">
-                        <img th:src="@{/vendors/liverty-admin/images/logo-inverse.svg}" alt="logo"/>
+                        <img th:src="@{/vendors/liverty-admin/images/logo-inverse.svg}" alt="logo" />
                     </a>
                     <a class="navbar-brand brand-logo-mini" href="index.html">
-                        <img th:src="@{/vendors/liverty-admin/images/logo-mini.svg}" alt="logo"/>
+                        <img th:src="@{/vendors/liverty-admin/images/logo-mini.svg}" alt="logo" />
                     </a>
                 </div>
                 <div class="navbar-menu-wrapper d-flex align-items-center">
                     <ul class="navbar-nav navbar-nav-right ml-auto mr-0">
-                        <li class="nav-item dropdown ml-4"><a
-                            class="nav-link count-indicator dropdown-toggle"
-                            id="notificationDropdown" href="#" data-toggle="dropdown"> <i
-                                class="fa fa-bell-o"></i> <span class="count bg-warning">4</span>
-                        </a>
-                            <div
-                                class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                                aria-labelledby="notificationDropdown">
+                        <li class="nav-item dropdown ml-4">
+                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i><span class="count bg-warning">4</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
                                 <a class="dropdown-item py-3">
-                                    <p class="mb-0 font-weight-medium float-left">You have 4 new
-                                        notifications</p> <span
-                                    class="badge badge-pill badge-inverse-info float-right">View
-                                        all</span>
+                                    <p class="mb-0 font-weight-medium float-left">You have 4 new notifications</p>
+                                    <span class="badge badge-pill badge-inverse-info float-right">View all</span>
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item preview-item">
@@ -84,9 +79,7 @@
                                         </div>
                                     </div>
                                     <div class="preview-item-content">
-                                        <h6
-                                            class="preview-subject font-weight-normal text-dark mb-1">Application
-                                            Error</h6>
+                                        <h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
                                         <p class="font-weight-light small-text mb-0">Just now</p>
                                     </div>
                                 </a>
@@ -98,10 +91,9 @@
                                         </div>
                                     </div>
                                     <div class="preview-item-content">
-                                        <h6
-                                            class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
-                                        <p class="font-weight-light small-text mb-0">Private
-                                            message</p>
+                                        <h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
+                                        <p class="font-weight-light small-text mb-0">Private message
+                                        </p>
                                     </div>
                                 </a>
                                 <div class="dropdown-divider"></div>
@@ -112,45 +104,40 @@
                                         </div>
                                     </div>
                                     <div class="preview-item-content">
-                                        <h6
-                                            class="preview-subject font-weight-normal text-dark mb-1">New
-                                            user registration</h6>
+                                        <h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
                                         <p class="font-weight-light small-text mb-0">2 days ago
                                         </p>
                                     </div>
                                 </a>
-                            </div></li>
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
-                            id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                                <img class="img-xs rounded-circle"
-                                src="https://placehold.it/100x100" alt="Profile image">
-                        </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
-                                aria-labelledby="UserDropdown">
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                                <img class="img-xs rounded-circle" src="https://placehold.it/100x100" alt="Profile image">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                                 <a class="dropdown-item p-0">
                                     <div class="d-flex border-bottom w-100">
-                                        <div
-                                            class="py-3 px-4 d-flex align-items-center justify-content-center flex-grow-1">
+                                        <div class="py-3 px-4 d-flex align-items-center justify-content-center flex-grow-1">
                                             <i class="fa fa-bookmark-o mr-0 text-gray"></i>
                                         </div>
-                                        <div
-                                            class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right flex-grow-1">
+                                        <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right flex-grow-1">
                                             <i class="fa fa-user-o mr-0 text-gray"></i>
                                         </div>
-                                        <div
-                                            class="py-3 px-4 d-flex align-items-center justify-content-center flex-grow-1">
+                                        <div class="py-3 px-4 d-flex align-items-center justify-content-center flex-grow-1">
                                             <i class="fa fa-clock-o mr-0 text-gray"></i>
                                         </div>
                                     </div>
-                                </a> <a href="diaryC.html" class="dropdown-item mt-2"> Write Diary </a>
-                                <a class="dropdown-item"> Manage Accounts </a> <a
-                                    class="dropdown-item"> Change Password </a> <a
-                                    class="dropdown-item"> Check Inbox </a> <a class="dropdown-item">
-                                    Sign Out </a>
-                            </div></li>
+                                </a>
+                                <a th:href="@{/diary/viewcreate}" class="dropdown-item mt-2"> Write Diary </a>
+                                <a class="dropdown-item"> Manage Accounts </a>
+                                <a class="dropdown-item"> Change Password </a>
+                                <a class="dropdown-item"> Check Inbox </a>
+                                <a class="dropdown-item"> Sign Out </a>
+                            </div>
+                        </li>
                     </ul>
-                    <button class="navbar-toggler align-self-center" type="button"
-                        data-toggle="minimize">
+                    <button class="navbar-toggler align-self-center" type="button" data-toggle="minimize">
                         <span class="fa fa-bars"></span>
                     </button>
                 </div>
@@ -158,14 +145,24 @@
             <div class="nav-bottom">
                 <div class="container">
                     <ul class="nav page-navigation">
-                        <li class="nav-item"><a href="diary.html" class="nav-link"><i
-                                class="link-icon fa fa-television"></i><span class="menu-title">DIARY</span></a>
+                        <li class="nav-item">
+                            <a href="diary.html" class="nav-link">
+                                <i class="link-icon fa fa-television"></i>
+                                <span class="menu-title">DIARY</span>
+                            </a>
                         </li>
-                        <li class="nav-item"><a href="pages/widgets.html" class="nav-link"><i
-                                class="link-icon fa fa-safari"></i><span class="menu-title">WIDGETS</span></a>
+                        <li class="nav-item">
+                            <a href="pages/widgets.html" class="nav-link">
+                                <i class="link-icon fa fa-safari"></i>
+                                <span class="menu-title">WIDGETS</span>
+                            </a>
                         </li>
-                        <li class="nav-item mega-menu"><a href="#" class="nav-link"><i
-                                class="link-icon fa fa-html5"></i><span class="menu-title">ADMIN</span><i class="menu-arrow"></i></a>
+                        <li class="nav-item mega-menu">
+                            <a href="#" class="nav-link">
+                                <i class="link-icon fa fa-html5"></i>
+                                <span class="menu-title">ADMIN</span>
+                                <i class="menu-arrow"></i>
+                            </a>
                             <div class="submenu">
                                 <div class="col-group-wrapper row">
                                     <div class="col-group col-2">
@@ -175,16 +172,11 @@
                                             </div>
                                             <div class="col-12">
                                                 <ul class="submenu-item">
-                                                <li class="nav-item"><a class="nav-link"
-                                                        href="#">Category</a></li>
-                                                    <li class="nav-item"><a class="nav-link"
-                                                        href="#">Common Board</a></li>
-                                                    <li class="nav-item"><a class="nav-link"
-                                                        href="#">Common Article</a></li>
-                                                    <li class="nav-item"><a class="nav-link"
-                                                        href="#">Service Board</a></li>
-                                                    <li class="nav-item"><a class="nav-link"
-                                                        href="#">Service Article</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="#">Category</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="#">Common Board</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="#">Common Article</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="#">Service Board</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="#">Service Article</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -196,10 +188,8 @@
                                             </div>
                                             <div class="col-12">
                                                 <ul class="submenu-item">
-                                                    <li class="nav-item"><a class="nav-link"
-                                                        href="/admin/codegroup/viewmain">Code Group</a></li>
-                                                    <li class="nav-item"><a class="nav-link"
-                                                        href="/admin/code/viewmain">Code</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="/admin/codegroup/viewmain">Code Group</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="/admin/code/viewmain">Code</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -211,8 +201,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <ul class="submenu-item">
-                                                    <li class="nav-item"><a class="nav-link"
-                                                        href="#">Menu</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -224,8 +213,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <ul class="submenu-item">
-                                                    <li class="nav-item"><a class="nav-link"
-                                                        href="#">Authority</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="#">Authority</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -237,14 +225,14 @@
                                             </div>
                                             <div class="col-12">
                                                 <ul class="submenu-item">
-                                                    <li class="nav-item"><a class="nav-link"
-                                                        href="#">User</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="#">User</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div></li>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -263,11 +251,8 @@
                 <!-- START FOOTER -->
                 <footer class="footer">
                     <div class="container-fluid clearfix">
-                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright
-                            © 2018 <a href="http://www.urbanui.com/" target="_blank">Urbanui</a>.
-                            All rights reserved.
-                        </span> <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted
-                            & made with</span>
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018 <a href="http://www.urbanui.com/" target="_blank">Urbanui</a>. All rights reserved.</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with</span>
                     </div>
                 </footer>
                 <!-- END FOOTER -->

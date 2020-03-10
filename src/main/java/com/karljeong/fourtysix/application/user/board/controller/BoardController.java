@@ -1,4 +1,4 @@
-package com.karljeong.fourtysix.application.board.controller;
+package com.karljeong.fourtysix.application.user.board.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

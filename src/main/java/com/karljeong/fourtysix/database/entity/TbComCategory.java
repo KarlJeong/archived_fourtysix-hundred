@@ -1,14 +1,21 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
  * The persistent class for the TB_COM_CATEGORY database table.
- * 
+ *
  */
 @Entity
 @Table(name="TB_COM_CATEGORY")
@@ -19,7 +26,7 @@ public class TbComCategory implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ARTICLE_CATEGORY_ID")
-	private String articleCategoryId;
+	private BigInteger articleCategoryId;
 
 	@Lob
 	@Column(name="CATEGORY_DESCRIPTION")
@@ -46,11 +53,11 @@ public class TbComCategory implements Serializable {
 	public TbComCategory() {
 	}
 
-	public String getArticleCategoryId() {
+	public BigInteger getArticleCategoryId() {
 		return this.articleCategoryId;
 	}
 
-	public void setArticleCategoryId(String articleCategoryId) {
+	public void setArticleCategoryId(BigInteger articleCategoryId) {
 		this.articleCategoryId = articleCategoryId;
 	}
 

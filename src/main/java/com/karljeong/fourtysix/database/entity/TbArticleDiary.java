@@ -1,14 +1,22 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import com.karljeong.fourtysix.utils.DateUtil;
 
 
 /**
  * The persistent class for the TB_ARTICLE_DIARY database table.
- * 
+ *
  */
 @Entity
 @Table(name="TB_ARTICLE_DIARY")
@@ -19,7 +27,7 @@ public class TbArticleDiary implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ARTICLE_ID")
-	private String articleId;
+	private BigInteger articleId;
 
 	@Column(name="ARTICLE_BAN_YN")
 	private byte articleBanYn;
@@ -61,29 +69,29 @@ public class TbArticleDiary implements Serializable {
 	@Column(name="ARTICLE_WRITER_ID")
 	private BigInteger articleWriterId;
 
-	@Column(name="CREATE_DATETIME")
-	private Timestamp createDatetime;
+	@Column(name="CREATE_DATETIME", updatable = false)
+	private Timestamp createDatetime = DateUtil.getTimestamp();
 
-	@Column(name="CREATE_USER_ID")
+	@Column(name="CREATE_USER_ID", updatable = false)
 	private BigInteger createUserId;
 
 	@Column(name="THUMBNAIL_FILE_ID")
 	private BigInteger thumbnailFileId;
 
-	@Column(name="UPDATE_DATETIME")
+	@Column(name="UPDATE_DATETIME", insertable = false)
 	private Timestamp updateDatetime;
 
-	@Column(name="UPDATE_USER_ID")
+	@Column(name="UPDATE_USER_ID", insertable = false)
 	private BigInteger updateUserId;
 
 	public TbArticleDiary() {
 	}
 
-	public String getArticleId() {
+	public BigInteger getArticleId() {
 		return this.articleId;
 	}
 
-	public void setArticleId(String articleId) {
+	public void setArticleId(BigInteger articleId) {
 		this.articleId = articleId;
 	}
 

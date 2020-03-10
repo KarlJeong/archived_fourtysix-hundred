@@ -1,4 +1,4 @@
-package com.karljeong.fourtysix.application.article.diary.controller;
+package com.karljeong.fourtysix.application.user.article.diary.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
