@@ -47,6 +47,10 @@ public class CodeGroupService {
 		return comCodeGroupList;
 	}
 
+    public List<TbComCodeGroup> findAll() {
+        return tbComCodeGroupRepository.findAll();
+    }
+
 	public TbComCodeGroup create(TbComCodeGroup tbComCodeGroup) {
 		tbComCodeGroup.setCreateUserId(BigInteger.valueOf(11111));
 		TbComCodeGroup save = tbComCodeGroupRepository.save(tbComCodeGroup);

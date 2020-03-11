@@ -1,5 +1,6 @@
 package com.karljeong.fourtysix.application.admin.code.service;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -46,11 +47,26 @@ public class CodeService {
 		return tbComCodeList;
 	}
 
-	public TbComCode findById(Long codeId) {
-		return tbComCodeRepository.findById(codeId).get();
+    public List<TbComCode> findAll() {
+        return tbComCodeRepository.findAll();
+    }
+
+	public TbComCode findById(BigInteger codeId) {
+		return tbComCodeRepository.findByCodeId(codeId);
 	}
 
 	public List<TbComCode> findByCodeGroupIdNull() {
 		return tbComCodeRepository.findByCodeGroupIdNull();
 	}
+
+    public TbComCode create(TbComCode tbComCode) {
+        tbComCode.setCreateUserId(BigInteger.valueOf(11111));
+        return tbComCodeRepository.save(tbComCode);
+    }
+
+    public TbComCode update(TbComCode tbComCode) {
+        tbComCode.setUpdateUserId(BigInteger.valueOf(11111));
+        return tbComCodeRepository.save(tbComCode);
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.karljeong.fourtysix.database.repository;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +14,9 @@ import com.karljeong.fourtysix.database.entity.TbComCodeGroup;
 @RepositoryRestResource(collectionResourceRel = "codeGroupEntity", path = "tbComCodeGroupRepository")
 public interface TbComCodeGroupRepository
 		extends PagingAndSortingRepository<TbComCodeGroup, String>, JpaSpecificationExecutor<TbComCodeGroup> {
+
+    @Override
+    List<TbComCodeGroup> findAll();
 
 	@Query("SELECT c FROM TbComCodeGroup c WHERE c.codeGroupId = :codeGroupId")
 	TbComCodeGroup findById(@Param("codeGroupId") BigInteger codeGroupId);

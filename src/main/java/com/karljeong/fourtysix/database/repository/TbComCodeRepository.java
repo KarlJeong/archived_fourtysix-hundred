@@ -18,6 +18,12 @@ import com.karljeong.fourtysix.database.entity.TbComCode;
 public interface TbComCodeRepository
 		extends PagingAndSortingRepository<TbComCode, Long>, JpaSpecificationExecutor<TbComCode> {
 
+    @Override
+    List<TbComCode> findAll();
+
+    @Query("SELECT c FROM TbComCode c WHERE c.codeId = :codeId")
+    TbComCode findByCodeId(BigInteger codeId);
+
 	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId IS NULL")
 	List<TbComCode> findByCodeGroupIdNull();
 
