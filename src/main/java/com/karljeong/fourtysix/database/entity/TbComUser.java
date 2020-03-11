@@ -1,14 +1,23 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.karljeong.fourtysix.utils.DateUtil;
 
 
 /**
  * The persistent class for the TB_COM_USER database table.
- * 
+ *
  */
 @Entity
 @Table(name="TB_COM_USER")
@@ -30,11 +39,11 @@ public class TbComUser implements Serializable {
 	@Column(name="ACTIVATE_YN")
 	private byte activateYn;
 
-	@Column(name="CREATE_DATETIME")
-	private Timestamp createDatetime;
+    @Column(name = "CREATE_DATETIME", updatable = false)
+    private Timestamp createDatetime = DateUtil.getTimestamp();
 
-	@Column(name="CREATE_USER_ID")
-	private BigInteger createUserId;
+    @Column(name="CREATE_USER_ID", updatable = false)
+    private BigInteger createUserId;
 
 	@Column(name="EMAIL")
 	private String email;
@@ -54,11 +63,11 @@ public class TbComUser implements Serializable {
 	@Column(name="SNS_ID")
 	private String snsId;
 
-	@Column(name="UPDATE_DATETIME")
-	private Timestamp updateDatetime;
+    @Column(name="UPDATE_DATETIME", insertable = false)
+    private Timestamp updateDatetime = DateUtil.getTimestamp();
 
-	@Column(name="UPDATE_USER_ID")
-	private BigInteger updateUserId;
+    @Column(name = "UPDATE_USER_ID", insertable = false)
+    private BigInteger updateUserId;
 
 	@Column(name="USER_LOCALE")
 	private String userLocale;
