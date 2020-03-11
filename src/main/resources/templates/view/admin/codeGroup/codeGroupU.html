@@ -15,6 +15,14 @@
         .then(d => console.log(d));
     }
 
+    function fnDelete() {
+        var params = $("#baseForm").serializeObject();
+        console.log(params);
+        PromiseUtil.delete("/v1/api/admin/codegroup/" + $("#codeGroupId").val(), params)
+        .then(JSON.parse)
+        .then(d => console.log(d));
+    }
+
 </script>
 </head>
 
@@ -60,7 +68,7 @@
                                 </form>
 
                                 <div class="container-fluid w-100">
-                                    <a href="javascript:void(0);" class="btn btn-success float-right mt-4 ml-2" onclick="fnSave()">Save</a> <a href="/admin/codegroup/viewmain" class="btn btn-secondary float-right mt-4">List</a>
+                                    <a href="javascript:void(0);" class="btn btn-success float-right mt-4 ml-2" onclick="fnSave()">Save</a> <a href="javascript:void(0);" class="btn btn-warning float-right mt-4 ml-2" onclick="fnDelete()">Delete</a> <a href="/admin/codegroup/viewmain" class="btn btn-secondary float-right mt-4">List</a>
                                 </div>
                             </div>
                         </div>

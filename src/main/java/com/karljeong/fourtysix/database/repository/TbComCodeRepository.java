@@ -18,11 +18,11 @@ import com.karljeong.fourtysix.database.entity.TbComCode;
 public interface TbComCodeRepository
 		extends PagingAndSortingRepository<TbComCode, Long>, JpaSpecificationExecutor<TbComCode> {
 
-    @Override
-    List<TbComCode> findAll();
+	@Override
+	List<TbComCode> findAll();
 
-    @Query("SELECT c FROM TbComCode c WHERE c.codeId = :codeId")
-    TbComCode findByCodeId(BigInteger codeId);
+	@Query("SELECT c FROM TbComCode c WHERE c.codeId = :codeId")
+	TbComCode findByCodeId(BigInteger codeId);
 
 	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId IS NULL")
 	List<TbComCode> findByCodeGroupIdNull();
@@ -40,5 +40,10 @@ public interface TbComCodeRepository
 	@Modifying
 	@Query("UPDATE TbComCode c SET c.updateUserId = :updateUserId, c.codeGroupId = NULL WHERE c.codeGroupId = :codeGroupId")
 	int deleteCodeGroupId(@Param("updateUserId") BigInteger updateUserId, @Param("codeGroupId") BigInteger codeGroupId);
+
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM TbComCode c WHERE c.codeId = :codeId")
+	int deleteById(@Param("codeId") BigInteger codeId);
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,20 +26,24 @@ public class CodeRestController {
 		this.codeService = codeService;
 	}
 
-    @GetMapping
-    public Page<TbComCode> readList(@RequestParam(required = false) Map<String, Object> searchRequest,
-            final Pageable pageable) {
-        return codeService.readList(searchRequest, pageable);
-    }
+	@GetMapping
+	public Page<TbComCode> readList(@RequestParam(required = false) Map<String, Object> searchRequest,
+			final Pageable pageable) {
+		return codeService.readList(searchRequest, pageable);
+	}
 
-    @PostMapping
-    public TbComCode create(@RequestBody TbComCode tbComCode) {
-        return codeService.create(tbComCode);
-    }
+	@PostMapping
+	public TbComCode create(@RequestBody TbComCode tbComCode) {
+		return codeService.create(tbComCode);
+	}
 
-    @PostMapping("/{codeId}")
-    public TbComCode update(@RequestBody TbComCode TbComCode,
-            @PathVariable("codeId") BigInteger codeId) {
-        return codeService.update(TbComCode);
-    }
+	@PostMapping("/{codeId}")
+	public TbComCode update(@RequestBody TbComCode TbComCode, @PathVariable("codeId") BigInteger codeId) {
+		return codeService.update(TbComCode);
+	}
+
+	@DeleteMapping("/{codeId}")
+	public int delete(@PathVariable("codeId") BigInteger codeId) {
+		return codeService.delete(codeId);
+	}
 }

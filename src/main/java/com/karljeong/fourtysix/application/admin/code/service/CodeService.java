@@ -47,9 +47,9 @@ public class CodeService {
 		return tbComCodeList;
 	}
 
-    public List<TbComCode> findAll() {
-        return tbComCodeRepository.findAll();
-    }
+	public List<TbComCode> findAll() {
+		return tbComCodeRepository.findAll();
+	}
 
 	public TbComCode findById(BigInteger codeId) {
 		return tbComCodeRepository.findByCodeId(codeId);
@@ -59,14 +59,17 @@ public class CodeService {
 		return tbComCodeRepository.findByCodeGroupIdNull();
 	}
 
-    public TbComCode create(TbComCode tbComCode) {
-        tbComCode.setCreateUserId(BigInteger.valueOf(11111));
-        return tbComCodeRepository.save(tbComCode);
-    }
+	public TbComCode create(TbComCode tbComCode) {
+		tbComCode.setCreateUserId(BigInteger.valueOf(11111));
+		return tbComCodeRepository.save(tbComCode);
+	}
 
-    public TbComCode update(TbComCode tbComCode) {
-        tbComCode.setUpdateUserId(BigInteger.valueOf(11111));
-        return tbComCodeRepository.save(tbComCode);
+	public TbComCode update(TbComCode tbComCode) {
+		tbComCode.setUpdateUserId(BigInteger.valueOf(11111));
+		return tbComCodeRepository.save(tbComCode);
+	}
 
-    }
+	public int delete(BigInteger codeId) {
+		return tbComCodeRepository.deleteById(codeId);
+	}
 }

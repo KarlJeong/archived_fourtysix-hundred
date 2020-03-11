@@ -47,9 +47,9 @@ public class CodeGroupService {
 		return comCodeGroupList;
 	}
 
-    public List<TbComCodeGroup> findAll() {
-        return tbComCodeGroupRepository.findAll();
-    }
+	public List<TbComCodeGroup> findAll() {
+		return tbComCodeGroupRepository.findAll();
+	}
 
 	public TbComCodeGroup create(TbComCodeGroup tbComCodeGroup) {
 		tbComCodeGroup.setCreateUserId(BigInteger.valueOf(11111));
@@ -83,5 +83,10 @@ public class CodeGroupService {
 		TbComCodeGroup tbComCodeGroup = tbComCodeGroupRepository.findById(codeGroupId);
 		tbComCodeGroup.setTbComCodes(tbComCodeRepository.findByCodeGroupId(codeGroupId));
 		return tbComCodeGroup;
+	}
+
+	public int delete(BigInteger codeGroupId) {
+		tbComCodeRepository.deleteCodeGroupId(BigInteger.valueOf(11111), codeGroupId);
+		return tbComCodeGroupRepository.deleteById(codeGroupId);
 	}
 }
