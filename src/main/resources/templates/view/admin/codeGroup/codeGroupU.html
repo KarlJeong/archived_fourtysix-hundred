@@ -12,7 +12,10 @@
         var params = $("#baseForm").serializeObject();
         PromiseUtil.post("/v1/api/admin/codegroup/"+$("#codeGroupId").val(), params)
         .then(JSON.parse)
-        .then(d => console.log(d));
+        .then(function(d){
+        	alert("Saved successfully.");
+        	window.location.href = "/admin/codegroup/viewupdate/" + d.codeGroupId;
+        });
     }
 
     function fnDelete() {
@@ -20,7 +23,10 @@
         console.log(params);
         PromiseUtil.delete("/v1/api/admin/codegroup/" + $("#codeGroupId").val(), params)
         .then(JSON.parse)
-        .then(d => console.log(d));
+        .then(function(d){
+        	alert("Deleted Successfully.");
+        	window.location.href = "/admin/codegroup/viewmain";
+        });
     }
 
 </script>

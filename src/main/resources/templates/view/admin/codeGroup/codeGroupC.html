@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}">
 <head>
-<title>Diary</title>
+<title>CodeGroup Management</title>
 <script defer th:src="@{/vendors/isotope/imagesloaded.pkgd.min.js}"></script>
 <script defer th:src="@{/vendors/isotope/isotope.pkgd.min.js}"></script>
 <script defer th:src="@{/vendors/liverty-admin/js/owl-carousel.js}"></script>
@@ -13,7 +13,10 @@
         console.log(params);
         PromiseUtil.post("/v1/api/admin/codegroup", params)
         .then(JSON.parse)
-        .then(d => console.log(d));
+        .then(function(d){
+        	alert("Saved successfully.");
+        	window.location.href = "/admin/codegroup/viewupdate/" + d.codeGroupId;
+        });
     }
 
 </script>
@@ -27,7 +30,7 @@
                     <div class="card-body">
                         <div class="row mb-5">
                             <div class="col-12">
-                                <h2>CODE GROUP DETAIL</h2>
+                                <h2>CODE GROUP CREATE</h2>
                                 <div class="separator-2"></div>
                                 <form id="baseForm">
                                     <div class="form-group">

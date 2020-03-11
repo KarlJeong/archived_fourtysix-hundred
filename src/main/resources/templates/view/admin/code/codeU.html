@@ -13,7 +13,10 @@
         console.log(params);
         PromiseUtil.post("/v1/api/admin/code/" + $("#codeId").val(), params)
         .then(JSON.parse)
-        .then(d => console.log(d));
+        .then(function(d){
+        	alert("Saved successfully.");
+        	window.location.href = "/admin/code/viewupdate/" + d.codeId;
+        });
     }
 
     function fnDelete() {
@@ -21,7 +24,10 @@
         console.log(params);
         PromiseUtil.delete("/v1/api/admin/code/" + $("#codeId").val(), params)
         .then(JSON.parse)
-        .then(d => console.log(d));
+        .then(function(d){
+        	alert("Deleted Successfully.");
+        	window.location.href = "/admin/code/viewmain";
+        });
     }
 
 </script>
