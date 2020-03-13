@@ -36,6 +36,8 @@ public class AuthController {
 
 	@GetMapping("/viewupdate/{authId}")
 	public String viewUpdate(Model model, @PathVariable("authId") BigInteger authId) {
+	    model.addAttribute("mainInfo", authService.findById(authId));
+        model.addAttribute("allUserList", userService.findAll());
 		return "/view/admin/auth/authU";
 	}
 }

@@ -71,7 +71,7 @@
                                 + data["authCode"] + '</a>');
 
                         $('td', row).eq(2).html('').append(
-                                data["authId"]);
+                                data["tbComUsers"] != null ? data["tbComUsers"].length : 0);
 
                         $('td', row).eq(3).html('').append(
                                 data["createDatetime"]);
@@ -118,7 +118,7 @@
                                         </div>
                                     </form>
                                     <div class="ml-auto px-1 py-1">
-                                        <button class="btn btn-info mt-3 mb-4">Search</button>
+                                        <button class="btn btn-info mt-3 mb-4" onClick="fnRetrieveAuth()">Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@
                     <div class="card-body">
                         <div class="row mb-5">
                             <div class="col-12 table-responsive">
-                                <table id="auth-table" class="display table table-hover table-condensed" width="100%">
+                                <table id="auth-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>Auth Name</th>

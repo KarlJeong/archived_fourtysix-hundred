@@ -85,5 +85,9 @@
       });
     };
 
+    $(".multi-select option").val(function(idx, val) {
+      $(this).siblings('[value="'+ val +'"]').remove();
+    });
+
   });
 })(jQuery);

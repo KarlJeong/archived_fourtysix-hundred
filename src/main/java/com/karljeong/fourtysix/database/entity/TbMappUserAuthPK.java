@@ -1,6 +1,8 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -14,27 +16,31 @@ public class TbMappUserAuthPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="USER_ID", insertable=false, updatable=false)
-	private String userId;
+	private BigInteger userId;
 
 	@Column(name="AUTH_ID", insertable=false, updatable=false)
-	private String authId;
+	private BigInteger authId;
 
 	public TbMappUserAuthPK() {
 	}
-	public String getUserId() {
-		return this.userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getAuthId() {
-		return this.authId;
-	}
-	public void setAuthId(String authId) {
-		this.authId = authId;
-	}
 
-	@Override
+	public BigInteger getUserId() {
+        return userId;
+    }
+
+    public void setUserId(BigInteger userId) {
+        this.userId = userId;
+    }
+
+    public BigInteger getAuthId() {
+        return authId;
+    }
+
+    public void setAuthId(BigInteger authId) {
+        this.authId = authId;
+    }
+
+    @Override
     public boolean equals(Object other) {
 		if (this == other) {
 			return true;

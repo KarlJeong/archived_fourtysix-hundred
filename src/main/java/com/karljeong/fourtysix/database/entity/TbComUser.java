@@ -28,7 +28,7 @@ public class TbComUser implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="USER_ID")
-	private String userId;
+	private BigInteger userId;
 
 	@Column(name="ACTIVATE_DATETIME")
 	private Timestamp activateDatetime;
@@ -81,15 +81,18 @@ public class TbComUser implements Serializable {
 	public TbComUser() {
 	}
 
-	public String getUserId() {
-		return this.userId;
-	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+	public BigInteger getUserId() {
+        return userId;
+    }
 
-	public Timestamp getActivateDatetime() {
+
+    public void setUserId(BigInteger userId) {
+        this.userId = userId;
+    }
+
+
+    public Timestamp getActivateDatetime() {
 		return this.activateDatetime;
 	}
 

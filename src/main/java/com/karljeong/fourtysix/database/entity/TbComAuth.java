@@ -3,6 +3,7 @@ package com.karljeong.fourtysix.database.entity;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.karljeong.fourtysix.utils.DateUtil;
 
@@ -24,104 +26,110 @@ import com.karljeong.fourtysix.utils.DateUtil;
 @Table(name="TB_COM_AUTH")
 @NamedQuery(name="TbComAuth.findAll", query="SELECT t FROM TbComAuth t")
 public class TbComAuth implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="AUTH_ID")
-	private String authId;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="AUTH_ID")
+    private BigInteger authId;
 
-	@Column(name="AUTH_CODE")
-	private String authCode;
+    @Column(name="AUTH_CODE")
+    private String authCode;
 
-	@Lob
-	@Column(name="AUTH_DESCRIPTION")
-	private String authDescription;
+    @Lob
+    @Column(name="AUTH_DESCRIPTION")
+    private String authDescription;
 
-	@Column(name="AUTH_NAME")
-	private String authName;
+    @Column(name="AUTH_NAME")
+    private String authName;
 
-	@Column(name = "CREATE_DATETIME", updatable = false)
-	private Timestamp createDatetime = DateUtil.getTimestamp();
+    @Column(name = "CREATE_DATETIME", updatable = false)
+    private Timestamp createDatetime = DateUtil.getTimestamp();
 
-	@Column(name="CREATE_USER_ID", updatable = false)
-	private BigInteger createUserId;
+    @Column(name="CREATE_USER_ID", updatable = false)
+    private BigInteger createUserId;
 
-	@Column(name="UPDATE_DATETIME", insertable = false)
-	private Timestamp updateDatetime = DateUtil.getTimestamp();
+    @Column(name="UPDATE_DATETIME", insertable = false)
+    private Timestamp updateDatetime = DateUtil.getTimestamp();
 
-	@Column(name = "UPDATE_USER_ID", insertable = false)
-	private BigInteger updateUserId;
+    @Column(name = "UPDATE_USER_ID", insertable = false)
+    private BigInteger updateUserId;
 
     @Column(name = "USE_YN")
     private byte useYn;
 
-	public TbComAuth() {
-	}
+    @Transient
+    private List<TbComUser> tbComUsers;
 
-	public String getAuthId() {
-		return this.authId;
-	}
+    public TbComAuth() {
+    }
 
-	public void setAuthId(String authId) {
-		this.authId = authId;
-	}
 
-	public String getAuthCode() {
-		return this.authCode;
-	}
+    public BigInteger getAuthId() {
+        return authId;
+    }
 
-	public void setAuthCode(String authCode) {
-		this.authCode = authCode;
-	}
 
-	public String getAuthDescription() {
-		return this.authDescription;
-	}
+    public void setAuthId(BigInteger authId) {
+        this.authId = authId;
+    }
 
-	public void setAuthDescription(String authDescription) {
-		this.authDescription = authDescription;
-	}
 
-	public String getAuthName() {
-		return this.authName;
-	}
+    public String getAuthCode() {
+        return this.authCode;
+    }
 
-	public void setAuthName(String authName) {
-		this.authName = authName;
-	}
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
+    }
 
-	public Timestamp getCreateDatetime() {
-		return this.createDatetime;
-	}
+    public String getAuthDescription() {
+        return this.authDescription;
+    }
 
-	public void setCreateDatetime(Timestamp createDatetime) {
-		this.createDatetime = createDatetime;
-	}
+    public void setAuthDescription(String authDescription) {
+        this.authDescription = authDescription;
+    }
 
-	public BigInteger getCreateUserId() {
-		return this.createUserId;
-	}
+    public String getAuthName() {
+        return this.authName;
+    }
 
-	public void setCreateUserId(BigInteger createUserId) {
-		this.createUserId = createUserId;
-	}
+    public void setAuthName(String authName) {
+        this.authName = authName;
+    }
 
-	public Timestamp getUpdateDatetime() {
-		return this.updateDatetime;
-	}
+    public Timestamp getCreateDatetime() {
+        return this.createDatetime;
+    }
 
-	public void setUpdateDatetime(Timestamp updateDatetime) {
-		this.updateDatetime = updateDatetime;
-	}
+    public void setCreateDatetime(Timestamp createDatetime) {
+        this.createDatetime = createDatetime;
+    }
 
-	public BigInteger getUpdateUserId() {
-		return this.updateUserId;
-	}
+    public BigInteger getCreateUserId() {
+        return this.createUserId;
+    }
 
-	public void setUpdateUserId(BigInteger updateUserId) {
-		this.updateUserId = updateUserId;
-	}
+    public void setCreateUserId(BigInteger createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public Timestamp getUpdateDatetime() {
+        return this.updateDatetime;
+    }
+
+    public void setUpdateDatetime(Timestamp updateDatetime) {
+        this.updateDatetime = updateDatetime;
+    }
+
+    public BigInteger getUpdateUserId() {
+        return this.updateUserId;
+    }
+
+    public void setUpdateUserId(BigInteger updateUserId) {
+        this.updateUserId = updateUserId;
+    }
 
     public byte getUseYn() {
         return useYn;
@@ -131,6 +139,12 @@ public class TbComAuth implements Serializable {
         this.useYn = useYn;
     }
 
+    public List<TbComUser> getTbComUsers() {
+        return tbComUsers;
+    }
 
+    public void setTbComUsers(List<TbComUser> tbComUsers) {
+        this.tbComUsers = tbComUsers;
+    }
 
 }
