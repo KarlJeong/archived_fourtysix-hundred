@@ -1,11 +1,13 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.math.BigInteger;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * The primary key class for the TB_COM_FILE database table.
- * 
+ *
  */
 @Embeddable
 public class TbComFilePK implements Serializable {
@@ -13,7 +15,7 @@ public class TbComFilePK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="FILE_ID")
-	private String fileId;
+	private BigInteger fileId;
 
 	@Column(name="FILE_REF_ID")
 	private int fileRefId;
@@ -23,10 +25,10 @@ public class TbComFilePK implements Serializable {
 
 	public TbComFilePK() {
 	}
-	public String getFileId() {
+	public BigInteger getFileId() {
 		return this.fileId;
 	}
-	public void setFileId(String fileId) {
+	public void setFileId(BigInteger fileId) {
 		this.fileId = fileId;
 	}
 	public int getFileRefId() {
@@ -42,7 +44,8 @@ public class TbComFilePK implements Serializable {
 		this.fileOrder = fileOrder;
 	}
 
-	public boolean equals(Object other) {
+	@Override
+    public boolean equals(Object other) {
 		if (this == other) {
 			return true;
 		}
@@ -50,19 +53,20 @@ public class TbComFilePK implements Serializable {
 			return false;
 		}
 		TbComFilePK castOther = (TbComFilePK)other;
-		return 
+		return
 			this.fileId.equals(castOther.fileId)
 			&& (this.fileRefId == castOther.fileRefId)
 			&& (this.fileOrder == castOther.fileOrder);
 	}
 
-	public int hashCode() {
+	@Override
+    public int hashCode() {
 		final int prime = 31;
 		int hash = 17;
 		hash = hash * prime + this.fileId.hashCode();
 		hash = hash * prime + this.fileRefId;
 		hash = hash * prime + this.fileOrder;
-		
+
 		return hash;
 	}
 }
