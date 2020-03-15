@@ -53,6 +53,7 @@ public class FileService {
             tbComFileRepository.save(tbComFile);
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

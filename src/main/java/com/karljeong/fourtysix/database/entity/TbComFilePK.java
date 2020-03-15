@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 /**
  * The primary key class for the TB_COM_FILE database table.
@@ -15,6 +17,7 @@ public class TbComFilePK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name="FILE_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private BigInteger fileId;
 
 	@Column(name="FILE_REF_ID")

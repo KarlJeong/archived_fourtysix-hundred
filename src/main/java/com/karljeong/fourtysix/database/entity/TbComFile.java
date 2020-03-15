@@ -1,165 +1,194 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
  * The persistent class for the TB_COM_FILE database table.
- * 
+ *
  */
 @Entity
-@Table(name="TB_COM_FILE")
-@NamedQuery(name="TbComFile.findAll", query="SELECT t FROM TbComFile t")
+@Table(name = "TB_COM_FILE")
+@NamedQuery(name = "TbComFile.findAll", query = "SELECT t FROM TbComFile t")
 public class TbComFile implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private TbComFilePK id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "FILE_ID")
+    private BigInteger fileId;
 
-	@Column(name="CREATE_DATETIME")
-	private Timestamp createDatetime;
+    @Column(name = "FILE_REF_ID")
+    private int fileRefId;
 
-	@Column(name="CREATE_USER_ID")
-	private BigInteger createUserId;
+    @Column(name = "FILE_ORDER")
+    private int fileOrder;
 
-	@Column(name="DELETE_YN")
-	private byte deleteYn;
+    @Column(name = "CREATE_DATETIME")
+    private Timestamp createDatetime;
 
-	@Column(name="FILE_EXTENTION")
-	private String fileExtention;
+    @Column(name = "CREATE_USER_ID")
+    private BigInteger createUserId;
 
-	@Column(name="FILE_NAME")
-	private String fileName;
+    @Column(name = "DELETE_YN")
+    private byte deleteYn;
 
-	@Column(name="FILE_ORGINAL_NAME")
-	private String fileOrginalName;
+    @Column(name = "FILE_EXTENTION")
+    private String fileExtention;
 
-	@Column(name="FILE_PARAM_NAME")
-	private String fileParamName;
+    @Column(name = "FILE_NAME")
+    private String fileName;
 
-	@Column(name="FILE_PATH")
-	private String filePath;
+    @Column(name = "FILE_ORGINAL_NAME")
+    private String fileOrginalName;
 
-	@Column(name="FILE_SIZE")
-	private BigInteger fileSize;
+    @Column(name = "FILE_PARAM_NAME")
+    private String fileParamName;
 
-	@Column(name="FILE_TYPE")
-	private String fileType;
+    @Column(name = "FILE_PATH")
+    private String filePath;
 
-	@Column(name="UPDATE_DATETIME")
-	private Timestamp updateDatetime;
+    @Column(name = "FILE_SIZE")
+    private BigInteger fileSize;
 
-	@Column(name="UPDATE_USER_ID")
-	private BigInteger updateUserId;
+    @Column(name = "FILE_TYPE")
+    private String fileType;
 
-	public TbComFile() {
-	}
+    @Column(name = "UPDATE_DATETIME")
+    private Timestamp updateDatetime;
 
-	public TbComFilePK getId() {
-		return this.id;
-	}
+    @Column(name = "UPDATE_USER_ID")
+    private BigInteger updateUserId;
 
-	public void setId(TbComFilePK id) {
-		this.id = id;
-	}
+    public TbComFile() {}
 
-	public Timestamp getCreateDatetime() {
-		return this.createDatetime;
-	}
+    public BigInteger getFileId() {
+        return this.fileId;
+    }
 
-	public void setCreateDatetime(Timestamp createDatetime) {
-		this.createDatetime = createDatetime;
-	}
+    public void setFileId(BigInteger fileId) {
+        this.fileId = fileId;
+    }
 
-	public BigInteger getCreateUserId() {
-		return this.createUserId;
-	}
+    public int getFileRefId() {
+        return this.fileRefId;
+    }
 
-	public void setCreateUserId(BigInteger createUserId) {
-		this.createUserId = createUserId;
-	}
+    public void setFileRefId(int fileRefId) {
+        this.fileRefId = fileRefId;
+    }
 
-	public byte getDeleteYn() {
-		return this.deleteYn;
-	}
+    public int getFileOrder() {
+        return this.fileOrder;
+    }
 
-	public void setDeleteYn(byte deleteYn) {
-		this.deleteYn = deleteYn;
-	}
+    public void setFileOrder(int fileOrder) {
+        this.fileOrder = fileOrder;
+    }
 
-	public String getFileExtention() {
-		return this.fileExtention;
-	}
+    public Timestamp getCreateDatetime() {
+        return this.createDatetime;
+    }
 
-	public void setFileExtention(String fileExtention) {
-		this.fileExtention = fileExtention;
-	}
+    public void setCreateDatetime(Timestamp createDatetime) {
+        this.createDatetime = createDatetime;
+    }
 
-	public String getFileName() {
-		return this.fileName;
-	}
+    public BigInteger getCreateUserId() {
+        return this.createUserId;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setCreateUserId(BigInteger createUserId) {
+        this.createUserId = createUserId;
+    }
 
-	public String getFileOrginalName() {
-		return this.fileOrginalName;
-	}
+    public byte getDeleteYn() {
+        return this.deleteYn;
+    }
 
-	public void setFileOrginalName(String fileOrginalName) {
-		this.fileOrginalName = fileOrginalName;
-	}
+    public void setDeleteYn(byte deleteYn) {
+        this.deleteYn = deleteYn;
+    }
 
-	public String getFileParamName() {
-		return this.fileParamName;
-	}
+    public String getFileExtention() {
+        return this.fileExtention;
+    }
 
-	public void setFileParamName(String fileParamName) {
-		this.fileParamName = fileParamName;
-	}
+    public void setFileExtention(String fileExtention) {
+        this.fileExtention = fileExtention;
+    }
 
-	public String getFilePath() {
-		return this.filePath;
-	}
+    public String getFileName() {
+        return this.fileName;
+    }
 
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public BigInteger getFileSize() {
-		return this.fileSize;
-	}
+    public String getFileOrginalName() {
+        return this.fileOrginalName;
+    }
 
-	public void setFileSize(BigInteger fileSize) {
-		this.fileSize = fileSize;
-	}
+    public void setFileOrginalName(String fileOrginalName) {
+        this.fileOrginalName = fileOrginalName;
+    }
 
-	public String getFileType() {
-		return this.fileType;
-	}
+    public String getFileParamName() {
+        return this.fileParamName;
+    }
 
-	public void setFileType(String fileType) {
-		this.fileType = fileType;
-	}
+    public void setFileParamName(String fileParamName) {
+        this.fileParamName = fileParamName;
+    }
 
-	public Timestamp getUpdateDatetime() {
-		return this.updateDatetime;
-	}
+    public String getFilePath() {
+        return this.filePath;
+    }
 
-	public void setUpdateDatetime(Timestamp updateDatetime) {
-		this.updateDatetime = updateDatetime;
-	}
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 
-	public BigInteger getUpdateUserId() {
-		return this.updateUserId;
-	}
+    public BigInteger getFileSize() {
+        return this.fileSize;
+    }
 
-	public void setUpdateUserId(BigInteger updateUserId) {
-		this.updateUserId = updateUserId;
-	}
+    public void setFileSize(BigInteger fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public String getFileType() {
+        return this.fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public Timestamp getUpdateDatetime() {
+        return this.updateDatetime;
+    }
+
+    public void setUpdateDatetime(Timestamp updateDatetime) {
+        this.updateDatetime = updateDatetime;
+    }
+
+    public BigInteger getUpdateUserId() {
+        return this.updateUserId;
+    }
+
+    public void setUpdateUserId(BigInteger updateUserId) {
+        this.updateUserId = updateUserId;
+    }
 
 }
