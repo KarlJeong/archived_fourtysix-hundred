@@ -9,53 +9,145 @@
 <link rel="stylesheet" th:href="@{/vendors/jstree/themes/default/style.css}">
 <script defer type="text/javascript">
 $(function() {
-    $('#menu-jstree').jstree({
-      "core": {
-        "check_callback": true
-      },
-      "types": {
-        "th-list": {
-          "icon": "fa fa-th-list"
+    fnInitJsTree();
+});
+
+function fnInitJsTree(){
+    let url = "/v1/api/admin/menu";
+    $.ajax({
+        url: url,
+        type: "GET"
+    }).done(function(result) {
+        let menuData = [];
+        $.each(result, function(i, menu) {
+            menuData.push({
+                "id" : menu.menuId,
+                "parent" : !menu.priorMenuId ? "#" : menu.priorMenuId,
+                "text" : menu.menuName,
+                "state": {"opened": true},
+                "type": menu.menuPath != null && menu.menuPath != "" ? "page" : "th-list",
+                "data" : menu
+            });
+        });
+
+
+        $("#admin-menutree").jstree({
+        core : {
+            "animation" : 0,
+            "check_callback" : true,
+            "data" : menuData
         },
-        "page": {
-          "icon": "fa fa-check"
-        },
-        "unsaved": {
-          "icon": "fa fa-unlock"
-        }
-      },
-      "contextmenu": {
-        "items": function($node) {
-          var tree = $("#menu-jstree").jstree(true);
-          return {
-            "Create": {
-              "separator_before": false,
-              "separator_after": false,
-              "label": "Create",
-              "action": function(obj) {
-                $node = tree.create_node($node, {
-                  text: 'New',
-                  type: 'unsaved'
-                });
-                tree.edit($node);
-              }
+        "types": {
+            "th-list": {
+              "icon": "fa fa-th-list"
             },
-            "Remove": {
-              "separator_before": false,
-              "separator_after": false,
-              "label": "Remove",
-              "action": function(obj) {
-                tree.delete_node($node);
-              }
+            "page": {
+              "icon": "fa fa-check"
+            },
+            "unsaved": {
+              "icon": "fa fa-unlock"
             }
-          };
-        }
-      },
-      "plugins": [
-        "contextmenu", "unique", "types"
-      ]
+          },
+          "contextmenu": {
+              "items": function($node) {
+                var tree = $("#admin-menutree").jstree(true);
+                return {
+                  "Create": {
+                    "separator_before": false,
+                    "separator_after": false,
+                    "label": "Create",
+                    "action": function (data) {
+                        var inst = $.jstree.reference(data.reference);
+                        var parentNode = inst.get_node(data.reference);
+                        inst.create_node(parentNode, {}, "last", function (new_node) {
+                            var newMenuData = {
+                              priorMenuId : parentNode.id,
+                              priorMenuName : parentNode.text,
+                              menuName : "Unsaved Page"
+                            };
+                            new_node.icon = "fa fa-unlock";
+                            new_node.type = "unsaved";
+                            new_node.text = "Unsaved Page";
+                            new_node.data = newMenuData;
+                            inst.edit(new_node);
+                        });
+                    }
+                  },
+                  "Remove": {
+                    "separator_before": false,
+                    "separator_after": false,
+                    "label": "Remove",
+                    "action": function(data) {
+                      var inst = $.jstree.reference(data.reference);
+                      var selectedNode = inst.get_node(data.reference);
+                      if (selectedNode.data != null && selectedNode.data.menuId !=null && selectedNode.data.menuId !="") {
+                          if (confirm("Do you want to delete the selected menu?")) {
+                              $("#menuId").val(selectedNode.data.menuId);
+                              fnDelete();
+                          }
+                      } else {
+                          tree.delete_node($node);
+                      }
+                    }
+                  }
+                };
+              }
+          },
+          "plugins": [
+              "contextmenu", "unique", "types"
+          ]
+        });
+        tree = $("#admin-menutree").jstree(true);
+
+        $("#admin-menutree").on('select_node.jstree', function(e, selectedNode) {
+            let currentNode = selectedNode.node.data;
+
+            //let parentNode = tree.get_node(tree.get_parent(currentNode.menuId)).data;
+            if(currentNode && currentNode.priorMenuId) {
+                $("#priorMenuName").val(currentNode.priorMenuName);
+                $("#priorMenuId").val(currentNode.priorMenuId);
+            } else {
+                $("#priorMenuName").val("");
+                $("#priorMenuId").val("");
+            }
+            $("#menuId").val(currentNode.menuId);
+            $("#menuName").val(currentNode.menuName);
+            $("#menuLevel").val(currentNode.menuLevel);
+            $("#menuOrder").val(currentNode.menuOrder);
+            $("#menuPath").val(currentNode.menuPath);
+            $("#menuDescription").val(currentNode.menuDescription);
+            $("#menuType").val(currentNode.menuType);
+            $("#useYn").val(currentNode.useYn);
+
+        });
+    })
+}
+
+function fnSave() {
+    var params = $("#baseForm").serializeObject();
+    var url = "/v1/api/admin/menu";
+
+    if ($("#menuId").val() != "") {
+        url = "/v1/api/admin/menu/" + $("#menuId").val();
+    }
+
+    PromiseUtil.post(url, params)
+    .then(JSON.parse)
+    .then(function(d){
+        alert("Saved successfully.");
+        window.location.reload();
     });
-  });
+}
+
+function fnDelete() {
+    PromiseUtil.delete("/v1/api/admin/menu/" + $("#menuId").val())
+    .then(function(){
+        alert("Deleted successfully.");
+        window.location.reload();
+    });
+}
+
+
 </script>
 </head>
 
@@ -70,67 +162,45 @@ $(function() {
                                 <h2>MENU MANAGEMENT</h2>
                                 <div class="separator-2"></div>
                                 <div class="row">
-                                    <div class="col-6">
-                                        <div id="menu-jstree" style="margin-top: 20px; min-height: 200px; border: 1px solid #ddd; padding: 20px;">
-                                            <ul>
-                                                <li class="jstree-open" data-jstree="{&quot;type&quot; : &quot;th-list&quot;}">css
-                                                    <ul>
-                                                        <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">app.css</li>
-                                                        <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">style.css</li>
-                                                    </ul>
-                                                </li>
-                                                <li class="jstree-open" data-jstree="{&quot;type&quot; : &quot;th-list&quot;}">img
-                                                    <ul>
-                                                        <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">bg.jpg</li>
-                                                        <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">logo.png</li>
-                                                        <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">avatar.png</li>
-                                                    </ul>
-                                                </li>
-                                                <li class="jstree-open" data-jstree="{&quot;type&quot; : &quot;th-list&quot;}">js
-                                                    <ul>
-                                                        <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">jquery.js</li>
-                                                        <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">app.js</li>
-                                                    </ul>
-                                                </li>
-                                                <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">index.html</li>
-                                                <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">page-one.html</li>
-                                                <li data-jstree="{&quot;type&quot; : &quot;page&quot;}">page-two.html</li>
-                                            </ul>
-                                        </div>
+                                    <div class="col-sm-6">
+                                        <div id="admin-menutree" style="margin-top:20px;min-height:200px;border:1px solid #ddd;padding:20px;"></div>
                                     </div>
-                                    <div class="col-6">
-                                        <form style="margin-top: 20px;">
+                                    <div class="col-sm-6">
+                                        <form id="baseForm" style="margin-top: 20px;">
                                             <div class="form-group">
-                                                <label for="priorMenuName">Prior Menu Name</label> <input type="text" class="form-control" id="priorMenuName" readonly>
+                                                <label for="priorMenuName">Prior Menu Name</label> <input type="text" class="form-control" id="priorMenuName" name="priorMenuName" readonly> <input type="hidden" class="form-control" id="priorMenuId" name="priorMenuId" readonly>
                                             </div>
                                             <div class="form-group">
-                                                <label for="menuName">Menu Name</label> <input type="text" class="form-control" id="menuName">
+                                                <label for="menuName">Menu Name</label> <input type="text" class="form-control" id="menuName" name="menuName"> <input type="hidden" class="form-control" id="menuId" name="menuId">
                                             </div>
                                             <div class="form-group">
-                                                <label for="menuPath">Menu Path</label> <input type="text" class="form-control" id="menuPath">
+                                                <label for="menuLevel">Menu Level</label> <input type="text" class="form-control" id="menuLevel" name="menuLevel">
                                             </div>
                                             <div class="form-group">
-                                                <label for="menuOrder">Menu Order</label> <input type="number" class="form-control" id="menuOrder">
+                                                <label for="menuPath">Menu Path</label> <input type="text" class="form-control" id="menuPath" name="menuPath">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="menuOrder">Menu Order</label> <input type="number" class="form-control" id="menuOrder" name="menuOrder">
                                             </div>
                                             <div class="form-group">
                                                 <label for="description">Description</label>
-                                                <textarea class="form-control" id="description" rows="3"></textarea>
+                                                <textarea class="form-control" id="menuDescription" name="menuDescription" rows="3"></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <label for="menuType">Menu Type</label> <select class="form-control" id="menuType">
-                                                    <option>COMMON</option>
-                                                    <option>SYSTEM</option>
+                                                <label for="menuType">Menu Type</label> <select class="form-control" id="menuType" name="menuType">
+                                                    <option value="COMMON">COMMON</option>
+                                                    <option value="SYSTEM">SYSTEM</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="useYn">Use YN</label> <select class="form-control" id="useYn">
-                                                    <option>USE</option>
-                                                    <option>DISUSE</option>
+                                                <label for="useYn">Use YN</label> <select class="form-control" id="useYn" name="useYn">
+                                                    <option value="1">USE</option>
+                                                    <option value="0">DISUSE</option>
                                                 </select>
                                             </div>
                                         </form>
                                         <div class="container-fluid w-100">
-                                            <a href="#" class="btn btn-success float-right mt-4 ml-2">Save</a> <a href="#" class="btn btn-warning float-right mt-4">Delete</a>
+                                            <a href="javascript:void(0);" class="btn btn-success float-right mt-4 ml-2" onclick="fnSave()">Save</a> <a href="javascript:void(0);" class="btn btn-warning float-right mt-4" onclick="fnDelete()">Delete</a>
                                         </div>
                                     </div>
                                 </div>
