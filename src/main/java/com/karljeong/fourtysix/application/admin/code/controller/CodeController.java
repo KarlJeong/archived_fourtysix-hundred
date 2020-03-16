@@ -29,14 +29,14 @@ public class CodeController {
 
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
-        model.addAttribute("codeGroupList", codeGroupService.findAll());
+		model.addAttribute("codeGroupList", codeGroupService.findAll());
 		return "/view/admin/code/codeC";
 	}
 
 	@GetMapping("/viewupdate/{codeId}")
 	public String viewUpdate(Model model, @PathVariable("codeId") BigInteger codeId) {
 		model.addAttribute("mainInfo", codeService.findById(codeId));
-        model.addAttribute("codeGroupList", codeGroupService.findAll());
+		model.addAttribute("codeGroupList", codeGroupService.findAll());
 		return "/view/admin/code/codeU";
 	}
 }

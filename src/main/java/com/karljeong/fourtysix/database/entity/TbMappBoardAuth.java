@@ -1,26 +1,30 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the TB_MAPP_BOARD_AUTH database table.
- * 
+ *
  */
 @Entity
-@Table(name="TB_MAPP_BOARD_AUTH")
-@NamedQuery(name="TbMappBoardAuth.findAll", query="SELECT t FROM TbMappBoardAuth t")
+@Table(name = "TB_MAPP_BOARD_AUTH")
+@NamedQuery(name = "TbMappBoardAuth.findAll", query = "SELECT t FROM TbMappBoardAuth t")
 public class TbMappBoardAuth implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private TbMappBoardAuthPK id;
 
-	@Column(name="READABLE_YN")
+	@Column(name = "READABLE_YN")
 	private byte readableYn;
 
-	@Column(name="WRITABLE_YN")
+	@Column(name = "WRITABLE_YN")
 	private byte writableYn;
 
 	public TbMappBoardAuth() {

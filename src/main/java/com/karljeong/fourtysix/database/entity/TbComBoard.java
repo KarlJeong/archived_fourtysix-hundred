@@ -1,65 +1,82 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.karljeong.fourtysix.utils.DateUtil;
 
 /**
  * The persistent class for the TB_COM_BOARD database table.
- * 
+ *
  */
 @Entity
-@Table(name="TB_COM_BOARD")
-@NamedQuery(name="TbComBoard.findAll", query="SELECT t FROM TbComBoard t")
+@Table(name = "TB_COM_BOARD")
+@NamedQuery(name = "TbComBoard.findAll", query = "SELECT t FROM TbComBoard t")
 public class TbComBoard implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="BOARD_ID")
-	private String boardId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "BOARD_ID")
+	private BigInteger boardId;
 
-	@Column(name="ARTICLE_COUNT")
+	@Column(name = "ARTICLE_COUNT", insertable = false, updatable = false)
 	private BigInteger articleCount;
 
-	@Column(name="BOARD_CODE")
+	@Column(name = "BOARD_CODE")
 	private String boardCode;
 
 	@Lob
-	@Column(name="BOARD_DESCRIPTION")
+	@Column(name = "BOARD_DESCRIPTION")
 	private String boardDescription;
 
-	@Column(name="BOARD_NAME")
+	@Column(name = "BOARD_NAME")
 	private String boardName;
 
-	@Column(name="CREATE_DATETIME")
-	private Timestamp createDatetime;
+	@Column(name = "CREATE_DATETIME", updatable = false)
+	private Timestamp createDatetime = DateUtil.getTimestamp();
 
-	@Column(name="CREATE_USER_ID")
+	@Column(name = "CREATE_USER_ID", updatable = false)
 	private BigInteger createUserId;
 
-	@Column(name="SYS_BOARD_YN")
+	@Column(name = "SYS_BOARD_YN")
 	private byte sysBoardYn;
 
-	@Column(name="UPDATE_DATETIME")
-	private Timestamp updateDatetime;
+	@Column(name = "UPDATE_DATETIME", insertable = false)
+	private Timestamp updateDatetime = DateUtil.getTimestamp();
 
-	@Column(name="UPDATE_USER_ID")
+	@Column(name = "UPDATE_USER_ID", insertable = false)
 	private BigInteger updateUserId;
 
-	@Column(name="USE_YN")
+	@Column(name = "USE_YN")
 	private byte useYn;
+
+	@Transient
+	private List<TbComAuth> tbComAuthWritable;
+
+	@Transient
+	private List<TbComAuth> tbComAuthReadable;
 
 	public TbComBoard() {
 	}
 
-	public String getBoardId() {
+	public BigInteger getBoardId() {
 		return this.boardId;
 	}
 
-	public void setBoardId(String boardId) {
+	public void setBoardId(BigInteger boardId) {
 		this.boardId = boardId;
 	}
 
@@ -141,6 +158,22 @@ public class TbComBoard implements Serializable {
 
 	public void setUseYn(byte useYn) {
 		this.useYn = useYn;
+	}
+
+	public List<TbComAuth> getTbComAuthWritable() {
+		return tbComAuthWritable;
+	}
+
+	public void setTbComAuthWritable(List<TbComAuth> tbComAuthWritable) {
+		this.tbComAuthWritable = tbComAuthWritable;
+	}
+
+	public List<TbComAuth> getTbComAuthReadable() {
+		return tbComAuthReadable;
+	}
+
+	public void setTbComAuthReadable(List<TbComAuth> tbComAuthReadable) {
+		this.tbComAuthReadable = tbComAuthReadable;
 	}
 
 }

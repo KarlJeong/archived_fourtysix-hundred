@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}">
+<head>
+<title>Auth List</title>
+<script defer th:src="@{/vendors/isotope/imagesloaded.pkgd.min.js}"></script>
+<script defer th:src="@{/vendors/isotope/isotope.pkgd.min.js}"></script>
+<script defer th:src="@{/vendors/liverty-admin/js/owl-carousel.js}"></script>
+<script defer type="text/javascript">
+    $(function() {
+        fnRetrieveBoard();
+    });
+    var fnRetrieveBoard = function() {
+        let searchForm = $("#searchForm");
+
+        if (searchForm[0] == null) {
+            return;
+        }
+
+        let url = "/v1/api/admin/board";
+        $.ajax({
+            type : "GET",
+            data : $("#searchForm").serializeObject(),
+            url : url
+        }).done(function(result) {
+            if ($.fn.DataTable.isDataTable('#board-table')) {
+                $('#board-table').DataTable().destroy();
+            }
+            fnCreateBoardTable(result.content)
+        }).fail(function(error) {
+            alert("error");
+            console.log(error);
+        });
+
+    }
+
+    var fnCreateBoardTable = function(data) {
+        var sysBoardYnStatus = {
+            0 : [ 'Service', 'danger' ],
+            1 : [ 'System', 'primary' ]
+        };
+
+        var useYnStatus = {
+            0 : [ 'Disuse', 'danger' ],
+            1 : [ 'Use', 'success' ]
+        };
+
+        $('#board-table').dataTable(
+                {
+                    data : data,
+                    "columns" : [ {
+                        "data" : "boardName"
+                    }, {
+                        "data" : "boardCode"
+                    }, {
+                        "data" : "articleCount"
+                    }, {
+                        "data" : "createDatetime"
+                    }, {
+                        "data" : "sysBoardYn"
+                    }, {
+                        "data" : "useYn"
+                    }  ],
+                    order : [ [ 3, 'desc' ] ],
+                    columnDefs : [ {
+                        targets : [ 4, 5 ],
+                        width : 80,
+                        className : 'text-center'
+                    } ],
+                    searching : false,
+                    createdRow : function(row, data, index) {
+                        $('td', row).eq(0).html('').append(
+                                '<a class="dt-alink" href="/admin/board/viewupdate/'+data["authId"]+'">'
+                                + data["boardName"] + '</a>');
+
+                        $('td', row).eq(1).html('').append(
+                                '<a class="dt-alink" href="/admin/board/viewupdate/'+data["authId"]+'">'
+                                + data["boardCode"] + '</a>');
+
+                        $('td', row).eq(2).html('').append(
+                                data["articleCount"]);
+
+                        $('td', row).eq(3).html('').append(
+                                data["createDatetime"]);
+
+                        $('td', row).eq(4).html('').append(
+                                '<label class="badge badge-' + sysBoardYnStatus[data["sysBoardYn"]][1] + '">'
+                                        + sysBoardYnStatus[data["sysBoardYn"]][0]
+                                        + '</label>');
+
+                        $('td', row).eq(5).html('').append(
+                                '<label class="badge badge-' + useYnStatus[data["useYn"]][1] + '">'
+                                        + useYnStatus[data["useYn"]][0]
+                                        + '</label>');
+                    }
+                });
+    }
+</script>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <h2>BOARD LIST</h2>
+                                    <a href="/admin/board/viewcreate" class="btn btn-sm btn-outline-info btn-fw mt-3"><i class="fa fa-plus-circle pr-2"></i>Create</a>
+                                </div>
+                                <div class="separator-2"></div>
+                                <div class="wrapper d-flex align-items-center py-3">
+                                    <form class="forms-sample w-100 mr-5" id="searchForm">
+                                        <div class="form-group row">
+                                            <div class="col-md-3">
+                                                <label>Board Code</label> <input type="text" name="boardCode" class="form-control">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Board Name</label> <input type="text" name="boardName" class="form-control">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>System Board</label> <select class="form-control" name="sysBoardYn">
+                                                    <option value="">All</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Use YN</label> <select class="form-control" name="useYn">
+                                                    <option value="">All</option>
+                                                    <option value="1">Yes</option>
+                                                    <option value="0">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="ml-auto px-1 py-1">
+                                        <button class="btn btn-info mt-3 mb-4" onClick="fnRetrieveBoard()">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-12 table-responsive">
+                                <table id="board-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Board Name</th>
+                                            <th>Board Code</th>
+                                            <th>Number of Article</th>
+                                            <th>Created at</th>
+                                            <th>System Board Yn</th>
+                                            <th>Use Yn</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>
