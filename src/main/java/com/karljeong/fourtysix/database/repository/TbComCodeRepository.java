@@ -16,7 +16,7 @@ import com.karljeong.fourtysix.database.entity.TbComCode;
 
 @RepositoryRestResource(collectionResourceRel = "codeEntity", path = "tbComCodeRepository")
 public interface TbComCodeRepository
-		extends PagingAndSortingRepository<TbComCode, Long>, JpaSpecificationExecutor<TbComCode> {
+		extends PagingAndSortingRepository<TbComCode, BigInteger>, JpaSpecificationExecutor<TbComCode> {
 
 	@Override
 	List<TbComCode> findAll();
@@ -26,6 +26,9 @@ public interface TbComCodeRepository
 
 	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId IS NULL")
 	List<TbComCode> findByCodeGroupIdNull();
+
+	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId IS NOT NULL AND c.useYn = 1")
+	List<TbComCode> findByCodeGroupIdNotNull();
 
 	@Query("SELECT c FROM TbComCode c WHERE c.codeGroupId = :codeGroupId")
 	List<TbComCode> findByCodeGroupId(@Param("codeGroupId") BigInteger codeGroupId);
@@ -44,6 +47,6 @@ public interface TbComCodeRepository
 	@Transactional
 	@Modifying
 	@Query("DELETE FROM TbComCode c WHERE c.codeId = :codeId")
-	int deleteById(@Param("codeId") BigInteger codeId);
+	void deleteById(@Param("codeId") BigInteger codeId);
 
 }

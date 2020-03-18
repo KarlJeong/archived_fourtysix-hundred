@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.karljeong.fourtysix.application.admin.code.service.CodeService;
 import com.karljeong.fourtysix.application.admin.codeGroup.service.CodeGroupService;
+import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
 
 @Controller
 @RequestMapping("/admin/codegroup")
@@ -17,20 +18,24 @@ public class CodeGroupController {
 
 	final CodeGroupService codeGroupService;
 	final CodeService codeService;
+	final LoadStatic loadStatic;
 
-	CodeGroupController(CodeGroupService codeGroupService, CodeService codeService) {
+	CodeGroupController(CodeGroupService codeGroupService, CodeService codeService, LoadStatic loadStatic) {
 		this.codeGroupService = codeGroupService;
 		this.codeService = codeService;
+		this.loadStatic = loadStatic;
 	}
 
 	@GetMapping("/viewmain")
-	public String viewMain() {
+	public String viewMain(Model model) {
+		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
 		return "/view/admin/codeGroup/codeGroup";
 	}
 
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
 		model.addAttribute("unselectedCodeList", codeService.findByCodeGroupIdNull());
+		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
 		return "/view/admin/codeGroup/codeGroupC";
 	}
 
@@ -38,6 +43,7 @@ public class CodeGroupController {
 	public String viewUpdate(Model model, @PathVariable("codeGroupId") BigInteger codeGroupId) {
 		model.addAttribute("mainInfo", codeGroupService.findById(codeGroupId));
 		model.addAttribute("unselectedCodeList", codeService.findByCodeGroupIdNull());
+		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
 		return "/view/admin/codeGroup/codeGroupU";
 	}
 

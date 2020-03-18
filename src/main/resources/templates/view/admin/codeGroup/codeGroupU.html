@@ -22,8 +22,7 @@
         var params = $("#baseForm").serializeObject();
         console.log(params);
         PromiseUtil.delete("/v1/api/admin/codegroup/" + $("#codeGroupId").val(), params)
-        .then(JSON.parse)
-        .then(function(d){
+        .then(function(){
         	alert("Deleted Successfully.");
         	window.location.href = "/admin/codegroup/viewmain";
         });
@@ -67,8 +66,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="useYn">Use YN</label> <select class="form-control" name="useYn" id="useYn" th:field="${mainInfo.useYn}">
-                                            <option value="1">Use</option>
-                                            <option value="0">Disuse</option>
+                                            <option th:each="code : ${codeUseYn}" th:value="${code.codeValue}" th:text="${code.codeName}"></option>
                                         </select>
                                     </div>
                                 </form>

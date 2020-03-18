@@ -46,7 +46,7 @@
                                       <label for="includingCodes">Code Group Belonging to</label>
                                       <select class="js-example-basic-multiple" name="codeGroupId" style="width:100%">
                                         <option value="">-- SELECT --</option>
-                                        <option th:each="codeGroups : ${codeGroupList}" th:value="${codeGroups.codeGroupId}" th:text="|[${codeGroups.codeGroupType}] ${codeGroups.codeGroupName} - ${codeGroups.codeGroupName}|"></option>
+                                        <option th:each="codeGroups : ${codeGroupList}" th:value="${codeGroups.codeGroupId}" th:text="|[${codeGroups.codeGroupType}] ${codeGroups.codeGroupValue} - ${codeGroups.codeGroupName}|"></option>
                                       </select>
                                     </div>
                                     <div class="form-group">
@@ -55,8 +55,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="useYn">Use YN</label> <select class="form-control" name="useYn" id="useYn">
-                                            <option value="1">Use</option>
-                                            <option value="0">Disuse</option>
+                                        <option th:each="code : ${codeUseYn}" th:value="${code.codeValue}" th:text="${code.codeName}"></option>
                                         </select>
                                     </div>
                                 </form>

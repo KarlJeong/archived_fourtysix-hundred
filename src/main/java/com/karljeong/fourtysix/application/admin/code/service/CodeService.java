@@ -69,7 +69,7 @@ public class CodeService {
 		return tbComCodeRepository.save(tbComCode);
 	}
 
-	public int delete(BigInteger codeId) {
-		return tbComCodeRepository.deleteById(codeId);
+	public void delete(BigInteger codeId) {
+		tbComCodeRepository.deleteById(codeId);
 	}
 }

@@ -43,7 +43,7 @@ public class CodeRestController {
 	}
 
 	@DeleteMapping("/{codeId}")
-	public int delete(@PathVariable("codeId") BigInteger codeId) {
-		return codeService.delete(codeId);
+	public void delete(@PathVariable("codeId") BigInteger codeId) {
+		codeService.delete(codeId);
 	}
 }

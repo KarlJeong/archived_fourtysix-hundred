@@ -55,9 +55,11 @@ public class CodeGroupService {
 		tbComCodeGroup.setCreateUserId(BigInteger.valueOf(11111));
 		TbComCodeGroup save = tbComCodeGroupRepository.save(tbComCodeGroup);
 		List<TbComCode> tbComCodes = tbComCodeGroup.getTbComCodes();
-		for (TbComCode tbComCode : tbComCodes) {
-			tbComCodeRepository.saveCodeGroupId(BigInteger.valueOf(11111), tbComCode.getCodeId(),
-					tbComCodeGroup.getCodeGroupId());
+		if (tbComCodes != null && !tbComCodes.isEmpty()) {
+			for (TbComCode tbComCode : tbComCodes) {
+				tbComCodeRepository.saveCodeGroupId(BigInteger.valueOf(11111), tbComCode.getCodeId(),
+						tbComCodeGroup.getCodeGroupId());
+			}
 		}
 		return save;
 	}
@@ -67,7 +69,7 @@ public class CodeGroupService {
 		TbComCodeGroup save = tbComCodeGroupRepository.save(tbComCodeGroup);
 		List<TbComCode> tbComCodes = tbComCodeGroup.getTbComCodes();
 
-		if (tbComCodes.size() > 0) {
+		if (tbComCodes != null && !tbComCodes.isEmpty()) {
 			tbComCodeRepository.deleteCodeGroupId(BigInteger.valueOf(11111), tbComCodeGroup.getCodeGroupId());
 
 			for (TbComCode tbComCode : tbComCodes) {

@@ -125,8 +125,7 @@
                                             <div class="col-md-4 col-lg-2">
                                                 <label>Use YN</label> <select class="form-control" name="useYn">
                                                     <option value="">All</option>
-                                                    <option value="1">Yes</option>
-                                                    <option value="0">No</option>
+                                                    <option th:each="code : ${codeUseYn}" th:value="${code.codeValue}" th:text="${code.codeName}"></option>
                                                 </select>
                                             </div>
                                         </div>

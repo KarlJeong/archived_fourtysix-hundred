@@ -188,14 +188,12 @@ function fnDelete() {
                                             </div>
                                             <div class="form-group">
                                                 <label for="menuType">Menu Type</label> <select class="form-control" id="menuType" name="menuType">
-                                                    <option value="SERVICE">SERVICE</option>
-                                                    <option value="SYSTEM">SYSTEM</option>
+                                                	<option th:each="code : ${codeMenuType}" th:value="${code.codeValue}" th:text="${code.codeName}"></option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
                                                 <label for="useYn">Use YN</label> <select class="form-control" id="useYn" name="useYn">
-                                                    <option value="1">USE</option>
-                                                    <option value="0">DISUSE</option>
+                                                	<option th:each="code : ${codeUseYn}" th:value="${code.codeValue}" th:text="${code.codeName}"></option>
                                                 </select>
                                             </div>
                                         </form>

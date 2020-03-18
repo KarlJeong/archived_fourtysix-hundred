@@ -50,8 +50,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="useYn">Use YN</label> <select class="form-control" name="useYn" id="useYn">
-                                            <option value="1">Use</option>
-                                            <option value="0">Disuse</option>
+                                            <option th:each="code : ${codeUseYn}" th:value="${code.codeValue}" th:text="${code.codeName}"></option>
                                         </select>
                                     </div>
                                 </form>
