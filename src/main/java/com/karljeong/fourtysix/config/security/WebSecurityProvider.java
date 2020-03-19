@@ -33,9 +33,7 @@ public class WebSecurityProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         logger.info(" :: Login with Spring Security Begins :: ");
-
         TbComUser tbComUser = this.getUserInfo(authentication.getName(), (String) authentication.getCredentials());
-
         if (tbComUser == null) {
             throw new BadCredentialsException("Invalid Id or Password.");
         }

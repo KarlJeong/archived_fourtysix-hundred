@@ -12,18 +12,22 @@ import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbComCode;
 import com.karljeong.fourtysix.database.entity.TbComCodeGroup;
+import com.karljeong.fourtysix.database.entity.TbComMenu;
 import com.karljeong.fourtysix.database.repository.TbComCodeGroupRepository;
 import com.karljeong.fourtysix.database.repository.TbComCodeRepository;
+import com.karljeong.fourtysix.database.repository.TbComMenuRepository;
 
 @Service
 public class LoadStaticService {
 
 	TbComCodeRepository tbComCodeRepository;
 	TbComCodeGroupRepository tbComCodeGroupRepository;
+	TbComMenuRepository tbComMenuRepository;
 
-	LoadStaticService(TbComCodeRepository tbComCodeRepository, TbComCodeGroupRepository tbComCodeGroupRepository) {
+	LoadStaticService(TbComCodeRepository tbComCodeRepository, TbComCodeGroupRepository tbComCodeGroupRepository, TbComMenuRepository tbComMenuRepository) {
 		this.tbComCodeRepository = tbComCodeRepository;
 		this.tbComCodeGroupRepository = tbComCodeGroupRepository;
+		this.tbComMenuRepository = tbComMenuRepository;
 	}
 
 	public Map<String, Map<String, Object>> loadSystemCode() {
@@ -64,4 +68,9 @@ public class LoadStaticService {
 
 		return systemCodes;
 	}
+
+	public List<TbComMenu> loadMenu(String menuType) {
+        return tbComMenuRepository.findAll(menuType);
+
+    }
 }

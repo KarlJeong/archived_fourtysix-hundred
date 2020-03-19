@@ -72,6 +72,9 @@ public class TbComMenu implements Serializable {
     @Transient
     private String priorMenuName;
 
+    @Transient
+    private String displayOrder;
+
 	public TbComMenu() {
 	}
 
@@ -186,6 +189,16 @@ public class TbComMenu implements Serializable {
     public void setPriorMenuName(String priorMenuName) {
         this.priorMenuName = priorMenuName;
     }
+
+    public String getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(String displayOrder) {
+        this.displayOrder = displayOrder;
+    }
+
+
 
 
 

@@ -1,5 +1,8 @@
 package com.karljeong.fourtysix.config.intercepter;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -8,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Component;
@@ -20,57 +24,64 @@ import com.karljeong.fourtysix.database.entity.TbComUser;
 @Component
 public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
 
-	Logger logger = LoggerFactory.getLogger(getClass());
+    Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Autowired
-	LoadStatic loadStatic;
+    @Autowired
+    LoadStatic loadStatic;
 
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		super.afterCompletion(request, response, handler, ex);
-	}
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+        super.afterCompletion(request, response, handler, ex);
+    }
 
-	@Override
-	public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		super.afterConcurrentHandlingStarted(request, response, handler);
-	}
+    @Override
+    public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        super.afterConcurrentHandlingStarted(request, response, handler);
+    }
 
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		super.postHandle(request, response, handler, modelAndView);
-	}
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+            ModelAndView modelAndView) throws Exception {
+        super.postHandle(request, response, handler, modelAndView);
+    }
 
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		logger.info("Page PRE BEGIN-----------------------------");
-		HttpSession session = request.getSession();
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
+        logger.info("Page PRE BEGIN-----------------------------");
+        HttpSession session = request.getSession();
 
-		if (session != null
-				&& session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY) != null) {
+        if (session != null
+                && session.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY) != null) {
 
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-			if (authentication != null) {
+            if (authentication != null) {
 
-				TbComUser userDto = (TbComUser) authentication.getPrincipal();
-				setUserInfoSession(request, userDto);
+                TbComUser tbComUser = (TbComUser) authentication.getPrincipal();
+                setUserInfoSession(request, tbComUser);
 
-			}
+                Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-		}
-		logger.info("Page PRE END-----------------------------");
-		return super.preHandle(request, response, handler);
-	}
+                Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+                while (iter.hasNext()) {
+                    GrantedAuthority auth = iter.next();
+                    System.out.println(":::::::::::::: " + auth.getAuthority());
+                }
 
+            }
 
-	private void setUserInfoSession(HttpServletRequest request, TbComUser tbComUser) {
-		request.setAttribute("userId", tbComUser.getUserId());
-		request.setAttribute("loginId", tbComUser.getLoginId());
-		request.setAttribute("userNickName", tbComUser.getUserNickname());
-	}
+        }
+        logger.info("Page PRE END-----------------------------");
+        return super.preHandle(request, response, handler);
+    }
+
+    private void setUserInfoSession(HttpServletRequest request, TbComUser tbComUser) {
+        request.setAttribute("userId", tbComUser.getUserId());
+        request.setAttribute("loginId", tbComUser.getLoginId());
+        request.setAttribute("userNickName", tbComUser.getUserNickname());
+    }
 
 }

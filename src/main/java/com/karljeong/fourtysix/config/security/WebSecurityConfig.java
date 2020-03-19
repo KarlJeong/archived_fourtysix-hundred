@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/js/**", "/vendors/**, /v1/**");
+		web.ignoring().antMatchers("/js/**", "/vendors/**", "/v1/**");
 	}
 
     @Override
@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll();
 
 		http.formLogin().loginPage("/login") // default
-				.loginProcessingUrl("/login/security") // Login Process URL, Same URL should be called in login page
+				.loginProcessingUrl("/loginsecurity") // Login Process URL, Same URL should be called in login page
 				.failureUrl("/login?error") // default
 				.defaultSuccessUrl("/login/success") //
 				.usernameParameter("loginId") //

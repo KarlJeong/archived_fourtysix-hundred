@@ -14,11 +14,11 @@
         <div class="row w-100 mx-auto">
             <div class="col-lg-4 mx-auto">
                 <div class="auto-form-wrapper">
-                    <form  id="loginForm" action="/login/security" method="POST">
+                    <form  id="loginForm" action="/loginsecurity" method="POST">
                         <div class="form-group">
                             <label class="label">Email</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Email">
+                                <input type="text" id="loginId" name="loginId" class="form-control" placeholder="Email">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="mdi mdi-check-circle-outline"></i></span>
                                 </div>
@@ -27,7 +27,8 @@
                         <div class="form-group">
                             <label class="label">Password</label>
                             <div class="input-group">
-                                <input type="password" class="form-control" placeholder="*********">
+                                <input type="password" id="password" name="password" class="form-control" placeholder="*********">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="mdi mdi-check-circle-outline"></i></span>
                                 </div>
