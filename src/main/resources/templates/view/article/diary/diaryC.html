@@ -11,10 +11,10 @@
     <script defer th:src="@{/vendors/liverty-admin/js/template.js}"></script>
     <script defer type="text/javascript">
     $(function() {
-        'use strict';
         $('#articleContents').summernote({
             height : 500,
             tabsize : 2,
+            insertImage : "/file",
             toolbar : [
                 [ 'style', [ 'style' ] ],
                 [ 'font', [ 'bold', 'italic', 'underline', 'clear' ] ],

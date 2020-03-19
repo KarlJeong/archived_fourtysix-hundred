@@ -1,4 +1,4 @@
-package com.karljeong.fourtysix.application.admin.category.controller;
+package com.karljeong.fourtysix.application.admin.category.diary.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
