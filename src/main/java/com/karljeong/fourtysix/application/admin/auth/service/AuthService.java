@@ -44,7 +44,7 @@ public class AuthService {
 				: tbComAuthRepository.findAll(TbComAuthSpec.searchWithKeys(searchKeys), pageable);
 
 		for (TbComAuth tbComAuth : tbComAuthList) {
-			tbComAuth.setTbComUsers(tbMappUserAuthRepository.findByAuthId(tbComAuth.getAuthId()));
+			tbComAuth.setTbComUsers(tbMappUserAuthRepository.findUsersByAuthId(tbComAuth.getAuthId()));
 		}
 
 		return tbComAuthList;
@@ -56,7 +56,7 @@ public class AuthService {
 
 	public TbComAuth findById(BigInteger authId) {
 		TbComAuth tbComAuth = tbComAuthRepository.findByAuthId(authId);
-		tbComAuth.setTbComUsers(tbMappUserAuthRepository.findByAuthId(tbComAuth.getAuthId()));
+		tbComAuth.setTbComUsers(tbMappUserAuthRepository.findUsersByAuthId(tbComAuth.getAuthId()));
 		return tbComAuth;
 	}
 

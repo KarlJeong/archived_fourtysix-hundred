@@ -5,6 +5,7 @@ PromiseUtil.get = function(url) {
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
+        req.setRequestHeader($("meta[name='_csrf_header']").attr("content"),  $("meta[name='_csrf']").attr("content"));
         req.open('GET', url);
 
         req.onload = function() {
@@ -37,6 +38,7 @@ PromiseUtil.post = function(url, params) {
         var req = new XMLHttpRequest();
         req.open('POST', url);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.setRequestHeader($("meta[name='_csrf_header']").attr("content"),  $("meta[name='_csrf']").attr("content"));
         req.onload = function() {
             // This is called even on 404 etc
             // so check the status
@@ -67,6 +69,7 @@ PromiseUtil.delete = function(url, params) {
         var req = new XMLHttpRequest();
         req.open('DELETE', url);
         req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        req.setRequestHeader($("meta[name='_csrf_header']").attr("content"),  $("meta[name='_csrf']").attr("content"));
         req.onload = function() {
             // This is called even on 404 etc
             // so check the status
@@ -95,6 +98,7 @@ PromiseUtil.postWithFile = function(url, params) {
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
+        req.setRequestHeader($("meta[name='_csrf_header']").attr("content"),  $("meta[name='_csrf']").attr("content"));
         req.open('POST', url);
         req.onload = function() {
             // This is called even on 404 etc
@@ -124,3 +128,9 @@ PromiseUtil.getJson = function(url) {
 }
 
 window.PromiseUtil = PromiseUtil;
+
+$(function() {
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+    });
+});

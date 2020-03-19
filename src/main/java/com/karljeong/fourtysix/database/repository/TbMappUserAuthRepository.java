@@ -12,6 +12,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import com.karljeong.fourtysix.database.entity.TbComAuth;
 import com.karljeong.fourtysix.database.entity.TbComUser;
 import com.karljeong.fourtysix.database.entity.TbMappUserAuth;
 import com.karljeong.fourtysix.database.entity.TbMappUserAuthPK;
@@ -21,7 +22,10 @@ public interface TbMappUserAuthRepository
 		extends PagingAndSortingRepository<TbMappUserAuth, TbMappUserAuthPK>, JpaSpecificationExecutor<TbMappUserAuth> {
 
     @Query("SELECT u FROM TbMappUserAuth c INNER JOIN TbComUser u ON u.userId = c.id.userId WHERE c.id.authId = :authId")
-    List<TbComUser> findByAuthId(@Param("authId") BigInteger authId);
+    List<TbComUser> findUsersByAuthId(@Param("authId") BigInteger authId);
+
+    @Query("SELECT u FROM TbMappUserAuth c INNER JOIN TbComAuth u ON u.authId = c.id.authId WHERE c.id.userId = :userId")
+    List<TbComAuth> findAuthsByUserId(@Param("userId") BigInteger userId);
 
     @Transactional
     @Modifying
