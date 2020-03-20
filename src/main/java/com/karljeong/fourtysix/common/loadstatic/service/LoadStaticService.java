@@ -10,9 +10,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.karljeong.fourtysix.database.entity.TbComAuth;
 import com.karljeong.fourtysix.database.entity.TbComCode;
 import com.karljeong.fourtysix.database.entity.TbComCodeGroup;
 import com.karljeong.fourtysix.database.entity.TbComMenu;
+import com.karljeong.fourtysix.database.repository.TbComAuthRepository;
 import com.karljeong.fourtysix.database.repository.TbComCodeGroupRepository;
 import com.karljeong.fourtysix.database.repository.TbComCodeRepository;
 import com.karljeong.fourtysix.database.repository.TbComMenuRepository;
@@ -23,11 +25,13 @@ public class LoadStaticService {
 	TbComCodeRepository tbComCodeRepository;
 	TbComCodeGroupRepository tbComCodeGroupRepository;
 	TbComMenuRepository tbComMenuRepository;
+	TbComAuthRepository tbComAuthRepository;
 
-	LoadStaticService(TbComCodeRepository tbComCodeRepository, TbComCodeGroupRepository tbComCodeGroupRepository, TbComMenuRepository tbComMenuRepository) {
+	LoadStaticService(TbComCodeRepository tbComCodeRepository, TbComCodeGroupRepository tbComCodeGroupRepository, TbComMenuRepository tbComMenuRepository, TbComAuthRepository tbComAuthRepository) {
 		this.tbComCodeRepository = tbComCodeRepository;
 		this.tbComCodeGroupRepository = tbComCodeGroupRepository;
 		this.tbComMenuRepository = tbComMenuRepository;
+		this.tbComAuthRepository = tbComAuthRepository;
 	}
 
 	public Map<String, Map<String, Object>> loadSystemCode() {
@@ -69,8 +73,78 @@ public class LoadStaticService {
 		return systemCodes;
 	}
 
-	public List<TbComMenu> loadMenu(String menuType) {
-        return tbComMenuRepository.findAll(menuType);
+	public List<Map<String, Object>> loadMenu(String menuType) {
+	    List<TbComMenu> tbComMenus = tbComMenuRepository.findAll(menuType);
+	    List<Map<String, Object>> hierarchyMenu = new ArrayList<Map<String, Object>>();
+
+	    Map<String, Object> menuLv1 = new HashMap<String, Object>();
+	    Map<String, Object> menuLv2 = new HashMap<String, Object>();
+	    ArrayList<Map<String, Object>> menuLv2List = new ArrayList<Map<String, Object>>();
+	    ArrayList<Map<String, Object>> menuLv3List = new ArrayList<Map<String, Object>>();
+
+	    int prevHandledLevel = 0;
+	    for (int i = 0 ; i < tbComMenus.size(); i++) {
+	        TbComMenu tbComMenu = tbComMenus.get(i);
+
+	        if (tbComMenu.getMenuLevel() == 1) {
+	            if (prevHandledLevel > tbComMenu.getMenuLevel()) {
+	                menuLv1.put("child", menuLv2List.clone());
+	                menuLv2List.clear();
+	                hierarchyMenu.add(menuLv1);
+	            } else if (prevHandledLevel == tbComMenu.getMenuLevel()) {
+	                menuLv2List.clear();
+                    hierarchyMenu.add(menuLv1);
+	            }else if ( ( i + 1 ) == tbComMenus.size() ) {
+	                System.out.println("Last level1");
+	                menuLv1 = this.setMenuProp(tbComMenu);
+                    hierarchyMenu.add(menuLv1);
+                }
+	            menuLv1 = this.setMenuProp(tbComMenu);
+	        } else if (tbComMenu.getMenuLevel() == 2) {
+	            if (prevHandledLevel > tbComMenu.getMenuLevel()) {
+	                menuLv2.put("child", menuLv3List.clone());
+	                menuLv3List.clear();
+	                menuLv2List.add(menuLv2);
+	            }
+	            menuLv2 = this.setMenuProp(tbComMenu);
+	        } else if (tbComMenu.getMenuLevel() == 3) {
+                menuLv3List.add(this.setMenuProp(tbComMenu));
+	        }
+
+	        if ( tbComMenu.getMenuLevel() > 1 && (i + 1) == tbComMenus.size() ) {
+	            System.out.println("Last not level1");
+	            menuLv1.put("child", menuLv2List.clone());
+	            hierarchyMenu.add(menuLv1);
+	        }
+	        System.out.println(tbComMenu.getMenuName() + " :::: " + tbComMenu.getMenuLevel() + " :::: " + tbComMenu.getMenuOrder());
+
+	        prevHandledLevel = tbComMenu.getMenuLevel();
+	    }
+
+	    for (int i = 0 ; i < hierarchyMenu.size(); i++) {
+	        Map<String, Object> m = hierarchyMenu.get(i);
+	        for (String key : m.keySet()) {
+	            System.out.println(key + " >>>>>>>>>>>>>>>> " + m.get(key));
+	        }
+	    }
+
+        return hierarchyMenu;
+
+    }
+
+	private Map<String, Object> setMenuProp(TbComMenu tbComMenu) {
+	    Map<String, Object> menu = new HashMap<String, Object>();
+	    menu.put("menuId", tbComMenu.getMenuId());
+	    menu.put("menuLevel", tbComMenu.getMenuLevel());
+	    menu.put("menuName", tbComMenu.getMenuName());
+	    menu.put("menuOrder", tbComMenu.getMenuOrder());
+	    menu.put("menuPath", tbComMenu.getMenuPath());
+	    menu.put("menuType", tbComMenu.getMenuType());
+	    return menu;
+	}
+
+    public List<TbComAuth> loadAuthority() {
+        return tbComAuthRepository.findAll();
 
     }
 }

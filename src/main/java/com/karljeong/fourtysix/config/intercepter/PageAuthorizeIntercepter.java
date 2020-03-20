@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,8 +25,11 @@ public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    LoadStatic loadStatic;
+    final LoadStatic loadStatic;
+
+    PageAuthorizeIntercepter(LoadStatic loadStatic) {
+        this.loadStatic= loadStatic;
+    }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
@@ -65,12 +67,22 @@ public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
 
                 Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-                Iterator<? extends GrantedAuthority> iter = authorities.iterator();
-                while (iter.hasNext()) {
-                    GrantedAuthority auth = iter.next();
-                    System.out.println(":::::::::::::: " + auth.getAuthority());
-                }
+                if (!hasMenuList(request)) {
+                    System.out.println("Service Menu Set Begin");
+                    request.setAttribute("serviceMenuList", loadStatic.getServiceMenuList());
 
+                    Iterator<? extends GrantedAuthority> iter = authorities.iterator();
+                    while (iter.hasNext()) {
+                        GrantedAuthority gaIter = iter.next();
+                        String auth = gaIter.getAuthority();
+                        if (auth != null && "ROLE_ADMIN".equals(auth)) {
+                            System.out.println("System Menu Set Begin");
+                            request.setAttribute("systemMenuList", loadStatic.getSystemMenuList());
+                            System.out.println(loadStatic.getSystemMenuList().size());
+                            System.out.println(loadStatic.getServiceMenuList().size());
+                        }
+                    }
+                }
             }
 
         }
@@ -82,6 +94,18 @@ public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
         request.setAttribute("userId", tbComUser.getUserId());
         request.setAttribute("loginId", tbComUser.getLoginId());
         request.setAttribute("userNickName", tbComUser.getUserNickname());
+    }
+
+    private Boolean hasMenuList(HttpServletRequest request) {
+        if (request.getAttribute("systemMenuList") != null) {
+            return true;
+        }
+
+        if (request.getAttribute("serviceMenuList") != null) {
+            return true;
+        }
+
+        return false;
     }
 
 }

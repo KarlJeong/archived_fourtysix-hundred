@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import com.karljeong.fourtysix.common.loadstatic.service.LoadStaticService;
-import com.karljeong.fourtysix.database.entity.TbComMenu;
+import com.karljeong.fourtysix.database.entity.TbComAuth;
 
 @Component
 public class LoadStatic {
@@ -20,8 +20,9 @@ public class LoadStatic {
 	}
 
 	private Map<String, Map<String, Object>> systemCode;
-	private List<TbComMenu> systemMenuList;
-	private List<TbComMenu> serviceMenuList;
+	private List<TbComAuth> authorityList;
+	private List<Map<String, Object>> systemMenuList;
+	private List<Map<String, Object>> serviceMenuList;
 
 	@PostConstruct
 	private void setSystemCode() {
@@ -37,6 +38,19 @@ public class LoadStatic {
 	}
 
     @PostConstruct
+    private void setAuthorityList() {
+        this.authorityList = loadStaticService.loadAuthority();
+    }
+
+    public void resetAuthorityList() {
+        this.authorityList = loadStaticService.loadAuthority();
+    }
+
+    public List<TbComAuth> getAuthorityList() {
+        return authorityList;
+    }
+
+    @PostConstruct
     private void setSystemMenuList() {
         this.systemMenuList = loadStaticService.loadMenu("SYSTEM");
     }
@@ -45,7 +59,7 @@ public class LoadStatic {
         this.systemMenuList = loadStaticService.loadMenu("SYSTEM");
     }
 
-    public List<TbComMenu> getSystemMenuList() {
+    public List<Map<String, Object>> getSystemMenuList() {
         return systemMenuList;
     }
 
@@ -58,7 +72,7 @@ public class LoadStatic {
         this.serviceMenuList = loadStaticService.loadMenu("SERVICE");
     }
 
-    public List<TbComMenu> getServiceMenuList() {
+    public List<Map<String, Object>> getServiceMenuList() {
         return serviceMenuList;
     }
 

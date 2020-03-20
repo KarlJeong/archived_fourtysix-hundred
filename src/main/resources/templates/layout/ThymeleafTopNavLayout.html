@@ -98,22 +98,21 @@
             <div class="nav-bottom">
                 <div class="container">
                     <ul class="nav page-navigation">
-                        <li class="nav-item">
-                            <a href="diary.html" class="nav-link">
-                                <i class="link-icon fa fa-television"></i>
-                                <span class="menu-title">DIARY</span>
+                        <li class="nav-item" th:each="serviceMenuLv1 : ${serviceMenuList}">
+                            <a th:href="${serviceMenuLv1.menuPath}" class="nav-link">
+                                <span class="menu-title" th:text="${serviceMenuLv1.menuName}"></span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
-                                <i class="link-icon fa fa-safari"></i>
-                                <span class="menu-title">WIDGETS</span>
+                        <li class="nav-item" th:each="systemMenuLv1 : ${systemMenuList}">
+                            <a th:href="${systemMenuLv1.menuPath}" class="nav-link">
+                                <span class="menu-title" th:text="${systemMenuLv1.menuName}"></span>
+                                <i class="menu-arrow" th:if="${systemMenuLv1.child}"></i>
                             </a>
                         </li>
                         <li class="nav-item mega-menu">
                             <a href="#" class="nav-link">
                                 <i class="link-icon fa fa-html5"></i>
-                                <span class="menu-title">ADMIN</span>
+                                <span class="menu-title">BB</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="submenu">
