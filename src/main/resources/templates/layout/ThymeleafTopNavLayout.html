@@ -103,86 +103,26 @@
                                 <span class="menu-title" th:text="${serviceMenuLv1.menuName}"></span>
                             </a>
                         </li>
-                        <li class="nav-item" th:each="systemMenuLv1 : ${systemMenuList}">
+                        <li class="nav-item" th:each="systemMenuLv1 : ${systemMenuList}" th:classappend="${systemMenuLv1.child} ? mega-menu : ''">
                             <a th:href="${systemMenuLv1.menuPath}" class="nav-link">
                                 <span class="menu-title" th:text="${systemMenuLv1.menuName}"></span>
                                 <i class="menu-arrow" th:if="${systemMenuLv1.child}"></i>
                             </a>
-                        </li>
-                        <li class="nav-item mega-menu">
-                            <a href="#" class="nav-link">
-                                <i class="link-icon fa fa-html5"></i>
-                                <span class="menu-title">BB</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="submenu">
-                                <div class="col-group-wrapper row">
-                                    <div class="col-group col-2">
+                            <div class="submenu" th:if="${systemMenuLv1.child}">
+                            	<div class="col-group-wrapper row">
+                            		<div class="col-group col-2" th:each="systemMenuLv2 : ${systemMenuLv1.child}">
                                         <div class="row">
                                             <div class="col-12">
-                                                <p class="category-heading">Board Management</p>
+                                                <p class="category-heading" th:text="${systemMenuLv2.menuName}"></p>
                                             </div>
                                             <div class="col-12">
                                                 <ul class="submenu-item">
-                                                    <li class="nav-item"><a class="nav-link" href="#">Category</a></li>
-                                                    <li class="nav-item"><a class="nav-link" href="#">Common Board</a></li>
-                                                    <li class="nav-item"><a class="nav-link" href="#">Common Article</a></li>
-                                                    <li class="nav-item"><a class="nav-link" href="#">Service Board</a></li>
-                                                    <li class="nav-item"><a class="nav-link" href="#">Service Article</a></li>
+                                                    <li class="nav-item" th:each="systemMenuLv3 : ${systemMenuLv2.child}"><a class="nav-link" th:href="${systemMenuLv3.menuPath}" th:text="${systemMenuLv3.menuName}"></a></li>
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-group col-2">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="category-heading">Code Management</p>
-                                            </div>
-                                            <div class="col-12">
-                                                <ul class="submenu-item">
-                                                    <li class="nav-item"><a class="nav-link" href="/admin/codegroup/viewmain">Code Group</a></li>
-                                                    <li class="nav-item"><a class="nav-link" href="/admin/code/viewmain">Code</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-group col-2">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="category-heading">Menu Management</p>
-                                            </div>
-                                            <div class="col-12">
-                                                <ul class="submenu-item">
-                                                    <li class="nav-item"><a class="nav-link" href="/admin/menu/viewmain">Menu</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-group col-2">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="category-heading">Authority Management</p>
-                                            </div>
-                                            <div class="col-12">
-                                                <ul class="submenu-item">
-                                                    <li class="nav-item"><a class="nav-link" href="/admin/auth/viewmain">Authority</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-group col-2">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <p class="category-heading">User Management</p>
-                                            </div>
-                                            <div class="col-12">
-                                                <ul class="submenu-item">
-                                                    <li class="nav-item"><a class="nav-link" href="#">User</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            		</div>
+                            	</div>
                             </div>
                         </li>
                     </ul>
