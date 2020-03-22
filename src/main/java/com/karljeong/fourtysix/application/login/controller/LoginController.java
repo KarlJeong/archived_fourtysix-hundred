@@ -18,10 +18,10 @@ import com.karljeong.fourtysix.utils.UserUtil;
 @RequestMapping("/login")
 public class LoginController {
 
-    final ServletContext servletContext;
+	final ServletContext servletContext;
 
-    LoginController(ServletContext servletContext) {
-        this.servletContext = servletContext;
+	LoginController(ServletContext servletContext) {
+		this.servletContext = servletContext;
 	}
 
 	@GetMapping
@@ -29,10 +29,15 @@ public class LoginController {
 		return "/view/login/login";
 	}
 
-    @GetMapping("/success")
-    public void redirectLoginSuccess(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        TbComUser tbComUser  = UserUtil.getUserInfo(request);
-        response.sendRedirect(servletContext.getContextPath() + "/admin/menu/viewmain");
-    }
+	@GetMapping("/f")
+	public String viewFMain(Model model) {
+		return "/view/login/FacebookLogin";
+	}
+
+	@GetMapping("/success")
+	public void redirectLoginSuccess(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		TbComUser tbComUser = UserUtil.getUserInfo(request);
+		response.sendRedirect(servletContext.getContextPath() + "/admin/menu/viewmain");
+	}
 
 }
