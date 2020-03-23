@@ -34,6 +34,11 @@ function facebookLogin() {
 	        PromiseUtil.post("/v1/api/login/f", params)
 	        .then(JSON.parse)
 	        .then(function(d){
+            	if (["SUCCESS_REDIRECT", "FAIL_REDIRECT"].indexOf(d.resultCd) >= 0) {
+            		alert(d.resultMsg);
+            		window.location.href = d.linkUrl;
+            		return;
+            	}
 	        	alert("Saved successfully.");
 	        });
 

@@ -5,8 +5,8 @@ PromiseUtil.get = function(url) {
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
-        req.setRequestHeader($("meta[name='_csrf_header']").attr("content"),  $("meta[name='_csrf']").attr("content"));
         req.open('GET', url);
+        req.setRequestHeader($("meta[name='_csrf_header']").attr("content"),  $("meta[name='_csrf']").attr("content"));
 
         req.onload = function() {
             // This is called even on 404 etc
@@ -44,12 +44,6 @@ PromiseUtil.post = function(url, params) {
             // so check the status
             if (req.status == 200) {
                 // Resolve the promise with the response text
-            	var res = JSON.parse(req.response);
-            	if (["SUCCESS_REDIRECT", "FAIL_REDIRECT"].indexOf(res.resultCd) >= 0) {
-            		alert(res.resultMsg);
-            		window.location.href = res.linkUrl;
-            		return;
-            	}
                 resolve(req.response);
             } else {
                 // Otherwise reject with the status text
