@@ -1,4 +1,4 @@
-package com.karljeong.fourtysix.application.login.service;
+package com.karljeong.fourtysix.application.signin.service;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -14,14 +14,14 @@ import com.karljeong.fourtysix.database.repository.TbComUserRepository;
 import com.karljeong.fourtysix.database.repository.TbMappUserAuthRepository;
 
 @Service
-public class LoginService {
+public class SigninService {
 
 	final TbComUserRepository tbComUserRepository;
 	final TbComUserBanRepository tbComUserBanRepository;
 	final TbComAuthRepository tbComAuthRepository;
 	final TbMappUserAuthRepository tbMappUserAuthRepository;
 
-	LoginService(TbComUserRepository tbComUserRepository, TbComUserBanRepository tbComUserBanRepository,
+	SigninService(TbComUserRepository tbComUserRepository, TbComUserBanRepository tbComUserBanRepository,
 			TbComAuthRepository tbComAuthRepository, TbMappUserAuthRepository tbMappUserAuthRepository) {
 		this.tbComUserRepository = tbComUserRepository;
 		this.tbComUserBanRepository = tbComUserBanRepository;

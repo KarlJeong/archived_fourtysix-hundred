@@ -20,7 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Component;
 
-import com.karljeong.fourtysix.application.login.service.LoginService;
+import com.karljeong.fourtysix.application.signin.service.SigninService;
 import com.karljeong.fourtysix.common.dto.ResultDto;
 import com.karljeong.fourtysix.common.dto.ResultDto.ResultCodeEnum;
 import com.karljeong.fourtysix.database.entity.TbComAuth;
@@ -32,10 +32,10 @@ public class WebSecurityProvider implements AuthenticationProvider {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	final LoginService loginService;
+	final SigninService signinService;
 
-	WebSecurityProvider(LoginService loginService) {
-		this.loginService = loginService;
+	WebSecurityProvider(SigninService signinService) {
+		this.signinService = signinService;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class WebSecurityProvider implements AuthenticationProvider {
 		return new UsernamePasswordAuthenticationToken(tbComUser, null, this.getAuthorities(tbComAuths));
 	}
 
-	public ResultDto googleAuthenticate(User faebookUser, HttpServletRequest req) {
+	public ResultDto facebookAuthenticate(User faebookUser, HttpServletRequest req) {
 		SecurityContext sc = SecurityContextHolder.getContext();
 
 		TbComUser tbComUser = this.getUserInfo(faebookUser.getEmail());
@@ -103,19 +103,19 @@ public class WebSecurityProvider implements AuthenticationProvider {
 	private TbComUser getUserInfo(String loginId, String password) {
 		// return loginService.findByLoginIdAndLoginPassword(loginId,
 		// EncryptUtil.encryptWithSha256(password));
-		return loginService.findByLoginIdAndLoginPassword(loginId, password);
+		return signinService.findByLoginIdAndLoginPassword(loginId, password);
 	}
 
 	private TbComUser getUserInfo(String loginId) {
-		return loginService.findByLoginId(loginId);
+		return signinService.findByLoginId(loginId);
 	}
 
 	private int getUserBanInfo(BigInteger userId) {
-		return loginService.findBannedInfoByUserId(userId);
+		return signinService.findBannedInfoByUserId(userId);
 	}
 
 	private List<TbComAuth> findAuthsInfoByUserId(BigInteger userId) {
-		return loginService.findAuthsInfoByUserId(userId);
+		return signinService.findAuthsInfoByUserId(userId);
 	}
 
 }

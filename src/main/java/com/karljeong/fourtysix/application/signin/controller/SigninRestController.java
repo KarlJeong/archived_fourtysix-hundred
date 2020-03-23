@@ -1,4 +1,4 @@
-package com.karljeong.fourtysix.application.login.controller;
+package com.karljeong.fourtysix.application.signin.controller;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.karljeong.fourtysix.application.login.service.LoginService;
+import com.karljeong.fourtysix.application.signin.service.SigninService;
 import com.karljeong.fourtysix.common.dto.ResultDto;
 import com.karljeong.fourtysix.common.dto.ResultDto.ResultCodeEnum;
 import com.karljeong.fourtysix.config.security.WebSecurityProvider;
@@ -22,13 +22,13 @@ import com.restfb.types.User;
 
 @RestController
 @RequestMapping("/v1/api/login")
-public class LoginRestController {
+public class SigninRestController {
 
-	final LoginService loginService;
+	final SigninService signinService;
 	final WebSecurityProvider webSecurityProvider;
 
-	LoginRestController(LoginService loginService, WebSecurityProvider webSecurityProvider) {
-		this.loginService = loginService;
+	SigninRestController(SigninService signinService, WebSecurityProvider webSecurityProvider) {
+		this.signinService = signinService;
 		this.webSecurityProvider = webSecurityProvider;
 	}
 
@@ -41,7 +41,7 @@ public class LoginRestController {
 			User faebookUser = facebookClient.fetchObject("me", User.class,
 					Parameter.with("fields", "email, name, id, picture"));
 			if (faebookUser != null) {
-				resultDto = webSecurityProvider.googleAuthenticate(faebookUser, req);
+				resultDto = webSecurityProvider.facebookAuthenticate(faebookUser, req);
 			}
 		} catch (FacebookException ex) {
 			resultDto.setResultMsg("Failed access to Facebook!");

@@ -1,4 +1,4 @@
-package com.karljeong.fourtysix.application.login.controller;
+package com.karljeong.fourtysix.application.signin.controller;
 
 import java.io.IOException;
 
@@ -16,11 +16,11 @@ import com.karljeong.fourtysix.utils.UserUtil;
 
 @Controller
 @RequestMapping("/login")
-public class LoginController {
+public class SigninController {
 
 	final ServletContext servletContext;
 
-	LoginController(ServletContext servletContext) {
+	SigninController(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
 
