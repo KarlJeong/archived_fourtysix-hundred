@@ -14,8 +14,10 @@ public interface TbComUserRepository
 		extends PagingAndSortingRepository<TbComUser, BigInteger>, JpaSpecificationExecutor<TbComUser> {
 
 	@Override
-    List<TbComUser> findAll();
+	List<TbComUser> findAll();
 
 	TbComUser findByLoginIdAndLoginPassword(String loginid, String loginPassword);
+
+	TbComUser findByLoginId(String loginid);
 
 }

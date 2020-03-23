@@ -47,8 +47,6 @@ $.fn.serializeObject = function() {
         }
     };
 
-    console.log(this.serializeArray());
-
     $.each(this.serializeArray(), extend);
     return result;
 };

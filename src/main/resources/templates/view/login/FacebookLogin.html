@@ -28,12 +28,13 @@ $(function() {
 function facebookLogin() {
 	FB.login(function(response) {
 		if (response.status === 'connected') {
-	        var params = {"facebookUserId" : response.authResponse.userId};
-	        PromiseUtil.post("/v1/api/admin/auth", params)
+	        var params = {"userId" : response.authResponse.userId
+	        			, "access_token" : response.authResponse.accessToken
+    				};
+	        PromiseUtil.post("/v1/api/login/f", params)
 	        .then(JSON.parse)
 	        .then(function(d){
 	        	alert("Saved successfully.");
-	        	window.location.href = "/admin/auth/viewupdate/" + d.authId;
 	        });
 
 		} else if (response.status === 'connected') {
@@ -41,7 +42,7 @@ function facebookLogin() {
 		} else {
 
 		}
-	}, {scope: 'public_profile,email'});
+	}, {scope: 'public_profile,email', return_scopes: true});
 }
 </script>
 </head>

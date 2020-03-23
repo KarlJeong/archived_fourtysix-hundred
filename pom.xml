@@ -102,6 +102,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.restfb/restfb -->
+		<dependency>
+		    <groupId>com.restfb</groupId>
+		    <artifactId>restfb</artifactId>
+		    <version>3.4.0</version>
+		</dependency>
         <!-- Custom Library END -->
     </dependencies>
 
