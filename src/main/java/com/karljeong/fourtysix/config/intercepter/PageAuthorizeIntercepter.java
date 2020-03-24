@@ -68,7 +68,6 @@ public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
                 Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
                 if (!hasMenuList(request)) {
-                    System.out.println("Service Menu Set Begin");
                     request.setAttribute("serviceMenuList", loadStatic.getServiceMenuList());
 
                     Iterator<? extends GrantedAuthority> iter = authorities.iterator();
@@ -76,10 +75,7 @@ public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
                         GrantedAuthority gaIter = iter.next();
                         String auth = gaIter.getAuthority();
                         if (auth != null && "ROLE_ADMIN".equals(auth)) {
-                            System.out.println("System Menu Set Begin");
                             request.setAttribute("systemMenuList", loadStatic.getSystemMenuList());
-                            System.out.println(loadStatic.getSystemMenuList().size());
-                            System.out.println(loadStatic.getServiceMenuList().size());
                         }
                     }
                 }

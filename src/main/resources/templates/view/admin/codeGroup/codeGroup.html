@@ -17,19 +17,14 @@
         if(searchForm[0] == null) {return;}
 
         let url = "/v1/api/admin/codegroup";
-        $.ajax({
-            type: "GET",
-            data: $("#searchForm").serializeObject(),
-            url: url
-        }).done(function(result) {
-            if ( $.fn.DataTable.isDataTable('#codeGroup-table') ) {
-                  $('#codeGroup-table').DataTable().destroy();
-                }
-            console.log(result);
-            fnCreateCodeGroupTable(result.content)
-        }).fail(function(error) {
-            alert("error");
-            console.log(error);
+        var params = $("#searchForm").serializeObject();
+        PromiseUtil.get(url, params)
+        .then(JSON.parse)
+        .then(function(d){
+            if ($.fn.DataTable.isDataTable('#codeGroup-table')) {
+                $('#codeGroup-table').DataTable().destroy();
+            }
+            fnCreateCodeGroupTable(d.data.content)
         });
     }
 

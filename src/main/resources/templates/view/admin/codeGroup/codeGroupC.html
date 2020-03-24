@@ -9,13 +9,11 @@
 <script defer type="text/javascript">
 
     function fnSave() {
+        let url = "/v1/api/admin/codegroup";
         var params = $("#baseForm").serializeObject();
-        console.log(params);
-        PromiseUtil.post("/v1/api/admin/codegroup", params)
+        PromiseUtil.post(url, params)
         .then(JSON.parse)
         .then(function(d){
-        	alert("Saved successfully.");
-        	window.location.href = "/admin/codegroup/viewupdate/" + d.codeGroupId;
         });
     }
 

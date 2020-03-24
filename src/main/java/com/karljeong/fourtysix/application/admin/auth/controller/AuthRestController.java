@@ -3,7 +3,6 @@ package com.karljeong.fourtysix.application.admin.auth.controller;
 import java.math.BigInteger;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +17,10 @@ import com.karljeong.fourtysix.application.admin.auth.service.AuthService;
 import com.karljeong.fourtysix.application.admin.user.service.UserService;
 import com.karljeong.fourtysix.database.entity.TbComAuth;
 
+import resulthandler.ResultDto;
+import resulthandler.ResultDto.ResultCodeEnum;
+import resulthandler.ResultSetter;
+
 @RestController
 @RequestMapping("/v1/api/admin/auth")
 public class AuthRestController {
@@ -31,24 +34,26 @@ public class AuthRestController {
 	}
 
 	@GetMapping
-	public Page<TbComAuth> readList(@RequestParam(required = false) Map<String, Object> searchRequest,
+	public ResultDto readList(@RequestParam(required = false) Map<String, Object> searchRequest,
 			final Pageable pageable) {
-		return authService.readList(searchRequest, pageable);
+	    return new ResultSetter(ResultCodeEnum.SUCCESS, null, authService.readList(searchRequest, pageable), null).getResultDto();
 	}
 
     @PostMapping
-    public TbComAuth create(@RequestBody TbComAuth tbComAuth) {
-        return authService.create(tbComAuth);
+    public ResultDto create(@RequestBody TbComAuth tbComAuth) {
+        TbComAuth createdTbComAuth = authService.create(tbComAuth);
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdTbComAuth, "/admin/auth/viewupdate/" + createdTbComAuth.getAuthId()).getResultDto();
     }
 
     @PostMapping("/{authId}")
-    public TbComAuth update(@RequestBody TbComAuth tbComAuth,
+    public ResultDto update(@RequestBody TbComAuth tbComAuth,
             @PathVariable("authId") BigInteger authId) {
-        return authService.update(tbComAuth);
+        TbComAuth updatedTbComAuth = authService.update(tbComAuth);
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Modified Successfully", updatedTbComAuth, "/admin/auth/viewupdate/" + updatedTbComAuth.getAuthId()).getResultDto();
     }
 
     @DeleteMapping("/{authId}")
-    public int delete(@PathVariable("authId") BigInteger authId) {
-        return authService.delete(authId);
+    public ResultDto delete(@PathVariable("authId") BigInteger authId) {
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Deleted Successfully", authService.delete(authId), "/admin/auth/viewmain").getResultDto();
     }
 }

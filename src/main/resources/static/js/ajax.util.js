@@ -12,6 +12,12 @@ PromiseUtil.get = function(url) {
             // This is called even on 404 etc
             // so check the status
             if (req.status == 200) {
+                var res = JSON.parse(req.response);
+            	if (["SUCCESS_REDIRECT", "FAIL_REDIRECT"].indexOf(res.resultCd) >= 0) {
+            		alert(res.resultMsg);
+            		window.location.href = res.linkUrl;
+            		return;
+            	}
                 // Resolve the promise with the response text
                 resolve(req.response);
             } else {
@@ -43,6 +49,12 @@ PromiseUtil.post = function(url, params) {
             // This is called even on 404 etc
             // so check the status
             if (req.status == 200) {
+                var res = JSON.parse(req.response);
+            	if (["SUCCESS_REDIRECT", "FAIL_REDIRECT"].indexOf(res.resultCd) >= 0) {
+            		alert(res.resultMsg);
+            		window.location.href = res.linkUrl;
+            		return;
+            	}
                 // Resolve the promise with the response text
                 resolve(req.response);
             } else {
@@ -74,6 +86,12 @@ PromiseUtil.delete = function(url, params) {
             // This is called even on 404 etc
             // so check the status
             if (req.status == 200) {
+                var res = JSON.parse(req.response);
+            	if (["SUCCESS_REDIRECT", "FAIL_REDIRECT"].indexOf(res.resultCd) >= 0) {
+            		alert(res.resultMsg);
+            		window.location.href = res.linkUrl;
+            		return;
+            	}
                 // Resolve the promise with the response text
                 resolve(req.response);
             } else {

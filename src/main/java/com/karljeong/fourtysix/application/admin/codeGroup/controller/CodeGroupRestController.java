@@ -3,7 +3,6 @@ package com.karljeong.fourtysix.application.admin.codeGroup.controller;
 import java.math.BigInteger;
 import java.util.Map;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.karljeong.fourtysix.application.admin.codeGroup.service.CodeGroupService;
 import com.karljeong.fourtysix.database.entity.TbComCodeGroup;
 
+import resulthandler.ResultDto;
+import resulthandler.ResultDto.ResultCodeEnum;
+import resulthandler.ResultSetter;
+
 @RestController
 @RequestMapping("/v1/api/admin/codegroup")
 public class CodeGroupRestController {
@@ -28,25 +31,27 @@ public class CodeGroupRestController {
 	}
 
 	@GetMapping
-	public Page<TbComCodeGroup> readList(@RequestParam(required = false) Map<String, Object> searchRequest,
+	public ResultDto readList(@RequestParam(required = false) Map<String, Object> searchRequest,
 			final Pageable pageable) {
-		return codeGroupService.readList(searchRequest, pageable);
-
+		return new ResultSetter(ResultCodeEnum.SUCCESS, null, codeGroupService.readList(searchRequest, pageable), null).getResultDto();
 	}
 
 	@PostMapping
-	public TbComCodeGroup create(@RequestBody TbComCodeGroup tbComCodeGroup) {
-		return codeGroupService.create(tbComCodeGroup);
+	public ResultDto create(@RequestBody TbComCodeGroup tbComCodeGroup) {
+		TbComCodeGroup createdTbComCodeGroup = codeGroupService.create(tbComCodeGroup);
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdTbComCodeGroup, "/admin/codegroup/viewupdate/" + createdTbComCodeGroup.getCodeGroupId()).getResultDto();
 	}
 
 	@PostMapping("/{codeGroupId}")
-	public TbComCodeGroup update(@RequestBody TbComCodeGroup tbComCodeGroup,
+	public ResultDto update(@RequestBody TbComCodeGroup tbComCodeGroup,
 			@PathVariable("codeGroupId") BigInteger codeGroupId) {
-		return codeGroupService.update(tbComCodeGroup);
+	    TbComCodeGroup updatedTbComCodeGroup = codeGroupService.update(tbComCodeGroup);
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Modified Successfully", updatedTbComCodeGroup, "/admin/codegroup/viewupdate/" + updatedTbComCodeGroup.getCodeGroupId()).getResultDto();
 	}
 
 	@DeleteMapping("/{codeGroupId}")
-	public int delete(@PathVariable("codeGroupId") BigInteger codeGroupId) {
-		return codeGroupService.delete(codeGroupId);
+	public ResultDto delete(@PathVariable("codeGroupId") BigInteger codeGroupId) {
+	    codeGroupService.delete(codeGroupId);
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Deleted Successfully", null, "/admin/codegroup/viewmain").getResultDto();
 	}
 }
