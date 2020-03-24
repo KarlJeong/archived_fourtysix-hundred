@@ -17,21 +17,15 @@
         }
 
         let url = "/v1/api/admin/auth";
-        $.ajax({
-            type : "GET",
-            data : $("#searchForm").serializeObject(),
-            url : url
-        }).done(function(result) {
+        var params = $("#searchForm").serializeObject();
+        PromiseUtil.get(url, params)
+        .then(JSON.parse)
+        .then(function(d){
             if ($.fn.DataTable.isDataTable('#auth-table')) {
                 $('#auth-table').DataTable().destroy();
             }
-            console.log(result);
-            fnCreateAuthTable(result.content)
-        }).fail(function(error) {
-            alert("error");
-            console.log(error);
+            fnCreateAuthTable(d.data.content)
         });
-
     }
 
     var fnCreateAuthTable = function(data) {

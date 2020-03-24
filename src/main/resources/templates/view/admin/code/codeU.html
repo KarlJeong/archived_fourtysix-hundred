@@ -9,23 +9,19 @@
 <script defer type="text/javascript">
 
     function fnSave() {
+        let url = "/v1/api/admin/code/" + $("#codeId").val();
         var params = $("#baseForm").serializeObject();
-        console.log(params);
-        PromiseUtil.post("/v1/api/admin/code/" + $("#codeId").val(), params)
+        PromiseUtil.post(url, params)
         .then(JSON.parse)
         .then(function(d){
-        	alert("Saved successfully.");
-        	window.location.href = "/admin/code/viewupdate/" + d.codeId;
         });
     }
 
     function fnDelete() {
+        let url = "/v1/api/admin/code/" + $("#codeId").val();
         var params = $("#baseForm").serializeObject();
-        console.log(params);
-        PromiseUtil.delete("/v1/api/admin/code/" + $("#codeId").val(), params)
-        .then(function(){
-        	alert("Deleted Successfully.");
-        	window.location.href = "/admin/code/viewmain";
+        PromiseUtil.delete(url, params)
+        .then(function(d){
         });
     }
 

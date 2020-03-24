@@ -21,11 +21,12 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.stereotype.Component;
 
 import com.karljeong.fourtysix.application.signin.service.SigninService;
-import com.karljeong.fourtysix.common.dto.ResultDto;
-import com.karljeong.fourtysix.common.dto.ResultDto.ResultCodeEnum;
 import com.karljeong.fourtysix.database.entity.TbComAuth;
 import com.karljeong.fourtysix.database.entity.TbComUser;
 import com.restfb.types.User;
+
+import resulthandler.ResultDto;
+import resulthandler.ResultDto.ResultCodeEnum;
 
 @Component
 public class WebSecurityProvider implements AuthenticationProvider {

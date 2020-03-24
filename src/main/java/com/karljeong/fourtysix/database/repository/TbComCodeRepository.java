@@ -44,7 +44,8 @@ public interface TbComCodeRepository
 	@Query("UPDATE TbComCode c SET c.updateUserId = :updateUserId, c.codeGroupId = NULL WHERE c.codeGroupId = :codeGroupId")
 	int deleteCodeGroupId(@Param("updateUserId") BigInteger updateUserId, @Param("codeGroupId") BigInteger codeGroupId);
 
-	@Transactional
+    @Override
+    @Transactional
 	@Modifying
 	@Query("DELETE FROM TbComCode c WHERE c.codeId = :codeId")
 	void deleteById(@Param("codeId") BigInteger codeId);

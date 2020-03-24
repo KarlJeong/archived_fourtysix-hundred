@@ -13,11 +13,12 @@ $(function() {
 });
 
 function fnInitJsTree(){
+
     let url = "/v1/api/admin/menu";
-    $.ajax({
-        url: url,
-        type: "GET"
-    }).done(function(result) {
+    PromiseUtil.get(url)
+    .then(JSON.parse)
+    .then(function(d){
+        let result = d.data;
         let menuData = [];
         $.each(result, function(i, menu) {
             menuData.push({
@@ -134,8 +135,6 @@ function fnSave() {
     PromiseUtil.post(url, params)
     .then(JSON.parse)
     .then(function(d){
-        alert("Saved successfully.");
-        window.location.reload();
     });
 }
 

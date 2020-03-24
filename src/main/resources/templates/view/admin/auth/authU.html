@@ -7,25 +7,20 @@
 <script defer th:src="@{/vendors/liverty-admin/js/owl-carousel.js}"></script>
 <script defer th:src="@{/vendors/liverty-admin/js/select2.js}"></script>
 <script defer type="text/javascript">
-
     function fnSave() {
+        let url = "/v1/api/admin/auth/" + $("#authId").val();
         var params = $("#baseForm").serializeObject();
-        console.log(params);
-        PromiseUtil.post("/v1/api/admin/auth", params)
+        PromiseUtil.post(url, params)
         .then(JSON.parse)
         .then(function(d){
-        	alert("Saved successfully.");
-        	window.location.href = "/admin/auth/viewupdate/" + d.authId;
         });
     }
 
     function fnDelete() {
+        let url = "/v1/api/admin/auth/" + $("#authId").val();
         var params = $("#baseForm").serializeObject();
-        console.log(params);
-        PromiseUtil.delete("/v1/api/admin/auth/" + $("#authId").val(), params)
+        PromiseUtil.delete(url, params)
         .then(function(d){
-            alert("Deleted Successfully.");
-            window.location.href = "/admin/auth/viewmain";
         });
     }
 
@@ -40,7 +35,7 @@
                     <div class="card-body">
                         <div class="row mb-5">
                             <div class="col-12">
-                                <h2>AUTH CREATE</h2>
+                                <h2>AUTH DETAIL</h2>
                                 <div class="separator-2"></div>
                                 <form id="baseForm">
                                     <div class="form-group">

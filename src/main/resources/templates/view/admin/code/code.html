@@ -18,21 +18,15 @@
         }
 
         let url = "/v1/api/admin/code";
-        $.ajax({
-            type : "GET",
-            data : $("#searchForm").serializeObject(),
-            url : url
-        }).done(function(result) {
+        var params = $("#searchForm").serializeObject();
+        PromiseUtil.get(url, params)
+        .then(JSON.parse)
+        .then(function(d){
             if ($.fn.DataTable.isDataTable('#code-table')) {
                 $('#code-table').DataTable().destroy();
             }
-            console.log(result);
-            fnCreateCodeTable(result.content)
-        }).fail(function(error) {
-            alert("error");
-            console.log(error);
+            fnCreateCodeTable(d.data.content)
         });
-
     }
 
     var fnCreateCodeTable = function(data) {

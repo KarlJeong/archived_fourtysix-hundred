@@ -95,7 +95,6 @@ public class LoadStaticService {
 	                menuLv2List.clear();
                     hierarchyMenu.add(menuLv1);
 	            }else if ( ( i + 1 ) == tbComMenus.size() ) {
-	                System.out.println("Last level1");
 	                menuLv1 = this.setMenuProp(tbComMenu);
                     hierarchyMenu.add(menuLv1);
                 }
@@ -112,20 +111,11 @@ public class LoadStaticService {
 	        }
 
 	        if ( tbComMenu.getMenuLevel() > 1 && (i + 1) == tbComMenus.size() ) {
-	            System.out.println("Last not level1");
 	            menuLv1.put("child", menuLv2List.clone());
 	            hierarchyMenu.add(menuLv1);
 	        }
-	        System.out.println(tbComMenu.getMenuName() + " :::: " + tbComMenu.getMenuLevel() + " :::: " + tbComMenu.getMenuOrder());
 
 	        prevHandledLevel = tbComMenu.getMenuLevel();
-	    }
-
-	    for (int i = 0 ; i < hierarchyMenu.size(); i++) {
-	        Map<String, Object> m = hierarchyMenu.get(i);
-	        for (String key : m.keySet()) {
-	            System.out.println(key + " >>>>>>>>>>>>>>>> " + m.get(key));
-	        }
 	    }
 
         return hierarchyMenu;
