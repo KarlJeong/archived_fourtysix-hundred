@@ -20,7 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Component;
 
-import com.karljeong.fourtysix.application.signin.service.SigninService;
+import com.karljeong.fourtysix.application.login.service.LoginService;
 import com.karljeong.fourtysix.database.entity.TbComAuth;
 import com.karljeong.fourtysix.database.entity.TbComUser;
 import com.restfb.types.User;
@@ -33,10 +33,10 @@ public class WebSecurityProvider implements AuthenticationProvider {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	final SigninService signinService;
+	final LoginService logininService;
 
-	WebSecurityProvider(SigninService signinService) {
-		this.signinService = signinService;
+	WebSecurityProvider(LoginService logininService) {
+		this.logininService = logininService;
 	}
 
 	@Override
@@ -104,19 +104,19 @@ public class WebSecurityProvider implements AuthenticationProvider {
 	private TbComUser getUserInfo(String loginId, String password) {
 		// return loginService.findByLoginIdAndLoginPassword(loginId,
 		// EncryptUtil.encryptWithSha256(password));
-		return signinService.findByLoginIdAndLoginPassword(loginId, password);
+		return logininService.findByLoginIdAndLoginPassword(loginId, password);
 	}
 
 	private TbComUser getUserInfo(String loginId) {
-		return signinService.findByLoginId(loginId);
+		return logininService.findByLoginId(loginId);
 	}
 
 	private int getUserBanInfo(BigInteger userId) {
-		return signinService.findBannedInfoByUserId(userId);
+		return logininService.findBannedInfoByUserId(userId);
 	}
 
 	private List<TbComAuth> findAuthsInfoByUserId(BigInteger userId) {
-		return signinService.findAuthsInfoByUserId(userId);
+		return logininService.findAuthsInfoByUserId(userId);
 	}
 
 }
