@@ -2,6 +2,7 @@ package com.karljeong.fourtysix.application.admin.board.controller;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,9 @@ import com.karljeong.fourtysix.database.entity.TbComBoard;
 @RestController
 @RequestMapping("/v1/api/admin/board")
 public class BoardRestController {
-	final BoardService boardService;
+	private final BoardService boardService;
 
+	@Autowired
 	BoardRestController(BoardService boardService) {
 		this.boardService = boardService;
 	}

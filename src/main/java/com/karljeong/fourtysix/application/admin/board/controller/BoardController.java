@@ -2,6 +2,7 @@ package com.karljeong.fourtysix.application.admin.board.controller;
 
 import java.math.BigInteger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,10 @@ import com.karljeong.fourtysix.application.admin.board.service.BoardService;
 @Controller
 @RequestMapping("/admin/board")
 public class BoardController {
-	final BoardService boardService;
-	final AuthService authService;
+	private final BoardService boardService;
+	private final AuthService authService;
 
+	@Autowired
 	BoardController(BoardService boardService, AuthService authService) {
 		this.boardService = boardService;
 		this.authService = authService;

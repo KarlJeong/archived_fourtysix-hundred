@@ -2,6 +2,7 @@ package com.karljeong.fourtysix.application.admin.code.controller;
 
 import java.math.BigInteger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,11 @@ import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
 @Controller
 @RequestMapping("/admin/code")
 public class CodeController {
-	final CodeService codeService;
-	final CodeGroupService codeGroupService;
-	final LoadStatic loadStatic;
+	private final CodeService codeService;
+	private final CodeGroupService codeGroupService;
+	private final LoadStatic loadStatic;
 
+	@Autowired
 	CodeController(CodeService codeService, CodeGroupService codeGroupService, LoadStatic loadStatic) {
 		this.codeService = codeService;
 		this.codeGroupService = codeGroupService;

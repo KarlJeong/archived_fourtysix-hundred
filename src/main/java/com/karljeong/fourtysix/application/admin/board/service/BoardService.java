@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,10 @@ import com.karljeong.fourtysix.database.specification.TbComBoardSpec.SearchKey;
 @Service
 public class BoardService {
 
-	final TbComBoardRepository tbComBoardRepository;
-	final TbMappBoardAuthRepository tbMappBoardAuthRepository;
+	private final TbComBoardRepository tbComBoardRepository;
+	private final TbMappBoardAuthRepository tbMappBoardAuthRepository;
 
+	@Autowired
 	BoardService(TbComBoardRepository tbComBoardRepository, TbMappBoardAuthRepository tbMappBoardAuthRepository) {
 		this.tbComBoardRepository = tbComBoardRepository;
 		this.tbMappBoardAuthRepository = tbMappBoardAuthRepository;

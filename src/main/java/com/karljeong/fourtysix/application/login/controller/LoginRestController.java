@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,9 +27,10 @@ import resulthandler.ResultDto.ResultCodeEnum;
 @RequestMapping("/v1/api/login")
 public class LoginRestController {
 
-	final LoginService loginService;
-	final WebSecurityProvider webSecurityProvider;
+    private final LoginService loginService;
+    private final WebSecurityProvider webSecurityProvider;
 
+    @Autowired
 	LoginRestController(LoginService loginService, WebSecurityProvider webSecurityProvider) {
 		this.loginService = loginService;
 		this.webSecurityProvider = webSecurityProvider;

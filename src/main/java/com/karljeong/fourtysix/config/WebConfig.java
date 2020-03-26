@@ -1,5 +1,6 @@
 package com.karljeong.fourtysix.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,10 +14,11 @@ import com.karljeong.fourtysix.config.intercepter.RestApiAuthorizeIntercepter;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	final CommonIntercepter commonInterceptor;
-	final PageAuthorizeIntercepter pageAuthorizeInterceptor;
-	final RestApiAuthorizeIntercepter restApiAuthorizeInterceptor;
+    private final CommonIntercepter commonInterceptor;
+    private final PageAuthorizeIntercepter pageAuthorizeInterceptor;
+    private final RestApiAuthorizeIntercepter restApiAuthorizeInterceptor;
 
+    @Autowired
 	WebConfig(CommonIntercepter commonInterceptor, PageAuthorizeIntercepter pageAuthorizeInterceptor,
 			RestApiAuthorizeIntercepter restApiAuthorizeInterceptor) {
 		this.commonInterceptor = commonInterceptor;

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,10 @@ import com.karljeong.fourtysix.database.specification.TbComCodeGroupSpec.SearchK
 @Service
 public class CodeGroupService {
 
-	TbComCodeGroupRepository tbComCodeGroupRepository;
-	TbComCodeRepository tbComCodeRepository;
+	private final TbComCodeGroupRepository tbComCodeGroupRepository;
+	private final TbComCodeRepository tbComCodeRepository;
 
+	@Autowired
 	CodeGroupService(TbComCodeGroupRepository tbComCodeGroupRepository, TbComCodeRepository tbComCodeRepository) {
 		this.tbComCodeGroupRepository = tbComCodeGroupRepository;
 		this.tbComCodeRepository = tbComCodeRepository;

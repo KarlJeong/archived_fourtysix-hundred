@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,8 +26,9 @@ public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
-    final LoadStatic loadStatic;
+    private final LoadStatic loadStatic;
 
+    @Autowired
     PageAuthorizeIntercepter(LoadStatic loadStatic) {
         this.loadStatic= loadStatic;
     }

@@ -2,6 +2,7 @@ package com.karljeong.fourtysix.application.admin.auth.controller;
 
 import java.math.BigInteger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,11 @@ import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
 @RequestMapping("/admin/auth")
 public class AuthController {
 
-	final AuthService authService;
-	final UserService userService;
-	final LoadStatic loadStatic;
+	private final AuthService authService;
+	private final UserService userService;
+	private final LoadStatic loadStatic;
 
+	@Autowired
 	AuthController(AuthService authService, UserService userService, LoadStatic loadStatic) {
 		this.authService = authService;
 		this.userService = userService;

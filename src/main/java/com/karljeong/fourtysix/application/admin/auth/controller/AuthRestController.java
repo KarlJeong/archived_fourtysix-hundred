@@ -3,6 +3,7 @@ package com.karljeong.fourtysix.application.admin.auth.controller;
 import java.math.BigInteger;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +26,10 @@ import resulthandler.ResultSetter;
 @RequestMapping("/v1/api/admin/auth")
 public class AuthRestController {
 
-    final AuthService authService;
-    final UserService userService;
+    private final AuthService authService;
+    private final UserService userService;
 
+    @Autowired
 	AuthRestController(AuthService authService, UserService userService) {
 		this.authService = authService;
 		this.userService = userService;

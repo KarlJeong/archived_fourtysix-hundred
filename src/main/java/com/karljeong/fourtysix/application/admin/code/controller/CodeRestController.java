@@ -3,6 +3,7 @@ package com.karljeong.fourtysix.application.admin.code.controller;
 import java.math.BigInteger;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,9 @@ import resulthandler.ResultSetter;
 @RestController
 @RequestMapping("/v1/api/admin/code")
 public class CodeRestController {
-	final CodeService codeService;
+	private final CodeService codeService;
 
+	@Autowired
 	CodeRestController(CodeService codeService) {
 		this.codeService = codeService;
 	}

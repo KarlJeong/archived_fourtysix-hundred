@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.karljeong.fourtysix.common.loadstatic.service.LoadStaticService;
@@ -13,8 +14,9 @@ import com.karljeong.fourtysix.database.entity.TbComAuth;
 @Component
 public class LoadStatic {
 
-	final LoadStaticService loadStaticService;
+    private final LoadStaticService loadStaticService;
 
+    @Autowired
 	LoadStatic(LoadStaticService loadStaticService) {
 		this.loadStaticService = loadStaticService;
 	}

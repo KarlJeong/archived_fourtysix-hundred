@@ -3,6 +3,7 @@ package com.karljeong.fourtysix.application.admin.menu.service;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbComMenu;
@@ -11,9 +12,9 @@ import com.karljeong.fourtysix.database.repository.TbComMenuRepository;
 @Service
 public class MenuService {
 
-    final TbComMenuRepository tbComMenuRepository;
+    private final TbComMenuRepository tbComMenuRepository;
 
-
+    @Autowired
 	MenuService(TbComMenuRepository tbComMenuRepository) {
 	    this.tbComMenuRepository = tbComMenuRepository;
 	}

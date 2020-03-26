@@ -2,6 +2,7 @@ package com.karljeong.fourtysix.application.admin.menu.controller;
 
 import java.math.BigInteger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +21,9 @@ import resulthandler.ResultSetter;
 @RestController
 @RequestMapping("/v1/api/admin/menu")
 public class MenuRestController {
-    final MenuService menuService;
+    private final MenuService menuService;
 
+    @Autowired
 	MenuRestController(MenuService menuService) {
 		this.menuService = menuService;
 	}

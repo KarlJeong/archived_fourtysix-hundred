@@ -3,6 +3,7 @@ package com.karljeong.fourtysix.application.admin.codeGroup.controller;
 import java.math.BigInteger;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,9 @@ import resulthandler.ResultSetter;
 @RequestMapping("/v1/api/admin/codegroup")
 public class CodeGroupRestController {
 
-	final CodeGroupService codeGroupService;
+	private final CodeGroupService codeGroupService;
 
+	@Autowired
 	CodeGroupRestController(CodeGroupService codeGroupService) {
 		this.codeGroupService = codeGroupService;
 	}

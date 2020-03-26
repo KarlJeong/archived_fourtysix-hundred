@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,8 +34,9 @@ public class WebSecurityProvider implements AuthenticationProvider {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	final LoginService logininService;
+	private final LoginService logininService;
 
+	@Autowired
 	WebSecurityProvider(LoginService logininService) {
 		this.logininService = logininService;
 	}

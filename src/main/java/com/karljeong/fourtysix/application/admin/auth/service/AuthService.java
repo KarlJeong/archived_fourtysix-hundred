@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,10 @@ import com.karljeong.fourtysix.database.specification.TbComAuthSpec.SearchKey;
 @Service
 public class AuthService {
 
-	TbComAuthRepository tbComAuthRepository;
-	TbMappUserAuthRepository tbMappUserAuthRepository;
+	private final TbComAuthRepository tbComAuthRepository;
+	private final TbMappUserAuthRepository tbMappUserAuthRepository;
 
+	@Autowired
 	AuthService(TbComAuthRepository tbComAuthRepository, TbMappUserAuthRepository tbMappUserAuthRepository) {
 		this.tbComAuthRepository = tbComAuthRepository;
 		this.tbMappUserAuthRepository = tbMappUserAuthRepository;

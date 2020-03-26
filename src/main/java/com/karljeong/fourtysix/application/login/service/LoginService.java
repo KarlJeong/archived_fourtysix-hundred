@@ -3,6 +3,7 @@ package com.karljeong.fourtysix.application.login.service;
 import java.math.BigInteger;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbComAuth;
@@ -16,11 +17,12 @@ import com.karljeong.fourtysix.database.repository.TbMappUserAuthRepository;
 @Service
 public class LoginService {
 
-    final TbComUserRepository tbComUserRepository;
-    final TbComUserBanRepository tbComUserBanRepository;
-    final TbComAuthRepository tbComAuthRepository;
-    final TbMappUserAuthRepository tbMappUserAuthRepository;
+    private final TbComUserRepository tbComUserRepository;
+    private final TbComUserBanRepository tbComUserBanRepository;
+    private final TbComAuthRepository tbComAuthRepository;
+    private final TbMappUserAuthRepository tbMappUserAuthRepository;
 
+    @Autowired
     LoginService(TbComUserRepository tbComUserRepository, TbComUserBanRepository tbComUserBanRepository,
             TbComAuthRepository tbComAuthRepository, TbMappUserAuthRepository tbMappUserAuthRepository) {
         this.tbComUserRepository = tbComUserRepository;

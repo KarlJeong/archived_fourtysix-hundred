@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbComAuth;
@@ -22,11 +23,12 @@ import com.karljeong.fourtysix.database.repository.TbComMenuRepository;
 @Service
 public class LoadStaticService {
 
-	TbComCodeRepository tbComCodeRepository;
-	TbComCodeGroupRepository tbComCodeGroupRepository;
-	TbComMenuRepository tbComMenuRepository;
-	TbComAuthRepository tbComAuthRepository;
+    private final TbComCodeRepository tbComCodeRepository;
+    private final TbComCodeGroupRepository tbComCodeGroupRepository;
+    private final TbComMenuRepository tbComMenuRepository;
+    private final TbComAuthRepository tbComAuthRepository;
 
+    @Autowired
 	LoadStaticService(TbComCodeRepository tbComCodeRepository, TbComCodeGroupRepository tbComCodeGroupRepository, TbComMenuRepository tbComMenuRepository, TbComAuthRepository tbComAuthRepository) {
 		this.tbComCodeRepository = tbComCodeRepository;
 		this.tbComCodeGroupRepository = tbComCodeGroupRepository;
