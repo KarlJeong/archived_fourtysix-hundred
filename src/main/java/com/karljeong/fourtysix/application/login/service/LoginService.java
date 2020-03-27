@@ -13,6 +13,8 @@ import com.karljeong.fourtysix.database.repository.TbComAuthRepository;
 import com.karljeong.fourtysix.database.repository.TbComUserBanRepository;
 import com.karljeong.fourtysix.database.repository.TbComUserRepository;
 import com.karljeong.fourtysix.database.repository.TbMappUserAuthRepository;
+import com.karljeong.fourtysix.utils.DateUtil;
+import com.restfb.types.User;
 
 @Service
 public class LoginService {
@@ -37,6 +39,22 @@ public class LoginService {
 
     public TbComUser findByLoginId(String loginId) {
         return tbComUserRepository.findByLoginId(loginId);
+    }
+
+    public TbComUser save(User faebookUser) {
+        TbComUser tbComUser = new TbComUser();
+        tbComUser.setCreateUserId(BigInteger.valueOf(11111));
+        tbComUser.setLoginId(faebookUser.getEmail());
+        tbComUser.setLoginPassword(faebookUser.getEmail());
+        tbComUser.setActivateYn((byte)1);
+        tbComUser.setActivateDatetime(DateUtil.getTimestamp());
+        tbComUser.setUserLocale(faebookUser.getLocale());
+        tbComUser.setLastLoginDatetime(DateUtil.getTimestamp());
+        tbComUser.setEmail(faebookUser.getEmail());
+        tbComUser.setUserName(faebookUser.getName());
+        tbComUser.setUserNickname(faebookUser.getName());
+        tbComUser.setSnsId(faebookUser.getId());
+        return tbComUserRepository.save(tbComUser);
     }
 
     public int findBannedInfoByUserId(BigInteger userId) {

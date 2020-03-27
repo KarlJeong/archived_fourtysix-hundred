@@ -66,10 +66,7 @@ public class WebSecurityProvider implements AuthenticationProvider {
 		TbComUser tbComUser = this.getUserInfo(faebookUser.getEmail());
 		ResultDto resultDto = new ResultDto();
 		if (tbComUser == null) {
-			resultDto.setResultMsg("Signup First Please!");
-			resultDto.setResultCd(ResultCodeEnum.FAIL_REDIRECT);
-			resultDto.setLinkUrl("/login/f");
-			return resultDto;
+		    tbComUser = this.createUserInfoViaFacebook(faebookUser);
 		}
 
 		int isBanned = this.getUserBanInfo(tbComUser.getUserId());
@@ -111,6 +108,10 @@ public class WebSecurityProvider implements AuthenticationProvider {
 
 	private TbComUser getUserInfo(String loginId) {
 		return logininService.findByLoginId(loginId);
+	}
+
+	private TbComUser createUserInfoViaFacebook(User faebookUser) {
+	    return logininService.save(faebookUser);
 	}
 
 	private int getUserBanInfo(BigInteger userId) {

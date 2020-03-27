@@ -247,3 +247,16 @@ table tbody tr td a.dt-alink:hover {
   border-top: 1px solid #fafafa;
   border-bottom: 1px solid #fafafa;
 }
+
+/** Facebook Login Button **/
+
+.btn-facebook:not(:disabled):not(.disabled):active, .wizard > .actions a:not(:disabled):not(.disabled):active, .btn-facebook:not(:disabled):not(.disabled).active, .wizard > .actions a:not(:disabled):not(.disabled).active, .show > .btn-facebook.dropdown-toggle, .wizard > .actions .show > a.dropdown-toggle {
+   color: #fff;
+   background-color: #4267B2;
+   border-color: #4267B2;
+}
+
+.btn.btn-facebook:hover {
+  color: #fff !important;
+  text-decoration: none;
+}
