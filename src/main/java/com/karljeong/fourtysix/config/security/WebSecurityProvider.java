@@ -34,6 +34,9 @@ public class WebSecurityProvider implements AuthenticationProvider {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	private final int userMaxInactiveInterval = 60 * 10;
+	private final int visitorMaxInactiveInterval = 60 * 5;
+
 	private final LoginService logininService;
 
 	@Autowired
@@ -83,11 +86,31 @@ public class WebSecurityProvider implements AuthenticationProvider {
 		sc.setAuthentication(new UsernamePasswordAuthenticationToken(tbComUser, null, this.getAuthorities(tbComAuths)));
 		HttpSession session = req.getSession(true);
 		session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
+		session.setMaxInactiveInterval(userMaxInactiveInterval);
+
 		resultDto.setData(tbComUser);
 		resultDto.setResultCd(ResultCodeEnum.SUCCESS_REDIRECT);
 		resultDto.setLinkUrl("/admin/codegroup/viewmain");
 		return resultDto;
 	}
+
+    public SecurityContext visitorAuthenticate(HttpServletRequest req) {
+        SecurityContext sc = SecurityContextHolder.getContext();
+
+        // Visitor Session Default Info
+        TbComUser tbComUser = new TbComUser();
+        tbComUser.setUserName("visitor");
+        tbComUser.setLoginId("visitor@mail.com");
+        tbComUser.setUserId(BigInteger.valueOf(0));
+
+        List<TbComAuth> tbComAuths = this.findAuthsInfoByUserId(tbComUser.getUserId());
+
+        sc.setAuthentication(new UsernamePasswordAuthenticationToken(tbComUser, null, this.getAuthorities(tbComAuths)));
+        HttpSession session = req.getSession(true);
+        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
+        session.setMaxInactiveInterval(visitorMaxInactiveInterval);
+        return sc;
+    }
 
 	@Override
 	public boolean supports(Class<?> authentication) {
