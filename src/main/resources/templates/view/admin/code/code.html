@@ -69,11 +69,11 @@
 
                         $('td', row).eq(2).html('').append(
                                 '<a class="dt-alink" href="/admin/code/viewupdate/'+data["codeId"]+'">'
-                                        + data["codeValue"] + '</a>');
+                                        + data["codeName"] + '</a>');
 
                         $('td', row).eq(3).html('').append(
                                 '<a class="dt-alink" href="/admin/code/viewupdate/'+data["codeId"]+'">'
-                                        + data["codeName"] + '</a>');
+                                        + data["codeValue"] + '</a>');
 
                         $('td', row).eq(4).html('').append(
                                 data["createDatetime"]);

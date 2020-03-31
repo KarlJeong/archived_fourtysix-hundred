@@ -75,8 +75,18 @@ public class LoadStaticService {
 		return systemCodes;
 	}
 
-	public List<Map<String, Object>> loadMenu(String menuType) {
-	    List<TbComMenu> tbComMenus = tbComMenuRepository.findAll(menuType);
+    public List<Map<String, Object>> loadMenuType(String menuType) {
+        List<TbComMenu> tbComMenus = tbComMenuRepository.findAll(menuType);
+        return this.createHierarchyMenu(tbComMenus);
+    }
+
+	public List<Map<String, Object>> loadMenuNotType(String menuType) {
+        List<TbComMenu> tbComMenus = tbComMenuRepository.findAllNotMenuType(menuType);
+        return this.createHierarchyMenu(tbComMenus);
+
+	}
+
+	private List<Map<String, Object>> createHierarchyMenu(List<TbComMenu> tbComMenus) {
 	    List<Map<String, Object>> hierarchyMenu = new ArrayList<Map<String, Object>>();
 
 	    Map<String, Object> menuLv1 = new HashMap<String, Object>();
@@ -112,9 +122,14 @@ public class LoadStaticService {
                 menuLv3List.add(this.setMenuProp(tbComMenu));
 	        }
 
-	        if ( tbComMenu.getMenuLevel() > 1 && (i + 1) == tbComMenus.size() ) {
-	            menuLv1.put("child", menuLv2List.clone());
-	            hierarchyMenu.add(menuLv1);
+	        if ((i + 1) == tbComMenus.size()) {
+	            if ( tbComMenu.getMenuLevel() > 1 ) {
+	                menuLv1.put("child", menuLv2List.clone());
+	                hierarchyMenu.add(menuLv1);
+
+	            } else if (tbComMenu.getMenuLevel() == 1) {
+	                hierarchyMenu.add(menuLv1);
+	            }
 	        }
 
 	        prevHandledLevel = tbComMenu.getMenuLevel();

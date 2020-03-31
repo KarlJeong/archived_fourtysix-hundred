@@ -54,11 +54,11 @@ public class LoadStatic {
 
     @PostConstruct
     private void setSystemMenuList() {
-        this.systemMenuList = loadStaticService.loadMenu("SYSTEM");
+        this.systemMenuList = loadStaticService.loadMenuType("SYSTEM");
     }
 
     public void resetSystemMenuList() {
-        this.systemMenuList = loadStaticService.loadMenu("SYSTEM");
+        this.systemMenuList = loadStaticService.loadMenuType("SYSTEM");
     }
 
     public List<Map<String, Object>> getSystemMenuList() {
@@ -67,14 +67,16 @@ public class LoadStatic {
 
     @PostConstruct
     private void setServiceMenuList() {
-        this.serviceMenuList = loadStaticService.loadMenu("SERVICE");
+        this.serviceMenuList = loadStaticService.loadMenuNotType("SYSTEM");
     }
 
     public void resetServiceMenuList() {
-        this.serviceMenuList = loadStaticService.loadMenu("SERVICE");
+        this.serviceMenuList = loadStaticService.loadMenuNotType("SYSTEM");
     }
 
     public List<Map<String, Object>> getServiceMenuList() {
+        System.out.println(serviceMenuList.get(0).get("menuPath"));
+        System.out.println(serviceMenuList.get(1).get("menuPath"));
         return serviceMenuList;
     }
 
