@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}">
+<head>
+<title>Auth List</title>
+<script defer th:src="@{/vendors/isotope/isotope.pkgd.min.js}"></script>
+<script defer type="text/javascript">
+    $(function() {
+        fnRetrievePattern();
+    });
+    var fnRetrievePattern = function() {
+        let url = "/v1/api/admin/pattern";
+        PromiseUtil.get(url)
+        .then(JSON.parse)
+        .then(function(d){
+            if ($.fn.DataTable.isDataTable('#pattern-table')) {
+                $('#pattern-table').DataTable().destroy();
+            }
+            fnCreatePatternTable(d.data.content)
+        });
+    }
+
+    var fnCreatePatternTable = function(data) {
+        $('#pattern-table').dataTable(
+                {
+                    data : data,
+                    "columns" : [ {
+                        "data" : "uriPattern"
+                    }, {
+                        "data" : "patternId"
+                    }, {
+                        "data" : "createDatetime"
+                    } ],
+                    order : [ [ 2, 'desc' ] ],
+                    columnDefs : [ {
+                        targets : [ 2 ],
+                        width : 80,
+                        className : 'text-center'
+                    } ],
+                    searching : false,
+                    createdRow : function(row, data, index) {
+                        $('td', row).eq(0).html('').append(
+                                '<a class="dt-alink" href="/admin/pattern/viewupdate/'+data["patternId"]+'">'
+                                + data["uriPattern"] + '</a>');
+
+                        $('td', row).eq(1).html('').append(
+                                data["tbComAuths"][0]["authCode"]
+                        );
+
+                        $('td', row).eq(2).html('').append(
+                                data["createDatetime"]);
+                    }
+                });
+    }
+</script>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <h2>PATTERN LIST</h2>
+                                    <a href="/admin/pattern/viewcreate" class="btn btn-sm btn-outline-info btn-fw mt-3"><i class="fa fa-plus-circle pr-2"></i>Create</a>
+                                </div>
+                                <div class="separator-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-12 table-responsive">
+                                <table id="pattern-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>URI Pattern</th>
+                                            <th>Allowed to</th>
+                                            <th>Created at</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

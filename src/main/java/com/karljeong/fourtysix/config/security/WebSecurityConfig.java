@@ -9,15 +9,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.karljeong.fourtysix.application.admin.menu.service.MenuService;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final WebSecurityProvider webSecurityProvider;
+    private final MenuService menuService;
 
     @Autowired
-    WebSecurityConfig(WebSecurityProvider webSecurityProvider) {
+    WebSecurityConfig(WebSecurityProvider webSecurityProvider, MenuService menuService) {
         this.webSecurityProvider = webSecurityProvider;
+        this.menuService = menuService;
     }
 
 	@Override
@@ -32,9 +36,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+
 		http.authorizeRequests()//
-				.antMatchers("/**")
-				.permitAll();
+        .antMatchers("/**")
+        .permitAll();
 
 		http.formLogin().loginPage("/login") // default
 				.loginProcessingUrl("/loginsecurity") // Login Process URL, Same URL should be called in login page
@@ -52,6 +57,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.sessionManagement().maximumSessions(1).expiredUrl("/login").and().invalidSessionUrl("/login");
 	}
-
 
 }
