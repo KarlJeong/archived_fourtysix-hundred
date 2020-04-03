@@ -13,15 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.karljeong.fourtysix.application.login.service.LoginService;
 import com.karljeong.fourtysix.config.security.WebSecurityProvider;
+import com.karljeong.fourtysix.resulthandler.ResultDto;
+import com.karljeong.fourtysix.resulthandler.ResultDto.ResultCodeEnum;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.Version;
 import com.restfb.exception.FacebookException;
 import com.restfb.types.User;
-
-import resulthandler.ResultDto;
-import resulthandler.ResultDto.ResultCodeEnum;
 
 @RestController
 @RequestMapping("/v1/api/login")

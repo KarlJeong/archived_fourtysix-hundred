@@ -1,4 +1,4 @@
-package resulthandler;
+package com.karljeong.fourtysix.resulthandler;
 
 public class ResultDto {
 

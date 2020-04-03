@@ -1,6 +1,6 @@
-package resulthandler;
+package com.karljeong.fourtysix.resulthandler;
 
-import resulthandler.ResultDto.ResultCodeEnum;
+import com.karljeong.fourtysix.resulthandler.ResultDto.ResultCodeEnum;
 
 public class ResultSetter {
 

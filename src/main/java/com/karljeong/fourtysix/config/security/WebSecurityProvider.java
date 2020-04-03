@@ -24,10 +24,9 @@ import org.springframework.stereotype.Component;
 import com.karljeong.fourtysix.application.login.service.LoginService;
 import com.karljeong.fourtysix.database.entity.TbComAuth;
 import com.karljeong.fourtysix.database.entity.TbComUser;
+import com.karljeong.fourtysix.resulthandler.ResultDto;
+import com.karljeong.fourtysix.resulthandler.ResultDto.ResultCodeEnum;
 import com.restfb.types.User;
-
-import resulthandler.ResultDto;
-import resulthandler.ResultDto.ResultCodeEnum;
 
 @Component
 public class WebSecurityProvider implements AuthenticationProvider {

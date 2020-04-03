@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.karljeong.fourtysix.application.admin.pattern.service.PatternService;
 import com.karljeong.fourtysix.database.entity.TbComPattern;
-
-import resulthandler.ResultDto;
-import resulthandler.ResultDto.ResultCodeEnum;
-import resulthandler.ResultSetter;
+import com.karljeong.fourtysix.resulthandler.ResultDto;
+import com.karljeong.fourtysix.resulthandler.ResultSetter;
+import com.karljeong.fourtysix.resulthandler.ResultDto.ResultCodeEnum;
 
 @RestController
 @RequestMapping("/v1/api/admin/pattern")
