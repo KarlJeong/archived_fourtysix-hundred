@@ -20,16 +20,19 @@ public class WebSecurityUrlChecker {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private final MenuService menuService;
+    private final WebSecurityProvider webSecurityProvider;
 
 	@Autowired
-	WebSecurityUrlChecker(MenuService menuService) {
+	WebSecurityUrlChecker(MenuService menuService, WebSecurityProvider webSecurityProvider) {
 		this.menuService = menuService;
+		this.webSecurityProvider = webSecurityProvider;
 	}
 
 	public boolean check(HttpServletRequest req, Authentication authentication) {
+	    System.out.println(authentication.getPrincipal());
 	    if (!((authentication.getPrincipal()) instanceof TbComUser)) {
 	        System.out.println("GetPrincipal is not TbComUser");
-	        return false;
+	        authentication = webSecurityProvider.visitorAuthenticate(req).getAuthentication();
 	    }
 
 	    TbComUser tbComUser = (TbComUser) authentication.getPrincipal();
@@ -39,6 +42,8 @@ public class WebSecurityUrlChecker {
 	    }
 
 	    String accessingUri = reqUri[1];
+
+	    System.out.println(accessingUri);
 
 
 	    Iterator<? extends GrantedAuthority> iter = authentication.getAuthorities().iterator();

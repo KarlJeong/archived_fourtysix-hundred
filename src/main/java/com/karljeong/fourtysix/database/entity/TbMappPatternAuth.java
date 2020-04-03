@@ -9,6 +9,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.karljeong.fourtysix.utils.DateUtil;
 
@@ -40,6 +41,12 @@ public class TbMappPatternAuth implements Serializable {
 
     @Column(name="DELETE_YN")
     private byte deleteYn;
+
+    @Transient
+    private String authCode;
+
+    @Transient
+    private String uriPattern;
 
 	public TbMappPatternAuth() {
 	}
@@ -91,5 +98,23 @@ public class TbMappPatternAuth implements Serializable {
     public void setDeleteYn(byte deleteYn) {
         this.deleteYn = deleteYn;
     }
+
+    public String getAuthCode() {
+        return authCode;
+    }
+
+    public void setAuthCode(String authCode) {
+        this.authCode = authCode;
+    }
+
+    public String getUriPattern() {
+        return uriPattern;
+    }
+
+    public void setUriPattern(String uriPattern) {
+        this.uriPattern = uriPattern;
+    }
+
+
 
 }

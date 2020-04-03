@@ -25,6 +25,7 @@ public class LoadStatic {
 	private List<TbComAuth> authorityList;
 	private List<Map<String, Object>> systemMenuList;
 	private List<Map<String, Object>> serviceMenuList;
+	private Map<String, List<String>> patterList;
 
 	@PostConstruct
 	private void setSystemCode() {
@@ -75,9 +76,20 @@ public class LoadStatic {
     }
 
     public List<Map<String, Object>> getServiceMenuList() {
-        System.out.println(serviceMenuList.get(0).get("menuPath"));
-        System.out.println(serviceMenuList.get(1).get("menuPath"));
         return serviceMenuList;
+    }
+
+    @PostConstruct
+    private void setPatterList() {
+        this.patterList = loadStaticService.loadPatternList();
+    }
+
+    public void resetPatterList() {
+        this.patterList = loadStaticService.loadPatternList();
+    }
+
+    public Map<String, List<String>> getPatterList() {
+        return patterList;
     }
 
 }

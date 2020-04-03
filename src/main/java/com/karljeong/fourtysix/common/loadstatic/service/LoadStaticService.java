@@ -19,6 +19,7 @@ import com.karljeong.fourtysix.database.repository.TbComAuthRepository;
 import com.karljeong.fourtysix.database.repository.TbComCodeGroupRepository;
 import com.karljeong.fourtysix.database.repository.TbComCodeRepository;
 import com.karljeong.fourtysix.database.repository.TbComMenuRepository;
+import com.karljeong.fourtysix.database.repository.TbMappPatternAuthRepository;
 
 @Service
 public class LoadStaticService {
@@ -27,13 +28,15 @@ public class LoadStaticService {
     private final TbComCodeGroupRepository tbComCodeGroupRepository;
     private final TbComMenuRepository tbComMenuRepository;
     private final TbComAuthRepository tbComAuthRepository;
+    private final TbMappPatternAuthRepository tbMappPatternAuthRepository;
 
     @Autowired
-	LoadStaticService(TbComCodeRepository tbComCodeRepository, TbComCodeGroupRepository tbComCodeGroupRepository, TbComMenuRepository tbComMenuRepository, TbComAuthRepository tbComAuthRepository) {
+	LoadStaticService(TbComCodeRepository tbComCodeRepository, TbComCodeGroupRepository tbComCodeGroupRepository, TbComMenuRepository tbComMenuRepository, TbComAuthRepository tbComAuthRepository, TbMappPatternAuthRepository tbMappPatternAuthRepository) {
 		this.tbComCodeRepository = tbComCodeRepository;
 		this.tbComCodeGroupRepository = tbComCodeGroupRepository;
 		this.tbComMenuRepository = tbComMenuRepository;
 		this.tbComAuthRepository = tbComAuthRepository;
+		this.tbMappPatternAuthRepository = tbMappPatternAuthRepository;
 	}
 
 	public Map<String, Map<String, Object>> loadSystemCode() {
@@ -153,5 +156,21 @@ public class LoadStaticService {
     public List<TbComAuth> loadAuthority() {
         return tbComAuthRepository.findAll();
 
+    }
+
+    public Map<String, List<String>> loadPatternList(){
+        Map<String, List<String>> patterns = new HashMap<String, List<String>>();
+        List<TbComAuth> tbComAuthList = tbComAuthRepository.findAll();
+        for (int i = 0; i < tbComAuthList.size();i ++) {
+            patterns.put("ROLE_" + tbComAuthList.get(i).getAuthCode(), new ArrayList<String>());
+        }
+
+        List<String[]> mappPatternAuthList = tbMappPatternAuthRepository.findAllPatternAuth();
+        for (int i = 0; i < mappPatternAuthList.size(); i++) {
+            List<String> uriPatterns = patterns.get("ROLE_" + mappPatternAuthList.get(i)[0]);
+            uriPatterns.add(mappPatternAuthList.get(i)[1]);
+            patterns.put("ROLE_" + mappPatternAuthList.get(i)[0], uriPatterns);
+        }
+        return patterns;
     }
 }
