@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}">
+<head>
+<title>Auth List</title>
+<script defer th:src="@{/vendors/isotope/imagesloaded.pkgd.min.js}"></script>
+<script defer th:src="@{/vendors/isotope/isotope.pkgd.min.js}"></script>
+<script defer th:src="@{/vendors/liverty-admin/js/owl-carousel.js}"></script>
+<script defer type="text/javascript">
+    $(function() {
+    });
+</script>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <a href="diary.html" class="card-title-link">
+                                <h4 class="card-title">POPULAR DIARY</h4>
+                            </a>
+                        </div>
+                        <div class="separator-2"></div>
+                        <div class="owl-carousel owl-theme full-width">
+                            <div class="item">
+                                <div class="card text-white">
+                                    <img class="card-img" src="https://placehold.it/1300x960" alt="Card image">
+                                    <div class="card-img-overlay d-flex">
+                                        <div class="mt-auto text-center w-100">
+                                            <h3>[LANGUAGE] How I learnt Korean</h3>
+                                            <h6 class="card-text mb-4 font-weight-normal ellipsis">Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="card text-white">
+                                    <img class="card-img" src="https://placehold.it/1300x960" alt="Card image">
+                                    <div class="card-img-overlay d-flex">
+                                        <div class="mt-auto text-center w-100">
+                                            <h3>[FOOD] How to make Korean style sidedish</h3>
+                                            <h6 class="card-text mb-4 font-weight-normal ellipsis">Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="card text-white">
+                                    <img class="card-img" src="https://placehold.it/1300x960" alt="Card image">
+                                        <div class="card-img-overlay d-flex">
+                                            <div class="mt-auto text-center w-100">
+                                                <h3>[TAG] Title</h3>
+                                                <h6 class="card-text mb-4 font-weight-normal ellipsis">Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah </h6>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <a href="#" class="card-title-link">
+                      <h4 class="card-title">RECOMMENDED</h4>
+                    </a>
+                    <a href="#" class="card-title-link"><i class="fa fa-caret-square-o-right icon-md"></i></a>
+                  </div>
+                  <div class="separator-2"></div>
+                  <div class="list-wrapper">
+                    <ul class="d-flex flex-column todo-list todo-list-custom">
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-dark fixed-badge align-middle">주전자</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">31번 환자가 슈퍼전파자가 아니라는 글들이 올라오네요</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-dark fixed-badge align-middle">글쎄</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">안알랴쥼</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-dark fixed-badge align-middle">글쎄</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">안알랴쥼</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-dark fixed-badge align-middle">글쎄</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">안알랴쥼</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-dark fixed-badge align-middle">글쎄</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">안알랴쥼</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-dark fixed-badge align-middle">글쎄</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">안알랴쥼</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-dark fixed-badge align-middle">글쎄</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">안알랴쥼</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-dark fixed-badge align-middle">글쎄</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">안알랴쥼</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-dark fixed-badge align-middle">글쎄</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">안알랴쥼</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  Google Ad
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <a href="#" class="card-title-link">
+                      <h4 class="card-title">NOTICE BY FOURTYSIX-HUNDRED</h4>
+                    </a>
+                    <a href="#" class="card-title-link"><i class="fa fa-caret-square-o-right icon-md"></i></a>
+                  </div>
+                  <div class="separator-2"></div>
+                  <div class="list-wrapper">
+                    <ul class="d-flex flex-column todo-list todo-list-custom">
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-info fixed-badge align-middle">공지</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">서비스가 런치 되었습니다.</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <span class="text-muted dashboard-count">2020-02-21</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-info fixed-badge align-middle">공지</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">DIARY 번역서비스를 제공합니다.</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <span class="text-muted dashboard-count">2020-02-21</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="col-12 pt-2">
+                      <img class="img-fuild rounded" src="https://placehold.it/470x280" alt="tab preview">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <a href="#" class="card-title-link">
+                      <h4 class="card-title">FLEA MARKET</h4>
+                    </a>
+                    <a href="#" class="card-title-link"><i class="fa fa-caret-square-o-right icon-md"></i></a>
+                  </div>
+                  <div class="separator-2"></div>
+                  <div class="list-wrapper">
+                    <ul class="d-flex flex-column todo-list todo-list-custom">
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-warning fixed-badge align-middle">팝니다</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">자전거 팔아요</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">자전거 삽니다</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-warning fixed-badge align-middle">팝니다</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">자동차 팝니다.</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">자동차 삽니다.</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-warning fixed-badge align-middle">팝니다</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">아이폰 팝니다</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">아이폰 삽니다</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-warning fixed-badge align-middle">팝니다</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">커피머신 팝니다.</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">커피머신 삽니다</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="col-12 pr-0 row">
+                          <div class="col-2 px-0">
+                            <a href="#">
+                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
+                            </a>
+                          </div>
+                          <div class="col-8 pl-0">
+                            <a class="dashboard-title-link" href="#">
+                              <span class="row dashboard-ellipsis dashboard-title">텀플러 삽니다.</span>
+                            </a>
+                          </div>
+                          <div class="col-2 pr-0 text-right">
+                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    </th:block>
+</body>
+
+</html>
