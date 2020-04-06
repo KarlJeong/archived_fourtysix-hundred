@@ -38,7 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()//
+		.antMatchers("/", "/login/**", "/error/**", "/favicon.ico").permitAll()
         .anyRequest().access("@webSecurityUrlChecker.check(request, authentication)");
+		//.anyRequest().permitAll();
+
+		http.exceptionHandling().accessDeniedPage("/error/403");
 
 		http.formLogin().loginPage("/login") // default
 				.loginProcessingUrl("/loginsecurity") // Login Process URL, Same URL should be called in login page
