@@ -1,5 +1,6 @@
 package com.karljeong.fourtysix.common.loadstatic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,28 +18,28 @@ public class LoadStatic {
     private final LoadStaticService loadStaticService;
 
     @Autowired
-	LoadStatic(LoadStaticService loadStaticService) {
-		this.loadStaticService = loadStaticService;
-	}
+    LoadStatic(LoadStaticService loadStaticService) {
+        this.loadStaticService = loadStaticService;
+    }
 
-	private Map<String, Map<String, Object>> systemCode;
-	private List<TbComAuth> authorityList;
-	private List<Map<String, Object>> systemMenuList;
-	private List<Map<String, Object>> serviceMenuList;
-	private Map<String, List<String>> patterList;
+    private Map<String, Map<String, Object>> systemCode;
+    private List<TbComAuth> authorityList;
+    private List<Map<String, Object>> systemMenuList;
+    private List<Map<String, Object>> serviceMenuList;
+    private Map<String, ArrayList<List<String>>> patterList;
 
-	@PostConstruct
-	private void setSystemCode() {
-		this.systemCode = loadStaticService.loadSystemCode();
-	}
+    @PostConstruct
+    private void setSystemCode() {
+        this.systemCode = loadStaticService.loadSystemCode();
+    }
 
-	public void resetSystemCode() {
-		this.systemCode = loadStaticService.loadSystemCode();
-	}
+    public void resetSystemCode() {
+        this.systemCode = loadStaticService.loadSystemCode();
+    }
 
-	public Map<String, Map<String, Object>> getSystemCode() {
-		return systemCode;
-	}
+    public Map<String, Map<String, Object>> getSystemCode() {
+        return systemCode;
+    }
 
     @PostConstruct
     private void setAuthorityList() {
@@ -88,7 +89,7 @@ public class LoadStatic {
         this.patterList = loadStaticService.loadPatternList();
     }
 
-    public Map<String, List<String>> getPatterList() {
+    public Map<String, ArrayList<List<String>>> getPatterList() {
         return patterList;
     }
 

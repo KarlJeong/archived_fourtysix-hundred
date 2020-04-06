@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/js/**", "/vendors/**", "/v1/**");
+		web.ignoring().antMatchers("/js/**", "/vendors/**");
 	}
 
     @Override

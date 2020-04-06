@@ -1,5 +1,7 @@
 package com.karljeong.fourtysix.config.security;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -42,12 +44,29 @@ public class WebSecurityUrlChecker extends AntPathMatcher{
             GrantedAuthority gaIter = iter.next();
             String auth = gaIter.getAuthority();
 
-            Map<String, List<String>> patternList = loadStatic.getPatterList();
-            List<String> patternListByAuth = patternList.get(auth);
-            for (String pattern : patternListByAuth) {
-                if (match(pattern, req.getRequestURI())) {
-                    return true;
+            Map<String, ArrayList<List<String>>> patternList = loadStatic.getPatterList();
+            ArrayList<List<String>> patternListByAuth = patternList.get(auth);
+            for (List<String> pattern : patternListByAuth) {
+                System.out.println(" >> " + req.getRequestURI().toUpperCase() + " >> " + pattern.get(0));
+                if (match(pattern.get(0), req.getRequestURI())) {
+                    switch (pattern.get(1).toUpperCase()) {
+                    case "GET":
+                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> GET");
+                        if ("GET".equals(req.getMethod().toUpperCase())) {
+                            return true;
+                        }
+                        break;
+
+                    case "ELSE":
+                        String[] elseList = {"PUT", "POST", "DELETE"};
+                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> ELSE");
+                        if (Arrays.asList(elseList).contains(req.getMethod().toUpperCase())) {
+                            return true;
+                        }
+                        break;
+                    }
                 }
+
             }
         }
 

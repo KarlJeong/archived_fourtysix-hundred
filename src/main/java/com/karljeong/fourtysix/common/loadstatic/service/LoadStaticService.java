@@ -158,17 +158,20 @@ public class LoadStaticService {
 
     }
 
-    public Map<String, List<String>> loadPatternList(){
-        Map<String, List<String>> patterns = new HashMap<String, List<String>>();
+    public  Map<String, ArrayList<List<String>>> loadPatternList(){
+        Map<String, ArrayList<List<String>>> patterns = new HashMap<String, ArrayList<List<String>>>();
         List<TbComAuth> tbComAuthList = tbComAuthRepository.findAll();
         for (int i = 0; i < tbComAuthList.size();i ++) {
-            patterns.put("ROLE_" + tbComAuthList.get(i).getAuthCode(), new ArrayList<String>());
+            patterns.put("ROLE_" + tbComAuthList.get(i).getAuthCode(), new ArrayList<List<String>>());
         }
 
         List<String[]> mappPatternAuthList = tbMappPatternAuthRepository.findAllPatternAuth();
         for (int i = 0; i < mappPatternAuthList.size(); i++) {
-            List<String> uriPatterns = patterns.get("ROLE_" + mappPatternAuthList.get(i)[0]);
-            uriPatterns.add(mappPatternAuthList.get(i)[1]);
+            ArrayList<List<String>> uriPatterns = patterns.get("ROLE_" + mappPatternAuthList.get(i)[0]);
+            List<String> p = new ArrayList<String>();
+            p.add(mappPatternAuthList.get(i)[1]);
+            p.add(mappPatternAuthList.get(i)[2]);
+            uriPatterns.add(p);
             patterns.put("ROLE_" + mappPatternAuthList.get(i)[0], uriPatterns);
         }
         return patterns;
