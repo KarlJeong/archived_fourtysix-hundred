@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.formLogin().loginPage("/login") // default
 				.loginProcessingUrl("/loginsecurity") // Login Process URL, Same URL should be called in login page
 				.failureUrl("/login?error") // default
-				.defaultSuccessUrl("/login/success") //
+				.defaultSuccessUrl("/main") //
 				.usernameParameter("loginId") //
 				.passwordParameter("password") //
 				.permitAll();
