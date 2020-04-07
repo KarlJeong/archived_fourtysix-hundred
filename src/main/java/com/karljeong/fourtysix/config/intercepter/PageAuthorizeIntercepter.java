@@ -75,6 +75,7 @@ public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
 
         if (!hasMenuList(request)) {
             request.setAttribute("serviceMenuList", loadStatic.getServiceMenuList());
+            request.setAttribute("isMember", false);
 
             Iterator<? extends GrantedAuthority> iter = authentication.getAuthorities().iterator();
             while (iter.hasNext()) {
@@ -82,6 +83,11 @@ public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
                 String auth = gaIter.getAuthority();
                 if (auth != null && "ROLE_ADMIN".equals(auth)) {
                     request.setAttribute("systemMenuList", loadStatic.getSystemMenuList());
+                    request.setAttribute("isMember", true);
+                } else if (auth != null && "ROLE_AUTHOR".equals(auth)) {
+                    request.setAttribute("isMember", true);
+                }else if (auth != null && "ROLE_MEMBER".equals(auth)) {
+                    request.setAttribute("isMember", true);
                 }
             }
         }
@@ -99,6 +105,7 @@ public class PageAuthorizeIntercepter extends HandlerInterceptorAdapter {
         request.setAttribute("loginId", tbComUser.getLoginId());
         request.setAttribute("userNickName", tbComUser.getUserNickname());
     }
+
 
     private Boolean hasMenuList(HttpServletRequest request) {
         if (request.getAttribute("systemMenuList") != null) {

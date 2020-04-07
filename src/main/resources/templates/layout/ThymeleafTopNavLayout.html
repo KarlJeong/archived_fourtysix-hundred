@@ -15,6 +15,7 @@
                 </div>
                 <div class="navbar-menu-wrapper d-flex align-items-center">
                     <ul class="navbar-nav navbar-nav-right ml-auto mr-0">
+                        <th:block th:if="${isMember} == true">
                         <li class="nav-item dropdown ml-4">
                             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i><span class="count bg-warning">4</span>
@@ -86,9 +87,15 @@
                                 <a class="dropdown-item"> Manage Accounts </a>
                                 <a class="dropdown-item"> Change Password </a>
                                 <a class="dropdown-item"> Check Inbox </a>
-                                <a class="dropdown-item"> Sign Out </a>
+                                <a href="/logout" class="dropdown-item"> Sign Out </a>
                             </div>
                         </li>
+                        </th:block>
+                        <th:block th:if="${isMember} == false">
+                        <li class="nav-item ml-4">
+                            <a href="/login/f" type="button" class="btn btn-outline-secondary" style="color:rgba(0, 0, 0, 0.5);">Login</a>
+                        </li>
+                        </th:block>
                     </ul>
                     <button class="navbar-toggler align-self-center" type="button" data-toggle="minimize">
                         <span class="mdi mdi-menu"></span>

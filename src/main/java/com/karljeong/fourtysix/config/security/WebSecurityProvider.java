@@ -89,7 +89,7 @@ public class WebSecurityProvider implements AuthenticationProvider {
 
 		resultDto.setData(tbComUser);
 		resultDto.setResultCd(ResultCodeEnum.SUCCESS_REDIRECT);
-		resultDto.setLinkUrl("/admin/codegroup/viewmain");
+		resultDto.setLinkUrl("/main");
 		return resultDto;
 	}
 
