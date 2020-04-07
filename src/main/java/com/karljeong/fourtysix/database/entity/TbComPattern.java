@@ -47,11 +47,11 @@ public class TbComPattern implements Serializable {
     @Column(name = "URI_PATTERN")
     private String uriPattern;
 
-    @Column(name = "METHOD")
-    private String method;
-
     @Transient
     private List<TbComAuth> tbComAuths;
+
+    @Transient
+    private List<TbMappPatternAuth> tbMappPatternAuths;
 
     public TbComPattern() {
     }
@@ -104,14 +104,6 @@ public class TbComPattern implements Serializable {
         this.uriPattern = uriPattern;
     }
 
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
     public List<TbComAuth> getTbComAuths() {
         return tbComAuths;
     }
@@ -119,4 +111,13 @@ public class TbComPattern implements Serializable {
     public void setTbComAuths(List<TbComAuth> tbComAuths) {
         this.tbComAuths = tbComAuths;
     }
+
+    public List<TbMappPatternAuth> getTbMappPatternAuths() {
+        return tbMappPatternAuths;
+    }
+
+    public void setTbMappPatternAuths(List<TbMappPatternAuth> tbMappPatternAuths) {
+        this.tbMappPatternAuths = tbMappPatternAuths;
+    }
+
 }

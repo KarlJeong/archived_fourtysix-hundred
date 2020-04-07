@@ -1,6 +1,7 @@
 package com.karljeong.fourtysix.application.admin.pattern.controller;
 
 import java.math.BigInteger;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.karljeong.fourtysix.application.admin.auth.service.AuthService;
 import com.karljeong.fourtysix.application.admin.pattern.service.PatternService;
 import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
+import com.karljeong.fourtysix.database.entity.TbComPattern;
 
 @Controller
 @RequestMapping("/admin/pattern")
@@ -36,13 +38,18 @@ public class PatternController {
     @GetMapping("/viewcreate")
     public String viewCreate(Model model) {
         model.addAttribute("authList", authService.findAll());
+        model.addAttribute("reqMethods", loadStatic.getSystemCode().get("REQ_METHOD").get("code"));
         return "/view/admin/pattern/patternC";
     }
 
     @GetMapping("/viewupdate/{patternId}")
     public String viewUpdate(Model model, @PathVariable("patternId") BigInteger patternId) {
-        model.addAttribute("mainInfo", patternService.findById(patternId));
+        TbComPattern tbComPattern = patternService.findById(patternId);
+        model.addAttribute("mainInfo", tbComPattern);
         model.addAttribute("authList", authService.findAll());
+        model.addAttribute("selectedAuths", tbComPattern.getTbComAuths().stream().map(d -> d.getAuthId()).collect(Collectors.toList()));
+        model.addAttribute("reqMethods", loadStatic.getSystemCode().get("REQ_METHOD").get("code"));
+        model.addAttribute("selectedMethods", tbComPattern.getTbMappPatternAuths().stream().map(d -> d.getId().getMethod()).collect(Collectors.toList()));
         return "/view/admin/pattern/patternU";
     }
 

@@ -20,10 +20,13 @@ import com.karljeong.fourtysix.database.entity.TbMappPatternAuthPK;
 public interface TbMappPatternAuthRepository
 		extends PagingAndSortingRepository<TbMappPatternAuth, TbMappPatternAuthPK>, JpaSpecificationExecutor<TbMappPatternAuth> {
 
-    @Query("SELECT u FROM TbMappPatternAuth c INNER JOIN TbComAuth u ON u.authId = c.id.authId WHERE c.id.patternId = :patternId")
+    @Query("SELECT u FROM TbMappPatternAuth c INNER JOIN TbComAuth u ON u.authId = c.id.authId WHERE c.id.patternId = :patternId  GROUP BY u.authId")
     List<TbComAuth> findByPatternId(@Param("patternId") BigInteger patternId);
 
-    @Query(value = "SELECT B.AUTH_CODE, C.URI_PATTERN, C.METHOD "
+    @Query("SELECT c FROM TbMappPatternAuth c WHERE c.id.patternId = :patternId GROUP BY c.id.method")
+    List<TbMappPatternAuth> findMethodByPatternId(@Param("patternId") BigInteger patternId);
+
+    @Query(value = "SELECT B.AUTH_CODE, C.URI_PATTERN, A.METHOD "
                 + "FROM TB_MAPP_PATTERN_AUTH A "
                 + "INNER JOIN TB_COM_AUTH B ON A.AUTH_ID = B.AUTH_ID "
                 + "INNER JOIN TB_COM_PATTERN C ON A.PATTERN_ID = C.PATTERN_ID "

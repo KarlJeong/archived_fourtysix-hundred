@@ -1,7 +1,6 @@
 package com.karljeong.fourtysix.config.security;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -56,11 +55,21 @@ public class WebSecurityUrlChecker extends AntPathMatcher{
                             return true;
                         }
                         break;
-
-                    case "ELSE":
-                        String[] elseList = {"PUT", "POST", "DELETE"};
-                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> ELSE");
-                        if (Arrays.asList(elseList).contains(req.getMethod().toUpperCase())) {
+                    case "PUT":
+                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> PUT");
+                        if ("PUT".equals(req.getMethod().toUpperCase())) {
+                            return true;
+                        }
+                        break;
+                    case "POST":
+                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> POST");
+                        if ("POST".equals(req.getMethod().toUpperCase())) {
+                            return true;
+                        }
+                        break;
+                    case "DELETE":
+                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> DELETE");
+                        if ("DELETE".equals(req.getMethod().toUpperCase())) {
                             return true;
                         }
                         break;

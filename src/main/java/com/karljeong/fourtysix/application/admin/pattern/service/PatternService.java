@@ -33,6 +33,7 @@ public class PatternService {
 
         for (TbComPattern tbComPattern : comPatternList) {
             tbComPattern.setTbComAuths(tbMappPatternAuthRepository.findByPatternId(tbComPattern.getPatternId()));
+            tbComPattern.setTbMappPatternAuths(tbMappPatternAuthRepository.findMethodByPatternId(tbComPattern.getPatternId()));
         }
 
         return comPatternList;
@@ -41,6 +42,7 @@ public class PatternService {
     public TbComPattern findById(BigInteger patternId) {
         TbComPattern tbComPattern = tbComPatternRepository.findById(patternId).get();
         tbComPattern.setTbComAuths(tbMappPatternAuthRepository.findByPatternId(patternId));
+        tbComPattern.setTbMappPatternAuths(tbMappPatternAuthRepository.findMethodByPatternId(patternId));
         return tbComPattern;
     }
 
@@ -50,18 +52,21 @@ public class PatternService {
         TbComPattern save = tbComPatternRepository.save(tbComPattern);
 
         List<TbComAuth> tbComAuths = tbComPattern.getTbComAuths();
-        if (tbComAuths != null && !tbComAuths.isEmpty()) {
+        List<TbMappPatternAuth> tbMappPatternAuths = tbComPattern.getTbMappPatternAuths();
+        if (tbComAuths != null && tbMappPatternAuths != null && !tbComAuths.isEmpty() && !tbMappPatternAuths.isEmpty()) {
             for (TbComAuth tbComAuth : tbComAuths) {
-                TbMappPatternAuth tbMappPatternAuth = new TbMappPatternAuth();
-                tbMappPatternAuth.setCreateUserId(BigInteger.valueOf(11111));
-                tbMappPatternAuth.setDeleteYn((byte) 0);
+                for (TbMappPatternAuth tbMappPatternAuth : tbMappPatternAuths) {
+                    tbMappPatternAuth.setCreateUserId(BigInteger.valueOf(11111));
+                    tbMappPatternAuth.setDeleteYn((byte) 0);
 
-                TbMappPatternAuthPK tbMappPatternAuthPK = new TbMappPatternAuthPK();
-                tbMappPatternAuthPK.setPatternId(save.getPatternId());
-                tbMappPatternAuthPK.setAuthId(tbComAuth.getAuthId());
-                tbMappPatternAuth.setId(tbMappPatternAuthPK);
+                    TbMappPatternAuthPK tbMappPatternAuthPK = new TbMappPatternAuthPK();
+                    tbMappPatternAuthPK.setPatternId(save.getPatternId());
+                    tbMappPatternAuthPK.setAuthId(tbComAuth.getAuthId());
+                    tbMappPatternAuthPK.setMethod(tbMappPatternAuth.getMethod());
+                    tbMappPatternAuth.setId(tbMappPatternAuthPK);
 
-                tbMappPatternAuthRepository.save(tbMappPatternAuth);
+                    tbMappPatternAuthRepository.save(tbMappPatternAuth);
+                }
             }
         }
 
@@ -72,21 +77,31 @@ public class PatternService {
         tbComPattern.setUpdateUserId(BigInteger.valueOf(11111));
         TbComPattern save = tbComPatternRepository.save(tbComPattern);
 
+
         List<TbComAuth> tbComAuths = tbComPattern.getTbComAuths();
-        if (tbComAuths != null && !tbComAuths.isEmpty()) {
+        List<TbMappPatternAuth> tbMappPatternAuths = tbComPattern.getTbMappPatternAuths();
+        System.out.println(tbComAuths.size());
+        System.out.println(tbMappPatternAuths.size());
+        System.out.println(tbComAuths.get(0).getAuthId());
+        System.out.println(tbMappPatternAuths.get(0).getMethod());
+        if (tbComAuths != null && tbMappPatternAuths != null && !tbComAuths.isEmpty() && !tbMappPatternAuths.isEmpty()) {
             tbMappPatternAuthRepository.deleteByPatternId(tbComPattern.getPatternId());
 
             for (TbComAuth tbComAuth : tbComAuths) {
-                TbMappPatternAuth tbMappPatternAuth = new TbMappPatternAuth();
-                tbMappPatternAuth.setCreateUserId(BigInteger.valueOf(11111));
-                tbMappPatternAuth.setDeleteYn((byte) 0);
+                for (TbMappPatternAuth tbMappPatternAuth : tbMappPatternAuths) {
+                    tbMappPatternAuth.setCreateUserId(BigInteger.valueOf(11111));
+                    tbMappPatternAuth.setDeleteYn((byte) 0);
+                    System.out.println(save.getPatternId());
+                    System.out.println(tbComAuth.getAuthId());
+                    System.out.println(tbMappPatternAuth.getMethod());
+                    TbMappPatternAuthPK tbMappPatternAuthPK = new TbMappPatternAuthPK();
+                    tbMappPatternAuthPK.setPatternId(save.getPatternId());
+                    tbMappPatternAuthPK.setAuthId(tbComAuth.getAuthId());
+                    tbMappPatternAuthPK.setMethod(tbMappPatternAuth.getMethod());
+                    tbMappPatternAuth.setId(tbMappPatternAuthPK);
 
-                TbMappPatternAuthPK tbMappPatternAuthPK = new TbMappPatternAuthPK();
-                tbMappPatternAuthPK.setPatternId(tbComPattern.getPatternId());
-                tbMappPatternAuthPK.setAuthId(tbComAuth.getAuthId());
-                tbMappPatternAuth.setId(tbMappPatternAuthPK);
-
-                tbMappPatternAuthRepository.save(tbMappPatternAuth);
+                    tbMappPatternAuthRepository.save(tbMappPatternAuth);
+                }
             }
         }
         return save;

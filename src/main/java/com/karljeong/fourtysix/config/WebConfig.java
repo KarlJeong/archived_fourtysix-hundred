@@ -30,10 +30,10 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 
-		registry.addInterceptor(commonInterceptor).addPathPatterns("/admin/**", "/diary/**", "/v1/api/**")
+		registry.addInterceptor(commonInterceptor).addPathPatterns("/", "/main/**", "/admin/**", "/diary/**", "/v1/api/**")
 				.excludePathPatterns("/js/**, /vendors/**");
 
-		registry.addInterceptor(pageAuthorizeInterceptor).addPathPatterns("/admin/**", "/diary/**")
+		registry.addInterceptor(pageAuthorizeInterceptor).addPathPatterns("/", "/main/**", "/admin/**", "/diary/**")
 				.excludePathPatterns("/js/**, /vendors/**");
 
 		registry.addInterceptor(restApiAuthorizeInterceptor).addPathPatterns("/v1/api/**")

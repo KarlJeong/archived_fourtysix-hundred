@@ -26,7 +26,7 @@
                     "columns" : [ {
                         "data" : "uriPattern"
                     }, {
-                        "data" : "method"
+                        "data" : "patternId"
                     }, {
                         "data" : "patternId"
                     }, {
@@ -40,21 +40,25 @@
                     } ],
                     searching : false,
                     createdRow : function(row, data, index) {
+                        var tbComAuthNames = [];
+                        for (var i = 0 ; i < data["tbComAuths"].length ; i++) {
+                            tbComAuthNames.push(data["tbComAuths"][i]["authCode"]);
+                        }
+
+                        var tbMappPatternAuthMethods = [];
+                        for (var i = 0 ; i < data["tbMappPatternAuths"].length ; i++) {
+                            tbMappPatternAuthMethods.push(data["tbMappPatternAuths"][i]["id"]["method"]);
+                        }
                         $('td', row).eq(0).html('').append(
                                 '<a class="dt-alink" href="/admin/pattern/viewupdate/'+data["patternId"]+'">'
                                 + data["uriPattern"] + '</a>');
 
 
                         $('td', row).eq(1).html('').append(
-                                data["method"]);
+                                tbMappPatternAuthMethods.join(", "));
 
-                        var tbComAuthNames = [];
-                        for (var i = 0 ; i < data["tbComAuths"].length ; i++) {
-                            tbComAuthNames.push(data["tbComAuths"][i]["authCode"]);
-                        }
                         $('td', row).eq(2).html('').append(
-                                tbComAuthNames.join(", ")
-                        );
+                                tbComAuthNames.join(", "));
 
                         $('td', row).eq(3).html('').append(
                                 data["createDatetime"]);

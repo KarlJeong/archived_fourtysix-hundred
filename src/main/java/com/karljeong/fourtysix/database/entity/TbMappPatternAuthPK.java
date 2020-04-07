@@ -21,6 +21,9 @@ public class TbMappPatternAuthPK implements Serializable {
 	@Column(name="AUTH_ID", insertable=false, updatable=false)
 	private BigInteger authId;
 
+    @Column(name="METHOD", insertable=false, updatable=false)
+    private String method;
+
 	public TbMappPatternAuthPK() {
 	}
 
@@ -40,6 +43,14 @@ public class TbMappPatternAuthPK implements Serializable {
         this.authId = authId;
     }
 
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
     @Override
     public boolean equals(Object other) {
 		if (this == other) {
@@ -51,7 +62,8 @@ public class TbMappPatternAuthPK implements Serializable {
 		TbMappPatternAuthPK castOther = (TbMappPatternAuthPK)other;
 		return
 			this.patternId.equals(castOther.patternId)
-			&& this.authId.equals(castOther.authId);
+			&& this.authId.equals(castOther.authId)
+			&& this.method.equals(castOther.method);
 	}
 
 	@Override
@@ -60,6 +72,7 @@ public class TbMappPatternAuthPK implements Serializable {
 		int hash = 17;
 		hash = hash * prime + this.patternId.hashCode();
 		hash = hash * prime + this.authId.hashCode();
+		hash = hash * prime + this.method.hashCode();
 
 		return hash;
 	}

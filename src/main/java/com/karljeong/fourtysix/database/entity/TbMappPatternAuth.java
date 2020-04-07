@@ -48,6 +48,9 @@ public class TbMappPatternAuth implements Serializable {
     @Transient
     private String uriPattern;
 
+    @Transient
+    private String method;
+
 	public TbMappPatternAuth() {
 	}
 
@@ -114,6 +117,16 @@ public class TbMappPatternAuth implements Serializable {
     public void setUriPattern(String uriPattern) {
         this.uriPattern = uriPattern;
     }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
+    }
+
+
 
 
 

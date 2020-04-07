@@ -39,15 +39,13 @@
                                         <label for="codeValue">URI Pattern</label> <input type="text" class="form-control" name="uriPattern" id="uriPattern" th:field="${mainInfo.uriPattern}"> <input type="hidden" class="form-control" name="patternId" id="patternId" th:field="${mainInfo.patternId}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="menuType">Method</label> <select class="form-control" name="method" id="method" th:field="${mainInfo.method}">
-                                            <option value="GET">Get</option>
-                                            <option value="ELSE">Else</option>
+                                        <label for="tbMappPatternAuth.method">Methods</label> <select name="tbMappPatternAuths.method" class="js-example-basic-multiple multi-select" multiple="multiple" style="width: 100%">
+                                            <option th:each="reqMethod : ${reqMethods}" th:value="${reqMethod.codeValue}" th:text="${reqMethod.codeName}" th:selected="${#lists.contains(selectedMethods, reqMethod.codeValue)}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="includingCodes">Allowed to</label> <select name="tbComAuths.authId" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
-                                            <option th:each="tbComAuths : ${mainInfo.tbComAuths}" th:value="${tbComAuths.authId}" th:text="|[${tbComAuths.authCode}] ${tbComAuths.authName}|" th:selected="${tbComAuths.authId}"></option>
-                                            <option th:each="auth : ${authList}" th:value="${auth.authId}" th:text="|[${auth.authCode}] ${auth.authName}|"></option>
+                                            <option th:each="auth : ${authList}" th:value="${auth.authId}" th:text="|[${auth.authCode}] ${auth.authName}|" th:selected="${#lists.contains(selectedAuths, auth.authId)}"></option>
                                         </select>
                                     </div>
                                 </form>
