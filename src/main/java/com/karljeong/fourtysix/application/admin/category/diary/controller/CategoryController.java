@@ -1,6 +1,7 @@
 package com.karljeong.fourtysix.application.admin.category.diary.controller;
 
 import java.math.BigInteger;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,16 +13,16 @@ public class CategoryController {
 
     @GetMapping("/viewmain")
     public String viewList() {
-        return "view/admin/category/auth";
+        return "view/admin/category/category";
     }
 
     @GetMapping("/viewcreate")
     public String viewCreate() {
-        return "view/admin/category/authC";
+        return "view/admin/category/categoryC";
     }
 
     @GetMapping("/viewupdate/{categoryId}")
     public String viewUpdate(@PathVariable BigInteger categoryId) {
-        return "view/admin/category/authU";
+        return "view/admin/category/categoryU";
     }
 }

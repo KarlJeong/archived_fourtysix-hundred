@@ -39,7 +39,7 @@
                                         <label for="codeValue">URI Pattern</label> <input type="text" class="form-control" name="uriPattern" id="uriPattern" th:field="${mainInfo.uriPattern}"> <input type="hidden" class="form-control" name="patternId" id="patternId" th:field="${mainInfo.patternId}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="tbMappPatternAuth.method">Methods</label> <select name="tbMappPatternAuths.method" class="js-example-basic-multiple multi-select" multiple="multiple" style="width: 100%">
+                                        <label for="tbMappPatternAuth.method">Methods</label> <select name="tbMappPatternAuths.method" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
                                             <option th:each="reqMethod : ${reqMethods}" th:value="${reqMethod.codeValue}" th:text="${reqMethod.codeName}" th:selected="${#lists.contains(selectedMethods, reqMethod.codeValue)}"></option>
                                         </select>
                                     </div>

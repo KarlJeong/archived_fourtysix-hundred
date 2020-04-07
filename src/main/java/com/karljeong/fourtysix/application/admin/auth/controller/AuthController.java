@@ -1,6 +1,7 @@
 package com.karljeong.fourtysix.application.admin.auth.controller;
 
 import java.math.BigInteger;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.karljeong.fourtysix.application.admin.auth.service.AuthService;
 import com.karljeong.fourtysix.application.admin.user.service.UserService;
 import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
+import com.karljeong.fourtysix.database.entity.TbComAuth;
 
 @Controller
 @RequestMapping("/admin/auth")
@@ -43,8 +45,10 @@ public class AuthController {
 
 	@GetMapping("/viewupdate/{authId}")
 	public String viewUpdate(Model model, @PathVariable("authId") BigInteger authId) {
-		model.addAttribute("mainInfo", authService.findById(authId));
+	    TbComAuth tbComAuth = authService.findById(authId);
+		model.addAttribute("mainInfo", tbComAuth);
 		model.addAttribute("allUserList", userService.findAll());
+		model.addAttribute("selectedUserList", tbComAuth.getTbComUsers().stream().map(d -> d.getUserId()).collect(Collectors.toList()));
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
 		return "/view/admin/auth/authU";
 	}

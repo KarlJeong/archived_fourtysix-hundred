@@ -45,9 +45,8 @@
                                         <label for="codeName">Auth Name</label> <input type="text" class="form-control" name="authName" id="authName" th:field="${mainInfo.authName}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="includingCodes">Authorized Users</label> <select name="tbComUsers.userId" class="js-example-basic-multiple multi-select" multiple="multiple" style="width: 100%">
-                                            <option th:each="tbComUsers : ${mainInfo.tbComUsers}" th:value="${tbComUsers.userId}" th:text="|${tbComUsers.email} - ${tbComUsers.userNickname}|" th:selected="${tbComUsers.userId}"></option>
-                                            <option th:each="allUsers : ${allUserList}" th:value="${allUsers.userId}" th:text="|${allUsers.email} - ${allUsers.userNickname}|"></option>
+                                        <label for="includingCodes">Authorized Users</label> <select name="tbComUsers.userId" class="js-example-basic-multiple" multiple="multiple" style="width: 100%">
+                                            <option th:each="allUsers : ${allUserList}" th:value="${allUsers.userId}" th:text="|${allUsers.email} - ${allUsers.userNickname}|" th:selected="${#lists.contains(selectedUserList, allUsers.userId)}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
