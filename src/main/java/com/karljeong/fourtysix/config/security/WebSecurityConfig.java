@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.exceptionHandling().accessDeniedPage("/error/403");
 
-		http.formLogin().loginPage("/login") // default
+		http.formLogin().loginPage("/login/f") // default
 				.loginProcessingUrl("/loginsecurity") // Login Process URL, Same URL should be called in login page
 				.failureUrl("/login?error") // default
 				.defaultSuccessUrl("/main") //
@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/main") //
 				.permitAll();
 
-		http.sessionManagement().maximumSessions(1).expiredUrl("/login").and().invalidSessionUrl("/login");
+		http.sessionManagement().maximumSessions(1).expiredUrl("/login/f").and().invalidSessionUrl("/login/f");
 	}
 
 }

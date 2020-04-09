@@ -1,12 +1,14 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * The persistent class for the TB_MAPP_BOARD_AUTH database table.
@@ -26,6 +28,9 @@ public class TbMappBoardAuth implements Serializable {
 
 	@Column(name = "WRITABLE_YN")
 	private byte writableYn;
+
+    @Transient
+    private BigInteger authId;
 
 	public TbMappBoardAuth() {
 	}
@@ -53,5 +58,15 @@ public class TbMappBoardAuth implements Serializable {
 	public void setWritableYn(byte writableYn) {
 		this.writableYn = writableYn;
 	}
+
+    public BigInteger getAuthId() {
+        return authId;
+    }
+
+    public void setAuthId(BigInteger authId) {
+        this.authId = authId;
+    }
+
+
 
 }

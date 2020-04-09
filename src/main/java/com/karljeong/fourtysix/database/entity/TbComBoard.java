@@ -64,10 +64,10 @@ public class TbComBoard implements Serializable {
 	private byte useYn;
 
 	@Transient
-	private List<TbComAuth> tbComAuthWritable;
+	private List<TbMappBoardAuth> tbComAuthWritable;
 
 	@Transient
-	private List<TbComAuth> tbComAuthReadable;
+	private List<TbMappBoardAuth> tbComAuthReadable;
 
 	public TbComBoard() {
 	}
@@ -160,20 +160,21 @@ public class TbComBoard implements Serializable {
 		this.useYn = useYn;
 	}
 
-	public List<TbComAuth> getTbComAuthWritable() {
-		return tbComAuthWritable;
-	}
+    public List<TbMappBoardAuth> getTbComAuthWritable() {
+        return tbComAuthWritable;
+    }
 
-	public void setTbComAuthWritable(List<TbComAuth> tbComAuthWritable) {
-		this.tbComAuthWritable = tbComAuthWritable;
-	}
+    public void setTbComAuthWritable(List<TbMappBoardAuth> tbComAuthWritable) {
+        this.tbComAuthWritable = tbComAuthWritable;
+    }
 
-	public List<TbComAuth> getTbComAuthReadable() {
-		return tbComAuthReadable;
-	}
+    public List<TbMappBoardAuth> getTbComAuthReadable() {
+        return tbComAuthReadable;
+    }
 
-	public void setTbComAuthReadable(List<TbComAuth> tbComAuthReadable) {
-		this.tbComAuthReadable = tbComAuthReadable;
-	}
+    public void setTbComAuthReadable(List<TbMappBoardAuth> tbComAuthReadable) {
+        this.tbComAuthReadable = tbComAuthReadable;
+    }
+
 
 }

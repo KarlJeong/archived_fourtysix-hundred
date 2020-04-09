@@ -9,13 +9,19 @@
 <script defer type="text/javascript">
 
     function fnSave() {
+        let url = "/v1/api/admin/board/" + $("#boardId").val();
         var params = $("#baseForm").serializeObject();
-        console.log(params);
-        PromiseUtil.post("/v1/api/admin/board", params)
+        PromiseUtil.post(url, params)
         .then(JSON.parse)
         .then(function(d){
-        	alert("Saved successfully.");
-        	window.location.href = "/admin/board/viewupdate/" + d.boardId;
+        });
+    }
+
+    function fnDelete() {
+        let url = "/v1/api/admin/board/" + $("#boardId").val();
+        var params = $("#baseForm").serializeObject();
+        PromiseUtil.delete(url, params)
+        .then(function(d){
         });
     }
 
@@ -34,33 +40,33 @@
                                 <div class="separator-2"></div>
                                 <form id="baseForm">
                                     <div class="form-group">
-                                        <label for="boardCode">Board Code</label> <input type="text" class="form-control" name="boardCode" id="boardCode">
+                                        <label for="boardCode">Board Code</label> <input type="text" class="form-control" name="boardCode" id="boardCode" th:field="${mainInfo.boardCode}"> <input type="hidden" class="form-control" name="boardId" id="boardId" th:field="${mainInfo.boardId}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="boardName">Board Name</label> <input type="text" class="form-control" name="boardName" id="boardName">
+                                        <label for="boardName">Board Name</label> <input type="text" class="form-control" name="boardName" id="boardName" th:field="${mainInfo.boardName}">
                                     </div>
                                     <div class="form-group">
                                         <label for="tbComAuthWritable.authId">Writable Authority to</label> <select name="tbComAuthWritable.authId" class="js-example-basic-multiple multi-select" multiple="multiple" style="width: 100%">
-                                            <option th:each="allAuths : ${allAuthList}" th:value="${allAuths.authId}" th:text="|${allAuths.authCode} - ${allAuths.authName}|"></option>
+                                            <option th:each="allAuths : ${allAuthList}" th:value="${allAuths.authId}" th:text="|${allAuths.authCode} - ${allAuths.authName}|" th:selected="${#lists.contains(selectedWritableList, allAuths.authId)}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="tbComAuthReadable.authId">Readable Authority to</label> <select name="tbComAuthReadable.authId" class="js-example-basic-multiple multi-select" multiple="multiple" style="width: 100%">
-                                            <option th:each="allAuths : ${allAuthList}" th:value="${allAuths.authId}" th:text="|${allAuths.authCode} - ${allAuths.authName}|"></option>
+                                            <option th:each="allAuths : ${allAuthList}" th:value="${allAuths.authId}" th:text="|${allAuths.authCode} - ${allAuths.authName}|" th:selected="${#lists.contains(selectedReadableList, allAuths.authId)}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="boardDescription">Description</label>
-                                        <textarea class="form-control" name="boardDescription" id="boardDescription" rows="5"></textarea>
+                                        <textarea class="form-control" name="boardDescription" id="boardDescription" rows="5" th:field="${mainInfo.boardDescription}"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sysBoardYn">System Board YN</label> <select class="form-control" name="sysBoardYn" id="sysBoardYn">
-                                        <option th:each="systemBoard : ${systemBoardYn}" th:value="${systemBoard.codeValue}" th:text="${systemBoard.codeName}"></option>
+                                        <label for="sysBoardYn">System Board YN</label> <select class="form-control" name="sysBoardYn" id="sysBoardYn" th:field="${mainInfo.sysBoardYn}">
+                                        <option th:each="systemBoard : ${systemBoardYn}" th:value="${systemBoard.codeValue}" th:text="${systemBoard.codeName}" th:selected="${systemBoard.codeValue == mainInfo.sysBoardYn}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="useYn">Use YN</label> <select class="form-control" name="useYn" id="useYn">
-                                        <option th:each="code : ${codeUseYn}" th:value="${code.codeValue}" th:text="${code.codeName}"></option>
+                                        <option th:each="code : ${codeUseYn}" th:value="${code.codeValue}" th:text="${code.codeName}" th:selected="${code.codeValue == mainInfo.useYn}"></option>
                                         </select>
                                     </div>
                                 </form>

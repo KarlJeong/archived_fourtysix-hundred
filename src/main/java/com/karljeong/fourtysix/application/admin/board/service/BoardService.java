@@ -5,15 +5,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.karljeong.fourtysix.database.entity.TbComAuth;
 import com.karljeong.fourtysix.database.entity.TbComBoard;
 import com.karljeong.fourtysix.database.entity.TbMappBoardAuth;
 import com.karljeong.fourtysix.database.entity.TbMappBoardAuthPK;
@@ -54,43 +51,55 @@ public class BoardService {
 		return tbComBoardRepository.findAll();
 	}
 
+    public TbComBoard findById(BigInteger boardId) {
+        TbComBoard tbComBoard = tbComBoardRepository.findById(boardId).get();
+        tbComBoard.setTbComAuthReadable(tbMappBoardAuthRepository.findReadableByBoardId(boardId));
+        tbComBoard.setTbComAuthWritable(tbMappBoardAuthRepository.findWritableByBoardId(boardId));
+        return tbComBoard;
+    }
+
 	public TbComBoard create(TbComBoard tbComBoard) {
 		tbComBoard.setCreateUserId(BigInteger.valueOf(11111));
 		TbComBoard save = tbComBoardRepository.save(tbComBoard);
-		List<TbComAuth> tbComAuthReadable = tbComBoard.getTbComAuthReadable();
-		List<TbComAuth> tbComAuthWritable = tbComBoard.getTbComAuthWritable();
+		List<TbMappBoardAuth> tbComAuthReadable = tbComBoard.getTbComAuthReadable();
+		List<TbMappBoardAuth> tbComAuthWritable = tbComBoard.getTbComAuthWritable();
 
-		Map<BigInteger, List<TbComAuth>> groupedList = Stream.of(tbComAuthReadable, tbComAuthWritable)
-				.flatMap(x -> x.stream()).collect(Collectors.groupingBy(y -> y.getAuthId()));
+		Map<BigInteger, TbMappBoardAuth> tbMappBoardAuths = new HashMap<BigInteger, TbMappBoardAuth>();
 
-		// TO-Do writable, readable 입력
 		if (tbComAuthReadable != null && !tbComAuthReadable.isEmpty()) {
-			for (TbComAuth tbComAuth : tbComAuthReadable) {
-				TbMappBoardAuth tbMappBoardAuth = new TbMappBoardAuth();
-				tbMappBoardAuth.setReadableYn((byte) 1);
+            for (TbMappBoardAuth tbMappBoardAuth : tbComAuthReadable) {
+                tbMappBoardAuth.setReadableYn((byte) 1);
 
-				TbMappBoardAuthPK tbMappBoardAuthPK = new TbMappBoardAuthPK();
-				tbMappBoardAuthPK.setBoardId(tbComBoard.getBoardId());
-				tbMappBoardAuthPK.setAuthId(tbComAuth.getAuthId());
-				tbMappBoardAuth.setId(tbMappBoardAuthPK);
+                TbMappBoardAuthPK tbMappBoardAuthPK = new TbMappBoardAuthPK();
+                tbMappBoardAuthPK.setBoardId(tbComBoard.getBoardId());
+                tbMappBoardAuthPK.setAuthId(tbMappBoardAuth.getAuthId());
+                tbMappBoardAuth.setId(tbMappBoardAuthPK);
+                tbMappBoardAuths.put(tbMappBoardAuth.getAuthId(), tbMappBoardAuth);
+            }
+        }
 
-				tbMappBoardAuthRepository.save(tbMappBoardAuth);
-			}
-		}
+        if (tbComAuthWritable != null && !tbComAuthWritable.isEmpty()) {
+            for (TbMappBoardAuth tbMappBoardAuth : tbComAuthWritable) {
 
-		if (tbComAuthWritable != null && !tbComAuthWritable.isEmpty()) {
-			for (TbComAuth tbComAuth : tbComAuthWritable) {
-				TbMappBoardAuth tbMappBoardAuth = new TbMappBoardAuth();
-				tbMappBoardAuth.setWritableYn((byte) 1);
+                if (tbMappBoardAuths.containsKey(tbMappBoardAuth.getAuthId())) {
+                    tbMappBoardAuth = tbMappBoardAuths.get(tbMappBoardAuth.getAuthId());
+                    tbMappBoardAuth.setWritableYn((byte) 1);
+                } else {
+                    tbMappBoardAuth.setWritableYn((byte) 1);
 
-				TbMappBoardAuthPK tbMappBoardAuthPK = new TbMappBoardAuthPK();
-				tbMappBoardAuthPK.setBoardId(tbComBoard.getBoardId());
-				tbMappBoardAuthPK.setAuthId(tbComAuth.getAuthId());
-				tbMappBoardAuth.setId(tbMappBoardAuthPK);
+                    TbMappBoardAuthPK tbMappBoardAuthPK = new TbMappBoardAuthPK();
+                    tbMappBoardAuthPK.setBoardId(tbComBoard.getBoardId());
+                    tbMappBoardAuthPK.setAuthId(tbMappBoardAuth.getAuthId());
+                    tbMappBoardAuth.setId(tbMappBoardAuthPK);
+                    tbMappBoardAuths.put(tbMappBoardAuth.getAuthId(), tbMappBoardAuth);
+                }
+            }
+        }
 
-				tbMappBoardAuthRepository.save(tbMappBoardAuth);
-			}
-		}
+        for (BigInteger authId : tbMappBoardAuths.keySet()) {
+            tbMappBoardAuthRepository.save(tbMappBoardAuths.get(authId));
+        }
+
 		return save;
 	}
 

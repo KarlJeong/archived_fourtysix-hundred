@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.karljeong.fourtysix.database.entity.TbComUser;
 import com.karljeong.fourtysix.utils.UserUtil;
@@ -49,7 +48,7 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
 
         if (session != null
@@ -65,8 +64,7 @@ public class LoginController {
 
         }
 
-        ModelAndView mav = new ModelAndView("/main");
-        return mav;
+        response.sendRedirect(servletContext.getContextPath() + "/main");
     }
 
 }

@@ -25,7 +25,8 @@
             if ($.fn.DataTable.isDataTable('#board-table')) {
                 $('#board-table').DataTable().destroy();
             }
-            fnCreateBoardTable(result.content)
+            fnCreateBoardTable(result.content);
+            console.log(result.content);
         }).fail(function(error) {
             alert("error");
             console.log(error);
@@ -69,11 +70,11 @@
                     searching : false,
                     createdRow : function(row, data, index) {
                         $('td', row).eq(0).html('').append(
-                                '<a class="dt-alink" href="/admin/board/viewupdate/'+data["authId"]+'">'
+                                '<a class="dt-alink" href="/admin/board/viewupdate/'+data["boardId"]+'">'
                                 + data["boardName"] + '</a>');
 
                         $('td', row).eq(1).html('').append(
-                                '<a class="dt-alink" href="/admin/board/viewupdate/'+data["authId"]+'">'
+                                '<a class="dt-alink" href="/admin/board/viewupdate/'+data["boardId"]+'">'
                                 + data["boardCode"] + '</a>');
 
                         $('td', row).eq(2).html('').append(
