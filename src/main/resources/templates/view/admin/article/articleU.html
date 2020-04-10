@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}">
+<head>
+<title>Article Detail</title>
+<link rel="stylesheet" th:href="@{/vendors/summernote/dist/summernote-bs4.css}">
+<script defer th:src="@{/vendors/summernote/dist/summernote-bs4.min.js}"></script>
+<script defer type="text/javascript" th:inline="javascript">
+
+    $(function() {
+        $('#articleContents').summernote({
+            height : 500,
+            tabsize : 2,
+            insertImage : "/file",
+            toolbar : [
+                [ 'style', [ 'style' ] ],
+                [ 'font', [ 'bold', 'italic', 'underline', 'clear' ] ],
+                [ 'fontname', [ 'fontname' ] ],
+                [ 'fontsize', [ 'fontsize' ] ],
+                [ 'color', [ 'color' ] ],
+                [ 'para', [ 'ul', 'ol', 'paragraph' ] ],
+                [ 'height', [ 'height' ] ],
+                [ 'table', [ 'table' ] ],
+                [ 'insert', [ 'link', 'picture', 'video', 'hr' ] ],
+                [ 'view', [ 'fullscreen', 'codeview' ] ],
+                [ 'help', [ 'help' ] ]
+            ]
+        });
+
+        $('#articleContents').summernote('code',/*<![CDATA[*//*[[ ${mainInfo.articleContents} ]]*//*]]>*/);
+    });
+
+</script>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card px-2">
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <h2>ARTICLE DETAIL</h2>
+                                <div class="separator-2"></div>
+                                <form id="baseForm">
+                                    <div class="form-group">
+                                        <label for="boardId">Board</label> <select class="form-control" name="boardId" id="boardId">
+                                            <option th:each="baord : ${allBoardList}" th:value="${baord.boardId}" th:text="${baord.boardName}" th:selected="${baord.boardId == mainInfo.boardId} "></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="boardId">Category</label> <select class="form-control" name="articleCategoryId" id="articleCategoryId">
+                                            <option>공지</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="articleTitle">Title</label> <input type="text" class="form-control" name="articleTitle" id="articleTitle" th:field="${mainInfo.articleTitle}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="articleContents">Contents</label>
+                                        <div id="articleContents"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="useYn">Deleted YN</label> <select class="form-control" name="articleDeleteYn" id="articleDeleteYn" th:field="${mainInfo.articleDeleteYn}">
+                                            <option th:each="deleted : ${deletedYn}" th:value="${deleted.codeValue}" th:text="${deleted.codeName}"></option>
+                                        </select>
+                                    </div>
+                                </form>
+
+                                <div class="container-fluid w-100">
+                                    <a href="javascript:void(0);" class="btn btn-success float-right mt-4 ml-2" onclick="fnSave()">Save</a> <a href="/admin/article/viewmain" class="btn btn-secondary float-right mt-4">List</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

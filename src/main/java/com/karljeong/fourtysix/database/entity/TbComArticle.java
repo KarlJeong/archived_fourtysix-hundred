@@ -1,14 +1,24 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.karljeong.fourtysix.utils.DateUtil;
 
 
 /**
  * The persistent class for the TB_COM_ARTICLE database table.
- * 
+ *
  */
 @Entity
 @Table(name="TB_COM_ARTICLE")
@@ -19,7 +29,7 @@ public class TbComArticle implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ARTICLE_ID")
-	private String articleId;
+	private BigInteger articleId;
 
 	@Column(name="ARTICLE_CATEGORY_ID")
 	private BigInteger articleCategoryId;
@@ -34,17 +44,17 @@ public class TbComArticle implements Serializable {
 	@Column(name="ARTICLE_MODIFIER_ID")
 	private BigInteger articleModifierId;
 
-	@Column(name="ARTICLE_MODIFY_DATETIME")
-	private String articleModifyDatetime;
+	@Column(name="ARTICLE_MODIFY_DATETIME", insertable = false)
+	private Timestamp articleModifyDatetime = DateUtil.getTimestamp();
 
 	@Column(name="ARTICLE_TITLE")
 	private String articleTitle;
 
-	@Column(name="ARTICLE_VIEW_COUNT")
-	private int articleViewCount;
+	@Column(name="ARTICLE_VIEW_COUNT", updatable = false)
+	private int articleViewCount = 0;
 
-	@Column(name="ARTICLE_WRITE_DATETIME")
-	private Timestamp articleWriteDatetime;
+	@Column(name="ARTICLE_WRITE_DATETIME", updatable = false)
+	private Timestamp articleWriteDatetime = DateUtil.getTimestamp();
 
 	@Column(name="ARTICLE_WRITER_ID")
 	private BigInteger articleWriterId;
@@ -52,26 +62,26 @@ public class TbComArticle implements Serializable {
 	@Column(name="BOARD_ID")
 	private BigInteger boardId;
 
-	@Column(name="CREATE_DATETIME")
-	private Timestamp createDatetime;
+	@Column(name = "CREATE_DATETIME", updatable = false)
+    private Timestamp createDatetime = DateUtil.getTimestamp();
 
-	@Column(name="CREATE_USER_ID")
-	private BigInteger createUserId;
+    @Column(name="CREATE_USER_ID", updatable = false)
+    private BigInteger createUserId;
 
-	@Column(name="UPDATE_DATETIME")
-	private Timestamp updateDatetime;
+    @Column(name="UPDATE_DATETIME", insertable = false)
+    private Timestamp updateDatetime = DateUtil.getTimestamp();
 
-	@Column(name="UPDATE_USER_ID")
-	private BigInteger updateUserId;
+    @Column(name = "UPDATE_USER_ID", insertable = false)
+    private BigInteger updateUserId;
 
 	public TbComArticle() {
 	}
 
-	public String getArticleId() {
+	public BigInteger getArticleId() {
 		return this.articleId;
 	}
 
-	public void setArticleId(String articleId) {
+	public void setArticleId(BigInteger articleId) {
 		this.articleId = articleId;
 	}
 
@@ -107,11 +117,11 @@ public class TbComArticle implements Serializable {
 		this.articleModifierId = articleModifierId;
 	}
 
-	public String getArticleModifyDatetime() {
+	public Timestamp getArticleModifyDatetime() {
 		return this.articleModifyDatetime;
 	}
 
-	public void setArticleModifyDatetime(String articleModifyDatetime) {
+	public void setArticleModifyDatetime(Timestamp articleModifyDatetime) {
 		this.articleModifyDatetime = articleModifyDatetime;
 	}
 
