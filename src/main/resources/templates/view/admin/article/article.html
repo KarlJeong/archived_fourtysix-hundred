@@ -18,58 +18,69 @@
         PromiseUtil.get(url, params)
         .then(JSON.parse)
         .then(function(d){
-            if ($.fn.DataTable.isDataTable('#auth-table')) {
-                $('#auth-table').DataTable().destroy();
+            if ($.fn.DataTable.isDataTable('#article-table')) {
+                $('#article-table').DataTable().destroy();
             }
             fnCreateArticleTable(d.data.content)
         });
     }
 
     var fnCreateArticleTable = function(data) {
-        var useYnStatus = {
-            0 : [ 'Disuse', 'danger' ],
-            1 : [ 'Use', 'success' ]
+        var deleteYnStatus = {
+            0 : [ 'Publishing', 'success' ],
+            1 : [ 'Deleted', 'danger' ]
         };
 
-        $('#auth-table').dataTable(
+        $('#article-table').dataTable(
                 {
                     data : data,
                     "columns" : [ {
-                        "data" : "authName"
+                        "data" : "tbComBoard"
                     }, {
-                        "data" : "authCode"
+                        "data" : "articleTitle"
                     }, {
-                        "data" : "authId"
+                        "data" : "articleViewCount"
                     }, {
-                        "data" : "createDatetime"
+                        "data" : "articleWriteDatetime"
                     }, {
-                        "data" : "useYn"
+                        "data" : "articleModifyDatetime"
+                    }, {
+                        "data" : "articleDeleteYn"
                     } ],
-                    order : [ [ 3, 'desc' ] ],
+                    order : [ [ 4, 'desc' ] ],
                     columnDefs : [ {
-                        targets : [ 4 ],
+                        targets : [ 0 ],
+                        width : 80,
+                        className : 'text-center'
+                    }, {
+                        targets : [ 1 ],
+                        width : 200
+                    }, {
+                        targets : [ 2, 5 ],
                         width : 80,
                         className : 'text-center'
                     } ],
                     searching : false,
                     createdRow : function(row, data, index) {
                         $('td', row).eq(0).html('').append(
-                                '<a class="dt-alink" href="/admin/auth/viewupdate/'+data["authId"]+'">'
-                                + data["authName"] + '</a>');
+                                data["tbComBoard"]["boardName"]);
 
                         $('td', row).eq(1).html('').append(
-                                '<a class="dt-alink" href="/admin/auth/viewupdate/'+data["authId"]+'">'
-                                + data["authCode"] + '</a>');
+                                '<a class="dt-alink" href="/admin/article/viewupdate/'+data["articleId"]+'">'
+                                + data["articleTitle"] + '</a>');
 
                         $('td', row).eq(2).html('').append(
-                                data["tbComUsers"] != null ? data["tbComUsers"].length : 0);
+                                data["articleViewCount"]);
 
                         $('td', row).eq(3).html('').append(
-                                data["createDatetime"]);
+                                data["articleWriteDatetime"]);
 
                         $('td', row).eq(4).html('').append(
-                                '<label class="badge badge-' + useYnStatus[data["useYn"]][1] + '">'
-                                        + useYnStatus[data["useYn"]][0]
+                                data["articleModifyDatetime"]);
+
+                        $('td', row).eq(5).html('').append(
+                                '<label class="badge badge-' + deleteYnStatus[data["articleDeleteYn"]][1] + '">'
+                                        + deleteYnStatus[data["articleDeleteYn"]][0]
                                         + '</label>');
                     }
                 });
@@ -118,14 +129,15 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-5">
-                            <div class="col-12 table-responsive">
-                                <table id="auth-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
+                            <div class="col-12">
+                                <table id="article-table" class="table table-hover table-condensed table-fixed" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>Board Name</th>
                                             <th>Title</th>
                                             <th>View Count</th>
-                                            <th>Created at</th>
+                                            <th>Written at</th>
+                                            <th>Modified at</th>
                                             <th>Deleted Yn</th>
                                         </tr>
                                     </thead>

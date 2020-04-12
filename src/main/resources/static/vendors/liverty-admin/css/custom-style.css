@@ -260,3 +260,15 @@ table tbody tr td a.dt-alink:hover {
   color: #fff !important;
   text-decoration: none;
 }
+
+/** Datatable **/
+table.dataTable td {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+table.table-fixed {
+    table-layout: fixed !important;
+    width: 100% !important;
+}

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbComArticle;
 import com.karljeong.fourtysix.database.repository.TbComArticleRepository;
+import com.karljeong.fourtysix.database.repository.TbComBoardRepository;
 import com.karljeong.fourtysix.database.specification.TbComArticleSpec;
 import com.karljeong.fourtysix.database.specification.TbComArticleSpec.SearchKey;
 
@@ -19,10 +20,12 @@ import com.karljeong.fourtysix.database.specification.TbComArticleSpec.SearchKey
 public class ArticleService {
 
     private final TbComArticleRepository tbComArticleRepository;
+    private final TbComBoardRepository tbComBoardRepository;
 
     @Autowired
-    ArticleService(TbComArticleRepository tbComArticleRepository) {
+    ArticleService(TbComArticleRepository tbComArticleRepository, TbComBoardRepository tbComBoardRepository) {
         this.tbComArticleRepository = tbComArticleRepository;
+        this.tbComBoardRepository = tbComBoardRepository;
     }
 
     public Page<TbComArticle> readList(Map<String, Object> searchRequest, Pageable pageable) {
@@ -38,6 +41,9 @@ public class ArticleService {
         Page<TbComArticle> tbComArticleList = searchKeys.isEmpty() ? tbComArticleRepository.findAll(pageable)
                 : tbComArticleRepository.findAll(TbComArticleSpec.searchWithKeys(searchKeys), pageable);
 
+        for (TbComArticle tbComArticle : tbComArticleList) {
+            tbComArticle.setTbComBoard(tbComBoardRepository.findById(tbComArticle.getBoardId()).get());
+        }
         return tbComArticleList;
     }
 
@@ -51,5 +57,14 @@ public class ArticleService {
         return tbComArticleRepository.save(tbComArticle);
 
     }
+
+    public TbComArticle update(TbComArticle tbComArticle) {
+        tbComArticle.setUpdateUserId(BigInteger.valueOf(11111));
+        tbComArticle.setArticleModifierId(BigInteger.valueOf(11111));
+        return tbComArticleRepository.save(tbComArticle);
+
+    }
+
+
 
 }

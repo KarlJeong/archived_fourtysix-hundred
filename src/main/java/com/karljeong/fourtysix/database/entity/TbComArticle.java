@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.karljeong.fourtysix.utils.DateUtil;
 
@@ -41,7 +42,7 @@ public class TbComArticle implements Serializable {
 	@Column(name="ARTICLE_DELETE_YN")
 	private byte articleDeleteYn;
 
-	@Column(name="ARTICLE_MODIFIER_ID")
+	@Column(name="ARTICLE_MODIFIER_ID", insertable = false)
 	private BigInteger articleModifierId;
 
 	@Column(name="ARTICLE_MODIFY_DATETIME", insertable = false)
@@ -56,7 +57,7 @@ public class TbComArticle implements Serializable {
 	@Column(name="ARTICLE_WRITE_DATETIME", updatable = false)
 	private Timestamp articleWriteDatetime = DateUtil.getTimestamp();
 
-	@Column(name="ARTICLE_WRITER_ID")
+	@Column(name="ARTICLE_WRITER_ID", updatable = false)
 	private BigInteger articleWriterId;
 
 	@Column(name="BOARD_ID")
@@ -73,6 +74,9 @@ public class TbComArticle implements Serializable {
 
     @Column(name = "UPDATE_USER_ID", insertable = false)
     private BigInteger updateUserId;
+
+    @Transient
+    private TbComBoard tbComBoard;
 
 	public TbComArticle() {
 	}
@@ -196,5 +200,13 @@ public class TbComArticle implements Serializable {
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
 	}
+
+    public TbComBoard getTbComBoard() {
+        return tbComBoard;
+    }
+
+    public void setTbComBoard(TbComBoard tbComBoard) {
+        this.tbComBoard = tbComBoard;
+    }
 
 }

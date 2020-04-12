@@ -29,6 +29,16 @@
         $('#articleContents').summernote('code',/*<![CDATA[*//*[[ ${mainInfo.articleContents} ]]*//*]]>*/);
     });
 
+    function fnSave() {
+        let url = "/v1/api/admin/article/" + $("#articleId").val();
+        var params = $("#baseForm").serializeObject();
+        params.articleContents = $("#articleContents").summernote('code');
+        PromiseUtil.post(url, params)
+        .then(JSON.parse)
+        .then(function(d){
+        });
+    }
+
 </script>
 </head>
 
@@ -47,10 +57,11 @@
                                         <label for="boardId">Board</label> <select class="form-control" name="boardId" id="boardId">
                                             <option th:each="baord : ${allBoardList}" th:value="${baord.boardId}" th:text="${baord.boardName}" th:selected="${baord.boardId == mainInfo.boardId} "></option>
                                         </select>
+                                        <input type="hidden" class="form-control" name="articleId" id="articleId" th:field="${mainInfo.articleId}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="boardId">Category</label> <select class="form-control" name="articleCategoryId" id="articleCategoryId">
-                                            <option>공지</option>
+                                        <label for="boardId">Category</label> <select class="form-control" name="articleCategoryId" id="articleCategoryId" th:field="${mainInfo.articleCategoryId}">
+                                            <option value="999">공지</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
