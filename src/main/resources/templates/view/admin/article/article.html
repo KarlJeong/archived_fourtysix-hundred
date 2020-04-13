@@ -27,8 +27,13 @@
 
     var fnCreateArticleTable = function(data) {
         var deleteYnStatus = {
-            0 : [ 'Publishing', 'success' ],
+            0 : [ 'Not Deleted', 'success' ],
             1 : [ 'Deleted', 'danger' ]
+        };
+
+        var publishYnStatus = {
+            0 : [ 'Not Publish', 'danger' ],
+            1 : [ 'Publish', 'success' ]
         };
 
         $('#article-table').dataTable(
@@ -45,6 +50,8 @@
                     }, {
                         "data" : "articleModifyDatetime"
                     }, {
+                        "data" : "articlePublishYn"
+                    } , {
                         "data" : "articleDeleteYn"
                     } ],
                     order : [ [ 4, 'desc' ] ],
@@ -54,9 +61,9 @@
                         className : 'text-center'
                     }, {
                         targets : [ 1 ],
-                        width : 200
+                        width : 180
                     }, {
-                        targets : [ 2, 5 ],
+                        targets : [ 2, 5, 6 ],
                         width : 80,
                         className : 'text-center'
                     } ],
@@ -79,6 +86,11 @@
                                 data["articleModifyDatetime"]);
 
                         $('td', row).eq(5).html('').append(
+                                '<label class="badge badge-' + publishYnStatus[data["articlePublishYn"]][1] + '">'
+                                        + publishYnStatus[data["articlePublishYn"]][0]
+                                        + '</label>');
+
+                        $('td', row).eq(6).html('').append(
                                 '<label class="badge badge-' + deleteYnStatus[data["articleDeleteYn"]][1] + '">'
                                         + deleteYnStatus[data["articleDeleteYn"]][0]
                                         + '</label>');
@@ -138,6 +150,7 @@
                                             <th>View Count</th>
                                             <th>Written at</th>
                                             <th>Modified at</th>
+                                            <th>Publish Yn</th>
                                             <th>Deleted Yn</th>
                                         </tr>
                                     </thead>

@@ -254,37 +254,18 @@
                   <div class="separator-2"></div>
                   <div class="list-wrapper">
                     <ul class="d-flex flex-column todo-list todo-list-custom">
-                      <li>
+                      <li th:each="noticeArticle : ${noticeArticleList}">
                         <div class="col-12 pr-0 row">
                           <div class="col-2 px-0">
-                            <a href="#">
                               <div class="badge badge-info fixed-badge align-middle">공지</div>
-                            </a>
                           </div>
                           <div class="col-8 pl-0">
                             <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">서비스가 런치 되었습니다.</span>
+                              <span class="row dashboard-ellipsis dashboard-title" th:text="${noticeArticle.articleTitle}"></span>
                             </a>
                           </div>
                           <div class="col-2 pr-0 text-right">
-                            <span class="text-muted dashboard-count">2020-02-21</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-info fixed-badge align-middle">공지</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">DIARY 번역서비스를 제공합니다.</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <span class="text-muted dashboard-count">2020-02-21</span>
+                            <span class="text-muted dashboard-count" th:text="${#dates.format(noticeArticle.articleWriteDatetime, 'yyyy-MM-dd')}"></span>
                           </div>
                         </div>
                       </li>

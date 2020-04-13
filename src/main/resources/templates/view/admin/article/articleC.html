@@ -69,7 +69,12 @@
                                         <div id="articleContents"></div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="useYn">Deleted YN</label> <select class="form-control" name="articleDeleteYn" id="articleDeleteYn">
+                                        <label for="articlePublishYn">Publish YN</label> <select class="form-control" name="articlePublishYn" id="articlePublishYn">
+                                            <option th:each="publish : ${publishYn}" th:value="${publish.codeValue}" th:text="${publish.codeName}" th:selected="${publish.codeValue == '0'}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="articleDeleteYn">Deleted YN</label> <select class="form-control" name="articleDeleteYn" id="articleDeleteYn">
                                             <option th:each="deleted : ${deletedYn}" th:value="${deleted.codeValue}" th:text="${deleted.codeName}" th:selected="${deleted.codeValue == '0'}"></option>
                                         </select>
                                     </div>

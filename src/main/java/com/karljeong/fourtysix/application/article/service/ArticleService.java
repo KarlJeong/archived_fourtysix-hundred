@@ -3,6 +3,7 @@ package com.karljeong.fourtysix.application.article.service;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,10 @@ public class ArticleService {
         tbComArticle.setArticleModifierId(BigInteger.valueOf(11111));
         return tbComArticleRepository.save(tbComArticle);
 
+    }
+
+    public List<TbComArticle> findArticyeForDashboardByBoardCode(String boardCode){
+        return tbComArticleRepository.findArticyeForDashboardByBoardCode(boardCode);
     }
 
 

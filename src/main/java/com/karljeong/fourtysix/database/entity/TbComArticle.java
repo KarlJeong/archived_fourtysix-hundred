@@ -42,6 +42,9 @@ public class TbComArticle implements Serializable {
 	@Column(name="ARTICLE_DELETE_YN")
 	private byte articleDeleteYn;
 
+    @Column(name="ARTICLE_PUBLISH_YN")
+    private byte articlePublishYn;
+
 	@Column(name="ARTICLE_MODIFIER_ID", insertable = false)
 	private BigInteger articleModifierId;
 
@@ -113,7 +116,15 @@ public class TbComArticle implements Serializable {
 		this.articleDeleteYn = articleDeleteYn;
 	}
 
-	public BigInteger getArticleModifierId() {
+	public byte getArticlePublishYn() {
+        return articlePublishYn;
+    }
+
+    public void setArticlePublishYn(byte articlePublishYn) {
+        this.articlePublishYn = articlePublishYn;
+    }
+
+    public BigInteger getArticleModifierId() {
 		return this.articleModifierId;
 	}
 

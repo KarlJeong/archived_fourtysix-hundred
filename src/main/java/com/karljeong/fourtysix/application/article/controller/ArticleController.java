@@ -36,6 +36,7 @@ public class ArticleController {
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
 	    model.addAttribute("allBoardList", boardService.findAll());
+	    model.addAttribute("publishYn", loadStatic.getSystemCode().get("PUBLISH_YN").get("code"));
         model.addAttribute("deletedYn", loadStatic.getSystemCode().get("DELETED_YN").get("code"));
 		return "/view/admin/article/articleC";
 	}
@@ -44,6 +45,7 @@ public class ArticleController {
 	public String viewUpdate(Model model, @PathVariable("articleId") BigInteger articleId) {
 	    model.addAttribute("mainInfo", articleService.findById(articleId));
         model.addAttribute("allBoardList", boardService.findAll());
+        model.addAttribute("publishYn", loadStatic.getSystemCode().get("PUBLISH_YN").get("code"));
         model.addAttribute("deletedYn", loadStatic.getSystemCode().get("DELETED_YN").get("code"));
 		return "/view/admin/article/articleU";
 	}
