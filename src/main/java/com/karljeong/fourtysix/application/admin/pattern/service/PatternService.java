@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
 import com.karljeong.fourtysix.database.entity.TbComAuth;
 import com.karljeong.fourtysix.database.entity.TbComPattern;
 import com.karljeong.fourtysix.database.entity.TbMappPatternAuth;
@@ -21,11 +22,13 @@ public class PatternService {
 
 	private final TbComPatternRepository tbComPatternRepository;
 	private final TbMappPatternAuthRepository tbMappPatternAuthRepository;
+	private final LoadStatic loadStatic;
 
 	@Autowired
-	PatternService(TbComPatternRepository tbComPatternRepository, TbMappPatternAuthRepository tbMappPatternAuthRepository) {
+	PatternService(TbComPatternRepository tbComPatternRepository, TbMappPatternAuthRepository tbMappPatternAuthRepository, LoadStatic loadStatic) {
 		this.tbComPatternRepository = tbComPatternRepository;
 		this.tbMappPatternAuthRepository = tbMappPatternAuthRepository;
+		this.loadStatic = loadStatic;
 	}
 
 	public Page<TbComPattern> readList(Map<String, Object> searchRequest, Pageable pageable) {
@@ -69,7 +72,7 @@ public class PatternService {
                 }
             }
         }
-
+        loadStatic.resetPatterList();
         return save;
     }
 
@@ -80,10 +83,6 @@ public class PatternService {
 
         List<TbComAuth> tbComAuths = tbComPattern.getTbComAuths();
         List<TbMappPatternAuth> tbMappPatternAuths = tbComPattern.getTbMappPatternAuths();
-        System.out.println(tbComAuths.size());
-        System.out.println(tbMappPatternAuths.size());
-        System.out.println(tbComAuths.get(0).getAuthId());
-        System.out.println(tbMappPatternAuths.get(0).getMethod());
         if (tbComAuths != null && tbMappPatternAuths != null && !tbComAuths.isEmpty() && !tbMappPatternAuths.isEmpty()) {
             tbMappPatternAuthRepository.deleteByPatternId(tbComPattern.getPatternId());
 
@@ -91,9 +90,6 @@ public class PatternService {
                 for (TbMappPatternAuth tbMappPatternAuth : tbMappPatternAuths) {
                     tbMappPatternAuth.setCreateUserId(BigInteger.valueOf(11111));
                     tbMappPatternAuth.setDeleteYn((byte) 0);
-                    System.out.println(save.getPatternId());
-                    System.out.println(tbComAuth.getAuthId());
-                    System.out.println(tbMappPatternAuth.getMethod());
                     TbMappPatternAuthPK tbMappPatternAuthPK = new TbMappPatternAuthPK();
                     tbMappPatternAuthPK.setPatternId(save.getPatternId());
                     tbMappPatternAuthPK.setAuthId(tbComAuth.getAuthId());
@@ -104,6 +100,7 @@ public class PatternService {
                 }
             }
         }
+        loadStatic.resetPatterList();
         return save;
 
     }
@@ -111,6 +108,7 @@ public class PatternService {
     public void delete(BigInteger patternId) {
         tbMappPatternAuthRepository.deleteByPatternId(patternId);
         tbComPatternRepository.deleteById(patternId);
+        loadStatic.resetPatterList();
     }
 
 }

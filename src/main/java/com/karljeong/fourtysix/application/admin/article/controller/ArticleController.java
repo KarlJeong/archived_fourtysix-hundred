@@ -1,4 +1,4 @@
-package com.karljeong.fourtysix.application.article.controller;
+package com.karljeong.fourtysix.application.admin.article.controller;
 
 import java.math.BigInteger;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.karljeong.fourtysix.application.admin.article.service.ArticleService;
 import com.karljeong.fourtysix.application.admin.board.service.BoardService;
-import com.karljeong.fourtysix.application.article.service.ArticleService;
 import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
 
 @Controller

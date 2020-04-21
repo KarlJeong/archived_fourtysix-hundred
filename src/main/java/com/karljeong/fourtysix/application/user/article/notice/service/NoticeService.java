@@ -1,4 +1,4 @@
-package com.karljeong.fourtysix.application.article.service;
+package com.karljeong.fourtysix.application.user.article.notice.service;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -18,19 +18,24 @@ import com.karljeong.fourtysix.database.specification.TbComArticleSpec;
 import com.karljeong.fourtysix.database.specification.TbComArticleSpec.SearchKey;
 
 @Service
-public class ArticleService {
+public class NoticeService {
 
     private final TbComArticleRepository tbComArticleRepository;
     private final TbComBoardRepository tbComBoardRepository;
 
     @Autowired
-    ArticleService(TbComArticleRepository tbComArticleRepository, TbComBoardRepository tbComBoardRepository) {
+    NoticeService(TbComArticleRepository tbComArticleRepository, TbComBoardRepository tbComBoardRepository) {
         this.tbComArticleRepository = tbComArticleRepository;
         this.tbComBoardRepository = tbComBoardRepository;
     }
 
     public Page<TbComArticle> readList(Map<String, Object> searchRequest, Pageable pageable) {
         Map<SearchKey, Object> searchKeys = new HashMap<>();
+
+        searchRequest.put("articleDeleteYn", 0);
+        searchRequest.put("articlePublishYn", 1);
+        searchRequest.put("boardId", 14);
+
         for (String key : searchRequest.keySet()) {
             if (searchRequest.get(key) != null && !"".equals(searchRequest.get(key))) {
                 if (!Arrays.asList(new String[] { "SIZE", "PAGE", "SORT" }).contains(key.toUpperCase())) {
@@ -42,28 +47,11 @@ public class ArticleService {
         Page<TbComArticle> tbComArticleList = searchKeys.isEmpty() ? tbComArticleRepository.findAll(pageable)
                 : tbComArticleRepository.findAll(TbComArticleSpec.searchWithKeys(searchKeys), pageable);
 
-        for (TbComArticle tbComArticle : tbComArticleList) {
-            tbComArticle.setTbComBoard(tbComBoardRepository.findById(tbComArticle.getBoardId()).get());
-        }
         return tbComArticleList;
     }
 
     public TbComArticle findById(BigInteger articleId) {
         return tbComArticleRepository.findById(articleId).get();
-    }
-
-    public TbComArticle create(TbComArticle tbComArticle) {
-        tbComArticle.setCreateUserId(BigInteger.valueOf(11111));
-        tbComArticle.setArticleWriterId(BigInteger.valueOf(11111));
-        return tbComArticleRepository.save(tbComArticle);
-
-    }
-
-    public TbComArticle update(TbComArticle tbComArticle) {
-        tbComArticle.setUpdateUserId(BigInteger.valueOf(11111));
-        tbComArticle.setArticleModifierId(BigInteger.valueOf(11111));
-        return tbComArticleRepository.save(tbComArticle);
-
     }
 
     public List<TbComArticle> findArticyeForDashboardByBoardCode(String boardCode){

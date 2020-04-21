@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/ThymeleafCommonLayout}">
+<head>
+    <title>Notice</title>
+    <script defer type="text/javascript">
+    $(function() {
+        fnRetrieveArticle();
+    });
+
+    var fnRetrieveArticle = function() {
+        let searchForm = $("#searchForm");
+
+        if (searchForm[0] == null) {
+            return;
+        }
+
+        let url = "/v1/api/notice";
+        var params = $("#searchForm").serializeObject();
+        PromiseUtil.get(url, params)
+        .then(JSON.parse)
+        .then(function(d){
+            fnCreateNoticeTable(d.data.content);
+            //$("#myCampaignPaging").html(createPaging(result.recordsTotal, 'fnCampaignSearchTable', result.start, result.length));
+        });
+    }
+
+
+
+    const fnCreateNoticeTable = function(data) {
+        if (data == null) {
+            return;
+        }
+
+        const html = [];
+        for (var i = 0; i < data.length; i++) {
+            var eachData = data[i];
+            html.push('<tr>');
+            html.push('<td class="info"><a href="/notice/viewdetail/'+ eachData.articleId +'">'+ eachData.articleTitle +'</a></td>');
+            html.push('<td class="info">'+ eachData.articleWriterId +'</td>');
+            html.push('<td class="info">'+ moment(eachData.createDatetime).format("YYYY-MM-DD") +'</td>');
+            html.push('</tr>');
+        }
+        const noticeListHtml = html.join('');
+        $("#noticeTable").html(noticeListHtml);
+
+    }
+    </script>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card px-2">
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-12">
+                                <h2>Notice</h2>
+                                <div class="separator-2"></div>
+                                <p class="lead">Official Announcement from Fourtysix-Hundred</p>
+                            </div>
+                        </div>
+                        <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <form id="searchForm">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="order-listing_length">
+                                        <label>Show <select name="size"
+                                            aria-controls="order-listing" class="form-control">
+                                                <option value="5">10</option>
+                                                <option value="10">20</option>
+                                                <option value="15">50</option>
+                                        </select> entries
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div id="order-listing_filter"
+                                        class="dataTables_filter form-group row">
+                                        <label class="col-4"> <select
+                                            name="order-listing_length"
+                                            aria-controls="order-listing" class="form-control">
+                                                <option value="title">제목</option>
+                                                <option value="writer">작성자</option>
+                                                <option value="contents">제목+내용</option>
+                                        </select>
+                                        </label>
+                                        <div class="input-group col-8">
+                                            <input type="text" class="form-control"> <span
+                                                class="input-group-append">
+                                                <button class="btn btn-info" type="button">Search</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 70%;" />
+                                        <th style="width: 15%;" />
+                                        <th style="width: 15%;" />
+                                    </tr>
+                                </thead>
+                                <tbody id="noticeTable"></tbody>
+                            </table>
+                        </div>
+                        <nav>
+                            <ul
+                                class="pagination rounded-flat d-flex justify-content-center pagination-primary">
+                                <li class="page-item"><a class="page-link" href="#"><i
+                                        class="mdi mdi-chevron-left"></i></a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#"><i
+                                        class="mdi mdi-chevron-right"></i></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

@@ -16,7 +16,7 @@ import com.karljeong.fourtysix.database.entity.TbComArticle;
 public class TbComArticleSpec {
 
     public enum SearchKey {
-        BOARDNAME("boardName"), DELETEYN("articleDeleteYn");
+        BOARDNAME("boardName"), ARTICLEDELETEYN("articleDeleteYn"), ARTICLEPUBLISHYN("articlePublishYn"), BOARDID("boardId");
 
         private final String value;
 
@@ -44,8 +44,14 @@ public class TbComArticleSpec {
             case BOARDNAME:
                 predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
                 break;
-            case DELETEYN:
-                predicate.add(builder.equal(root.get(key.value), Integer.valueOf(searchKeyword.get(key).toString())));
+            case ARTICLEDELETEYN:
+                predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
+                break;
+            case ARTICLEPUBLISHYN:
+                predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
+                break;
+            case BOARDID:
+                predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
                 break;
             default:
                 break;

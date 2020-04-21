@@ -1,4 +1,4 @@
-package com.karljeong.fourtysix.application.article.controller;
+package com.karljeong.fourtysix.application.admin.article.controller;
 
 import java.math.BigInteger;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.karljeong.fourtysix.application.article.service.ArticleService;
+import com.karljeong.fourtysix.application.admin.article.service.ArticleService;
 import com.karljeong.fourtysix.database.entity.TbComArticle;
 import com.karljeong.fourtysix.resulthandler.ResultDto;
 import com.karljeong.fourtysix.resulthandler.ResultDto.ResultCodeEnum;

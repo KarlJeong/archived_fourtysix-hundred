@@ -272,3 +272,29 @@ table.table-fixed {
     table-layout: fixed !important;
     width: 100% !important;
 }
+
+
+/** Bootstrap Table **/
+table.table-sm td {
+    padding: 13px 30px;
+    position: relative;
+    /**border-top:    1px solid  #ff0;
+    border-right:  1px dashed #f0F;
+    border-bottom: 1px dotted #f00;
+    border-left:   1px solid  #09f;**/
+}
+
+table.table-sm td.info::before {
+    border-left: 1px solid #d5dcec;
+    position: absolute;
+    content: "";
+    top: 30%;
+    bottom: 30%;
+    right: -1px;
+}
+
+table.table-sm a {
+  color: #223C61;
+  text-decoration: none !important;
+  cursor: pointer;
+}
