@@ -114,13 +114,16 @@
                             <div class="col-12 table-sm-tbody">
                                 <div class="row table-sm-tr">
                                     <div class="table-sm-td col-lg-8">
-                                        <div class="badge badge-warning fixed-badge align-middle" style="float:left;">NOTICE</div>
-                                        <div class="table-sm-td-content" style="float:left;">
-                                            <a th:href="@{/notice/viewdetail/} + ${notice.articleId}" th:text="${notice.articleTitle}"></a>
-                                        </div>
-                                        <div class="pt-2 d-block d-lg-none d-xl-none">
-                                            <div class="" th:text="${notice.articleWriterId}"></div> |
-                                            <div class="" th:text="${#dates.format(notice.articleWriteDatetime, 'yyyy-MM-dd HH:hh:ss')}"></div>
+                                        <div class="table-sm-td-content">
+                                            <span class="badge badge-warning fixed-badge align-middle">NOTICE</span>
+                                            <span class="table-sm-td-content">
+                                                <a th:href="@{/notice/viewdetail/} + ${notice.articleId}" th:text="${notice.articleTitle}"></a>
+                                            </span>
+                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
+                                                <span class="" th:text="${notice.articleWriterId}"></span>
+                                                <span class="text-muted">|</span>
+                                                <span class="" th:text="${#dates.format(notice.articleWriteDatetime, 'yyyy-MM-dd')}"></span>
+                                            </div>
                                         </div>
 
                                     </div>
