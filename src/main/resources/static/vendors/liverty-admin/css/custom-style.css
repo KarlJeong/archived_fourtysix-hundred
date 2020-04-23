@@ -290,7 +290,7 @@ div.table-sm-tr {
 div.table-sm-td {
     /**display: table-cell;**/
     position: relative;
-    padding: 5px 30px;
+    padding: 10px 0px;
     border-bottom: 1px solid rgba(213, 220, 236, 0.7);
     vertical-align: middle;
     font-size: 0.7rem;
@@ -349,4 +349,8 @@ table.table-sm a {
 }
 
 
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2.25rem - 2px) !important;
+}
 
