@@ -1,13 +1,16 @@
 package com.karljeong.fourtysix.application.user.article.notice.controller;
 
 import java.math.BigInteger;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.karljeong.fourtysix.application.user.article.notice.service.NoticeService;
 import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
@@ -26,7 +29,8 @@ public class NoticeController {
 	}
 
 	@GetMapping("/viewmain")
-	public String viewMain(Model model) {
+	public String viewMain(Model model, @RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable) {
+	    model.addAttribute("noticeList", noticeService.readList(searchRequest, pageable));
 		return "/view/article/notice/notice";
 	}
 

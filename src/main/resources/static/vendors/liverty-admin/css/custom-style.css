@@ -274,7 +274,55 @@ table.table-fixed {
 }
 
 
-/** Bootstrap Table **/
+/** Div Table **/
+div.table-sm {
+    padding: 10px 10px 10px 15px;
+}
+
+div.table-sm-tbody {
+    /**display: table-row-group;**/
+}
+
+div.table-sm-tr {
+    /**display: table-row;**/
+}
+
+div.table-sm-td {
+    /**display: table-cell;**/
+    position: relative;
+    padding: 13px 30px;
+    border-bottom: 1px solid rgba(213, 220, 236, 0.7);
+    vertical-align: middle;
+    font-size: 0.7rem;
+    line-height: 1;
+}
+
+div.table-sm-td-content {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    padding: 0.2rem 0.3rem;
+}
+
+div.table-sm-td a {
+  color: #223C61;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+
+div.table-sm-td-sep::before {
+    border-left: 1px solid rgba(213, 220, 236, 0.7);
+    display: block;
+    position: absolute;
+    content: "";
+    top: 30%;
+    bottom: 30%;
+    left: -1px;
+    z-index: 20;
+}
+
 table.table-sm td {
     padding: 13px 30px;
     position: relative;
@@ -283,6 +331,7 @@ table.table-sm td {
     border-bottom: 1px dotted #f00;
     border-left:   1px solid  #09f;**/
 }
+
 
 table.table-sm td.info::before {
     border-left: 1px solid #d5dcec;
@@ -298,3 +347,6 @@ table.table-sm a {
   text-decoration: none !important;
   cursor: pointer;
 }
+
+
+

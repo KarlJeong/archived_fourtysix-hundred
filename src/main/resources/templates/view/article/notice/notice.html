@@ -109,6 +109,27 @@
                                 <tbody id="noticeTable"></tbody>
                             </table>
                         </div>
+
+                        <div class="row table-sm" th:each="notice : ${noticeList}">
+                            <div class="col-12 table-sm-tbody">
+                                <div class="row table-sm-tr">
+                                    <div class="table-sm-td col-lg-8">
+                                        <div class="badge badge-warning fixed-badge align-middle" style="float:left;">NOTICE</div>
+                                        <div class="table-sm-td-content" style="float:left;">
+                                            <a th:href="@{/notice/viewdetail/} + ${notice.articleId}" th:text="${notice.articleTitle}"></a>
+                                        </div>
+                                        <div class="pt-2 d-block d-lg-none d-xl-none">
+                                            <div class="" th:text="${notice.articleWriterId}"></div> |
+                                            <div class="" th:text="${#dates.format(notice.articleWriteDatetime, 'yyyy-MM-dd HH:hh:ss')}"></div>
+                                        </div>
+
+                                    </div>
+                                    <!-- <span class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><span class="table-sm-td-content" th:text="${notice.articleWriterId}"></span></span> -->
+                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content">좀더써봐길게좀써봐이거보다더길게</div></div>
+                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${#dates.format(notice.articleWriteDatetime, 'yyyy-MM-dd')}"></div></div>
+                                </div>
+                            </div>
+                        </div>
                         <nav>
                             <ul
                                 class="pagination rounded-flat d-flex justify-content-center pagination-primary">
