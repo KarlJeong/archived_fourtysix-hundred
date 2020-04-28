@@ -69,6 +69,21 @@ $.fn.serializeFiles = function() {
     return formData;
 };
 
+$.fn.serializeParams = function() {
+    "use strict";
+    var $form = $(this);
+    var formParams = $form.serializeArray();
+    var data = [];
+    $.each(formParams, function(i, val) {
+        if (val.value === null || val.value === "") {
+            return true;
+        }
+        data.push(val.name + "=" + val.value);
+    });
+
+    return data.join("&");
+};
+
 Number.prototype.format = function(){
     if(this==0) return 0;
 

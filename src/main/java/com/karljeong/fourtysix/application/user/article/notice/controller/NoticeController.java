@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.karljeong.fourtysix.application.user.article.notice.service.NoticeService;
 import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
+import com.karljeong.fourtysix.database.entity.TbComArticle;
+import com.karljeong.fourtysix.utils.PagingUtil;
 
 @Controller
 @RequestMapping("/notice")
@@ -30,7 +33,9 @@ public class NoticeController {
 
 	@GetMapping("/viewmain")
 	public String viewMain(Model model, @RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable) {
-	    model.addAttribute("noticeList", noticeService.readList(searchRequest, pageable));
+	    Page<TbComArticle> noticeList = noticeService.readList(searchRequest, pageable);
+	    model.addAttribute("noticeList", noticeList);
+	    model.addAttribute("paging", PagingUtil.getPageList(noticeList.getTotalPages(), noticeList.getNumber()));
 		return "/view/article/notice/notice";
 	}
 
