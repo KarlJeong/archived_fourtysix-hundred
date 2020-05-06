@@ -19,4 +19,6 @@ public interface TbComArticleRepository
 	@Query("SELECT c FROM TbComArticle c INNER JOIN TbComBoard b ON b.boardId = c.boardId WHERE b.boardCode = :boardCode AND c.articlePublishYn = 1 AND c.articleDeleteYn = 0 ORDER BY c.articleModifyDatetime, c.articleWriteDatetime DESC")
     List<TbComArticle> findArticyeForDashboardByBoardCode(@Param("boardCode") String boardCode, Pageable pageable);
 
+	@Query(value="SELECT FN_GET_USER_NAME(:userId)", nativeQuery=true)
+	String findArticleWriterName(@Param("userId") BigInteger userId);
 }

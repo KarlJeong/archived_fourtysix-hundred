@@ -81,6 +81,9 @@ public class TbComArticle implements Serializable {
     @Transient
     private TbComBoard tbComBoard;
 
+    @Transient
+    private String articleWriterUserName;
+
 	public TbComArticle() {
 	}
 
@@ -219,5 +222,15 @@ public class TbComArticle implements Serializable {
     public void setTbComBoard(TbComBoard tbComBoard) {
         this.tbComBoard = tbComBoard;
     }
+
+    public String getArticleWriterUserName() {
+        return articleWriterUserName;
+    }
+
+    public void setArticleWriterUserName(String articleWriterUserName) {
+        this.articleWriterUserName = articleWriterUserName;
+    }
+
+
 
 }

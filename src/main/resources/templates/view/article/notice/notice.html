@@ -79,10 +79,7 @@
                                     <div class="col-4 pl-1">
                                         <label>Show</label>
                                         <select class="form-control" id="size" name="size" th:field="${noticeList.size}" onchange="fnReadList()">
-                                            <option value="10">10</option>
-                                            <option value="20">20</option>
-                                            <option value="30">30</option>
-                                            <option value="50">50</option>
+                                            <option th:each="articleNumber : ${articleNumber}" th:value="${articleNumber.codeValue}" th:text="${articleNumber.codeName}"></option>
                                         </select>
                                     </div>
                                 </div>
@@ -106,7 +103,7 @@
 
                                     </div>
                                     <!-- <span class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><span class="table-sm-td-content" th:text="${notice.articleWriterId}"></span></span> -->
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content">좀더써봐길게좀써봐이거보다더길게</div></div>
+                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${notice.articleWriterUserName}"></div></div>
                                     <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${#dates.format(notice.articleWriteDatetime, 'yyyy-MM-dd')}"></div></div>
                                 </div>
                             </div>

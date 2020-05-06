@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +26,9 @@ public class NoticeService {
 
     private final TbComArticleRepository tbComArticleRepository;
     private final TbComBoardRepository tbComBoardRepository;
+
+    @PersistenceContext
+    EntityManager em;
 
     @Autowired
     NoticeService(TbComArticleRepository tbComArticleRepository, TbComBoardRepository tbComBoardRepository) {
@@ -47,6 +53,10 @@ public class NoticeService {
 
         Page<TbComArticle> tbComArticleList = searchKeys.isEmpty() ? tbComArticleRepository.findAll(pageable)
                 : tbComArticleRepository.findAll(TbComArticleSpec.searchWithKeys(searchKeys), pageable);
+
+        for (TbComArticle tbComArticle : tbComArticleList) {
+            tbComArticle.setArticleWriterUserName(tbComArticleRepository.findArticleWriterName(tbComArticle.getArticleWriterId()));
+        }
 
         return tbComArticleList;
     }
