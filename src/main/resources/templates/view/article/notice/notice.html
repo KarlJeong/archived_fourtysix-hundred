@@ -3,53 +3,6 @@
     layout:decorate="~{layout/ThymeleafCommonLayout}">
 <head>
     <title>Notice</title>
-    <script defer type="text/javascript">
-    $(function() {
-        //fnRetrieveArticle();
-    });
-
-    var fnRetrieveArticle = function() {
-        let searchForm = $("#searchForm");
-
-        if (searchForm[0] == null) {
-            return;
-        }
-
-        let url = "/v1/api/notice";
-        var params = $("#searchForm").serializeObject();
-        PromiseUtil.get(url, params)
-        .then(JSON.parse)
-        .then(function(d){
-            fnCreateNoticeTable(d.data.content);
-        });
-    }
-
-
-
-    const fnCreateNoticeTable = function(data) {
-        if (data == null) {
-            return;
-        }
-
-        const html = [];
-        for (var i = 0; i < data.length; i++) {
-            var eachData = data[i];
-            html.push('<tr>');
-            html.push('<td class="info"><a href="/notice/viewdetail/'+ eachData.articleId +'">'+ eachData.articleTitle +'</a></td>');
-            html.push('<td class="info">'+ eachData.articleWriterId +'</td>');
-            html.push('<td class="info">'+ moment(eachData.createDatetime).format("YYYY-MM-DD") +'</td>');
-            html.push('</tr>');
-        }
-        const noticeListHtml = html.join('');
-        $("#noticeTable").html(noticeListHtml);
-
-    }
-
-    const fnReadList = function() {
-        var params = $("#searchForm").serializeParams();
-        window.location.href = "/notice/viewmain?" + params;
-    }
-    </script>
 </head>
 
 <body>
@@ -95,14 +48,13 @@
                                                 <a th:href="@{/notice/viewdetail/} + ${notice.articleId}" th:text="${notice.articleTitle}"></a>
                                             </span>
                                             <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="" th:text="${notice.articleWriterId}"></span>
+                                                <span class="" th:text="${notice.articleWriterUserName}"></span>
                                                 <span class="text-muted">|</span>
                                                 <span class="" th:text="${#dates.format(notice.articleWriteDatetime, 'yyyy-MM-dd')}"></span>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <!-- <span class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><span class="table-sm-td-content" th:text="${notice.articleWriterId}"></span></span> -->
                                     <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${notice.articleWriterUserName}"></div></div>
                                     <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${#dates.format(notice.articleWriteDatetime, 'yyyy-MM-dd')}"></div></div>
                                 </div>

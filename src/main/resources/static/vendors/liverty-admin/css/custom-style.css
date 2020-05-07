@@ -354,3 +354,11 @@ select.form-control:not([size]):not([multiple]) {
 
 }
 
+.article-info {
+	font-size: 0.8rem;
+}
+
+.article-box {
+	width:66px;
+	height:66px;
+}

@@ -25,7 +25,7 @@ import com.karljeong.fourtysix.utils.ValidationUtil;
 public class NoticeController {
 
 	private final LoadStatic loadStatic;
-    private final NoticeService noticeService;
+	private final NoticeService noticeService;
 
 	@Autowired
 	NoticeController(LoadStatic loadStatic, NoticeService noticeService) {
@@ -34,25 +34,26 @@ public class NoticeController {
 	}
 
 	@SuppressWarnings("unchecked")
-    @GetMapping("/viewmain")
-	public String viewMain(Model model, @RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable) {
+	@GetMapping("/viewmain")
+	public String viewMain(Model model, @RequestParam(required = false) Map<String, Object> searchRequest,
+			final Pageable pageable) {
 
-	    List<Map<String, Object>> articleNumberList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ARTICLE_NUMBER").get("code");
-	    if (!ValidationUtil.isValidPageSize(pageable.getPageSize(), articleNumberList))
-	    { throw new RuntimeException("Invalid Paging Request."); }
+		List<Map<String, Object>> articleNumberList = (List<Map<String, Object>>) loadStatic.getSystemCode()
+				.get("ARTICLE_NUMBER").get("code");
+		if (!ValidationUtil.isValidPageSize(pageable.getPageSize(), articleNumberList)) {
+			throw new RuntimeException("Invalid Paging Request.");
+		}
 
-	    Page<TbComArticle> noticeList = noticeService.readList(searchRequest, pageable);
-	    model.addAttribute("noticeList", noticeList);
-	    model.addAttribute("articleNumber", articleNumberList);
-	    model.addAttribute("paging", PagingUtil.getPageList(noticeList.getTotalPages(), noticeList.getNumber()));
+		Page<TbComArticle> noticeList = noticeService.readList(searchRequest, pageable);
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("articleNumber", articleNumberList);
+		model.addAttribute("paging", PagingUtil.getPageList(noticeList.getTotalPages(), noticeList.getNumber()));
 		return "/view/article/notice/notice";
 	}
 
 	@GetMapping("/viewdetail/{articleId}")
 	public String viewUpdate(Model model, @PathVariable("articleId") BigInteger articleId) {
-	    model.addAttribute("mainInfo", noticeService.findById(articleId));
-        model.addAttribute("publishYn", loadStatic.getSystemCode().get("PUBLISH_YN").get("code"));
-        model.addAttribute("deletedYn", loadStatic.getSystemCode().get("DELETED_YN").get("code"));
-        return "/view/article/common/articleCommon";
+		model.addAttribute("articleInfo", noticeService.findById(articleId));
+		return "/view/article/notice/noticeR";
 	}
 }

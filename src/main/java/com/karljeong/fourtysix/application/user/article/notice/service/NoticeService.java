@@ -24,52 +24,54 @@ import com.karljeong.fourtysix.database.specification.TbComArticleSpec.SearchKey
 @Service
 public class NoticeService {
 
-    private final TbComArticleRepository tbComArticleRepository;
-    private final TbComBoardRepository tbComBoardRepository;
+	private final TbComArticleRepository tbComArticleRepository;
+	private final TbComBoardRepository tbComBoardRepository;
 
-    @PersistenceContext
-    EntityManager em;
+	@PersistenceContext
+	EntityManager em;
 
-    @Autowired
-    NoticeService(TbComArticleRepository tbComArticleRepository, TbComBoardRepository tbComBoardRepository) {
-        this.tbComArticleRepository = tbComArticleRepository;
-        this.tbComBoardRepository = tbComBoardRepository;
-    }
+	@Autowired
+	NoticeService(TbComArticleRepository tbComArticleRepository, TbComBoardRepository tbComBoardRepository) {
+		this.tbComArticleRepository = tbComArticleRepository;
+		this.tbComBoardRepository = tbComBoardRepository;
+	}
 
-    public Page<TbComArticle> readList(Map<String, Object> searchRequest, Pageable pageable) {
-        Map<SearchKey, Object> searchKeys = new HashMap<>();
+	public Page<TbComArticle> readList(Map<String, Object> searchRequest, Pageable pageable) {
+		Map<SearchKey, Object> searchKeys = new HashMap<>();
 
-        searchRequest.put("articleDeleteYn", 0);
-        searchRequest.put("articlePublishYn", 1);
-        searchRequest.put("boardId", 14);
+		searchRequest.put("articleDeleteYn", 0);
+		searchRequest.put("articlePublishYn", 1);
+		searchRequest.put("boardId", 14);
 
-        for (String key : searchRequest.keySet()) {
-            if (searchRequest.get(key) != null && !"".equals(searchRequest.get(key))) {
-                if (!Arrays.asList(new String[] { "SIZE", "PAGE", "SORT" }).contains(key.toUpperCase())) {
-                    searchKeys.put(SearchKey.valueOf(key.toUpperCase()), searchRequest.get(key));
-                }
-            }
-        }
+		for (String key : searchRequest.keySet()) {
+			if (searchRequest.get(key) != null && !"".equals(searchRequest.get(key))) {
+				if (!Arrays.asList(new String[] { "SIZE", "PAGE", "SORT" }).contains(key.toUpperCase())) {
+					searchKeys.put(SearchKey.valueOf(key.toUpperCase()), searchRequest.get(key));
+				}
+			}
+		}
 
-        Page<TbComArticle> tbComArticleList = searchKeys.isEmpty() ? tbComArticleRepository.findAll(pageable)
-                : tbComArticleRepository.findAll(TbComArticleSpec.searchWithKeys(searchKeys), pageable);
+		Page<TbComArticle> tbComArticleList = searchKeys.isEmpty() ? tbComArticleRepository.findAll(pageable)
+				: tbComArticleRepository.findAll(TbComArticleSpec.searchWithKeys(searchKeys), pageable);
 
-        for (TbComArticle tbComArticle : tbComArticleList) {
-            tbComArticle.setArticleWriterUserName(tbComArticleRepository.findArticleWriterName(tbComArticle.getArticleWriterId()));
-        }
+		for (TbComArticle tbComArticle : tbComArticleList) {
+			tbComArticle.setArticleWriterUserName(
+					tbComArticleRepository.findArticleWriterName(tbComArticle.getArticleWriterId()));
+		}
 
-        return tbComArticleList;
-    }
+		return tbComArticleList;
+	}
 
-    public TbComArticle findById(BigInteger articleId) {
-        return tbComArticleRepository.findById(articleId).get();
-    }
+	public TbComArticle findById(BigInteger articleId) {
+		TbComArticle tbComArticle = tbComArticleRepository.findById(articleId).get();
+		tbComArticle.setArticleWriterUserName(
+				tbComArticleRepository.findArticleWriterName(tbComArticle.getArticleWriterId()));
+		return tbComArticle;
+	}
 
-    public List<TbComArticle> findArticyeForDashboardByBoardCode(String boardCode){
-        Pageable pageable = PageRequest.of(0, 3);
-        return tbComArticleRepository.findArticyeForDashboardByBoardCode(boardCode, pageable);
-    }
-
-
+	public List<TbComArticle> findArticyeForDashboardByBoardCode(String boardCode) {
+		Pageable pageable = PageRequest.of(0, 3);
+		return tbComArticleRepository.findArticyeForDashboardByBoardCode(boardCode, pageable);
+	}
 
 }

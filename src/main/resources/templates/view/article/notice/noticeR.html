@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout/ThymeleafCommonLayout}">
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card px-2">
+                    <div class="card-body">
+                        <div class="row mb-1">
+                            <div class="col-12">
+                                <h4>Notice</h4>
+                                <div class="separator-2"></div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center py-1">
+                            <div class="col-12">
+                                <div class="header">
+                                    <div class="">
+                                        <h5 th:text="${articleInfo.articleTitle}"></h5>
+                                    </div>
+                                    <div class="d-flex align-items-center article-info py-2">
+	                                    <div class="">
+	                                        <i class="fa fa-user-circle-o pr-2 text-dark"></i><span class="pr-2" th:text="${articleInfo.articleWriterUserName}"></span>
+	                                        <i class="fa fa-clock-o pr-2 text-dark"></i><span class="pr-2" th:text="${#dates.format(articleInfo.articleWriteDatetime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+	                                    </div>
+	                                    <div class="ml-auto px-1 py-1 d-none d-lg-block d-xl-block">
+	                                        <i class="fa fa-eye pr-2 text-dark"></i><span class="pr-2">12,382</span>
+	                                        <i class="fa fa-heart pr-2 text-danger"></i><span class="pr-2">2,409</span>
+	                                        <i class="fa fa-comments-o pr-2 text-dark"></i><span class="pr-2">132</span>
+	                                    </div>
+                                    </div>
+                                </div>
+
+                                <div class="separator-2"></div>
+                                <div class="body">
+                                    <span style="white-space:pre-line;" th:utext="${articleInfo.articleContents}"></span>
+                                </div>
+                                <div class="d-flex flex-row align-items-center justify-content-center pt-3">
+                                    <a href="#">
+                                        <span class="p-3 article-box badge badge-info">
+                                            <i class="fa fa-heart-o fa-2x font-weight-bold"></i><br>
+                                            <span class="text-white font-weight-bold" style="font-size:0.8rem;">2.1K</span>
+                                        </span>
+                                    </a>
+                                    <a href="#">
+                                        <span class="p-3 ml-3 article-box badge badge-success">
+                                            <i class="fa fa-comments-o fa-2x font-weight-bold"></i><br>
+                                            <span class="text-white font-weight-bold" style="font-size:0.8rem;">132</span>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+
+</body>
+
+</html>
