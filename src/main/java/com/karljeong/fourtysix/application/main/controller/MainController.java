@@ -22,14 +22,14 @@ public class MainController {
 		this.noticeService = noticeService;
 	}
 
-    @GetMapping
-    public String view(Model model) {
-        return this.viewMain(model);
-    }
+	@GetMapping
+	public String view(Model model) {
+		return this.viewMain(model);
+	}
 
 	@GetMapping("/main")
 	public String viewMain(Model model) {
-	    model.addAttribute("noticeArticleList", noticeService.findArticyeForDashboardByBoardCode("NOTICE"));
+		model.addAttribute("noticeArticleList", noticeService.findArticyeForDashboardByBoardCode("NOTICE"));
 		return "/view/main/main";
 	}
 
