@@ -46,29 +46,24 @@ public class WebSecurityUrlChecker extends AntPathMatcher{
             Map<String, ArrayList<List<String>>> patternList = loadStatic.getPatterList();
             ArrayList<List<String>> patternListByAuth = patternList.get(auth);
             for (List<String> pattern : patternListByAuth) {
-                System.out.println(" >> " + req.getRequestURI().toUpperCase() + " >> " + pattern.get(0));
                 if (match(pattern.get(0), req.getRequestURI())) {
                     switch (pattern.get(1).toUpperCase()) {
                     case "GET":
-                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> GET");
                         if ("GET".equals(req.getMethod().toUpperCase())) {
                             return true;
                         }
                         break;
                     case "PUT":
-                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> PUT");
                         if ("PUT".equals(req.getMethod().toUpperCase())) {
                             return true;
                         }
                         break;
                     case "POST":
-                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> POST");
                         if ("POST".equals(req.getMethod().toUpperCase())) {
                             return true;
                         }
                         break;
                     case "DELETE":
-                        System.out.println(" >> " + req.getMethod().toUpperCase() + " >> DELETE");
                         if ("DELETE".equals(req.getMethod().toUpperCase())) {
                             return true;
                         }

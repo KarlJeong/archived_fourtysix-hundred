@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/ThymeleafCommonLayout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}" xmlns:sec="http://www.thymeleaf.org">
 <head>
-    <title>General Discussion Forum</title>
+<title>General Discussion Forum</title>
 </head>
 
 <body>
@@ -92,10 +91,9 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col-2 ml-auto">
-                        	<a href="/b/general/viewcreate" class="btn btn-sm btn-outline-info btn-fw mt-3"><i class="fa fa-pencil pr-2"></i>Write</a>
+                        <div sec:authorize="hasRole('ROLE_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_ADMIN')" class="d-flex justify-content-end">
+                            <a href="/b/general/viewcreate" class="btn btn-sm btn-outline-info btn-fw mt-3"><i class="fa fa-pencil pr-2"></i>Write</a>
                         </div>
-
                     </div>
                 </div>
             </div>
