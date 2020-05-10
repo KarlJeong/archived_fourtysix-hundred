@@ -116,8 +116,8 @@ PromiseUtil.postWithFile = function(url, params) {
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
-        req.setRequestHeader($("meta[name='_csrf_header']").attr("content"),  $("meta[name='_csrf']").attr("content"));
         req.open('POST', url);
+        req.setRequestHeader($("meta[name='_csrf_header']").attr("content"),  $("meta[name='_csrf']").attr("content"));
         req.onload = function() {
             // This is called even on 404 etc
             // so check the status

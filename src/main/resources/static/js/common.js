@@ -69,6 +69,7 @@ $.fn.serializeFiles = function() {
     return formData;
 };
 
+
 $.fn.serializeParams = function() {
     "use strict";
     var $form = $(this);
@@ -83,6 +84,47 @@ $.fn.serializeParams = function() {
 
     return data.join("&");
 };
+
+$.fn.initSummernote = function(articleType) {
+	"use strict";
+	var sNote = $(this);
+	sNote.summernote({
+        height : 500,
+        tabsize : 2,
+        toolbar : [
+            [ 'style', [ 'style' ] ],
+            [ 'font', [ 'bold', 'italic', 'underline', 'clear' ] ],
+            [ 'fontname', [ 'fontname' ] ],
+            [ 'fontsize', [ 'fontsize' ] ],
+            [ 'color', [ 'color' ] ],
+            [ 'para', [ 'ul', 'ol', 'paragraph' ] ],
+            [ 'height', [ 'height' ] ],
+            [ 'table', [ 'table' ] ],
+            [ 'insert', [ 'link', 'picture', 'video', 'hr' ] ],
+            [ 'view', [ 'fullscreen', 'codeview' ] ],
+            [ 'help', [ 'help' ] ]
+        ],
+        callbacks: {
+        	onImageUpload : function(files) {
+                uploadSummernoteFile(files, sNote, articleType);
+            }
+          }
+	});
+};
+
+function uploadSummernoteFile(files, sNote, articleType) {
+	$.each(files, function(i, file) {
+		var formData = new FormData();
+        formData.append("contentFile", file);
+
+    	let url = "/v1/api/file/r/" + (articleType !== '' ? articleType : "unknown");
+        PromiseUtil.postWithFile(url, formData)
+        .then(JSON.parse)
+        .then(function(d){
+        	sNote.summernote("insertImage", "/v1/api/file/img/" + d[0].fileId, d[0].fileOriginalName);
+        });
+    });
+}
 
 Number.prototype.format = function(){
     if(this==0) return 0;

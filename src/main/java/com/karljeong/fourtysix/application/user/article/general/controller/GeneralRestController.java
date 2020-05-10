@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.karljeong.fourtysix.application.user.article.general.service.GeneralService;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
+import com.karljeong.fourtysix.resulthandler.ResultDto;
+import com.karljeong.fourtysix.resulthandler.ResultDto.ResultCodeEnum;
+import com.karljeong.fourtysix.resulthandler.ResultSetter;
 
 @RestController
 @RequestMapping("/v1/api/b/general")
@@ -21,8 +24,10 @@ public class GeneralRestController {
 	}
 
 	@PostMapping
-	public TbArticleGeneral save(@RequestBody TbArticleGeneral tbArticleGeneral) {
-		return generalService.create(tbArticleGeneral);
+	public ResultDto save(@RequestBody TbArticleGeneral tbArticleGeneral) {
+		TbArticleGeneral createTbArticleGeneral = generalService.create(tbArticleGeneral);
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleGeneral,
+				"/b/general/viewupdate/" + createTbArticleGeneral.getArticleId()).getResultDto();
 	}
 
 }
