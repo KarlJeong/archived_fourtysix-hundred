@@ -27,7 +27,7 @@ public class GeneralRestController {
 	public ResultDto save(@RequestBody TbArticleGeneral tbArticleGeneral) {
 		TbArticleGeneral createTbArticleGeneral = generalService.create(tbArticleGeneral);
 		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleGeneral,
-				"/b/general/viewupdate/" + createTbArticleGeneral.getArticleId()).getResultDto();
+				"/b/general/viewdetail/" + createTbArticleGeneral.getArticleId()).getResultDto();
 	}
 
 }

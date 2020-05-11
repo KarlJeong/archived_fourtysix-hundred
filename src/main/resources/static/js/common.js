@@ -121,7 +121,11 @@ function uploadSummernoteFile(files, sNote, articleType) {
         PromiseUtil.postWithFile(url, formData)
         .then(JSON.parse)
         .then(function(d){
-        	sNote.summernote("insertImage", "/v1/api/file/img/" + d[0].fileId, d[0].fileOriginalName);
+        	sNote.summernote("insertImage", "/v1/api/file/img/" + d[0].fileId, function($image){
+        		$image.attr("data-filename", d[0].fileOrginalName);
+        		$image.attr("width", $image.width());
+        		$image.css("maxWidth", "100%");
+        	});
         });
     });
 }
