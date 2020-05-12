@@ -21,7 +21,7 @@
 
                         <div class="d-flex align-items-center py-1">
                             <div class="col-12">
-                                <div class="header">
+                                <div class="contents-header">
                                     <div class="">
                                         <h5 th:text="${articleInfo.articleTitle}"></h5>
                                     </div>
@@ -39,22 +39,39 @@
                                 </div>
 
                                 <div class="separator-2"></div>
-                                <div class="body">
+                                <div class="contents-body">
                                     <span style="white-space:pre-line;" th:utext="${articleInfo.articleContents}"></span>
+                                    <div class="d-flex flex-row align-items-center justify-content-center pt-3">
+                                        <a href="#">
+                                            <span class="p-3 article-box badge badge-info">
+                                                <i class="fa fa-heart-o fa-2x font-weight-bold"></i><br>
+                                                <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleLikeCount)}"></span>
+                                            </span>
+                                        </a>
+                                        <a href="#">
+                                            <span class="p-3 ml-3 article-box badge badge-success">
+                                                <i class="fa fa-comments-o fa-2x font-weight-bold"></i><br>
+                                                <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleReplyCount)}"></span>
+                                            </span>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="d-flex flex-row align-items-center justify-content-center pt-3">
-                                    <a href="#">
-                                        <span class="p-3 article-box badge badge-info">
-                                            <i class="fa fa-heart-o fa-2x font-weight-bold"></i><br>
-                                            <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleLikeCount)}"></span>
-                                        </span>
-                                    </a>
-                                    <a href="#">
-                                        <span class="p-3 ml-3 article-box badge badge-success">
-                                            <i class="fa fa-comments-o fa-2x font-weight-bold"></i><br>
-                                            <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleReplyCount)}"></span>
-                                        </span>
-                                    </a>
+                                <div class="contents-footer pt-5">
+                                    <div class="reply-area">
+                                        <div class="reply pt-2">
+                                          <h3 class="reply-header">Success</h3>
+                                          <div class="reply-body">
+                                            <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam.</p>
+                                          </div>
+                                        </div>
+                                        <div class="reply pt-2">
+                                          <h4 class="reply-header reply-header-owner">Success</h4>
+                                          <div class="reply-body">
+                                            <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam.</p>
+                                          </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                      </div>
                                 </div>
                             </div>
                         </div>

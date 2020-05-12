@@ -362,3 +362,31 @@ select.form-control:not([size]):not([multiple]) {
 	width:66px;
 	height:66px;
 }
+
+
+/** Reply area **/
+
+.reply-header{
+    font-size: 0.8375rem;
+    border-bottom: 0;
+    background: #BDBDBD;
+    /** background: #f1f6ff;
+    background-color: #f1f6ff;**/
+    background-color: #BDBDBD;
+
+    padding: 0.3rem 0.75rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid #8C8C8C;
+    border-top-left-radius: calc(0.3rem - 1px);
+    border-top-right-radius: calc(0.3rem - 1px);
+}
+.reply-header.reply-header-owner{
+    background: #4CCEAC;
+    background-color: #4CCEAC;
+}
+
+.reply-body {
+    color: #000;
+    background: #EAEAEA;
+    padding: 0.3rem 0.75rem;
+}
