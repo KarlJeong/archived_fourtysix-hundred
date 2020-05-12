@@ -365,28 +365,28 @@ select.form-control:not([size]):not([multiple]) {
 
 
 /** Reply area **/
+.reply{
+    width:100%;
+}
 
 .reply-header{
-    font-size: 0.8375rem;
+    font-size: 0.6375rem;
     border-bottom: 0;
-    background: #BDBDBD;
-    /** background: #f1f6ff;
-    background-color: #f1f6ff;**/
-    background-color: #BDBDBD;
+    background-color: #EAEAEA;
 
     padding: 0.3rem 0.75rem;
     margin-bottom: 0;
-    border-bottom: 1px solid #8C8C8C;
+    border-bottom: 1px solid #E1E1E1;
     border-top-left-radius: calc(0.3rem - 1px);
     border-top-right-radius: calc(0.3rem - 1px);
 }
 .reply-header.reply-header-owner{
-    background: #4CCEAC;
-    background-color: #4CCEAC;
+    background-color: #B2EBF4;
+    border-bottom: 1px solid #A8E1EA;
 }
 
 .reply-body {
     color: #000;
-    background: #EAEAEA;
+    background: #FAFAFA;
     padding: 0.3rem 0.75rem;
 }
