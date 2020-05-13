@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
+import com.karljeong.fourtysix.database.entity.TbArticleGeneralReply;
+import com.karljeong.fourtysix.database.repository.TbArticleGeneralReplyRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleGeneralRepository;
 import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec;
 import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec.SearchKey;
@@ -19,10 +21,12 @@ import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec.Searc
 public class GeneralService {
 
 	private final TbArticleGeneralRepository tbArticleGeneralRepository;
+	private final TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository;
 
 	@Autowired
-	GeneralService(TbArticleGeneralRepository tbArticleGeneralRepository) {
+	GeneralService(TbArticleGeneralRepository tbArticleGeneralRepository, TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository) {
 		this.tbArticleGeneralRepository = tbArticleGeneralRepository;
+		this.tbArticleGeneralReplyRepository = tbArticleGeneralReplyRepository;
 	}
 
 	public Page<TbArticleGeneral> readList(Map<String, Object> searchRequest, Pageable pageable) {
@@ -71,5 +75,12 @@ public class GeneralService {
 		return tbArticleGeneralRepository.save(tbArticleGeneral);
 
 	}
+
+    public TbArticleGeneralReply reply(TbArticleGeneralReply tbArticleGeneralReply) {
+        tbArticleGeneralReply.setCreateUserId(BigInteger.valueOf(1));
+        tbArticleGeneralReply.setReplyWriterId(BigInteger.valueOf(1));
+        return tbArticleGeneralReplyRepository.save(tbArticleGeneralReply);
+
+    }
 
 }

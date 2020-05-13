@@ -13,6 +13,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.karljeong.fourtysix.utils.DateUtil;
+
 /**
  * The persistent class for the TB_ARTICLE_DIARY_REPLY database table.
  *
@@ -31,17 +33,23 @@ public class TbArticleGeneralReply implements Serializable {
 	@Column(name = "ARTICLE_ID")
 	private BigInteger articleId;
 
-	@Column(name = "CREATE_DATETIME")
-	private Timestamp createDatetime;
+	@Column(name = "CREATE_DATETIME", updatable = false)
+    private Timestamp createDatetime = DateUtil.getTimestamp();
 
-	@Column(name = "CREATE_USER_ID")
-	private BigInteger createUserId;
+    @Column(name = "CREATE_USER_ID", updatable = false)
+    private BigInteger createUserId;
+
+    @Column(name = "UPDATE_DATETIME", insertable = false)
+    private Timestamp updateDatetime;
+
+    @Column(name = "UPDATE_USER_ID", insertable = false)
+    private BigInteger updateUserId;
 
 	@Column(name = "PRIOR_REPLY_ID")
 	private BigInteger priorReplyId;
 
 	@Column(name = "REPLY_BAN_YN")
-	private byte replyBanYn;
+	private byte replyBanYn = 0;
 
 	@Lob
 	@Column(name = "REPLY_CONTENTS")
@@ -50,32 +58,26 @@ public class TbArticleGeneralReply implements Serializable {
 	@Column(name = "REPLY_DELETE_YN")
 	private byte replyDeleteYn;
 
-	@Column(name = "REPLY_LEVEL")
-	private int replyLevel;
+	@Column(name = "REPLY_LEVEL", updatable = false)
+	private int replyLevel = 1;
 
-	@Column(name = "REPLY_MODIFIER_ID")
+	@Column(name = "REPLY_MODIFIER_ID", insertable = false)
 	private BigInteger replyModifierId;
 
-	@Column(name = "REPLY_MODIFY_DATETIME")
+	@Column(name = "REPLY_MODIFY_DATETIME", insertable = false)
 	private Timestamp replyModifyDatetime;
 
-	@Column(name = "REPLY_ORDER")
-	private int replyOrder;
+	@Column(name = "REPLY_ORDER", updatable = false)
+	private int replyOrder = 1;
 
-	@Column(name = "REPLY_REPORT_COUNT")
-	private int replyReportCount;
+	@Column(name = "REPLY_REPORT_COUNT", updatable = false)
+	private int replyReportCount = 0;
 
-	@Column(name = "REPLY_WRITER_ID")
+	@Column(name = "REPLY_WRITER_ID", updatable = false)
 	private BigInteger replyWriterId;
 
-	@Column(name = "REPYL_WRITE_DATETIME")
-	private Timestamp repylWriteDatetime;
-
-	@Column(name = "UPDATE_DATETIME")
-	private Timestamp updateDatetime;
-
-	@Column(name = "UPDATE_USER_ID")
-	private BigInteger updateUserId;
+	@Column(name = "REPYL_WRITE_DATETIME", updatable = false)
+	private Timestamp repylWriteDatetime = DateUtil.getTimestamp();
 
 	public TbArticleGeneralReply() {
 	}
