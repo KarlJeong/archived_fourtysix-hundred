@@ -14,8 +14,8 @@ import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneralReply;
 import com.karljeong.fourtysix.database.repository.TbArticleGeneralReplyRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleGeneralRepository;
+import com.karljeong.fourtysix.database.specification.TbArticleGeneralReplySpec;
 import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec;
-import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec.SearchKey;
 
 @Service
 public class GeneralService {
@@ -24,13 +24,14 @@ public class GeneralService {
 	private final TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository;
 
 	@Autowired
-	GeneralService(TbArticleGeneralRepository tbArticleGeneralRepository, TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository) {
+	GeneralService(TbArticleGeneralRepository tbArticleGeneralRepository,
+			TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository) {
 		this.tbArticleGeneralRepository = tbArticleGeneralRepository;
 		this.tbArticleGeneralReplyRepository = tbArticleGeneralReplyRepository;
 	}
 
 	public Page<TbArticleGeneral> readList(Map<String, Object> searchRequest, Pageable pageable) {
-		Map<SearchKey, Object> searchKeys = new HashMap<>();
+		Map<com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec.SearchKey, Object> searchKeys = new HashMap<>();
 
 		searchRequest.put("articleDeleteYn", 0);
 		searchRequest.put("articleBanYn", 0);
@@ -38,7 +39,8 @@ public class GeneralService {
 		for (String key : searchRequest.keySet()) {
 			if (searchRequest.get(key) != null && !"".equals(searchRequest.get(key))) {
 				if (!Arrays.asList(new String[] { "SIZE", "PAGE", "SORT" }).contains(key.toUpperCase())) {
-					searchKeys.put(SearchKey.valueOf(key.toUpperCase()), searchRequest.get(key));
+					searchKeys.put(com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec.SearchKey
+							.valueOf(key.toUpperCase()), searchRequest.get(key));
 				}
 			}
 		}
@@ -53,6 +55,34 @@ public class GeneralService {
 		}
 
 		return tbArticleGeneralList;
+	}
+
+	public Page<TbArticleGeneralReply> readReplyList(Map<String, Object> searchRequest, Pageable pageable) {
+		Map<com.karljeong.fourtysix.database.specification.TbArticleGeneralReplySpec.SearchKey, Object> searchKeys = new HashMap<>();
+
+		searchRequest.put("articleDeleteYn", 0);
+		searchRequest.put("articleBanYn", 0);
+
+		for (String key : searchRequest.keySet()) {
+			if (searchRequest.get(key) != null && !"".equals(searchRequest.get(key))) {
+				if (!Arrays.asList(new String[] { "SIZE", "PAGE", "SORT" }).contains(key.toUpperCase())) {
+					searchKeys.put(com.karljeong.fourtysix.database.specification.TbArticleGeneralReplySpec.SearchKey
+							.valueOf(key.toUpperCase()), searchRequest.get(key));
+				}
+			}
+		}
+
+		Page<TbArticleGeneralReply> tbArticleGeneralReplyList = searchKeys.isEmpty()
+				? tbArticleGeneralReplyRepository.findAll(pageable)
+				: tbArticleGeneralReplyRepository.findAll(TbArticleGeneralReplySpec.searchWithKeys(searchKeys),
+						pageable);
+
+		for (TbArticleGeneralReply tbArticleGeneralReply : tbArticleGeneralReplyList) {
+			tbArticleGeneralReply.setReplyWriterUserName(
+					tbArticleGeneralReplyRepository.findReplyWriterName(tbArticleGeneralReply.getReplyWriterId()));
+		}
+
+		return tbArticleGeneralReplyList;
 	}
 
 	public TbArticleGeneral findById(BigInteger articleId) {
@@ -76,11 +106,11 @@ public class GeneralService {
 
 	}
 
-    public TbArticleGeneralReply reply(TbArticleGeneralReply tbArticleGeneralReply) {
-        tbArticleGeneralReply.setCreateUserId(BigInteger.valueOf(1));
-        tbArticleGeneralReply.setReplyWriterId(BigInteger.valueOf(1));
-        return tbArticleGeneralReplyRepository.save(tbArticleGeneralReply);
+	public TbArticleGeneralReply reply(TbArticleGeneralReply tbArticleGeneralReply) {
+		tbArticleGeneralReply.setCreateUserId(BigInteger.valueOf(1));
+		tbArticleGeneralReply.setReplyWriterId(BigInteger.valueOf(1));
+		return tbArticleGeneralReplyRepository.save(tbArticleGeneralReply);
 
-    }
+	}
 
 }

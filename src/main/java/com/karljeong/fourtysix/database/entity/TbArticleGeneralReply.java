@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.karljeong.fourtysix.utils.DateUtil;
 
@@ -34,16 +35,16 @@ public class TbArticleGeneralReply implements Serializable {
 	private BigInteger articleId;
 
 	@Column(name = "CREATE_DATETIME", updatable = false)
-    private Timestamp createDatetime = DateUtil.getTimestamp();
+	private Timestamp createDatetime = DateUtil.getTimestamp();
 
-    @Column(name = "CREATE_USER_ID", updatable = false)
-    private BigInteger createUserId;
+	@Column(name = "CREATE_USER_ID", updatable = false)
+	private BigInteger createUserId;
 
-    @Column(name = "UPDATE_DATETIME", insertable = false)
-    private Timestamp updateDatetime;
+	@Column(name = "UPDATE_DATETIME", insertable = false)
+	private Timestamp updateDatetime;
 
-    @Column(name = "UPDATE_USER_ID", insertable = false)
-    private BigInteger updateUserId;
+	@Column(name = "UPDATE_USER_ID", insertable = false)
+	private BigInteger updateUserId;
 
 	@Column(name = "PRIOR_REPLY_ID")
 	private BigInteger priorReplyId;
@@ -78,6 +79,9 @@ public class TbArticleGeneralReply implements Serializable {
 
 	@Column(name = "REPYL_WRITE_DATETIME", updatable = false)
 	private Timestamp repylWriteDatetime = DateUtil.getTimestamp();
+
+	@Transient
+	private String replyWriterUserName;
 
 	public TbArticleGeneralReply() {
 	}
@@ -216,6 +220,14 @@ public class TbArticleGeneralReply implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
+	}
+
+	public String getReplyWriterUserName() {
+		return replyWriterUserName;
+	}
+
+	public void setReplyWriterUserName(String replyWriterUserName) {
+		this.replyWriterUserName = replyWriterUserName;
 	}
 
 }
