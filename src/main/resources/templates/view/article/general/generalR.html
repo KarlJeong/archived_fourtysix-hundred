@@ -3,10 +3,24 @@
 <head>
 <title>General Discussion Forum</title>
 <script defer type="text/javascript">
+
+    $(function() {
+    });
+
+    function fnRetrieveReply() {
+        let url = "/v1/api/b/general";
+        var params = $("#baseForm").serializeObject();
+        params.articleContents = $("#articleContents").summernote('code');
+        PromiseUtil.post(url, params)
+        .then(JSON.parse)
+        .then(function(d){
+        });
+    }
+
     function fnReply() {
         let url = "/v1/api/b/general/reply";
         var params = $("#createReplyForm").serializeObject();
-        PromiseUtil.post(url, params)
+        PromiseUtil.get(url, params)
         .then(JSON.parse)
         .then(function(d){
         });

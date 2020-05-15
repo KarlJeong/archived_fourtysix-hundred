@@ -7,15 +7,17 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneralReply;
 import com.karljeong.fourtysix.database.repository.TbArticleGeneralReplyRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleGeneralRepository;
-import com.karljeong.fourtysix.database.specification.TbArticleGeneralReplySpec;
 import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec;
+import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec.SearchKey;
 
 @Service
 public class GeneralService {
@@ -31,7 +33,7 @@ public class GeneralService {
 	}
 
 	public Page<TbArticleGeneral> readList(Map<String, Object> searchRequest, Pageable pageable) {
-		Map<com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec.SearchKey, Object> searchKeys = new HashMap<>();
+		Map<SearchKey, Object> searchKeys = new HashMap<>();
 
 		searchRequest.put("articleDeleteYn", 0);
 		searchRequest.put("articleBanYn", 0);
@@ -39,8 +41,7 @@ public class GeneralService {
 		for (String key : searchRequest.keySet()) {
 			if (searchRequest.get(key) != null && !"".equals(searchRequest.get(key))) {
 				if (!Arrays.asList(new String[] { "SIZE", "PAGE", "SORT" }).contains(key.toUpperCase())) {
-					searchKeys.put(com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec.SearchKey
-							.valueOf(key.toUpperCase()), searchRequest.get(key));
+					searchKeys.put(SearchKey.valueOf(key.toUpperCase()), searchRequest.get(key));
 				}
 			}
 		}
@@ -57,32 +58,14 @@ public class GeneralService {
 		return tbArticleGeneralList;
 	}
 
-	public Page<TbArticleGeneralReply> readReplyList(Map<String, Object> searchRequest, Pageable pageable) {
-		Map<com.karljeong.fourtysix.database.specification.TbArticleGeneralReplySpec.SearchKey, Object> searchKeys = new HashMap<>();
+	public Page<TbArticleGeneralReply> readReplyList(BigInteger articleId, int pageNumber) {
 
-		searchRequest.put("articleDeleteYn", 0);
-		searchRequest.put("articleBanYn", 0);
+	    Pageable pageable = PageRequest.of(pageNumber, 20, Sort.by("repylWriteDatete").descending().and(Sort.by("")));
 
-		for (String key : searchRequest.keySet()) {
-			if (searchRequest.get(key) != null && !"".equals(searchRequest.get(key))) {
-				if (!Arrays.asList(new String[] { "SIZE", "PAGE", "SORT" }).contains(key.toUpperCase())) {
-					searchKeys.put(com.karljeong.fourtysix.database.specification.TbArticleGeneralReplySpec.SearchKey
-							.valueOf(key.toUpperCase()), searchRequest.get(key));
-				}
-			}
-		}
 
-		Page<TbArticleGeneralReply> tbArticleGeneralReplyList = searchKeys.isEmpty()
-				? tbArticleGeneralReplyRepository.findAll(pageable)
-				: tbArticleGeneralReplyRepository.findAll(TbArticleGeneralReplySpec.searchWithKeys(searchKeys),
-						pageable);
 
-		for (TbArticleGeneralReply tbArticleGeneralReply : tbArticleGeneralReplyList) {
-			tbArticleGeneralReply.setReplyWriterUserName(
-					tbArticleGeneralReplyRepository.findReplyWriterName(tbArticleGeneralReply.getReplyWriterId()));
-		}
 
-		return tbArticleGeneralReplyList;
+		return null;
 	}
 
 	public TbArticleGeneral findById(BigInteger articleId) {

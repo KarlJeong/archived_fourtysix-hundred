@@ -1,15 +1,14 @@
 package com.karljeong.fourtysix.application.user.article.general.controller;
 
-import java.util.Map;
+import java.math.BigInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.karljeong.fourtysix.application.user.article.general.service.GeneralService;
@@ -30,11 +29,10 @@ public class GeneralRestController {
 		this.generalService = generalService;
 	}
 
-	@GetMapping
-	public ResultDto readReplyList(@RequestParam(required = false) Map<String, Object> searchRequest,
-			final Pageable pageable) {
-		Page<TbArticleGeneralReply> createTbArticleGeneralReply = generalService.readReplyList(searchRequest, pageable);
-		return new ResultSetter(ResultCodeEnum.SUCCESS, createTbArticleGeneralReply).getResultDto();
+	@GetMapping("/reply/{articleId}/{pageNumber}")
+	public ResultDto readReplyList(@PathVariable("articleId") BigInteger articleId, @PathVariable("articleId") int pageNumber) {
+		Page<TbArticleGeneralReply> retrievedTbArticleGeneralReply = generalService.readReplyList(articleId, pageNumber);
+		return new ResultSetter(ResultCodeEnum.SUCCESS, retrievedTbArticleGeneralReply).getResultDto();
 	}
 
 	@PostMapping
