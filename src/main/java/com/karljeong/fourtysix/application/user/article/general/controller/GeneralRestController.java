@@ -30,8 +30,9 @@ public class GeneralRestController {
 	}
 
 	@GetMapping("/reply/{articleId}/{pageNumber}")
-	public ResultDto readReplyList(@PathVariable("articleId") BigInteger articleId, @PathVariable("articleId") int pageNumber) {
+	public ResultDto readReplyList(@PathVariable("articleId") BigInteger articleId, @PathVariable("pageNumber") int pageNumber) {
 		Page<TbArticleGeneralReply> retrievedTbArticleGeneralReply = generalService.readReplyList(articleId, pageNumber);
+		System.out.println(retrievedTbArticleGeneralReply.getContent().size());
 		return new ResultSetter(ResultCodeEnum.SUCCESS, retrievedTbArticleGeneralReply).getResultDto();
 	}
 

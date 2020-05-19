@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
@@ -59,13 +58,18 @@ public class GeneralService {
 	}
 
 	public Page<TbArticleGeneralReply> readReplyList(BigInteger articleId, int pageNumber) {
+	    final int pageSize = 20;
+	    System.out.println("pageNumber :: " + pageNumber);
+	    System.out.println("pageSize :: " + pageSize);
+	    System.out.println("articleId :: " + articleId);
+	    Pageable pageable = PageRequest.of(pageNumber, pageSize);
+	    Page<TbArticleGeneralReply> retrievedReplyList = tbArticleGeneralReplyRepository.findByArticleId(articleId, pageable);
+	    for (TbArticleGeneralReply tbArticleGeneralReply : retrievedReplyList) {
+	        tbArticleGeneralReply.setReplyWriterUserName(
+	                tbArticleGeneralReplyRepository.findReplyWriterName(tbArticleGeneralReply.getReplyWriterId()));
 
-	    Pageable pageable = PageRequest.of(pageNumber, 20, Sort.by("repylWriteDatete").descending().and(Sort.by("")));
-
-
-
-
-		return null;
+	    }
+	    return tbArticleGeneralReplyRepository.findByArticleId(articleId, pageable);
 	}
 
 	public TbArticleGeneral findById(BigInteger articleId) {

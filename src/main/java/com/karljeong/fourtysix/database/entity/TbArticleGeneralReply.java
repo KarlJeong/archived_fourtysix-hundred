@@ -77,11 +77,14 @@ public class TbArticleGeneralReply implements Serializable {
 	@Column(name = "REPLY_WRITER_ID", updatable = false)
 	private BigInteger replyWriterId;
 
-	@Column(name = "REPYL_WRITE_DATETIME", updatable = false)
-	private Timestamp repylWriteDatetime = DateUtil.getTimestamp();
+	@Column(name = "REPLY_WRITE_DATETIME", updatable = false)
+    private Timestamp replyWriteDatetime = DateUtil.getTimestamp();
 
 	@Transient
 	private String replyWriterUserName;
+
+	@Transient
+	private String path;
 
 	public TbArticleGeneralReply() {
 	}
@@ -198,15 +201,15 @@ public class TbArticleGeneralReply implements Serializable {
 		this.replyWriterId = replyWriterId;
 	}
 
-	public Timestamp getRepylWriteDatetime() {
-		return this.repylWriteDatetime;
-	}
+	public Timestamp getReplyWriteDatetime() {
+        return replyWriteDatetime;
+    }
 
-	public void setRepylWriteDatetime(Timestamp repylWriteDatetime) {
-		this.repylWriteDatetime = repylWriteDatetime;
-	}
+    public void setReplyWriteDatetime(Timestamp replyWriteDatetime) {
+        this.replyWriteDatetime = replyWriteDatetime;
+    }
 
-	public Timestamp getUpdateDatetime() {
+    public Timestamp getUpdateDatetime() {
 		return this.updateDatetime;
 	}
 
@@ -229,5 +232,15 @@ public class TbArticleGeneralReply implements Serializable {
 	public void setReplyWriterUserName(String replyWriterUserName) {
 		this.replyWriterUserName = replyWriterUserName;
 	}
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+
 
 }

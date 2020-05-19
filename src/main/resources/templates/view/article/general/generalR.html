@@ -2,18 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}" xmlns:sec="http://www.thymeleaf.org">
 <head>
 <title>General Discussion Forum</title>
-<script defer type="text/javascript">
+<script defer type="text/javascript" th:inline="javascript">
 
     $(function() {
+        fnRetrieveReply(0);
     });
 
-    function fnRetrieveReply() {
-        let url = "/v1/api/b/general";
+    function fnRetrieveReply(pageNumber) {
+        let url = "/v1/api/b/general/reply/" + /*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/ + "/" + pageNumber;
+        console.log(url);
         var params = $("#baseForm").serializeObject();
-        params.articleContents = $("#articleContents").summernote('code');
-        PromiseUtil.post(url, params)
+        PromiseUtil.get(url, params)
         .then(JSON.parse)
         .then(function(d){
+            console.log(d);
         });
     }
 
