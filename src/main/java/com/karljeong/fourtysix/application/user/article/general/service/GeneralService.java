@@ -59,9 +59,6 @@ public class GeneralService {
 
 	public Page<TbArticleGeneralReply> readReplyList(BigInteger articleId, int pageNumber) {
 	    final int pageSize = 20;
-	    System.out.println("pageNumber :: " + pageNumber);
-	    System.out.println("pageSize :: " + pageSize);
-	    System.out.println("articleId :: " + articleId);
 	    Pageable pageable = PageRequest.of(pageNumber, pageSize);
 	    Page<TbArticleGeneralReply> retrievedReplyList = tbArticleGeneralReplyRepository.findByArticleId(articleId, pageable);
 	    for (TbArticleGeneralReply tbArticleGeneralReply : retrievedReplyList) {

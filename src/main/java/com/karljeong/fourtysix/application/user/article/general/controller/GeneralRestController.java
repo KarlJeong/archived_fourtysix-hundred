@@ -1,6 +1,8 @@
 package com.karljeong.fourtysix.application.user.article.general.controller;
 
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import com.karljeong.fourtysix.database.entity.TbArticleGeneralReply;
 import com.karljeong.fourtysix.resulthandler.ResultDto;
 import com.karljeong.fourtysix.resulthandler.ResultDto.ResultCodeEnum;
 import com.karljeong.fourtysix.resulthandler.ResultSetter;
+import com.karljeong.fourtysix.utils.PagingUtil;
 
 @RestController
 @RequestMapping("/v1/api/b/general")
@@ -33,7 +36,12 @@ public class GeneralRestController {
 	public ResultDto readReplyList(@PathVariable("articleId") BigInteger articleId, @PathVariable("pageNumber") int pageNumber) {
 		Page<TbArticleGeneralReply> retrievedTbArticleGeneralReply = generalService.readReplyList(articleId, pageNumber);
 		System.out.println(retrievedTbArticleGeneralReply.getContent().size());
-		return new ResultSetter(ResultCodeEnum.SUCCESS, retrievedTbArticleGeneralReply).getResultDto();
+
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("replyList", retrievedTbArticleGeneralReply);
+		data.put("paging", PagingUtil.getPageList(retrievedTbArticleGeneralReply.getTotalPages(), retrievedTbArticleGeneralReply.getNumber()));
+
+		return new ResultSetter(ResultCodeEnum.SUCCESS, data).getResultDto();
 	}
 
 	@PostMapping

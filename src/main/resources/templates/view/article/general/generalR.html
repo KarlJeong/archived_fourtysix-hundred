@@ -10,13 +10,59 @@
 
     function fnRetrieveReply(pageNumber) {
         let url = "/v1/api/b/general/reply/" + /*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/ + "/" + pageNumber;
-        console.log(url);
         var params = $("#baseForm").serializeObject();
         PromiseUtil.get(url, params)
         .then(JSON.parse)
         .then(function(d){
-            console.log(d);
+            fnCreateReplyArea(d.data.replyList);
+            fnCreatePaingArea(d.data.paging, d.data.replyList.number);
         });
+    }
+
+    function fnCreateReplyArea(rData) {
+        var $replArea = $(".reply-area");
+        $replArea.empty();
+        for (var i = 0 ; i < rData.content.length ; i++) {
+            var d = rData.content[i];
+            console.log(typeof(d.replyWriteDatetime));
+            var html = [];
+            var isReplyHeaderOwner = /*<![CDATA[*//*[[ ${articleInfo.articleWriterId} ]]*//*]]>*/ === d.replyWriterId ? true : false;
+            html.push('<div class="d-flex align-items-center">');
+            if (d.replyLevel > 1) {
+                html.push('  <img src="/vendors/images/reply.png" style="padding-left:'+16 * (d.replyLevel -1)+'px;"></img>');
+            }
+            html.push('  <div class="reply pt-2">');
+            html.push('    <div class="reply-header ' + (isReplyHeaderOwner ? 'reply-header-owner' : '') + ' container-fluid d-flex justify-content-between">');
+            html.push('      <span class="font-weight-bold">'+d.replyWriterUserName+'</span>');
+            html.push('      <span class="font-weight-bold text-gray pl-3">'+ISOdateToYYYYMMDDHH24MI(d.replyWriteDatetime)+'</span>');
+            html.push('      <span class="font-weight-bold" style="margin-left:auto;">'+ISOdateToYYYYMMDDHH24MI(d.replyWriteDatetime)+'</span>');
+            html.push('      <span class="font-weight-bold">'+'test'+'</span>');
+            html.push('    </div>');
+            html.push('    <div class="reply-body">');
+            html.push('      <p>'+d.replyContents+'</p>');
+            html.push('    </div>');
+            html.push('  </div>');
+            html.push('</div>');
+            $replArea.append(html.join(''));
+        }
+        $replArea.append('<div class="clearfix"></div>');
+    }
+
+    function fnCreatePaingArea(pData, number){
+        var html = [];
+        html.push('<nav>');
+        html.push('  <ul class="pagination rounded-flat d-flex justify-content-center pagination-primary">');
+        html.push('    <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-left"></i></a></li>');
+        for (var i = 0 ; i < pData.length; i++) {
+            html.push('  <li class="page-item '+(pData[i] === number + 1 ? 'active' : '')+' ">');
+            html.push('    <a class="page-link" href="javascript:void(0);" onclick="fnRetrieveReply('+(pData[i] -1)+')">'+pData[i]+'</a>');
+            html.push('  </li>');
+        }
+        html.push('    <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-right"></i></a></li>');
+        html.push('  </ul>');
+        html.push('</nav>');
+        html.push('<div class="clearfix"></div>');
+        $(".reply-paging-area").html(html.join(''));
     }
 
     function fnReply() {
@@ -96,45 +142,8 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="reply-area">
-                                        <div class="reply pt-2">
-                                          <div class="reply-header container-fluid d-flex justify-content-between">
-                                            <span class="font-weight-bold">정경수</span>
-                                            <span style="margin-left:auto;">2020-05-13 11:12:32</span>
-                                          </div>
-                                          <div class="reply-body">
-                                            <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam.</p>
-                                          </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <img th:src="@{/vendors/images/reply.png}"></img>
-                                            <div class="reply pt-2">
-                                              <h4 class="reply-header reply-header-owner">Success</h4>
-                                              <div class="reply-body">
-                                                <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam.</p>
-                                              </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <img th:src="@{/vendors/images/reply.png}" style="padding-left:16px;"></img>
-                                            <div class="reply pt-2">
-                                              <h4 class="reply-header reply-header-owner">Success</h4>
-                                              <div class="reply-body">
-                                                <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam.</p>
-                                              </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <img th:src="@{/vendors/images/reply.png}" style="padding-left:32px;"></img>
-                                            <div class="reply pt-2">
-                                              <h4 class="reply-header reply-header-owner">Success</h4>
-                                              <div class="reply-body">
-                                                <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam.</p>
-                                              </div>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                      </div>
+                                    <div class="reply-area"></div>
+                                    <div class="reply-paging-area pt-3"></div>
                                 </div>
                             </div>
                         </div>

@@ -390,8 +390,8 @@ select.form-control:not([size]):not([multiple]) {
     border-top-right-radius: calc(0.3rem - 1px);
 }
 .reply-header.reply-header-owner{
-    background-color: #B2EBF4;
-    border-bottom: 1px solid #A8E1EA;
+    background-color: #62C15B;
+    border-bottom: 1px solid #62C15B;
 }
 
 .reply-body {
