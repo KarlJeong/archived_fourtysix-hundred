@@ -43,7 +43,7 @@
                                         <div class="table-sm-td-content">
                                             <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
                                             <span class="table-sm-td-content">
-                                                <a th:href="@{/b/general/viewdetail/} + ${article.articleId}" th:text="${article.articleTitle}"></a>
+                                                <a th:href="@{/b/general/viewdetail/{articleId}(articleId = ${article.articleId}, size=${articleList.size}, page=${articleList.number})}" th:text="${article.articleTitle}"></a>
                                             </span>
                                             <div class="text-right pt-2 d-block d-lg-none d-xl-none">
                                                 <span class="" th:text="${article.articleWriterUserName}"></span>
@@ -65,7 +65,7 @@
 
                                 <th:block th:if="${articleList.totalPages > 0}" th:each="pageNumber : ${paging}">
                                 <li class="page-item" th:classappend="${pageNumber==articleList.number +1} ? active">
-                                    <a class="page-link" th:href="@{/notice/viewmain(size=${articleList.size}, page=${pageNumber -1})}" th:text="${pageNumber}" ></a>
+                                    <a class="page-link" th:href="@{/b/general/viewmain(size=${articleList.size}, page=${pageNumber -1})}" th:text="${pageNumber}" ></a>
                                 </li>
                                 </th:block>
 
