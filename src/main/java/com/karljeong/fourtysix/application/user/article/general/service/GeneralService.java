@@ -97,4 +97,11 @@ public class GeneralService {
 
 	}
 
+	public TbArticleGeneralReply replyDynamic(TbArticleGeneralReply tbArticleGeneralReply) {
+	    tbArticleGeneralReply.setCreateUserId(BigInteger.valueOf(1));
+	    tbArticleGeneralReply.setReplyWriterId(BigInteger.valueOf(1));
+	    return tbArticleGeneralReplyRepository.save(tbArticleGeneralReply);
+
+	}
+
 }

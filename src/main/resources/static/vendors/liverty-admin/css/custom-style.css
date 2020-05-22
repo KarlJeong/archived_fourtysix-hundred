@@ -407,3 +407,8 @@ select.form-control:not([size]):not([multiple]) {
     margin: 20px 0px 20px 0px;
 
 }
+
+.btn.btn-reply {
+    font-size: 0.675rem;
+    padding: 0.2rem 0.51rem;
+}

@@ -24,7 +24,6 @@
         $replArea.empty();
         for (var i = 0 ; i < rData.content.length ; i++) {
             var d = rData.content[i];
-            console.log(typeof(d.replyWriteDatetime));
             var html = [];
             var isReplyHeaderOwner = /*<![CDATA[*//*[[ ${articleInfo.articleWriterId} ]]*//*]]>*/ === d.replyWriterId ? true : false;
             html.push('<div class="d-flex align-items-center">');
@@ -35,8 +34,8 @@
             html.push('    <div class="reply-header ' + (isReplyHeaderOwner ? 'reply-header-owner' : '') + ' container-fluid d-flex justify-content-between">');
             html.push('      <span class="font-weight-bold">'+d.replyWriterUserName+'</span>');
             html.push('      <span class="font-weight-bold text-gray pl-3">'+ISOdateToYYYYMMDDHH24MI(d.replyWriteDatetime)+'</span>');
-            html.push('      <span class="font-weight-bold" style="margin-left:auto;">'+ISOdateToYYYYMMDDHH24MI(d.replyWriteDatetime)+'</span>');
-            html.push('      <span class="font-weight-bold">'+'test'+'</span>');
+            html.push('      <span class="font-weight-bold" style="margin-left:auto;"></span>');
+            html.push('      <button class="btn btn-sm btn-info btn-reply font-weight-bold" onclick="fnCreatingReplyTextArea(this, \''+d.replyId+'\')">'+'Reply'+'</button>');
             html.push('    </div>');
             html.push('    <div class="reply-body">');
             html.push('      <p>'+d.replyContents+'</p>');
@@ -65,10 +64,45 @@
         $(".reply-paging-area").html(html.join(''));
     }
 
+    function fnCreatingReplyTextArea(ele, pReplyId){
+        var writable = /*<![CDATA[*//*[[${#authorization.expression('hasAnyRole(''ROLE_MEMBER'',''ROLE_AUTHOR'',''ROLE_ADMIN'')')} ? ${true} : ${false} ]]*//*]]>*/;
+        if (!writable) {
+            alert("Login Required");
+            //return;
+        }
+
+        var $replyTextArea = $(ele).parents("div.reply");
+        var html = [];
+        $(".reply-dynamic-textarea").remove();
+        html.push('<div class="reply reply-dynamic-textarea pt-2">');
+        html.push('  <div class="reply-header container-fluid d-flex justify-content-between">');
+        html.push('    <span class="font-weight-bold">정경수</span>');
+        html.push('    <span style="margin-left:auto;"></span>');
+        html.push('  </div>');
+        html.push('  <form id="createDynamicReplyForm">');
+        html.push('  <div class="reply-body input-group">');
+        html.push('    <input type="hidden" name="priorReplyId" value="'+pReplyId+'"></input>');
+        html.push('    <textarea class="form-control col-md-10" name="replyDynamicContents" id="replyDynamicContents" rows="3"></textarea>');
+        html.push('    <button onclick="fnReplyDynamic()" class="col-md-2 btn btn-sm btn-outline-info btn-fw"><i class="fa fa-pencil pr-2"></i>Reply</button>');
+        html.push('  </div>');
+        html.push('  </form>');
+        html.push('</div>');
+        $replyTextArea.append(html.join(''));
+    }
+
     function fnReply() {
         let url = "/v1/api/b/general/reply";
         var params = $("#createReplyForm").serializeObject();
-        PromiseUtil.get(url, params)
+        PromiseUtil.POST(url, params)
+        .then(JSON.parse)
+        .then(function(d){
+        });
+    }
+
+    function fnReplyDynamic() {
+        let url = "/v1/api/b/general/replydynamic";
+        var params = $("#createDynamicReplyForm").serializeObject();
+        PromiseUtil.POST(url, params)
         .then(JSON.parse)
         .then(function(d){
         });

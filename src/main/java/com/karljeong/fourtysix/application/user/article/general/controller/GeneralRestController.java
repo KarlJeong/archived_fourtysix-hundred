@@ -58,4 +58,11 @@ public class GeneralRestController {
 				"/b/general/viewdetail/" + createTbArticleReplyGeneral.getArticleId()).getResultDto();
 	}
 
+    @PostMapping("/replydynamic")
+    public ResultDto replyDynamic(@RequestBody TbArticleGeneralReply tbArticleGeneralReply) {
+        int createTbArticleReplyGeneral = generalService.replyDynamic(tbArticleGeneralReply);
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleReplyGeneral,
+                "/b/general/viewdetail/" + createTbArticleReplyGeneral.getArticleId()).getResultDto();
+    }
+
 }

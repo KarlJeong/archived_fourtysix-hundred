@@ -2,9 +2,12 @@ package com.karljeong.fourtysix.database.repository;
 
 import java.math.BigInteger;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -47,4 +50,23 @@ public interface TbArticleGeneralReplyRepository extends PagingAndSortingReposit
 	        nativeQuery = true
 	)
 	Page<TbArticleGeneralReply> findByArticleId(@Param("articleId") BigInteger articleId, Pageable pageable);
+
+	@Transactional
+    @Modifying
+    @Query
+    (
+                value = "INSERT INTO TB_ARTICLE_GENERAL_REPLY (CREATE_USER_ID, ARTICLE_ID, PRIOR_REPLY_ID, REPLY_CONTENTS, REPLY_LEVEL, REPLY_ORDER, REPLY_WRITER_ID) " +
+                        "SELECT :tbArticleGeneralReply.createUserId " +
+                        "     , C.ARTICLE_ID " +
+                        "     , :tbArticleGeneralReply.priorReplyId " +
+                        "     , :tbArticleGeneralReply.replyContents " +
+                        "     , C.REPLY_LEVEL +1 " +
+                        "     , (SELECT IFNULL(MAX(SUB.REPLY_ORDER) +1, 1) FROM TB_ARTICLE_GENERAL_REPLY SUB WHERE SUB.PRIOR_REPLY_ID = :tbArticleGeneralReply.priorReplyId AND SUB.REPLY_LEVEL = C.REPLY_LEVEL +1) " +
+                        "     , :tbArticleGeneralReply.replyWriterId " +
+                        "FROM TB_ARTICLE_GENERAL_REPLY C "+
+                        "WHERE C.REPLY_ID = :tbArticleGeneralReply.priorReplyId "+
+                        ")",
+                nativeQuery = true
+    )
+    int saveReplyDynamic(@Param("tbArticleGeneralReply") TbArticleGeneralReply tbArticleGeneralReply);
 }
