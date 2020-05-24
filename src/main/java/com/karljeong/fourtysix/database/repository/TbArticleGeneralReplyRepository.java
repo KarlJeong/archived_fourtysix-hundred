@@ -19,6 +19,8 @@ import com.karljeong.fourtysix.database.entity.TbArticleGeneralReply;
 public interface TbArticleGeneralReplyRepository extends PagingAndSortingRepository<TbArticleGeneralReply, BigInteger>,
 		JpaSpecificationExecutor<TbArticleGeneralReply> {
 
+	Long countByArticleId(@Param("articleId") BigInteger articleId);
+
 	@Query(value = "SELECT FN_GET_USER_NAME(:userId)", nativeQuery = true)
 	String findReplyWriterName(@Param("userId") BigInteger userId);
 

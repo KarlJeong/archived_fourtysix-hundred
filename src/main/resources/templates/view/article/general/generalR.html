@@ -5,11 +5,11 @@
 <script defer type="text/javascript" th:inline="javascript">
 
     $(function() {
-        fnRetrieveReply(0);
+        fnRetrieveReply(-1);
     });
 
     function fnRetrieveReply(pageNumber) {
-        let url = "/v1/api/b/general/reply/" + /*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/ + "/" + pageNumber;
+        let url = "/v1/api/b/general/" + /*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/ + "/reply/" + pageNumber;
         var params = $("#baseForm").serializeObject();
         PromiseUtil.get(url, params)
         .then(JSON.parse)
@@ -76,12 +76,11 @@
         $(".reply-dynamic-textarea").remove();
         html.push('<div class="reply reply-dynamic-textarea pt-2">');
         html.push('  <div class="reply-header container-fluid d-flex justify-content-between">');
-        html.push('    <span class="font-weight-bold">정경수</span>');
+        html.push('    <span class="font-weight-bold">'+/*<![CDATA[*//*[[${#authentication.principal.userName} ]]*//*]]>*/+'</span>');
         html.push('    <span style="margin-left:auto;"></span>');
         html.push('  </div>');
         html.push('  <form id="createDynamicReplyForm">');
         html.push('  <div class="reply-body input-group">');
-        html.push('    <input type="hidden" name="articleId" value="'+articleId+'"></input>');
         html.push('    <input type="hidden" name="priorReplyId" value="'+pReplyId+'"></input>');
         html.push('    <textarea class="form-control col-md-10" name="replyContents" rows="3"></textarea>');
         html.push('    <button onclick="fnReplyDynamic()" class="col-md-2 btn btn-sm btn-outline-info btn-fw"><i class="fa fa-pencil pr-2"></i>Reply</button>');
@@ -92,9 +91,8 @@
     }
 
     function fnReply() {
-        let url = "/v1/api/b/general/reply";
+        let url = "/v1/api/b/general/"+/*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/+"/reply";
         var params = $("#createReplyForm").serializeObject();
-        console.log(url);
         PromiseUtil.post(url, params)
         .then(JSON.parse)
         .then(function(d){
@@ -102,9 +100,17 @@
     }
 
     function fnReplyDynamic() {
-        let url = "/v1/api/b/general/replydynamic";
+        let url = "/v1/api/b/general/"+/*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/+"/replydynamic";
         var params = $("#createDynamicReplyForm").serializeObject();
         PromiseUtil.post(url, params)
+        .then(JSON.parse)
+        .then(function(d){
+        });
+    }
+
+    function fnToggleLike() {
+    	let url = "/v1/api/b/general/"+/*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/+"/like";
+    	PromiseUtil.put(url, params)
         .then(JSON.parse)
         .then(function(d){
         });
@@ -148,13 +154,13 @@
                                 <div class="contents-body">
                                     <span style="white-space:pre-line;" th:utext="${articleInfo.articleContents}"></span>
                                     <div class="d-flex flex-row align-items-center justify-content-center pt-3">
-                                        <a href="#">
+                                        <a href="javascript:void(0);" onclick="fnToggleLike()">
                                             <span class="p-3 article-box badge badge-info">
-                                                <i class="fa fa-heart-o fa-2x font-weight-bold"></i><br>
+                                                <i class="fa fa-2x font-weight-bold" th:classappend="${articleLike.likeYn == 0 ? 'fa-heart-o'  : 'fa-heart'}"></i><br>
                                                 <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleLikeCount)}"></span>
                                             </span>
                                         </a>
-                                        <a href="#">
+                                        <a href="#reply-area">
                                             <span class="p-3 ml-3 article-box badge badge-success">
                                                 <i class="fa fa-comments-o fa-2x font-weight-bold"></i><br>
                                                 <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleReplyCount)}"></span>
@@ -166,19 +172,18 @@
                                     <div sec:authorize="hasRole('ROLE_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_ADMIN')" class="reply-write-area">
                                         <div class="reply pt-2">
                                             <div class="reply-header container-fluid d-flex justify-content-between">
-                                                <span class="font-weight-bold">정경수</span>
+                                                <span class="font-weight-bold" sec:authentication="principal.userName"></span>
                                                 <span style="margin-left:auto;"></span>
                                             </div>
                                             <form id="createReplyForm">
                                             <div class="reply-body input-group">
-                                                <input type="hidden" name="articleId" th:field="${articleInfo.articleId}"></input>
                                                 <textarea class="form-control col-md-10" name="replyContents" id="replyContents" rows="3"></textarea>
                                                 <button onclick="fnReply()" class="col-md-2 btn btn-sm btn-outline-info btn-fw"><i class="fa fa-pencil pr-2"></i>Reply</button>
                                             </div>
                                             </form>
                                         </div>
                                     </div>
-                                    <div class="reply-area"></div>
+                                    <div class="reply-area" id="reply-area"></div>
                                     <div class="reply-paging-area pt-3"></div>
                                 </div>
                                 <div class="listDivSection"></div>

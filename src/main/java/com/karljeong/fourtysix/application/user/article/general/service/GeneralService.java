@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
+import com.karljeong.fourtysix.database.entity.TbArticleGeneralLike;
+import com.karljeong.fourtysix.database.entity.TbArticleGeneralLikePK;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneralReply;
+import com.karljeong.fourtysix.database.repository.TbArticleGeneralLikeRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleGeneralReplyRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleGeneralRepository;
 import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec;
@@ -23,12 +27,15 @@ public class GeneralService {
 
 	private final TbArticleGeneralRepository tbArticleGeneralRepository;
 	private final TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository;
+	private final TbArticleGeneralLikeRepository tbArticleGeneralLikeRepository;
 
 	@Autowired
 	GeneralService(TbArticleGeneralRepository tbArticleGeneralRepository,
-			TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository) {
+			TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository,
+			TbArticleGeneralLikeRepository tbArticleGeneralLikeRepository) {
 		this.tbArticleGeneralRepository = tbArticleGeneralRepository;
 		this.tbArticleGeneralReplyRepository = tbArticleGeneralReplyRepository;
+		this.tbArticleGeneralLikeRepository = tbArticleGeneralLikeRepository;
 	}
 
 	public Page<TbArticleGeneral> readList(Map<String, Object> searchRequest, Pageable pageable) {
@@ -60,6 +67,11 @@ public class GeneralService {
 
 	public Page<TbArticleGeneralReply> readReplyList(BigInteger articleId, int pageNumber) {
 		final int pageSize = 20;
+
+		if (pageNumber < 0) {
+			int totalCount = tbArticleGeneralReplyRepository.countByArticleId(articleId).intValue();
+			pageNumber = (totalCount - 1) / pageSize;
+		}
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<TbArticleGeneralReply> retrievedReplyList = tbArticleGeneralReplyRepository.findByArticleId(articleId,
 				pageable);
@@ -76,6 +88,13 @@ public class GeneralService {
 		tbArticleGeneral.setArticleWriterUserName(
 				tbArticleGeneralRepository.findArticleWriterName(tbArticleGeneral.getArticleWriterId()));
 		return tbArticleGeneral;
+	}
+
+	public TbArticleGeneralLike findById(TbArticleGeneralLikePK tbArticleGeneralLikePK) {
+		Optional<TbArticleGeneralLike> tbArticleGeneralLike = tbArticleGeneralLikeRepository
+				.findById(tbArticleGeneralLikePK);
+
+		return tbArticleGeneralLike.isPresent() ? tbArticleGeneralLike.get() : new TbArticleGeneralLike();
 	}
 
 	public TbArticleGeneral create(TbArticleGeneral tbArticleGeneral) {

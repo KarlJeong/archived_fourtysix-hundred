@@ -9,6 +9,10 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.servlet.http.HttpServletRequest;
+
+import com.karljeong.fourtysix.utils.DateUtil;
+import com.karljeong.fourtysix.utils.UserUtil;
 
 /**
  * The persistent class for the TB_ARTICLE_GENERAL_LIKE database table.
@@ -21,31 +25,31 @@ public class TbArticleGeneralLike implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private TbArticleDiaryLikePK id;
+	private TbArticleGeneralLikePK id;
 
-	@Column(name = "CREATE_DATETIME")
-	private Timestamp createDatetime;
+	@Column(name = "CREATE_DATETIME", updatable = false)
+	private Timestamp createDatetime = DateUtil.getTimestamp();
 
-	@Column(name = "CREATE_USER_ID")
+	@Column(name = "CREATE_USER_ID", updatable = false)
 	private BigInteger createUserId;
+
+	@Column(name = "UPDATE_DATETIME", insertable = false)
+	private Timestamp updateDatetime;
+
+	@Column(name = "UPDATE_USER_ID", insertable = false)
+	private BigInteger updateUserId;
 
 	@Column(name = "LIKE_YN")
 	private byte likeYn;
 
-	@Column(name = "UPDATE_DATETIME")
-	private Timestamp updateDatetime;
-
-	@Column(name = "UPDATE_USER_ID")
-	private BigInteger updateUserId;
-
 	public TbArticleGeneralLike() {
 	}
 
-	public TbArticleDiaryLikePK getId() {
+	public TbArticleGeneralLikePK getId() {
 		return this.id;
 	}
 
-	public void setId(TbArticleDiaryLikePK id) {
+	public void setId(TbArticleGeneralLikePK id) {
 		this.id = id;
 	}
 
@@ -87,6 +91,12 @@ public class TbArticleGeneralLike implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
+	}
+
+	public void setUserInfo(HttpServletRequest request) {
+		BigInteger userId = UserUtil.getUserId(request);
+		this.createUserId = userId;
+		this.updateUserId = userId;
 	}
 
 }

@@ -1,9 +1,13 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.servlet.http.HttpServletRequest;
+
+import com.karljeong.fourtysix.utils.UserUtil;
 
 /**
  * The primary key class for the TB_ARTICLE_GENERAL_LIKE database table.
@@ -14,28 +18,28 @@ public class TbArticleGeneralLikePK implements Serializable {
 	// default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "USER_ID")
-	private String userId;
+	@Column(name = "USER_ID", insertable = false, updatable = false)
+	private BigInteger userId;
 
 	@Column(name = "ARTICLE_ID", insertable = false, updatable = false)
-	private String articleId;
+	private BigInteger articleId;
 
 	public TbArticleGeneralLikePK() {
 	}
 
-	public String getUserId() {
+	public BigInteger getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(BigInteger userId) {
 		this.userId = userId;
 	}
 
-	public String getArticleId() {
+	public BigInteger getArticleId() {
 		return this.articleId;
 	}
 
-	public void setArticleId(String articleId) {
+	public void setArticleId(BigInteger articleId) {
 		this.articleId = articleId;
 	}
 
@@ -57,5 +61,10 @@ public class TbArticleGeneralLikePK implements Serializable {
 		hash = hash * prime + this.articleId.hashCode();
 
 		return hash;
+	}
+
+	public void setUserInfo(HttpServletRequest request) {
+		BigInteger userId = UserUtil.getUserId(request);
+		this.userId = userId;
 	}
 }

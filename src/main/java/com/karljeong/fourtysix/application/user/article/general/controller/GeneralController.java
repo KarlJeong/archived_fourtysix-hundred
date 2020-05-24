@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.karljeong.fourtysix.application.user.article.general.service.GeneralService;
 import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
+import com.karljeong.fourtysix.database.entity.TbArticleGeneralLikePK;
 import com.karljeong.fourtysix.utils.PagingUtil;
 import com.karljeong.fourtysix.utils.ValidationUtil;
 
@@ -60,7 +63,8 @@ public class GeneralController {
 	@SuppressWarnings("unchecked")
 	@GetMapping("/viewdetail/{articleId}")
 	public String viewUpdate(Model model, @PathVariable("articleId") BigInteger articleId,
-			@RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable) {
+			@RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable,
+			HttpServletRequest request) {
 		model.addAttribute("articleInfo", generalService.findById(articleId));
 
 		List<Map<String, Object>> articleNumberList = (List<Map<String, Object>>) loadStatic.getSystemCode()
@@ -74,6 +78,12 @@ public class GeneralController {
 		model.addAttribute("articleNumber", articleNumberList);
 		model.addAttribute("paging",
 				PagingUtil.getPageList(articleGeneralList.getTotalPages(), articleGeneralList.getNumber()));
+
+		TbArticleGeneralLikePK tbArticleGeneralLikePK = new TbArticleGeneralLikePK();
+		tbArticleGeneralLikePK.setArticleId(articleId);
+		tbArticleGeneralLikePK.setUserInfo(request);
+		System.out.println(">>>" + generalService.findById(tbArticleGeneralLikePK).getLikeYn());
+		model.addAttribute("articleLike", generalService.findById(tbArticleGeneralLikePK));
 
 		return "/view/article/general/generalR";
 	}
