@@ -1,5 +1,7 @@
 package com.karljeong.fourtysix.utils;
 
+import java.math.BigInteger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,20 +13,23 @@ import com.karljeong.fourtysix.database.entity.TbComUser;
 
 public class UserUtil {
 
+	public static TbComUser getUserInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		SecurityContext sc = (SecurityContext) session
+				.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
 
-    public static TbComUser getUserInfo(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        SecurityContext sc = (SecurityContext) session
-                .getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+		if (sc == null) {
+			return null;
+		}
 
-        if (sc == null) {
-            return null;
-        }
+		Authentication authentication = sc.getAuthentication();
 
-        Authentication authentication = sc.getAuthentication();
+		return (TbComUser) authentication.getPrincipal();
 
-        return (TbComUser) authentication.getPrincipal();
+	}
 
-    }
-
+	public static BigInteger getUserId(HttpServletRequest request) {
+		TbComUser tbComUser = getUserInfo(request);
+		return tbComUser.getUserId();
+	}
 }

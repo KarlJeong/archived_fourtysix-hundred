@@ -35,7 +35,7 @@
             html.push('      <span class="font-weight-bold">'+d.replyWriterUserName+'</span>');
             html.push('      <span class="font-weight-bold text-gray pl-3">'+ISOdateToYYYYMMDDHH24MI(d.replyWriteDatetime)+'</span>');
             html.push('      <span class="font-weight-bold" style="margin-left:auto;"></span>');
-            html.push('      <button class="btn btn-sm btn-info btn-reply font-weight-bold" onclick="fnCreatingReplyTextArea(this, \''+d.replyId+'\')">'+'Reply'+'</button>');
+            html.push('      <button class="btn btn-sm btn-info btn-reply font-weight-bold" onclick="fnCreatingReplyTextArea(this, \''+d.replyId+'\', \''+d.articleId+'\')">'+'Reply'+'</button>');
             html.push('    </div>');
             html.push('    <div class="reply-body">');
             html.push('      <p>'+d.replyContents+'</p>');
@@ -64,7 +64,7 @@
         $(".reply-paging-area").html(html.join(''));
     }
 
-    function fnCreatingReplyTextArea(ele, pReplyId){
+    function fnCreatingReplyTextArea(ele, pReplyId, articleId){
         var writable = /*<![CDATA[*//*[[${#authorization.expression('hasAnyRole(''ROLE_MEMBER'',''ROLE_AUTHOR'',''ROLE_ADMIN'')')} ? ${true} : ${false} ]]*//*]]>*/;
         if (!writable) {
             alert("Login Required");
@@ -81,8 +81,9 @@
         html.push('  </div>');
         html.push('  <form id="createDynamicReplyForm">');
         html.push('  <div class="reply-body input-group">');
+        html.push('    <input type="hidden" name="articleId" value="'+articleId+'"></input>');
         html.push('    <input type="hidden" name="priorReplyId" value="'+pReplyId+'"></input>');
-        html.push('    <textarea class="form-control col-md-10" name="replyDynamicContents" id="replyDynamicContents" rows="3"></textarea>');
+        html.push('    <textarea class="form-control col-md-10" name="replyContents" rows="3"></textarea>');
         html.push('    <button onclick="fnReplyDynamic()" class="col-md-2 btn btn-sm btn-outline-info btn-fw"><i class="fa fa-pencil pr-2"></i>Reply</button>');
         html.push('  </div>');
         html.push('  </form>');
@@ -93,7 +94,8 @@
     function fnReply() {
         let url = "/v1/api/b/general/reply";
         var params = $("#createReplyForm").serializeObject();
-        PromiseUtil.POST(url, params)
+        console.log(url);
+        PromiseUtil.post(url, params)
         .then(JSON.parse)
         .then(function(d){
         });
@@ -102,7 +104,7 @@
     function fnReplyDynamic() {
         let url = "/v1/api/b/general/replydynamic";
         var params = $("#createDynamicReplyForm").serializeObject();
-        PromiseUtil.POST(url, params)
+        PromiseUtil.post(url, params)
         .then(JSON.parse)
         .then(function(d){
         });

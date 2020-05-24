@@ -13,8 +13,10 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.servlet.http.HttpServletRequest;
 
 import com.karljeong.fourtysix.utils.DateUtil;
+import com.karljeong.fourtysix.utils.UserUtil;
 
 /**
  * The persistent class for the TB_ARTICLE_General database table.
@@ -24,6 +26,7 @@ import com.karljeong.fourtysix.utils.DateUtil;
 @Table(name = "TB_ARTICLE_GENERAL")
 @NamedQuery(name = "TbArticleGeneral.findAll", query = "SELECT t FROM TbArticleGeneral t")
 public class TbArticleGeneral implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -239,6 +242,14 @@ public class TbArticleGeneral implements Serializable {
 
 	public void setArticleWriterUserName(String articleWriterUserName) {
 		this.articleWriterUserName = articleWriterUserName;
+	}
+
+	public void setUserInfo(HttpServletRequest request) {
+		BigInteger userId = UserUtil.getUserId(request);
+		this.createUserId = userId;
+		this.updateUserId = userId;
+		this.articleWriterId = userId;
+		this.articleModifierId = userId;
 	}
 
 }

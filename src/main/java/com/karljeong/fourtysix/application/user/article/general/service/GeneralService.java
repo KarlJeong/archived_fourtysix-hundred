@@ -39,7 +39,8 @@ public class GeneralService {
 
 		for (String key : searchRequest.keySet()) {
 			if (searchRequest.get(key) != null && !"".equals(searchRequest.get(key))) {
-				if (!Arrays.asList(new String[] { "SIZE", "PAGE", "SORT" }).contains(key.toUpperCase())) {
+				if (!Arrays.asList(new String[] { "SIZE", "PAGE", "SORT", "ARTICLEID", "REPLYCONTENTS", "PRIORREPLYID",
+						"REPLYDYNAMICCONTENTS" }).contains(key.toUpperCase())) {
 					searchKeys.put(SearchKey.valueOf(key.toUpperCase()), searchRequest.get(key));
 				}
 			}
@@ -58,15 +59,16 @@ public class GeneralService {
 	}
 
 	public Page<TbArticleGeneralReply> readReplyList(BigInteger articleId, int pageNumber) {
-	    final int pageSize = 20;
-	    Pageable pageable = PageRequest.of(pageNumber, pageSize);
-	    Page<TbArticleGeneralReply> retrievedReplyList = tbArticleGeneralReplyRepository.findByArticleId(articleId, pageable);
-	    for (TbArticleGeneralReply tbArticleGeneralReply : retrievedReplyList) {
-	        tbArticleGeneralReply.setReplyWriterUserName(
-	                tbArticleGeneralReplyRepository.findReplyWriterName(tbArticleGeneralReply.getReplyWriterId()));
+		final int pageSize = 20;
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<TbArticleGeneralReply> retrievedReplyList = tbArticleGeneralReplyRepository.findByArticleId(articleId,
+				pageable);
+		for (TbArticleGeneralReply tbArticleGeneralReply : retrievedReplyList) {
+			tbArticleGeneralReply.setReplyWriterUserName(
+					tbArticleGeneralReplyRepository.findReplyWriterName(tbArticleGeneralReply.getReplyWriterId()));
 
-	    }
-	    return tbArticleGeneralReplyRepository.findByArticleId(articleId, pageable);
+		}
+		return tbArticleGeneralReplyRepository.findByArticleId(articleId, pageable);
 	}
 
 	public TbArticleGeneral findById(BigInteger articleId) {
@@ -77,30 +79,22 @@ public class GeneralService {
 	}
 
 	public TbArticleGeneral create(TbArticleGeneral tbArticleGeneral) {
-		tbArticleGeneral.setCreateUserId(BigInteger.valueOf(1));
-		tbArticleGeneral.setArticleWriterId(BigInteger.valueOf(1));
 		return tbArticleGeneralRepository.save(tbArticleGeneral);
 
 	}
 
 	public TbArticleGeneral update(TbArticleGeneral tbArticleGeneral) {
-		tbArticleGeneral.setUpdateUserId(BigInteger.valueOf(1));
-		tbArticleGeneral.setArticleModifierId(BigInteger.valueOf(1));
 		return tbArticleGeneralRepository.save(tbArticleGeneral);
 
 	}
 
 	public TbArticleGeneralReply reply(TbArticleGeneralReply tbArticleGeneralReply) {
-		tbArticleGeneralReply.setCreateUserId(BigInteger.valueOf(1));
-		tbArticleGeneralReply.setReplyWriterId(BigInteger.valueOf(1));
 		return tbArticleGeneralReplyRepository.save(tbArticleGeneralReply);
 
 	}
 
-	public TbArticleGeneralReply replyDynamic(TbArticleGeneralReply tbArticleGeneralReply) {
-	    tbArticleGeneralReply.setCreateUserId(BigInteger.valueOf(1));
-	    tbArticleGeneralReply.setReplyWriterId(BigInteger.valueOf(1));
-	    return tbArticleGeneralReplyRepository.save(tbArticleGeneralReply);
+	public int replyDynamic(TbArticleGeneralReply tbArticleGeneralReply) {
+		return tbArticleGeneralReplyRepository.saveReplyDynamic(tbArticleGeneralReply);
 
 	}
 

@@ -13,8 +13,10 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.servlet.http.HttpServletRequest;
 
 import com.karljeong.fourtysix.utils.DateUtil;
+import com.karljeong.fourtysix.utils.UserUtil;
 
 /**
  * The persistent class for the TB_ARTICLE_DIARY_REPLY database table.
@@ -78,7 +80,7 @@ public class TbArticleGeneralReply implements Serializable {
 	private BigInteger replyWriterId;
 
 	@Column(name = "REPLY_WRITE_DATETIME", updatable = false)
-    private Timestamp replyWriteDatetime = DateUtil.getTimestamp();
+	private Timestamp replyWriteDatetime = DateUtil.getTimestamp();
 
 	@Transient
 	private String replyWriterUserName;
@@ -202,14 +204,14 @@ public class TbArticleGeneralReply implements Serializable {
 	}
 
 	public Timestamp getReplyWriteDatetime() {
-        return replyWriteDatetime;
-    }
+		return replyWriteDatetime;
+	}
 
-    public void setReplyWriteDatetime(Timestamp replyWriteDatetime) {
-        this.replyWriteDatetime = replyWriteDatetime;
-    }
+	public void setReplyWriteDatetime(Timestamp replyWriteDatetime) {
+		this.replyWriteDatetime = replyWriteDatetime;
+	}
 
-    public Timestamp getUpdateDatetime() {
+	public Timestamp getUpdateDatetime() {
 		return this.updateDatetime;
 	}
 
@@ -233,14 +235,20 @@ public class TbArticleGeneralReply implements Serializable {
 		this.replyWriterUserName = replyWriterUserName;
 	}
 
-    public String getPath() {
-        return path;
-    }
+	public String getPath() {
+		return path;
+	}
 
-    public void setPath(String path) {
-        this.path = path;
-    }
+	public void setPath(String path) {
+		this.path = path;
+	}
 
-
+	public void setUserInfo(HttpServletRequest request) {
+		BigInteger userId = UserUtil.getUserId(request);
+		this.createUserId = userId;
+		this.updateUserId = userId;
+		this.replyWriterId = userId;
+		this.replyModifierId = userId;
+	}
 
 }

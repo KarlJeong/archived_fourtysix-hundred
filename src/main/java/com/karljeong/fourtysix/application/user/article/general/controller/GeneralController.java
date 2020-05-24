@@ -59,20 +59,21 @@ public class GeneralController {
 
 	@SuppressWarnings("unchecked")
 	@GetMapping("/viewdetail/{articleId}")
-	public String viewUpdate(Model model, @PathVariable("articleId") BigInteger articleId, @RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable) {
+	public String viewUpdate(Model model, @PathVariable("articleId") BigInteger articleId,
+			@RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable) {
 		model.addAttribute("articleInfo", generalService.findById(articleId));
 
-        List<Map<String, Object>> articleNumberList = (List<Map<String, Object>>) loadStatic.getSystemCode()
-                .get("ARTICLE_NUMBER").get("code");
-        if (!ValidationUtil.isValidPageSize(pageable.getPageSize(), articleNumberList)) {
-            throw new RuntimeException("Invalid Paging Request.");
-        }
+		List<Map<String, Object>> articleNumberList = (List<Map<String, Object>>) loadStatic.getSystemCode()
+				.get("ARTICLE_NUMBER").get("code");
+		if (!ValidationUtil.isValidPageSize(pageable.getPageSize(), articleNumberList)) {
+			throw new RuntimeException("Invalid Paging Request.");
+		}
 
-        Page<TbArticleGeneral> articleGeneralList = generalService.readList(searchRequest, pageable);
-        model.addAttribute("articleList", articleGeneralList);
-        model.addAttribute("articleNumber", articleNumberList);
-        model.addAttribute("paging",
-                PagingUtil.getPageList(articleGeneralList.getTotalPages(), articleGeneralList.getNumber()));
+		Page<TbArticleGeneral> articleGeneralList = generalService.readList(searchRequest, pageable);
+		model.addAttribute("articleList", articleGeneralList);
+		model.addAttribute("articleNumber", articleNumberList);
+		model.addAttribute("paging",
+				PagingUtil.getPageList(articleGeneralList.getTotalPages(), articleGeneralList.getNumber()));
 
 		return "/view/article/general/generalR";
 	}

@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,36 +35,42 @@ public class GeneralRestController {
 	}
 
 	@GetMapping("/reply/{articleId}/{pageNumber}")
-	public ResultDto readReplyList(@PathVariable("articleId") BigInteger articleId, @PathVariable("pageNumber") int pageNumber) {
-		Page<TbArticleGeneralReply> retrievedTbArticleGeneralReply = generalService.readReplyList(articleId, pageNumber);
-		System.out.println(retrievedTbArticleGeneralReply.getContent().size());
+	public ResultDto readReplyList(@PathVariable("articleId") BigInteger articleId,
+			@PathVariable("pageNumber") int pageNumber) {
+		Page<TbArticleGeneralReply> retrievedTbArticleGeneralReply = generalService.readReplyList(articleId,
+				pageNumber);
 
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("replyList", retrievedTbArticleGeneralReply);
-		data.put("paging", PagingUtil.getPageList(retrievedTbArticleGeneralReply.getTotalPages(), retrievedTbArticleGeneralReply.getNumber()));
+		data.put("paging", PagingUtil.getPageList(retrievedTbArticleGeneralReply.getTotalPages(),
+				retrievedTbArticleGeneralReply.getNumber()));
 
 		return new ResultSetter(ResultCodeEnum.SUCCESS, data).getResultDto();
 	}
 
 	@PostMapping
-	public ResultDto save(@RequestBody TbArticleGeneral tbArticleGeneral) {
+	public ResultDto save(@RequestBody TbArticleGeneral tbArticleGeneral, HttpServletRequest request) {
+		tbArticleGeneral.setUserInfo(request);
 		TbArticleGeneral createTbArticleGeneral = generalService.create(tbArticleGeneral);
 		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleGeneral,
 				"/b/general/viewdetail/" + createTbArticleGeneral.getArticleId()).getResultDto();
 	}
 
 	@PostMapping("/reply")
-	public ResultDto reply(@RequestBody TbArticleGeneralReply tbArticleGeneralReply) {
+	public ResultDto reply(@RequestBody TbArticleGeneralReply tbArticleGeneralReply, HttpServletRequest request) {
+		tbArticleGeneralReply.setUserInfo(request);
 		TbArticleGeneralReply createTbArticleReplyGeneral = generalService.reply(tbArticleGeneralReply);
 		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleReplyGeneral,
 				"/b/general/viewdetail/" + createTbArticleReplyGeneral.getArticleId()).getResultDto();
 	}
 
-    @PostMapping("/replydynamic")
-    public ResultDto replyDynamic(@RequestBody TbArticleGeneralReply tbArticleGeneralReply) {
-        int createTbArticleReplyGeneral = generalService.replyDynamic(tbArticleGeneralReply);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleReplyGeneral,
-                "/b/general/viewdetail/" + createTbArticleReplyGeneral.getArticleId()).getResultDto();
-    }
+	@PostMapping("/replydynamic")
+	public ResultDto replyDynamic(@RequestBody TbArticleGeneralReply tbArticleGeneralReply,
+			HttpServletRequest request) {
+		tbArticleGeneralReply.setUserInfo(request);
+		int createTbArticleReplyGeneral = generalService.replyDynamic(tbArticleGeneralReply);
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleReplyGeneral,
+				"/b/general/viewdetail/" + tbArticleGeneralReply.getArticleId()).getResultDto();
+	}
 
 }
