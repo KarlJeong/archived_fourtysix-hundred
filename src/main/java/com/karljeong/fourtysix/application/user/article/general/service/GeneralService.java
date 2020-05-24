@@ -87,6 +87,7 @@ public class GeneralService {
 		TbArticleGeneral tbArticleGeneral = tbArticleGeneralRepository.findById(articleId).get();
 		tbArticleGeneral.setArticleWriterUserName(
 				tbArticleGeneralRepository.findArticleWriterName(tbArticleGeneral.getArticleWriterId()));
+		this.updateViewCount(articleId);
 		return tbArticleGeneral;
 	}
 
@@ -108,13 +109,35 @@ public class GeneralService {
 	}
 
 	public TbArticleGeneralReply reply(TbArticleGeneralReply tbArticleGeneralReply) {
-		return tbArticleGeneralReplyRepository.save(tbArticleGeneralReply);
+	    TbArticleGeneralReply createdTbArticleGeneralReply= tbArticleGeneralReplyRepository.save(tbArticleGeneralReply);
+	    this.updateReplyCount(createdTbArticleGeneralReply.getArticleId());
+		return createdTbArticleGeneralReply;
 
 	}
 
 	public int replyDynamic(TbArticleGeneralReply tbArticleGeneralReply) {
-		return tbArticleGeneralReplyRepository.saveReplyDynamic(tbArticleGeneralReply);
+	    int result = tbArticleGeneralReplyRepository.saveReplyDynamic(tbArticleGeneralReply);
+        this.updateReplyCount(tbArticleGeneralReply.getArticleId());
+		return result;
 
+	}
+
+	public TbArticleGeneralLike toggleLike(TbArticleGeneralLike tbArticleGeneralLike) {
+	    TbArticleGeneralLike createdTbArticleGeneralLike = tbArticleGeneralLikeRepository.save(tbArticleGeneralLike);
+	    this.updateLikeCount(createdTbArticleGeneralLike.getId().getArticleId());
+	    return createdTbArticleGeneralLike;
+	}
+
+	private void updateLikeCount(BigInteger articleId) {
+	    tbArticleGeneralRepository.saveLikeCount(articleId);
+	}
+
+	private void updateReplyCount(BigInteger articleId) {
+	    tbArticleGeneralRepository.saveReplyCount(articleId);
+	}
+
+	private void updateViewCount(BigInteger articleId) {
+        tbArticleGeneralRepository.saveViewCount(articleId);
 	}
 
 }

@@ -109,8 +109,8 @@
     }
 
     function fnToggleLike() {
-    	let url = "/v1/api/b/general/"+/*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/+"/like";
-    	PromiseUtil.put(url, params)
+    	let url = "/v1/api/b/general/"+/*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/+"/like/" + (/*<![CDATA[*//*[[ ${articleLike.likeYn} ]]*//*]]>*/ ^ 1);
+    	PromiseUtil.post(url)
         .then(JSON.parse)
         .then(function(d){
         });

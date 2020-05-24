@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -79,15 +78,18 @@ public class GeneralRestController {
 				"/b/general/viewdetail/" + tbArticleGeneralReply.getArticleId()).getResultDto();
 	}
 
-	@PutMapping("/{articleId}/like")
-	public ResultDto toggleLike(@PathVariable("articleId") BigInteger articleId, HttpServletRequest request) {
+	@PostMapping("/{articleId}/like/{likeYn}")
+	public ResultDto toggleLike(@PathVariable("articleId") BigInteger articleId, @PathVariable("likeYn") byte likeYn, HttpServletRequest request) {
 		TbArticleGeneralLike tbArticleGeneralLike = new TbArticleGeneralLike();
 		TbArticleGeneralLikePK tbArticleGeneralLikePK = new TbArticleGeneralLikePK();
 		tbArticleGeneralLike.setUserInfo(request);
+		tbArticleGeneralLike.setLikeYn(likeYn);
 		tbArticleGeneralLikePK.setArticleId(articleId);
 		tbArticleGeneralLikePK.setUserInfo(request);
 		tbArticleGeneralLike.setId(tbArticleGeneralLikePK);
-		return null;
+		TbArticleGeneralLike createdtbArticleGeneralLike = generalService.toggleLike(tbArticleGeneralLike);
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdtbArticleGeneralLike,
+                "/b/general/viewdetail/" + articleId).getResultDto();
 	}
 
 }
