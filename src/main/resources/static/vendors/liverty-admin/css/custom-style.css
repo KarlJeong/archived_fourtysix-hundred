@@ -372,6 +372,10 @@ select.form-control:not([size]):not([multiple]) {
 	height:66px;
 }
 
+.contents-body img {
+	max-width: 100%;
+}
+
 
 /** Reply area **/
 .reply{

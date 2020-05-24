@@ -106,8 +106,15 @@ $.fn.initSummernote = function(articleType) {
         ],
         callbacks: {
         	onImageUpload : function(files) {
+        		alert("!");
+        		console.log(files);
                 uploadSummernoteFile(files, sNote, articleType);
+            },
+            onImageLinkInsert : function(e) {
+            	alert("@");
+            	console.log(e);
             }
+
           }
 	});
 };
