@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}" xmlns:sec="http://www.thymeleaf.org">
 <head>
 <title>General Discussion Forum</title>
+<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
 <script defer type="text/javascript" th:inline="javascript">
+
 
     $(function() {
         fnRetrieveReply(-1);
@@ -67,8 +70,10 @@
     function fnCreatingReplyTextArea(ele, pReplyId, articleId){
         var writable = /*<![CDATA[*//*[[${#authorization.expression('hasAnyRole(''ROLE_MEMBER'',''ROLE_AUTHOR'',''ROLE_ADMIN'')')} ? ${true} : ${false} ]]*//*]]>*/;
         if (!writable) {
-            alert("Login Required");
-            //return;
+            if (confirm("Login Required Service. Do you want to move to login page?")) {
+                window.location.href="/login/f";
+            }
+            return;
         }
 
         var $replyTextArea = $(ele).parents("div.reply");
@@ -152,18 +157,24 @@
 
                                 <div class="separator-2"></div>
                                 <div class="contents-body">
-                                    <span style="white-space:pre-line;" th:utext="${articleInfo.articleContents}"></span>
+                                    <div style="white-space:pre-line;" th:utext="${articleInfo.articleContents}"></div>
                                     <div class="d-flex flex-row align-items-center justify-content-center pt-3">
                                         <a href="javascript:void(0);" onclick="fnToggleLike()">
-                                            <span class="p-3 article-box badge badge-info">
-                                                <i class="fa fa-2x font-weight-bold" th:classappend="${articleLike.likeYn == 0 ? 'fa-heart-o'  : 'fa-heart'}"></i><br>
+                                            <span class="py-3 article-box badge badge-info">
+                                                <i class="mdi mdi-24px font-weight-bold" th:classappend="${articleLike.likeYn == 0 ? 'mdi-heart-outline'  : 'mdi-heart'}"></i><br>
                                                 <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleLikeCount)}"></span>
                                             </span>
                                         </a>
                                         <a href="#reply-area">
-                                            <span class="p-3 ml-3 article-box badge badge-success">
-                                                <i class="fa fa-comments-o fa-2x font-weight-bold"></i><br>
+                                            <span class="py-3 ml-3 article-box badge badge-success">
+                                                <i class="mdi mdi-24px mdi-comment-multiple-outline font-weight-bold"></i><br>
                                                 <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleReplyCount)}"></span>
+                                            </span>
+                                        </a>
+                                        <a href="javascript:void(0)" th:onclick="|fnShowSwal('ban_article', ${articleInfo.articleId}, 'GENERAL')|">
+                                            <span class="py-3 ml-3 article-box badge badge-danger">
+                                                <i class="mdi mdi-24px mdi-alarm-light font-weight-bold"></i><br>
+                                                <span class="text-white font-weight-bold" style="font-size:0.8rem;">Report</span>
                                             </span>
                                         </a>
                                     </div>
