@@ -64,6 +64,9 @@
                 <div class="content-wrapper">
                     <th:block layout:fragment="content"></th:block>
                 </div>
+                <div class="report-modal">
+                    <th:block layout:insert="~{layout/ThymeleafContentReportModalLayout :: reportmodal}"></th:block>
+                </div>
                 <!-- END PAGE-CONTENTS -->
 
                 <!-- START FOOTER -->
@@ -71,6 +74,7 @@
                 <!-- END FOOTER -->
             </div>
         </div>
+
         <!-- END CONTENTS -->
     </div>
 

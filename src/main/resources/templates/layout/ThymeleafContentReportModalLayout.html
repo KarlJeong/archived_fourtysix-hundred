@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <th:block layout:fragment="reportmodal">
+        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalTitle" aria-hidden="true">
+            <div class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reportModalTitle">Report *</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="reportForm">
+                        <input type="hidden" id="target">
+                        <input type="hidden" name="boardCode" id="boardCode">
+                        <input type="hidden" name="articleId" id="articleId">
+                        <input type="hidden" name="replyId" id="replyId">
+                            <div class="form-group">
+                                <label for="reportCategoryCode">Report Category</label>
+                                <select class="form-control" name="reportCategoryCode" id="reportCategoryCode">
+                                    <option value="SEXUAL_CONTENT">Sexual Content</option>
+                                    <option value="VIOLENCE">Violence</option>
+                                    <option value="RACISM">Racism</option>
+                                    <option value="POLITICS">Politic Matter</option>
+                                    <option value="ETC">Etc</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="reportCategory">Report Detail</label>
+                                <textarea class="form-control" name="reportDetail" id="reportDetail" rows="10"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" onclick="fnReport()">Report</button>
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+</html>

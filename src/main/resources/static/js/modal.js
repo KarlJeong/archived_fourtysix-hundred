@@ -1,33 +1,33 @@
-(function($) {
-  fnShowSwal = async function(type, articleId, articleType) {
-    'use strict';
-    if (type === 'ban_article') {
-        const { value: fruit } = await Swal.fire({
-            title: 'Select field validation',
-            input: 'select',
-            inputOptions: {
-              apples: 'Apples',
-              bananas: 'Bananas',
-              grapes: 'Grapes',
-              oranges: 'Oranges'
-            },
-            inputPlaceholder: 'Select a fruit',
-            showCancelButton: true,
-            inputValidator: (value) => {
-              return new Promise((resolve) => {
-                if (value === 'oranges') {
-                  resolve()
-                } else {
-                  resolve('You need to select oranges :)')
-                }
-              })
-            }
-          })
+function fnCallReportReplyModal(target, boardCode, articleId, replyId) {
+    $("#reportModalTitle").text("Report " + target);
+    $("#boardCode").val(boardCode.toUpperCase());
+    $("#reportCategoryCode option:eq(0)").prop("selected", true);
+    $("#reportDetail").val("");
+    $("#articleId").val(articleId);
+    $("#replyId").val(replyId);
+    $("#target").val(target);
+    $("#reportModal").modal({backdrop: "static"});
+};
 
-          if (fruit) {
-            Swal.fire(`You selected: ${fruit}`)
-          }
-    }
-  }
+function fnCallReportArticleModal(target, boardCode, articleId) {
+    $("#reportModalTitle").text("Report " + target);
+    $("#boardCode").val(boardCode.toUpperCase());
+    $("#reportCategoryCode option:eq(0)").prop("selected", true);
+    $("#reportDetail").val("");
+    $("#articleId").val(articleId);
+    $("#replyId").val("");
+    $("#target").val(target);
+    $("#reportModal").modal({backdrop: "static"});
+};
 
-})(jQuery);
+function fnReport() {
+    let url = "/v1/api/b/report/article";
+    var params = $("#reportForm").serializeObject();
+    console.log(params);
+    PromiseUtil.post(url, params)
+    .then(JSON.parse)
+    .then(function(d){
+        alert("Thank you for your reporting.");
+        window.location.reload();
+    });
+};

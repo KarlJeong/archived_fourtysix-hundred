@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}" xmlns:sec="http://www.thymeleaf.org">
 <head>
 <title>General Discussion Forum</title>
-<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
+<script defer src="//cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script defer type="text/javascript" th:inline="javascript">
 
 
@@ -38,6 +37,7 @@
             html.push('      <span class="font-weight-bold">'+d.replyWriterUserName+'</span>');
             html.push('      <span class="font-weight-bold text-gray pl-3">'+ISOdateToYYYYMMDDHH24MI(d.replyWriteDatetime)+'</span>');
             html.push('      <span class="font-weight-bold" style="margin-left:auto;"></span>');
+            html.push('      <a href="javascript:void(0)" class="reportModalOpener" onclick="fnCallReportReplyModal(\'Reply\', \'GENERAL\', \''+ /*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/ +'\', \''+d.replyId+'\')">Report</a>');
             html.push('      <button class="btn btn-sm btn-info btn-reply font-weight-bold" onclick="fnCreatingReplyTextArea(this, \''+d.replyId+'\', \''+d.articleId+'\')">'+'Reply'+'</button>');
             html.push('    </div>');
             html.push('    <div class="reply-body">');
@@ -171,7 +171,7 @@
                                                 <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleReplyCount)}"></span>
                                             </span>
                                         </a>
-                                        <a href="javascript:void(0)" th:onclick="|fnShowSwal('ban_article', ${articleInfo.articleId}, 'GENERAL')|">
+                                        <a sec:authorize="hasRole('ROLE_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_ADMIN')" href="javascript:void(0)" class="reportModalOpener" th:onclick="|fnCallReportArticleModal('Article', 'GENERAL', '${articleInfo.articleId}')|">
                                             <span class="py-3 ml-3 article-box badge badge-danger">
                                                 <i class="mdi mdi-24px mdi-alarm-light font-weight-bold"></i><br>
                                                 <span class="text-white font-weight-bold" style="font-size:0.8rem;">Report</span>
