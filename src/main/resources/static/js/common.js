@@ -208,3 +208,25 @@ function ISOdateToYYYYMMDDHH24MI(givenDateTime) {
         return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd).concat(" ").concat(hh).concat(":").concat(min).concat(":").concat(sec);
     }
 };
+
+function dateConverterToDateOrDateTime(givenDateTime) {
+    if (givenDateTime == null || givenDateTime == '') {
+        return '';
+    }
+    var dateTime = new Date(givenDateTime);
+    var today = new Date();
+
+    var yyyy = dateTime.getFullYear();
+    var mm = dateTime.getMonth() +1;
+    mm = mm < 10 ? '0' + dateTime.getMonth() : dateTime.getMonth();
+    var dd = dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate();
+    var hh = dateTime.getHours() < 10 ? "0" + dateTime.getHours() : dateTime.getHours();
+    var min = dateTime.getMinutes() < 10 ? "0" + dateTime.getMinutes() : dateTime.getMinutes();
+    var sec = dateTime.getSeconds() < 10 ? "0" + dateTime.getSeconds() : dateTime.getSeconds();
+
+    if (dateTime.getDate() === today.getDate() && dateTime.getMonth() === today.getMonth() && dateTime.getFullYear() === today.getFullYear()) {
+        return "".concat(hh).concat(":").concat(min).concat(":").concat(sec);
+    } else {
+        return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd);
+    }
+}

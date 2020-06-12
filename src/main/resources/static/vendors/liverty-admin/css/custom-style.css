@@ -394,14 +394,22 @@ select.form-control:not([size]):not([multiple]) {
     border-top-right-radius: calc(0.3rem - 1px);
 }
 .reply-header.reply-header-owner{
-    background-color: #62C15B;
-    border-bottom: 1px solid #62C15B;
+    background-color: #4CCEAC;
+    border-bottom: 1px solid #4CCEAC;
 }
 
 .reply-body {
     color: #000;
     background: #FAFAFA;
     padding: 0.3rem 0.75rem;
+}
+
+.reply-footer {
+    color: #000;
+    background: #FAFAFA;
+    padding: 0rem 0.75rem 0rem 0.75rem;
+    font-weight: 400;
+    font-size: 0.8rem;
 }
 
 .listDivSection {
@@ -415,4 +423,20 @@ select.form-control:not([size]):not([multiple]) {
 .btn.btn-reply {
     font-size: 0.675rem;
     padding: 0.2rem 0.51rem;
+}
+
+.reply-datetime {
+    max-width: 113px;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.reply-writer {
+    max-width: 80px;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
