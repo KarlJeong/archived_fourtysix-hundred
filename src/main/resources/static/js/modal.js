@@ -21,9 +21,14 @@ function fnCallReportArticleModal(target, boardCode, articleId) {
 };
 
 function fnReport() {
-    let url = "/v1/api/b/report/article";
+    var target = $("#target").val();
+    alert(target);
+    if (!confirm("Would you like to report this " + target + "?")) {
+        return;
+    }
+
+    let url = "/v1/api/b/report/" + target.toLowerCase();
     var params = $("#reportForm").serializeObject();
-    console.log(params);
     PromiseUtil.post(url, params)
     .then(JSON.parse)
     .then(function(d){

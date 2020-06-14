@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.karljeong.fourtysix.application.user.article.report.service.ReportService;
+import com.karljeong.fourtysix.database.entity.TbArticleReplyReport;
 import com.karljeong.fourtysix.database.entity.TbArticleReport;
 import com.karljeong.fourtysix.resulthandler.ResultDto;
 import com.karljeong.fourtysix.resulthandler.ResultDto.ResultCodeEnum;
@@ -26,5 +27,12 @@ public class ReportRestController {
         tbArticleReport.setUserInfo(request);
         TbArticleReport createdTbArticleReport = reportService.reportArticle(tbArticleReport);
         return new ResultSetter(ResultCodeEnum.SUCCESS, createdTbArticleReport).getResultDto();
+    }
+
+    @PostMapping("/reply")
+    public ResultDto reportReply(@RequestBody TbArticleReplyReport tbArticleReplyReport, HttpServletRequest request) {
+        tbArticleReplyReport.setUserInfo(request);
+        TbArticleReplyReport createdTbArticleReplyReport = reportService.reportArticleReply(tbArticleReplyReport);
+        return new ResultSetter(ResultCodeEnum.SUCCESS, createdTbArticleReplyReport).getResultDto();
     }
 }
