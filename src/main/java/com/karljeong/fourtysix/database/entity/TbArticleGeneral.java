@@ -37,8 +37,8 @@ public class TbArticleGeneral implements Serializable {
 	@Column(name = "ARTICLE_BAN_YN")
 	private byte articleBanYn;
 
-	@Column(name = "ARTICLE_CATEGORY_ID")
-	private BigInteger articleCategoryId;
+	@Column(name = "ARTICLE_CATEGORY_CV")
+	private String articleCategoryCv;
 
 	@Lob
 	@Column(name = "ARTICLE_CONTENTS")
@@ -108,13 +108,6 @@ public class TbArticleGeneral implements Serializable {
 		this.articleBanYn = articleBanYn;
 	}
 
-	public BigInteger getArticleCategoryId() {
-		return this.articleCategoryId;
-	}
-
-	public void setArticleCategoryId(BigInteger articleCategoryId) {
-		this.articleCategoryId = articleCategoryId;
-	}
 
 	public String getArticleContents() {
 		return this.articleContents;

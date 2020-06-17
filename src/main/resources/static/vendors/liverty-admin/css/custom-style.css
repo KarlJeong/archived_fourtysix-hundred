@@ -35,8 +35,8 @@ a.card-title-link {
 }
 
 .dashboard-title {
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 550;
+  font-size: 13px;
 }
 
 .dashboard-count {
@@ -285,6 +285,7 @@ table.table-fixed {
 
 /** Div Table **/
 div.table-sm {
+    min-width: 100%;
     padding: 5px 10px 5px 15px;
 }
 
@@ -307,6 +308,7 @@ div.table-sm-td {
 }
 
 div.table-sm-td-content {
+    font-weight: 550;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

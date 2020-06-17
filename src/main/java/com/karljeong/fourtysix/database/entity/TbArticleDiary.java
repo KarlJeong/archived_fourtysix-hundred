@@ -3,6 +3,7 @@ package com.karljeong.fourtysix.database.entity;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
 import com.karljeong.fourtysix.utils.DateUtil;
 
 
@@ -32,8 +34,8 @@ public class TbArticleDiary implements Serializable {
 	@Column(name="ARTICLE_BAN_YN")
 	private byte articleBanYn;
 
-	@Column(name="ARTICLE_CATEGORY_ID")
-	private BigInteger articleCategoryId;
+	@Column(name="ARTICLE_CATEGORY_CV")
+	private String articleCategoryCv;
 
 	@Lob
 	@Column(name="ARTICLE_CONTENTS")
@@ -103,15 +105,15 @@ public class TbArticleDiary implements Serializable {
 		this.articleBanYn = articleBanYn;
 	}
 
-	public BigInteger getArticleCategoryId() {
-		return this.articleCategoryId;
-	}
+	public String getArticleCategoryCv() {
+        return articleCategoryCv;
+    }
 
-	public void setArticleCategoryId(BigInteger articleCategoryId) {
-		this.articleCategoryId = articleCategoryId;
-	}
+    public void setArticleCategoryCv(String articleCategoryCv) {
+        this.articleCategoryCv = articleCategoryCv;
+    }
 
-	public String getArticleContents() {
+    public String getArticleContents() {
 		return this.articleContents;
 	}
 
