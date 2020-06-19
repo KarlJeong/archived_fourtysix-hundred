@@ -1,11 +1,11 @@
 var PromiseUtil = !window.PromiseUtil ? {} : window.PromiseUtil;
 
-PromiseUtil.get = function(url) {
+PromiseUtil.get = function(url, params) {
     // Return a new promise.
     return new Promise(function(resolve, reject) {
         // Do the usual XHR stuff
         var req = new XMLHttpRequest();
-        req.open('GET', url);
+        req.open('GET', url + formatParams(params));
         req.setRequestHeader($("meta[name='_csrf_header']").attr("content"),  $("meta[name='_csrf']").attr("content"));
 
         req.onload = function() {
@@ -142,10 +142,20 @@ PromiseUtil.postWithFile = function(url, params) {
 }
 
 PromiseUtil.getJson = function(url) {
-    return this.get(url).then(JSON.parse);
+    return this.get(url, null).then(JSON.parse);
 }
 
 window.PromiseUtil = PromiseUtil;
+
+function formatParams( params ){
+    if ( params == null) {return "";}
+    return "?" + Object
+          .keys(params)
+          .map(function(key){
+            return key+"="+encodeURIComponent(params[key])
+          })
+          .join("&")
+  }
 
 $(function() {
     $(document).ajaxSend(function(e, xhr, options) {

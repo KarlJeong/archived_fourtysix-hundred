@@ -253,25 +253,28 @@
                   </div>
                   <div class="separator-2"></div>
                   <div class="list-wrapper">
-                    <ul class="d-flex flex-column todo-list todo-list-custom">
-                      <li th:each="noticeArticle : ${noticeArticleList}">
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                              <div class="badge badge-info fixed-badge align-middle">공지</div>
-                          </div>
-                          <div class="col-8 pt-1 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title" th:text="${noticeArticle.articleTitle}"></span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <span class="text-muted dashboard-count" th:text="${#dates.format(noticeArticle.articleWriteDatetime, 'yyyy-MM-dd')}"></span>
-                          </div>
+                    <div class="row table-sm" th:each="noticeArticle : ${noticeArticleList}">
+                        <div class="col-12 pl-1 table-sm-tbody">
+                            <div class="row table-sm-tr">
+                                <div class="table-sm-td col-lg-10">
+                                    <div class="table-sm-td-content">
+                                        <span th:each="noticeArticleCategory : ${noticeArticleCategoryList}" th:object="${noticeArticleCategory}" th:if="${noticeArticleCategory.codeValue == noticeArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${noticeArticleCategory.codeName}"></span>
+                                        <span class="table-sm-td-content">
+                                            <a href="/b/general/viewdetail/3?size=20&amp;page=0" th:text="${noticeArticle.articleTitle}"></a>
+                                        </span>
+                                        <div class="text-right pt-2 d-block d-lg-none d-xl-none">
+                                            <span class="text-muted dashboard-count" th:text="${#dates.format(noticeArticle.articleWriteDatetime, 'yyyy-MM-dd')}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+                                    <div class="table-sm-td-content"><span class="text-muted dashboard-count" th:text="${#dates.format(noticeArticle.articleWriteDatetime, 'yyyy-MM-dd')}"></span></div>
+                                </div>
+                            </div>
                         </div>
-                      </li>
-                    </ul>
+                    </div>
                     <div class="col-12 pt-2">
-                      <img class="img-fuild rounded" src="https://placehold.it/470x280" alt="tab preview">
+                      <img class="img-fuild rounded" src="https://placehold.it/470x280" alt="tab preview" style="max-width: 100%;">
                     </div>
                   </div>
                 </div>
@@ -286,444 +289,36 @@
                   </div>
                   <div class="separator-2"></div>
                   <div class="list-wrapper">
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
+                    <div class="row table-sm" th:each="generalArticle: ${generalArticleList}">
+                        <div class="col-12 pl-1 table-sm-tbody">
+                            <div class="row table-sm-tr">
+                                <div class="table-sm-td col-lg-8">
+                                    <div class="table-sm-td-content">
+                                        <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == generalArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${generalArticleCategory.codeName}"></span>
+                                        <span class="table-sm-td-content">
+                                            <a href="/b/general/viewdetail/3?size=20&amp;page=0" th:text="${generalArticle.articleTitle}"></a>
+                                        </span>
+                                        <div class="text-right pt-2 d-block d-lg-none d-xl-none">
+                                            <span th:text=${generalArticle.articleWriterUserName}></span>
+                                            <span class="text-muted">|</span>
+                                            <i class="fa fa-image mr-2 ml-auto"></i><span class="text-danger dashboard-count">3k</span>
                                         </div>
                                     </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
+                                </div>
+                                <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+                                    <div class="table-sm-td-content" th:text=${generalArticle.articleWriterUserName}></div>
+                                </div>
+                                <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+                                    <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
                                 </div>
                             </div>
                         </div>
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                      <div class="row table-sm">
-                            <div class="col-12 pl-1 table-sm-tbody">
-                                <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
-                                        <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
-                                            <span class="table-sm-td-content">
-                                                <a href="/b/general/viewdetail/3?size=20&amp;page=0">자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다자전거 삽니다</a>
-                                            </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="">작성자명</span>
-                                                <span class="text-muted">|</span>
-                                                <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content">ADMIN_NICK</div>
-                                    </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block">
-                                        <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center mb-2">
-                    <a href="#" class="card-title-link">
-                      <h4 class="card-title">FLEA MARKET</h4>
-                    </a>
-                    <a href="#" class="card-title-link"><i class="fa fa-caret-square-o-right icon-md"></i></a>
-                  </div>
-                  <div class="separator-2"></div>
-                  <div class="list-wrapper">
-                    <ul class="d-flex flex-column todo-list todo-list-custom">
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-warning fixed-badge align-middle">팝니다</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">자전거 팔아요</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">자전거 삽니다</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-warning fixed-badge align-middle">팝니다</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">자동차 팝니다.</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">자동차 삽니다.</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-warning fixed-badge align-middle">팝니다</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">아이폰 팝니다</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">아이폰 삽니다</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-warning fixed-badge align-middle">팝니다</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">커피머신 팝니다.</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">커피머신 삽니다</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="col-12 pr-0 row">
-                          <div class="col-2 px-0">
-                            <a href="#">
-                              <div class="badge badge-success fixed-badge align-middle">삽니다</div>
-                            </a>
-                          </div>
-                          <div class="col-8 pl-0">
-                            <a class="dashboard-title-link" href="#">
-                              <span class="row dashboard-ellipsis dashboard-title">텀플러 삽니다.</span>
-                            </a>
-                          </div>
-                          <div class="col-2 pr-0 text-right">
-                            <i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
     </th:block>
 </body>
 

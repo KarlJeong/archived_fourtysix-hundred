@@ -39,7 +39,7 @@
                         <div class="row table-sm" th:each="article : ${articleList}">
                             <div class="col-12 table-sm-tbody">
                                 <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-8">
+                                    <div class="table-sm-td col-lg-9">
                                         <div class="table-sm-td-content">
                                             <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
                                             <span class="table-sm-td-content">
@@ -53,14 +53,14 @@
                                         </div>
 
                                     </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${article.articleWriterUserName}"></div></div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${#dates.format(article.articleWriteDatetime, 'yyyy-MM-dd')}"></div></div>
+                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center"><div class="table-sm-td-content" th:text="${article.articleWriterUserName}"></div></div>
+                                    <div class="table-sm-td col-lg-1 table-sm-td-sep d-none d-lg-block d-xl-block text-center"><div class="table-sm-td-content" th:text="${#dates.format(article.articleWriteDatetime, 'yyyy-MM-dd')}"></div></div>
                                 </div>
                             </div>
                         </div>
                         <nav>
                             <ul
-                                class="pagination rounded-flat d-flex justify-content-center pagination-primary">
+                                class="py-4 pagination rounded-flat d-flex justify-content-center pagination-primary">
                                 <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-left"></i></a></li>
 
                                 <th:block th:if="${articleList.totalPages > 0}" th:each="pageNumber : ${paging}">

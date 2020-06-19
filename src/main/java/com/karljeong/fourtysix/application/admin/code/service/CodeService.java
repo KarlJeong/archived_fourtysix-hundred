@@ -43,6 +43,7 @@ public class CodeService {
 				: tbComCodeRepository.findAll(TbComCodeSpec.searchWithKeys(searchKeys), pageable);
 
 		for (TbComCode tbComCode : tbComCodeList) {
+		    System.out.println(tbComCode.getCodeName());
 			tbComCode.setTbComCodeGroup(tbComCodeGroupRepository.findByCodeGroupId(tbComCode.getCodeGroupId()));
 		}
 

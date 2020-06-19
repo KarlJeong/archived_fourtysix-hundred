@@ -62,6 +62,7 @@ public class GeneralService {
 					tbArticleGeneralRepository.findArticleWriterName(tbArticleGeneral.getArticleWriterId()));
 		}
 
+
 		return tbArticleGeneralList;
 	}
 

@@ -33,7 +33,7 @@ public class TbComArticle implements Serializable {
 	private BigInteger articleId;
 
 	@Column(name="ARTICLE_CATEGORY_CV")
-	private BigInteger articleCategoryCv;
+	private String articleCategoryCv;
 
 	@Lob
 	@Column(name="ARTICLE_CONTENTS")
@@ -96,11 +96,11 @@ public class TbComArticle implements Serializable {
 	}
 
 
-	public BigInteger getArticleCategoryCv() {
+	public String getArticleCategoryCv() {
         return articleCategoryCv;
     }
 
-    public void setArticleCategoryCv(BigInteger articleCategoryCv) {
+    public void setArticleCategoryCv(String articleCategoryCv) {
         this.articleCategoryCv = articleCategoryCv;
     }
 

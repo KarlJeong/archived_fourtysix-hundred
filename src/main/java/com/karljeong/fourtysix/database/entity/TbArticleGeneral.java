@@ -89,6 +89,9 @@ public class TbArticleGeneral implements Serializable {
 	@Transient
 	private String articleWriterUserName;
 
+	@Transient
+	private String articleCategoryName;
+
 	public TbArticleGeneral() {
 	}
 
@@ -237,7 +240,23 @@ public class TbArticleGeneral implements Serializable {
 		this.articleWriterUserName = articleWriterUserName;
 	}
 
-	public void setUserInfo(HttpServletRequest request) {
+	public String getArticleCategoryCv() {
+        return articleCategoryCv;
+    }
+
+    public void setArticleCategoryCv(String articleCategoryCv) {
+        this.articleCategoryCv = articleCategoryCv;
+    }
+
+    public String getArticleCategoryName() {
+        return articleCategoryName;
+    }
+
+    public void setArticleCategoryName(String articleCategoryName) {
+        this.articleCategoryName = articleCategoryName;
+    }
+
+    public void setUserInfo(HttpServletRequest request) {
 		BigInteger userId = UserUtil.getUserId(request);
 		this.createUserId = userId;
 		this.updateUserId = userId;
