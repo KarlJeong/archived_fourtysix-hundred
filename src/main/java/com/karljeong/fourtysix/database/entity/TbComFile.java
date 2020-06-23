@@ -56,8 +56,8 @@ public class TbComFile implements Serializable {
 	@Column(name = "FILE_NAME")
 	private String fileName;
 
-	@Column(name = "FILE_ORGINAL_NAME")
-	private String fileOrginalName;
+	@Column(name = "FILE_ORIGINAL_NAME")
+	private String fileOriginalName;
 
 	@Column(name = "FILE_PARAM_NAME")
 	private String fileParamName;
@@ -138,12 +138,12 @@ public class TbComFile implements Serializable {
 		this.fileName = fileName;
 	}
 
-	public String getFileOrginalName() {
-		return this.fileOrginalName;
+	public String getFileOriginalName() {
+		return this.fileOriginalName;
 	}
 
-	public void setFileOrginalName(String fileOrginalName) {
-		this.fileOrginalName = fileOrginalName;
+	public void setFileOriginalName(String fileOriginalName) {
+		this.fileOriginalName = fileOriginalName;
 	}
 
 	public String getFileParamName() {

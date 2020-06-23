@@ -57,6 +57,8 @@ public class GeneralController {
 
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
+        List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");
+        model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
 		return "/view/article/general/generalC";
 	}
 

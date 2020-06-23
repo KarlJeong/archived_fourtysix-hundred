@@ -7,24 +7,7 @@
 <script defer type="text/javascript">
 
     $(function() {
-        $('#articleContents').summernote({
-            height : 500,
-            tabsize : 2,
-            insertImage : "/file",
-            toolbar : [
-                [ 'style', [ 'style' ] ],
-                [ 'font', [ 'bold', 'italic', 'underline', 'clear' ] ],
-                [ 'fontname', [ 'fontname' ] ],
-                [ 'fontsize', [ 'fontsize' ] ],
-                [ 'color', [ 'color' ] ],
-                [ 'para', [ 'ul', 'ol', 'paragraph' ] ],
-                [ 'height', [ 'height' ] ],
-                [ 'table', [ 'table' ] ],
-                [ 'insert', [ 'link', 'picture', 'video', 'hr' ] ],
-                [ 'view', [ 'fullscreen', 'codeview' ] ],
-                [ 'help', [ 'help' ] ]
-            ]
-        });
+        var params = $("#articleContents").initSummernote("article");
     });
 
     function fnSave() {

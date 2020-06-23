@@ -1,23 +1,28 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
- * The persistent class for the TB_ARTICLE_DIARY_LIKE database table.
- * 
+ * The persistent class for the TB_ARTICLE_BLOG_LIKE database table.
+ *
  */
 @Entity
-@Table(name="TB_ARTICLE_DIARY_LIKE")
-@NamedQuery(name="TbArticleDiaryLike.findAll", query="SELECT t FROM TbArticleDiaryLike t")
-public class TbArticleDiaryLike implements Serializable {
+@Table(name="TB_ARTICLE_BLOG_LIKE")
+@NamedQuery(name="TbArticleBlogLike.findAll", query="SELECT t FROM TbArticleBlogLike t")
+public class TbArticleBlogLike implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	private TbArticleDiaryLikePK id;
+	private TbArticleBlogLikePK id;
 
 	@Column(name="CREATE_DATETIME")
 	private Timestamp createDatetime;
@@ -34,14 +39,14 @@ public class TbArticleDiaryLike implements Serializable {
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
 
-	public TbArticleDiaryLike() {
+	public TbArticleBlogLike() {
 	}
 
-	public TbArticleDiaryLikePK getId() {
+	public TbArticleBlogLikePK getId() {
 		return this.id;
 	}
 
-	public void setId(TbArticleDiaryLikePK id) {
+	public void setId(TbArticleBlogLikePK id) {
 		this.id = id;
 	}
 

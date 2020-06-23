@@ -42,7 +42,7 @@ public class MainController {
 	    model.addAttribute("noticeArticleCategoryList", noticeArticleCategoryList);
 		model.addAttribute("noticeArticleList", noticeService.findArticyeForDashboardByBoardCode("NOTICE"));
 
-		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_DIARY_CATEGORY").get("code");
+		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");
 		model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
 		model.addAttribute("generalArticleList", generalService.readList(new HashMap<String, Object>(), PageRequest.of(0, 10)));
 		return "/view/main/main";

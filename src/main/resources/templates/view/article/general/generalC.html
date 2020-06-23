@@ -36,8 +36,8 @@
                                 <div class="separator-2"></div>
                                 <form id="baseForm">
                                     <div class="form-group">
-                                        <label for="boardId">Category</label> <select class="form-control" name="articleCategoryId" id="articleCategoryId">
-                                            <option value="1">None</option>
+                                        <label for="boardId">Category</label> <select class="form-control" name="articleCategoryCv" id="articleCategoryCv">
+                                            <option th:each="generalArticleCategory : ${generalArticleCategoryList}" th:value="${generalArticleCategory.codeValue}" th:text="${generalArticleCategory.codeName}"></option>
                                         </select>
                                     </div>
                                     <div class="form-group">

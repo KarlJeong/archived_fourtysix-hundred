@@ -35,8 +35,8 @@ import com.karljeong.fourtysix.utils.DateUtil;
 public class FileService {
 
 	private final Path rootLocation;
-	private TbComFileRepository tbComFileRepository;
 	private ServletContext servletContext;
+	private TbComFileRepository tbComFileRepository;
 
 	@Autowired
 	public FileService(FileProperties fileProperties, TbComFileRepository tbComFileRepository,
@@ -62,7 +62,7 @@ public class FileService {
 
 		String filePath = FilenameUtils.concat(selectFileInfo.getFilePath(),
 				selectFileInfo.getFileName() + "." + selectFileInfo.getFileExtension());
-		String fileName = selectFileInfo.getFileOrginalName() + "." + selectFileInfo.getFileExtension();
+		String fileName = selectFileInfo.getFileOriginalName() + "." + selectFileInfo.getFileExtension();
 
 		File file = new File(filePath);
 		if (!file.exists()) {
@@ -135,14 +135,14 @@ public class FileService {
 			}
 			tbComFile.setFileType(fileType);
 			tbComFile.setFileOrder(1);
-			tbComFile.setFileOrginalName(multipartFile.getOriginalFilename());
+			tbComFile.setFileOriginalName(multipartFile.getOriginalFilename());
 			tbComFile.setFilePath(savePath.toString());
 			tbComFile.setFileName(fileName);
 			tbComFile.setFileExtension(extension);
 			tbComFile.setFileSize(BigInteger.valueOf(multipartFile.getSize()));
 			tbComFile.setCreateDatetime(DateUtil.getTimestamp());
 			tbComFile.setCreateUserId(BigInteger.valueOf(1));
-			tbComFile = tbComFileRepository.save(tbComFile);
+            tbComFile = tbComFileRepository.save(tbComFile);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,7 +150,12 @@ public class FileService {
 		return tbComFile;
 	}
 
+	public TbComFile save(TbComFile tbComFile) {
+	    return tbComFileRepository.save(tbComFile);
+	}
+
 	public int removeFile(BigInteger fileId) {
 		return tbComFileRepository.deleteFile(fileId);
 	}
+
 }

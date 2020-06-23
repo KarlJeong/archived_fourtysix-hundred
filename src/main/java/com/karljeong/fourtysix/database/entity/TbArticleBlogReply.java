@@ -1,19 +1,27 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
 import java.math.BigInteger;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
- * The persistent class for the TB_ARTICLE_DIARY_REPLY database table.
- * 
+ * The persistent class for the TB_ARTICLE_BLOG_REPLY database table.
+ *
  */
 @Entity
-@Table(name="TB_ARTICLE_DIARY_REPLY")
-@NamedQuery(name="TbArticleDiaryReply.findAll", query="SELECT t FROM TbArticleDiaryReply t")
-public class TbArticleDiaryReply implements Serializable {
+@Table(name="TB_ARTICLE_BLOG_REPLY")
+@NamedQuery(name="TbArticleBlogReply.findAll", query="SELECT t FROM TbArticleBlogReply t")
+public class TbArticleBlogReply implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -70,7 +78,7 @@ public class TbArticleDiaryReply implements Serializable {
 	@Column(name="UPDATE_USER_ID")
 	private BigInteger updateUserId;
 
-	public TbArticleDiaryReply() {
+	public TbArticleBlogReply() {
 	}
 
 	public String getReplyId() {

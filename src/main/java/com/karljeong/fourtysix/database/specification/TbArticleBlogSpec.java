@@ -10,9 +10,9 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.karljeong.fourtysix.database.entity.TbArticleDiary;
+import com.karljeong.fourtysix.database.entity.TbArticleBlog;
 
-public class TbArticleDiarySpec {
+public class TbArticleBlogSpec {
 
 	public enum SearchKey {
 		ARTICLEDELETEYN("articleDeleteYn"), ARTICLEBANYN("articleBanYn");
@@ -28,15 +28,15 @@ public class TbArticleDiarySpec {
 		}
 	}
 
-	public static Specification<TbArticleDiary> searchWithKeys(Map<SearchKey, Object> searchKeys) {
-		return (Specification<TbArticleDiary>) ((root, query, builder) -> {
+	public static Specification<TbArticleBlog> searchWithKeys(Map<SearchKey, Object> searchKeys) {
+		return (Specification<TbArticleBlog>) ((root, query, builder) -> {
 			List<Predicate> predicate = getPredicateWithKeyword(searchKeys, root, builder);
 			return builder.and(predicate.toArray(new Predicate[0]));
 		});
 	}
 
 	private static List<Predicate> getPredicateWithKeyword(Map<SearchKey, Object> searchKeyword,
-			Root<TbArticleDiary> root, CriteriaBuilder builder) {
+			Root<TbArticleBlog> root, CriteriaBuilder builder) {
 		List<Predicate> predicate = new ArrayList<>();
 		for (SearchKey key : searchKeyword.keySet()) {
 			switch (key) {

@@ -12,18 +12,20 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.servlet.http.HttpServletRequest;
 
 import com.karljeong.fourtysix.utils.DateUtil;
+import com.karljeong.fourtysix.utils.UserUtil;
 
 
 /**
- * The persistent class for the TB_ARTICLE_DIARY database table.
+ * The persistent class for the TB_ARTICLE_BLOG database table.
  *
  */
 @Entity
-@Table(name="TB_ARTICLE_DIARY")
-@NamedQuery(name="TbArticleDiary.findAll", query="SELECT t FROM TbArticleDiary t")
-public class TbArticleDiary implements Serializable {
+@Table(name="TB_ARTICLE_BLOG")
+@NamedQuery(name="TbArticleBlog.findAll", query="SELECT t FROM TbArticleBlog t")
+public class TbArticleBlog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -47,11 +49,11 @@ public class TbArticleDiary implements Serializable {
 	@Column(name="ARTICLE_LIKE_COUNT")
 	private int articleLikeCount;
 
-	@Column(name="ARTICLE_MODIFIER_ID")
+	@Column(name = "ARTICLE_MODIFIER_ID", insertable = false)
 	private BigInteger articleModifierId;
 
-	@Column(name="ARTICLE_MODIFY_DATETIME")
-	private String articleModifyDatetime;
+	@Column(name = "ARTICLE_MODIFY_DATETIME", insertable = false)
+    private Timestamp articleModifyDatetime = DateUtil.getTimestamp();
 
 	@Column(name="ARTICLE_REPLY_COUNT")
 	private int articleReplyCount;
@@ -62,14 +64,14 @@ public class TbArticleDiary implements Serializable {
 	@Column(name="ARTICLE_TITLE")
 	private String articleTitle;
 
-	@Column(name="ARTICLE_VIEW_COUNT")
-	private int articleViewCount;
+	@Column(name = "ARTICLE_VIEW_COUNT", updatable = false)
+    private int articleViewCount = 0;
 
-	@Column(name="ARTICLE_WRITE_DATETIME")
-	private Timestamp articleWriteDatetime;
+	@Column(name = "ARTICLE_WRITE_DATETIME", updatable = false)
+    private Timestamp articleWriteDatetime = DateUtil.getTimestamp();
 
-	@Column(name="ARTICLE_WRITER_ID")
-	private BigInteger articleWriterId;
+    @Column(name = "ARTICLE_WRITER_ID", updatable = false)
+    private BigInteger articleWriterId;
 
 	@Column(name="CREATE_DATETIME", updatable = false)
 	private Timestamp createDatetime = DateUtil.getTimestamp();
@@ -86,7 +88,7 @@ public class TbArticleDiary implements Serializable {
 	@Column(name="UPDATE_USER_ID", insertable = false)
 	private BigInteger updateUserId;
 
-	public TbArticleDiary() {
+	public TbArticleBlog() {
 	}
 
 	public BigInteger getArticleId() {
@@ -145,15 +147,15 @@ public class TbArticleDiary implements Serializable {
 		this.articleModifierId = articleModifierId;
 	}
 
-	public String getArticleModifyDatetime() {
-		return this.articleModifyDatetime;
-	}
+	public Timestamp getArticleModifyDatetime() {
+        return articleModifyDatetime;
+    }
 
-	public void setArticleModifyDatetime(String articleModifyDatetime) {
-		this.articleModifyDatetime = articleModifyDatetime;
-	}
+    public void setArticleModifyDatetime(Timestamp articleModifyDatetime) {
+        this.articleModifyDatetime = articleModifyDatetime;
+    }
 
-	public int getArticleReplyCount() {
+    public int getArticleReplyCount() {
 		return this.articleReplyCount;
 	}
 
@@ -240,5 +242,13 @@ public class TbArticleDiary implements Serializable {
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
 	}
+
+    public void setUserInfo(HttpServletRequest request) {
+        BigInteger userId = UserUtil.getUserId(request);
+        this.createUserId = userId;
+        this.updateUserId = userId;
+        this.articleWriterId = userId;
+        this.articleModifierId = userId;
+    }
 
 }
