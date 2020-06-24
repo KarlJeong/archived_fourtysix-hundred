@@ -1,6 +1,10 @@
 package com.karljeong.fourtysix.utils;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ThymeleafDialectUtil {
 	private static String[] suffix = new String[] { "", "k", "m", "b", "t" };
@@ -14,4 +18,27 @@ public class ThymeleafDialectUtil {
 		}
 		return r;
 	}
+
+    public String dateConverterToDateOrDateTime(Timestamp givenDateTime) {
+        if (givenDateTime == null) {
+            return "";
+        }
+
+        long timestamp = givenDateTime.getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestamp);
+
+        long currentTimestamp = System.currentTimeMillis();
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.setTimeInMillis(currentTimestamp);
+
+
+        DateFormat df = null;
+        if (cal.get(Calendar.YEAR) == todayCal.get(Calendar.YEAR) && cal.get(Calendar.MONTH) == todayCal.get(Calendar.MONTH) && cal.get(Calendar.DATE) == todayCal.get(Calendar.DATE)) {
+            df = new SimpleDateFormat("HH:mm:ss");
+        } else {
+            df = new SimpleDateFormat("yyyy-MM-dd");
+        }
+        return df.format(cal.getTime());
+    }
 }

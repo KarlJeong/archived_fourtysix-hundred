@@ -27,13 +27,10 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="dataTables_length" id="order-listing_length">
-                                        <label>Show <select name="order-listing_length"
-                                            aria-controls="order-listing" class="form-control">
-                                                <option value="5">10</option>
-                                                <option value="10">20</option>
-                                                <option value="15">50</option>
-                                        </select> entries
-                                        </label>
+                                        <label>Show</label>
+                                        <select class="form-control" id="size" name="size" th:field="${articleList.size}" onchange="fnReadList()">
+                                            <option th:each="articleNumber : ${articleNumber}" th:value="${articleNumber.codeValue}" th:text="${articleNumber.codeName}"></option>
+                                        </select> <label> entries</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
@@ -58,313 +55,46 @@
                             </div>
                         </div>
                         <div class="masonry-grid row">
-                            <!-- masonry grid item start -->
-                            <div class="masonry-grid-item col-md-6 col-lg-4">
-                                <!-- blogpost start -->
-                                <article class="blogpost shadow-2 light-gray-bg bordered">
-                                    <div id="carousel-blog-post" class="carousel slide"
-                                        data-ride="carousel">
-                                        <div class="owl-carousel owl-theme full-width">
-                                            <div class="item">
-                                                <img src="https://placehold.it/330x320"
-                                                    alt="banner image" />
-                                            </div>
-                                            <div class="item">
-                                                <img src="https://placehold.it/330x320"
-                                                    alt="banner image" />
-                                            </div>
-                                            <div class="item">
-                                                <img src="https://placehold.it/330x320"
-                                                    alt="banner image" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <header>
-                                        <h3>
-                                            <a class="diary-title-link" href="diaryR.html">Blogpost
-                                                with slider</a>
-                                        </h3>
-                                        <div class="post-info">
-                                            <span class="post-date"> <i
-                                                class="fa fa-calendar-o pr-1"></i> <span class="day">2020-01-12</span>
-
-                                            </span> <span class="submitted"><i
-                                                class="fa fa-user pr-1 pl-1"></i><a href="#">John
-                                                    Doe</a></span> <span class="comments"><i
-                                                class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">122</a></span>
-                                            <span class="likes"><i
-                                                class="fa fa-heart pl-1 pr-1"></i> <a href="#">209</a></span>
-                                        </div>
-                                    </header>
-                                    <div class="blogpost-content">
-                                        <p>Mauris dolor sapien, malesuada at interdum ut,
-                                            hendrerit eget lorem. Nunc interdum mi neque, et
-                                            sollicitudin purus fermentum ut. Suspendisse faucibus
-                                            nibh odio, a vehicula eros pharetra in. Maecenas
-                                            ullamcorper commodo rutrum.</p>
-                                    </div>
-                                    <footer class="clearfix">
-                                        <div class="tags pull-left">
-                                            <i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a
-                                                href="#">tag 2</a>, <a href="#">long tag 3</a>
-                                        </div>
-                                        <div class="link pull-right">
-                                            <i class="fa fa-link pr-1"></i><a href="#">Read More</a>
-                                        </div>
-                                    </footer>
-                                </article>
-                                <!-- blogpost end -->
-                            </div>
-                            <!-- masonry grid item end -->
-
-                            <div class="masonry-grid-item col-md-6 col-lg-4">
+                            <div class="masonry-grid-item col-md-6 col-lg-4" th:each="blog : ${articleList}">
                                 <!-- blogpost start -->
                                 <article class="blogpost shadow-2 light-gray-bg bordered">
                                     <div class="overlay-container">
-                                        <img class="w-100" src="https://placehold.it/330x320"
-                                            alt="tab Preview">
+                                        <img class="w-100" th:src="@{${'/v1/api/file/img/' + blog.thumbnailFileId}}" alt="tab Preview">
                                     </div>
                                     <header>
                                         <h2>
-                                            <a class="diary-title-link" href="diaryR.html">Cute
-                                                Robot</a>
+                                            <a class="diary-title-link" th:href="@{${'/blog/viewdetail/' + blog.articleId}}" th:text="${blog.articleTitle}"></a>
                                         </h2>
                                         <div class="post-info">
-                                            <span class="post-date"> <i
-                                                class="fa fa-calendar-o pr-1"></i> <span class="day">2020-01-02</span>
-                                            </span> <span class="submitted"><i
-                                                class="fa fa-user pr-1 pl-1"></i><a href="#">John
-                                                    Doe</a></span> <span class="comments"><i
-                                                class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">1.1k</a></span>
-                                            <span class="likes"><i
-                                                class="fa fa-heart pl-1 pr-1"></i> <a href="#">9</a></span>
+                                            <span class="post-date"> <i class="fa fa-calendar-o pr-1"></i><span class="day" th:text="${#fourtysixFormat.dateConverterToDateOrDateTime(blog.articleWriteDatetime)}"></span></span>
+                                            <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i><span th:text="${blog.articleWriterUserName}"></span></span>
+                                            <span class="comments"><i class="fa fa-comments-o pl-1 pr-1"></i><span th:text="${#fourtysixFormat.convertNumberFormat(blog.articleReplyCount)}"></span></span>
+                                            <span class="likes"><i class="fa fa-heart pl-1 pr-1"></i><span th:text="${#fourtysixFormat.convertNumberFormat(blog.articleLikeCount)}"></span></span>
                                         </div>
                                     </header>
                                     <div class="blogpost-content">
-                                        <p>Mauris dolor sapien, malesuada at interdum ut,
-                                            hendrerit eget lorem. Nunc interdum mi neque, et
-                                            sollicitudin purus fermentum ut. Suspendisse faucibus
-                                            nibh odio, a vehicula eros pharetra in. Maecenas
-                                            ullamcorper commodo rutrum. In iaculis lectus vel augue
-                                            eleifend dignissim. Aenean viverra semper sollicitudin.</p>
-                                        <p>Mauris dolor sapien, malesuada at interdum ut,
-                                            hendrerit eget lorem. Nunc interdum mi neque, et
-                                            sollicitudin purus fermentum ut. Suspendisse faucibus
-                                            nibh odio, a vehicula eros pharetra in. Maecenas
-                                            ullamcorper commodo rutrum. In iaculis lectus vel augue
-                                            eleifend dignissim. Aenean viverra semper sollicitudin.</p>
+                                        <p th:text="${blog.articleSummary}"></p>
                                     </div>
                                     <footer class="clearfix">
-                                        <div class="tags pull-left">
-                                            <i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a
-                                                href="#">tag 2</a>, <a href="#">long tag 3</a>
-                                        </div>
                                         <div class="link pull-right">
-                                            <i class="fa fa-link pr-1"></i><a href="#">Read More</a>
                                         </div>
                                     </footer>
                                 </article>
                                 <!-- blogpost end -->
                             </div>
-                            <!-- masonry grid item end -->
-
-                            <!-- masonry grid item start -->
-                            <div class="masonry-grid-item col-md-6 col-lg-4">
-                                <!-- blogpost start -->
-                                <article
-                                    class="blogpost shadow-2 light-gray-bg bordered object-non-visible"
-                                    data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-                                    <div class="overlay-container">
-                                        <img class="w-100" src="https://placehold.it/330x320"
-                                            alt="tab Preview">
-                                    </div>
-                                    <header>
-                                        <h2>
-                                            <a class="diary-title-link" href="diaryR.html">Nunc
-                                                interdum mi neque</a>
-                                        </h2>
-                                        <div class="post-info">
-                                            <span class="post-date"> <i
-                                                class="fa fa-calendar-o pr-1"></i> <span class="day">2020-01-01</span>
-                                            </span> <span class="submitted"><i
-                                                class="fa fa-user pr-1 pl-1"></i><a href="#">John
-                                                    Doe</a></span> <span class="comments"><i
-                                                class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">1.1k</a></span>
-                                            <span class="likes"><i
-                                                class="fa fa-heart pl-1 pr-1"></i> <a href="#">1.4k</a></span>
-                                        </div>
-                                    </header>
-                                    <div class="blogpost-content">
-                                        <p>Mauris dolor sapien, malesuada at interdum ut,
-                                            hendrerit eget lorem. Nunc interdum mi neque, et
-                                            sollicitudin purus fermentum ut. Suspendisse faucibus
-                                            nibh odio, a vehicula eros pharetra in. Maecenas
-                                            ullamcorper commodo rutrum. In iaculis lectus vel augue
-                                            eleifend dignissim. Aenean viverra semper sollicitudin.</p>
-                                    </div>
-                                    <footer class="clearfix">
-                                        <div class="tags pull-left">
-                                            <i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a
-                                                href="#">tag 2</a>, <a href="#">long tag 3</a>
-                                        </div>
-                                        <div class="link pull-right">
-                                            <i class="fa fa-link pr-1"></i><a href="#">Read More</a>
-                                        </div>
-                                    </footer>
-                                </article>
-                                <!-- blogpost end -->
-                            </div>
-                            <!-- masonry grid item end -->
-
-                            <!-- masonry grid item start -->
-                            <div class="masonry-grid-item col-md-6 col-lg-4">
-                                <!-- blogpost start -->
-                                <article
-                                    class="blogpost shadow-2 light-gray-bg bordered object-non-visible"
-                                    data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-                                    <div class="overlay-container">
-                                        <img class="w-100" src="https://placehold.it/330x320"
-                                            alt="tab Preview">
-                                    </div>
-                                    <header>
-                                        <h2>
-                                            <a class="diary-title-link" href="diaryR.html">Successful
-                                                business ideas</a>
-                                        </h2>
-                                        <div class="post-info">
-                                            <span class="post-date"> <i
-                                                class="fa fa-calendar-o pr-1"></i> <span class="day">2020-01-02</span>
-
-                                            </span> <span class="submitted"><i
-                                                class="fa fa-user pr-1 pl-1"></i><a href="#">John
-                                                    Doe</a></span> <span class="comments"><i
-                                                class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22</a></span>
-                                            <span class="likes"><i
-                                                class="fa fa-heart pl-1 pr-1"></i> <a href="#">14.2k</a></span>
-                                        </div>
-                                    </header>
-                                    <div class="blogpost-content">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit. Architecto veniam, perspiciatis libero quasi,
-                                            iusto delectus sed accusantium fugit inventore iure
-                                            molestiae amet voluptatem, ut dolorem ex dolorum ea
-                                            impedit quae!</p>
-                                    </div>
-                                    <footer class="clearfix">
-                                        <div class="tags pull-left">
-                                            <i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a
-                                                href="#">tag 2</a>, <a href="#">long tag 3</a>
-                                        </div>
-                                        <div class="link pull-right">
-                                            <i class="fa fa-link pr-1"></i><a href="#">Read More</a>
-                                        </div>
-                                    </footer>
-                                </article>
-                                <!-- blogpost end -->
-                            </div>
-                            <!-- masonry grid item end -->
-
-                            <!-- masonry grid item start -->
-                            <div class="masonry-grid-item col-md-6 col-lg-4">
-                                <!-- blogpost start -->
-                                <article
-                                    class="blogpost shadow-2 light-gray-bg bordered object-non-visible"
-                                    data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-                                    <div class="overlay-container">
-                                        <img class="w-100" src="https://placehold.it/330x320"
-                                            alt="tab Preview">
-                                    </div>
-                                    <header>
-                                        <h2>
-                                            <a class="diary-title-link" href="diaryR.html">Successful
-                                                business ideas</a>
-                                        </h2>
-                                        <div class="post-info">
-                                            <span class="post-date"> <i
-                                                class="fa fa-calendar-o pr-1"></i> <span class="day">2020-01-02</span>
-
-                                            </span> <span class="submitted"><i
-                                                class="fa fa-user pr-1 pl-1"></i><a href="#">John
-                                                    Doe</a></span> <span class="comments"><i
-                                                class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22</a></span>
-                                            <span class="likes"><i
-                                                class="fa fa-heart pl-1 pr-1"></i> <a href="#">1.2k</a></span>
-                                        </div>
-                                    </header>
-                                    <div class="blogpost-content">
-                                        <p>Lorem ipsum dolor sit ametut dolorem ex dolorum ea
-                                            impedit quae!</p>
-                                    </div>
-                                    <footer class="clearfix">
-                                        <div class="tags pull-left">
-                                            <i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a
-                                                href="#">tag 2</a>, <a href="#">long tag 3</a>
-                                        </div>
-                                        <div class="link pull-right">
-                                            <i class="fa fa-link pr-1"></i><a href="#">Read More</a>
-                                        </div>
-                                    </footer>
-                                </article>
-                                <!-- blogpost end -->
-                            </div>
-                            <!-- masonry grid item end -->
-
-                            <!-- masonry grid item start -->
-                            <div class="masonry-grid-item col-md-6 col-lg-4">
-                                <!-- blogpost start -->
-                                <article
-                                    class="blogpost shadow-2 light-gray-bg bordered object-non-visible"
-                                    data-animation-effect="fadeInUpSmall" data-effect-delay="100">
-                                    <div class="overlay-container">
-                                        <img class="w-100" src="https://placehold.it/330x320"
-                                            alt="tab Preview">
-                                    </div>
-                                    <header>
-                                        <h2>
-                                            <a class="diary-title-link" href="diaryR.html">Successful
-                                                business ideas</a>
-                                        </h2>
-                                        <div class="post-info">
-                                            <span class="post-date"> <i
-                                                class="fa fa-calendar-o pr-1"></i> <span class="day">2020-01-02</span>
-
-                                            </span> <span class="submitted"><i
-                                                class="fa fa-user pr-1 pl-1"></i><a href="#">John
-                                                    Doe</a></span> <span class="comments"><i
-                                                class="fa fa-comments-o pl-1 pr-1"></i> <a href="#">22</a></span>
-                                            <span class="likes"><i
-                                                class="fa fa-heart pl-1 pr-1"></i> <a href="#">4.2k</a></span>
-                                        </div>
-                                    </header>
-                                    <div class="blogpost-content">
-                                        <p>Lorem ipsum dolor sit ametut dolorem ex dolorum ea
-                                            impedit quae!</p>
-                                    </div>
-                                    <footer class="clearfix">
-                                        <div class="tags pull-left">
-                                            <i class="fa fa-tags pr-1"></i> <a href="#">tag 1</a>, <a
-                                                href="#">tag 2</a>, <a href="#">long tag 3</a>
-                                        </div>
-                                        <div class="link pull-right">
-                                            <i class="fa fa-link pr-1"></i><a href="#">Read More</a>
-                                        </div>
-                                    </footer>
-                                </article>
-                                <!-- blogpost end -->
-                            </div>
-                            <!-- masonry grid item end -->
                         </div>
                         <nav>
                             <ul
-                                class="pagination rounded-flat d-flex justify-content-center pagination-primary">
-                                <li class="page-item"><a class="page-link" href="#"><i
-                                        class="mdi mdi-chevron-left"></i></a></li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#"><i
-                                        class="mdi mdi-chevron-right"></i></a></li>
+                                class="py-4 pagination rounded-flat d-flex justify-content-center pagination-primary">
+                                <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-left"></i></a></li>
+
+                                <th:block th:if="${articleList.totalPages > 0}" th:each="pageNumber : ${paging}">
+                                <li class="page-item" th:classappend="${pageNumber==articleList.number +1} ? active">
+                                    <a class="page-link" th:href="@{/b/general/viewmain(size=${articleList.size}, page=${pageNumber -1})}" th:text="${pageNumber}" ></a>
+                                </li>
+                                </th:block>
+
+                                <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-right"></i></a></li>
                             </ul>
                         </nav>
                     </div>

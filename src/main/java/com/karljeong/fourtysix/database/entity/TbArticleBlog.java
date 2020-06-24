@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 
 import com.karljeong.fourtysix.utils.DateUtil;
@@ -64,6 +65,9 @@ public class TbArticleBlog implements Serializable {
 	@Column(name="ARTICLE_TITLE")
 	private String articleTitle;
 
+	@Column(name="ARTICLE_SUMMARY")
+	private String articleSummary;
+
 	@Column(name = "ARTICLE_VIEW_COUNT", updatable = false)
     private int articleViewCount = 0;
 
@@ -87,6 +91,12 @@ public class TbArticleBlog implements Serializable {
 
 	@Column(name="UPDATE_USER_ID", insertable = false)
 	private BigInteger updateUserId;
+
+    @Transient
+    private String articleWriterUserName;
+
+    @Transient
+    private String articleCategoryName;
 
 	public TbArticleBlog() {
 	}
@@ -179,7 +189,15 @@ public class TbArticleBlog implements Serializable {
 		this.articleTitle = articleTitle;
 	}
 
-	public int getArticleViewCount() {
+	public String getArticleSummary() {
+        return articleSummary;
+    }
+
+    public void setArticleSummary(String articleSummary) {
+        this.articleSummary = articleSummary;
+    }
+
+    public int getArticleViewCount() {
 		return this.articleViewCount;
 	}
 
@@ -242,6 +260,24 @@ public class TbArticleBlog implements Serializable {
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
 	}
+
+
+
+    public String getArticleWriterUserName() {
+        return articleWriterUserName;
+    }
+
+    public void setArticleWriterUserName(String articleWriterUserName) {
+        this.articleWriterUserName = articleWriterUserName;
+    }
+
+    public String getArticleCategoryName() {
+        return articleCategoryName;
+    }
+
+    public void setArticleCategoryName(String articleCategoryName) {
+        this.articleCategoryName = articleCategoryName;
+    }
 
     public void setUserInfo(HttpServletRequest request) {
         BigInteger userId = UserUtil.getUserId(request);

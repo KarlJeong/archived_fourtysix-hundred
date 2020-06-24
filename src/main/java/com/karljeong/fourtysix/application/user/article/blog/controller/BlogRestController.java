@@ -25,7 +25,7 @@ public class BlogRestController {
 
     @GetMapping
     public Iterable<TbArticleBlog> getBlogs(@RequestBody TbArticleBlog tbArticleBlog) {
-        return blogService.getBlogs(tbArticleBlog);
+        return null;
     }
 
     @GetMapping("/{articleId}")
