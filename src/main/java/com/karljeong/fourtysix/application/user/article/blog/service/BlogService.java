@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import com.karljeong.fourtysix.application.admin.file.service.FileService;
 import com.karljeong.fourtysix.database.entity.TbArticleBlog;
+import com.karljeong.fourtysix.database.entity.TbArticleBlogLike;
+import com.karljeong.fourtysix.database.entity.TbArticleBlogLikePK;
+import com.karljeong.fourtysix.database.repository.TbArticleBlogLikeRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleBlogRepository;
 import com.karljeong.fourtysix.database.specification.TbArticleBlogSpec;
 import com.karljeong.fourtysix.database.specification.TbArticleBlogSpec.SearchKey;
@@ -23,6 +27,9 @@ public class BlogService {
 
     @Autowired
     TbArticleBlogRepository tbArticleBlogRepository;
+
+    @Autowired
+    TbArticleBlogLikeRepository tbArticleBlogLikeRepository;
 
     public Page<TbArticleBlog> readList(Map<String, Object> searchRequest, Pageable pageable) {
         Map<SearchKey, Object> searchKeys = new HashMap<>();
@@ -60,4 +67,18 @@ public class BlogService {
         TbArticleBlog save = tbArticleBlogRepository.save(tbArticleBlog);
         return save;
     }
+
+    public TbArticleBlog findById(BigInteger articleId) {
+        TbArticleBlog tbArticleBlog = tbArticleBlogRepository.findById(articleId).get();
+        tbArticleBlog.setArticleWriterUserName(
+                tbArticleBlogRepository.findArticleWriterName(tbArticleBlog.getArticleWriterId()));
+        return tbArticleBlog;
+    }
+
+    public TbArticleBlogLike findById(TbArticleBlogLikePK tbArticleBlogLikePK) {
+        Optional<TbArticleBlogLike> tbArticleBlogLike = tbArticleBlogLikeRepository.findById(tbArticleBlogLikePK);
+
+        return tbArticleBlogLike.isPresent() ? tbArticleBlogLike.get() : new TbArticleBlogLike();
+    }
+
 }

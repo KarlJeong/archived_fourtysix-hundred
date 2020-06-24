@@ -23,37 +23,15 @@
                           </div>
                         <div class="separator-2"></div>
                         <div class="owl-carousel owl-theme full-width">
-                            <div class="item">
+                            <div class="item" th:each="blogArticle : ${blogArticleList}">
                                 <div class="card text-white">
-                                    <img class="card-img" src="https://placehold.it/1300x960" alt="Card image">
+                                    <img class="card-img" th:src="@{${'/v1/api/file/img/' + blogArticle.thumbnailFileId}}" alt="Card image">
                                     <div class="card-img-overlay d-flex">
                                         <div class="mt-auto text-center w-100">
-                                            <h3>[LANGUAGE] How I learnt Korean</h3>
-                                            <h6 class="card-text mb-4 font-weight-normal ellipsis">Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah </h6>
+                                            <h3 th:each="blogArticleCategory : ${blogArticleCategoryList}" th:object="${blogArticleCategory}" th:if="${blogArticleCategory.codeValue == blogArticle.articleCategoryCv}" th:text="${'[' + blogArticleCategory.codeName + '] ' + blogArticle.articleTitle}"></h3>
+                                            <h6 class="card-text mb-4 font-weight-normal ellipsis" th:text="${blogArticle.articleSummary}"></h6>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card text-white">
-                                    <img class="card-img" src="https://placehold.it/1300x960" alt="Card image">
-                                    <div class="card-img-overlay d-flex">
-                                        <div class="mt-auto text-center w-100">
-                                            <h3>[FOOD] How to make Korean style sidedish</h3>
-                                            <h6 class="card-text mb-4 font-weight-normal ellipsis">Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah </h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="card text-white">
-                                    <img class="card-img" src="https://placehold.it/1300x960" alt="Card image">
-                                        <div class="card-img-overlay d-flex">
-                                            <div class="mt-auto text-center w-100">
-                                                <h3>[TAG] Title</h3>
-                                                <h6 class="card-text mb-4 font-weight-normal ellipsis">Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah </h6>
-                                            </div>
-                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -293,7 +271,7 @@
                             <div class="row table-sm-tr">
                                 <div class="table-sm-td col-lg-8">
                                     <div class="table-sm-td-content">
-                                        <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == generalArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${generalArticleCategory.codeName}"></span>
+                                        <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == generalArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${blogArticleCategory .codeName}"></span>
                                         <span class="table-sm-td-content">
                                             <a href="/b/general/viewdetail/3?size=20&amp;page=0" th:text="${generalArticle.articleTitle}"></a>
                                         </span>

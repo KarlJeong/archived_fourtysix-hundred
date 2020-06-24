@@ -1,9 +1,13 @@
 package com.karljeong.fourtysix.database.entity;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.servlet.http.HttpServletRequest;
+
+import com.karljeong.fourtysix.utils.UserUtil;
 
 /**
  * The primary key class for the TB_ARTICLE_BLOG_LIKE database table.
@@ -14,28 +18,37 @@ public class TbArticleBlogLikePK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="USER_ID")
-	private String userId;
+	@Column(name = "USER_ID", insertable = false, updatable = false)
+    private BigInteger userId;
 
-	@Column(name="ARTICLE_ID", insertable=false, updatable=false)
-	private String articleId;
+    @Column(name = "ARTICLE_ID", insertable = false, updatable = false)
+    private BigInteger articleId;
 
 	public TbArticleBlogLikePK() {
 	}
-	public String getUserId() {
-		return this.userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getArticleId() {
-		return this.articleId;
-	}
-	public void setArticleId(String articleId) {
-		this.articleId = articleId;
-	}
 
-	@Override
+
+	public BigInteger getUserId() {
+        return userId;
+    }
+
+
+    public void setUserId(BigInteger userId) {
+        this.userId = userId;
+    }
+
+
+    public BigInteger getArticleId() {
+        return articleId;
+    }
+
+
+    public void setArticleId(BigInteger articleId) {
+        this.articleId = articleId;
+    }
+
+
+    @Override
     public boolean equals(Object other) {
 		if (this == other) {
 			return true;
@@ -58,4 +71,9 @@ public class TbArticleBlogLikePK implements Serializable {
 
 		return hash;
 	}
+
+    public void setUserInfo(HttpServletRequest request) {
+        BigInteger userId = UserUtil.getUserId(request);
+        this.userId = userId;
+    }
 }

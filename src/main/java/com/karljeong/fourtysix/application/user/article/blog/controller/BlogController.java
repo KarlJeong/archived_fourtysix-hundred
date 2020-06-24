@@ -1,7 +1,10 @@
 package com.karljeong.fourtysix.application.user.article.blog.controller;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,12 +12,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.karljeong.fourtysix.application.user.article.blog.service.BlogService;
 import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
 import com.karljeong.fourtysix.database.entity.TbArticleBlog;
+import com.karljeong.fourtysix.database.entity.TbArticleBlogLikePK;
 import com.karljeong.fourtysix.utils.PagingUtil;
 import com.karljeong.fourtysix.utils.ValidationUtil;
 
@@ -53,8 +58,14 @@ public class BlogController {
         return "/view/article/blog/blogC";
     }
 
-    @GetMapping("/viewdetail")
-    public String viewDetail() {
+    @GetMapping("/viewdetail/{articleId}")
+    public String viewDetail(Model model, @PathVariable("articleId") BigInteger articleId, HttpServletRequest request) {
+        model.addAttribute("articleInfo", blogService.findById(articleId));
+
+        TbArticleBlogLikePK tbArticleBlogLikePK = new TbArticleBlogLikePK();
+        tbArticleBlogLikePK.setArticleId(articleId);
+        tbArticleBlogLikePK.setUserInfo(request);
+        model.addAttribute("articleLike", blogService.findById(tbArticleBlogLikePK));
         return "/view/article/blog/blogR";
     }
 
