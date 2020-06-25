@@ -106,13 +106,15 @@ $.fn.initSummernote = function(articleType) {
         ],
         callbacks: {
         	onImageUpload : function(files) {
-        		alert("!");
-        		console.log(files);
                 uploadSummernoteFile(files, sNote, articleType);
             },
             onImageLinkInsert : function(e) {
-            	alert("@");
             	console.log(e);
+            },
+            onPaste: function (e) {
+                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                e.preventDefault();
+                document.execCommand('insertText', false, bufferText);
             }
 
           }

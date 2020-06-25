@@ -271,7 +271,7 @@
                             <div class="row table-sm-tr">
                                 <div class="table-sm-td col-lg-8">
                                     <div class="table-sm-td-content">
-                                        <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == generalArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${blogArticleCategory .codeName}"></span>
+                                        <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == generalArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${blogArticleCategory.codeName}"></span>
                                         <span class="table-sm-td-content">
                                             <a href="/b/general/viewdetail/3?size=20&amp;page=0" th:text="${generalArticle.articleTitle}"></a>
                                         </span>

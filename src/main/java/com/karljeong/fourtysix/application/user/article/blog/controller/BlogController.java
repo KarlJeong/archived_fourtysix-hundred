@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +45,9 @@ public class BlogController {
             throw new RuntimeException("Invalid Paging Request.");
         }
 
-        Page<TbArticleBlog> articleBlogList = blogService.readList(searchRequest, pageable);
+        searchRequest.put("publishYn", 1);
+
+        Page<TbArticleBlog> articleBlogList = blogService.readList(searchRequest, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("articleWriteDatetime")));
         model.addAttribute("articleList", articleBlogList);
         model.addAttribute("articleNumber", articleNumberList);
         model.addAttribute("paging", PagingUtil.getPageList(articleBlogList.getTotalPages(), articleBlogList.getNumber()));

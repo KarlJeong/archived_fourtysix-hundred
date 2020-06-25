@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,7 +49,9 @@ public class MainController {
 
         List<Map<String, Object>> blogArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_BLOG_CATEGORY").get("code");
         model.addAttribute("blogArticleCategoryList", blogArticleCategoryList);
-        model.addAttribute("blogArticleList", blogService.readList(new HashMap<String, Object>(), PageRequest.of(0, 10)));
+        Map<String, Object> blogSearchKey = new HashMap<String, Object>();
+        blogSearchKey.put("publishYn", 1);
+        model.addAttribute("blogArticleList", blogService.readList(blogSearchKey, PageRequest.of(0, 3, Sort.by("articleWriteDatetime").descending())));
 
 		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");
 		model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);

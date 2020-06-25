@@ -92,6 +92,12 @@ public class TbArticleBlog implements Serializable {
 	@Column(name="UPDATE_USER_ID", insertable = false)
 	private BigInteger updateUserId;
 
+    @Column(name="REQUEST_PUBLISH_YN")
+    private byte requestPublishYn;
+
+    @Column(name="PUBLISH_YN")
+    private byte publishYn;
+
     @Transient
     private String articleWriterUserName;
 
@@ -261,7 +267,21 @@ public class TbArticleBlog implements Serializable {
 		this.updateUserId = updateUserId;
 	}
 
+    public byte getRequestPublishYn() {
+        return requestPublishYn;
+    }
 
+    public void setRequestPublishYn(byte requestPublishYn) {
+        this.requestPublishYn = requestPublishYn;
+    }
+
+    public byte getPublishYn() {
+        return publishYn;
+    }
+
+    public void setPublishYn(byte publishYn) {
+        this.publishYn = publishYn;
+    }
 
     public String getArticleWriterUserName() {
         return articleWriterUserName;

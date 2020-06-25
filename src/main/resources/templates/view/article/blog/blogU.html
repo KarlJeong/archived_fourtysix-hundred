@@ -19,7 +19,11 @@
         });
     });
 
-    function fnSave(requestPublish) {
+    function fnSaveRequest() {
+
+    }
+
+    function fnTempSave() {
         var formData = new FormData();
         formData.append("blogUploadFile", $('input[type=file]')[0].files[0]);
         let url = "/v1/api/file/r/blog";
@@ -29,7 +33,6 @@
             var params = $("#baseForm").serializeObject();
             params.articleContents = $("#articleContents").summernote('code');
             params.thumbnailFileId = d[0].fileId;
-            params.requestPublishYn = requestPublish;
             PromiseUtil.post("/v1/api/blogs", params)
             .then(JSON.parse)
             .then(function(d){
@@ -76,8 +79,9 @@
                                 </form>
 
                                 <div class="container-fluid w-100">
-                                    <a href="#" class="btn btn-primary float-right mt-4 ml-2" onclick="fnSave(1)">Request Publishing</a>
-                                    <a href="#" class="btn btn-success float-right mt-4 ml-2" onclick="fnSave(0)">Temporary Save</a>
+                                    <a href="#" class="btn btn-primary float-right mt-4 ml-2" onclick="fnSaveRequest()">Request Publishing</a>
+                                    <a href="#" class="btn btn-success float-right mt-4 ml-2" onclick="fnTempSave()">Temporary Save</a>
+                                    <a href="#" class="btn btn-danger float-right mt-4 ml-2">Delete</a>
                                     <a href="#" class="btn btn-secondary float-right mt-4">List</a>
                                 </div>
                             </div>
