@@ -232,3 +232,11 @@ function dateConverterToDateOrDateTime(givenDateTime) {
         return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd);
     }
 }
+
+$('.mainblog').on('click', function(event){
+    var $this = $(this);
+    if ($this.attr("data-link")) {
+        window.location.href = "/blog/viewdetail/"+$this.attr("data-link");
+    }
+
+  });

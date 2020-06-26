@@ -14,7 +14,10 @@
                     <div class="card-body">
                         <div class="row mb-5">
                             <div class="col-12">
-                                <h2 th:text="${articleInfo.articleTitle}"></h2>
+                                <div class="blog-header-img">
+                                    <img th:src="@{${'/v1/api/file/img/' + articleInfo.thumbnailFileId}}" alt="Thumbnail" style="width:100%; max-height:520px;" >
+                                </div>
+                                <h2 class="pt-3" th:text="${articleInfo.articleTitle}"></h2>
                                 <div class="header wrapper d-flex align-items-center py-2">
                                     <img class="img-sm rounded-circle" src="https://placehold.it/100x100" alt="profile">
                                     <div class="wrapper ml-3">

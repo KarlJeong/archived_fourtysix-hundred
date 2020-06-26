@@ -442,3 +442,7 @@ select.form-control:not([size]):not([multiple]) {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.blog-header-img {
+    margin: -1.3em -1rem 0rem -1rem !important;
+}
