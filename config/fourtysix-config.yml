@@ -1,0 +1,44 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://13.124.174.20/fourtysix_hundred
+    username: fourtysix
+    password: 9X-n3LJT)AgxKqkGGpVLp*?h'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      pool-name: 46WEB-POOL
+      minimum-idle: 3
+      maximum-pool-size: 10
+      connection-test-query: SELECT 1
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      auto-commit: true
+  data:
+    rest:
+      base-path: api
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  devtools:
+    livereload:
+      enabled: true
+  http:
+    encoding:
+      charset: UTF-8
+  thymeleaf:
+    encoding: UTF-8
+    cache: false
+    mode: HTML
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+file-upload:
+  location: /home/centos/fourtysix-hundred/temp/
