@@ -37,7 +37,7 @@ public class BlogRestController {
     public ResultDto save(@RequestBody TbArticleBlog tbArticleBlog, HttpServletRequest request) {
         tbArticleBlog.setUserInfo(request);
         TbArticleBlog createTbArticleBlog = blogService.create(tbArticleBlog);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleBlog,
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleBlog,
                 "/blog/viewdetail/" + createTbArticleBlog.getArticleId()).getResultDto();
     }
 }

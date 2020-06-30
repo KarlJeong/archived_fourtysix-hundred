@@ -3,7 +3,7 @@ package com.karljeong.fourtysix.resulthandler;
 public class ResultDto {
 
 	public enum ResultCodeEnum {
-		SUCCESS, SUCCESS_REDIRECT, FAIL, FAIL_REDIRECT;
+		SUCCESS, SUCCESS_REDIRECT, SUCCESS_REDIRECT_ALERT, FAIL, FAIL_REDIRECT, FAIL_REDIRECT_ALERT;
 	}
 
 	private ResultCodeEnum resultCd;

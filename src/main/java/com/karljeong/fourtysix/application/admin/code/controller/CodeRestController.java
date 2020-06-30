@@ -54,18 +54,18 @@ public class CodeRestController {
 	@PostMapping
 	public ResultDto create(@RequestBody TbComCode tbComCode) {
 	    TbComCode createdTbComCode = codeService.create(tbComCode);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdTbComCode, "/admin/code/viewupdate/" + createdTbComCode.getCodeId()).getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createdTbComCode, "/admin/code/viewupdate/" + createdTbComCode.getCodeId()).getResultDto();
 	}
 
 	@PostMapping("/{codeId}")
 	public ResultDto update(@RequestBody TbComCode TbComCode, @PathVariable("codeId") BigInteger codeId) {
 	    TbComCode updatedTbComCode = codeService.update(TbComCode);
-		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Modified Successfully", updatedTbComCode, "/admin/code/viewupdate/" + updatedTbComCode.getCodeId()).getResultDto();
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Modified Successfully", updatedTbComCode, "/admin/code/viewupdate/" + updatedTbComCode.getCodeId()).getResultDto();
 	}
 
 	@DeleteMapping("/{codeId}")
 	public ResultDto delete(@PathVariable("codeId") BigInteger codeId) {
 	    codeService.delete(codeId);
-		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Deleted Successfully", null, "/admin/code/viewmain").getResultDto();
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Deleted Successfully", null, "/admin/code/viewmain").getResultDto();
 	}
 }

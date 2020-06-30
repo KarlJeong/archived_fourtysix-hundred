@@ -75,7 +75,7 @@ public class WebSecurityProvider implements AuthenticationProvider {
 
 		if (isBanned > 0) {
 			resultDto.setResultMsg("Banned User");
-			resultDto.setResultCd(ResultCodeEnum.FAIL_REDIRECT);
+			resultDto.setResultCd(ResultCodeEnum.FAIL_REDIRECT_ALERT);
 			resultDto.setLinkUrl("/login/f");
 			return resultDto;
 		}

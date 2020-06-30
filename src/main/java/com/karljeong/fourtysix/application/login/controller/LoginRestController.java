@@ -48,7 +48,7 @@ public class LoginRestController {
 			}
 		} catch (FacebookException ex) {
 			resultDto.setResultMsg("Failed access to Facebook!");
-			resultDto.setResultCd(ResultCodeEnum.FAIL_REDIRECT);
+			resultDto.setResultCd(ResultCodeEnum.FAIL_REDIRECT_ALERT);
 			resultDto.setLinkUrl("/login/f");
 		}
 

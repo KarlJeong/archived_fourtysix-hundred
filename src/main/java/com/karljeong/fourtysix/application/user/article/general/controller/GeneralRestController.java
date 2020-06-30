@@ -54,7 +54,7 @@ public class GeneralRestController {
 	public ResultDto save(@RequestBody TbArticleGeneral tbArticleGeneral, HttpServletRequest request) {
 		tbArticleGeneral.setUserInfo(request);
 		TbArticleGeneral createTbArticleGeneral = generalService.create(tbArticleGeneral);
-		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleGeneral,
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleGeneral,
 				"/b/general/viewdetail/" + createTbArticleGeneral.getArticleId()).getResultDto();
 	}
 
@@ -64,7 +64,7 @@ public class GeneralRestController {
 		tbArticleGeneralReply.setUserInfo(request);
 		tbArticleGeneralReply.setArticleId(articleId);
 		TbArticleGeneralReply createTbArticleReplyGeneral = generalService.reply(tbArticleGeneralReply);
-		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleReplyGeneral,
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleReplyGeneral,
 				"/b/general/viewdetail/" + createTbArticleReplyGeneral.getArticleId()).getResultDto();
 	}
 
@@ -74,7 +74,7 @@ public class GeneralRestController {
 		tbArticleGeneralReply.setUserInfo(request);
 		tbArticleGeneralReply.setArticleId(articleId);
 		int createTbArticleReplyGeneral = generalService.replyDynamic(tbArticleGeneralReply);
-		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createTbArticleReplyGeneral,
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleReplyGeneral,
 				"/b/general/viewdetail/" + tbArticleGeneralReply.getArticleId()).getResultDto();
 	}
 
@@ -88,7 +88,7 @@ public class GeneralRestController {
 		tbArticleGeneralLikePK.setUserInfo(request);
 		tbArticleGeneralLike.setId(tbArticleGeneralLikePK);
 		TbArticleGeneralLike createdtbArticleGeneralLike = generalService.toggleLike(tbArticleGeneralLike);
-		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdtbArticleGeneralLike,
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createdtbArticleGeneralLike,
                 "/b/general/viewdetail/" + articleId).getResultDto();
 	}
 

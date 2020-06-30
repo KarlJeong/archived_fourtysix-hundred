@@ -39,14 +39,14 @@ public class ArticleRestController {
     @PostMapping
     public ResultDto create(@RequestBody TbComArticle tbComArticle) {
         TbComArticle createdTbComArticle = articleService.create(tbComArticle);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdTbComArticle, "/admin/article/viewupdate/" + createdTbComArticle.getArticleId()).getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createdTbComArticle, "/admin/article/viewupdate/" + createdTbComArticle.getArticleId()).getResultDto();
     }
 
     @PostMapping("/{articleId}")
     public ResultDto update(@RequestBody TbComArticle tbComArticle,
             @PathVariable("articleId") BigInteger articleId) {
         TbComArticle updatedTbComArticle = articleService.update(tbComArticle);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Modified Successfully", updatedTbComArticle, "/admin/article/viewupdate/" + updatedTbComArticle.getArticleId()).getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Modified Successfully", updatedTbComArticle, "/admin/article/viewupdate/" + updatedTbComArticle.getArticleId()).getResultDto();
     }
 
 }

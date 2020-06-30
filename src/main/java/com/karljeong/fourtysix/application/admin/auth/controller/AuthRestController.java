@@ -43,18 +43,18 @@ public class AuthRestController {
     @PostMapping
     public ResultDto create(@RequestBody TbComAuth tbComAuth) {
         TbComAuth createdTbComAuth = authService.create(tbComAuth);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdTbComAuth, "/admin/auth/viewupdate/" + createdTbComAuth.getAuthId()).getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createdTbComAuth, "/admin/auth/viewupdate/" + createdTbComAuth.getAuthId()).getResultDto();
     }
 
     @PostMapping("/{authId}")
     public ResultDto update(@RequestBody TbComAuth tbComAuth,
             @PathVariable("authId") BigInteger authId) {
         TbComAuth updatedTbComAuth = authService.update(tbComAuth);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Modified Successfully", updatedTbComAuth, "/admin/auth/viewupdate/" + updatedTbComAuth.getAuthId()).getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Modified Successfully", updatedTbComAuth, "/admin/auth/viewupdate/" + updatedTbComAuth.getAuthId()).getResultDto();
     }
 
     @DeleteMapping("/{authId}")
     public ResultDto delete(@PathVariable("authId") BigInteger authId) {
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Deleted Successfully", authService.delete(authId), "/admin/auth/viewmain").getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Deleted Successfully", authService.delete(authId), "/admin/auth/viewmain").getResultDto();
     }
 }

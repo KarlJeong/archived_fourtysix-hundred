@@ -40,19 +40,19 @@ public class CodeGroupRestController {
 	@PostMapping
 	public ResultDto create(@RequestBody TbComCodeGroup tbComCodeGroup) {
 		TbComCodeGroup createdTbComCodeGroup = codeGroupService.create(tbComCodeGroup);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdTbComCodeGroup, "/admin/codegroup/viewupdate/" + createdTbComCodeGroup.getCodeGroupId()).getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createdTbComCodeGroup, "/admin/codegroup/viewupdate/" + createdTbComCodeGroup.getCodeGroupId()).getResultDto();
 	}
 
 	@PostMapping("/{codeGroupId}")
 	public ResultDto update(@RequestBody TbComCodeGroup tbComCodeGroup,
 			@PathVariable("codeGroupId") BigInteger codeGroupId) {
 	    TbComCodeGroup updatedTbComCodeGroup = codeGroupService.update(tbComCodeGroup);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Modified Successfully", updatedTbComCodeGroup, "/admin/codegroup/viewupdate/" + updatedTbComCodeGroup.getCodeGroupId()).getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Modified Successfully", updatedTbComCodeGroup, "/admin/codegroup/viewupdate/" + updatedTbComCodeGroup.getCodeGroupId()).getResultDto();
 	}
 
 	@DeleteMapping("/{codeGroupId}")
 	public ResultDto delete(@PathVariable("codeGroupId") BigInteger codeGroupId) {
 	    codeGroupService.delete(codeGroupId);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Deleted Successfully", null, "/admin/codegroup/viewmain").getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Deleted Successfully", null, "/admin/codegroup/viewmain").getResultDto();
 	}
 }

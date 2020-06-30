@@ -40,20 +40,20 @@ public class PatternRestController {
     @PostMapping
     public ResultDto create(@RequestBody TbComPattern tbComPattern) {
         TbComPattern createdTbComPattern = patternService.create(tbComPattern);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdTbComPattern, "/admin/pattern/viewupdate/" + createdTbComPattern.getPatternId()).getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createdTbComPattern, "/admin/pattern/viewupdate/" + createdTbComPattern.getPatternId()).getResultDto();
     }
 
     @PostMapping("/{patternId}")
     public ResultDto update(@RequestBody TbComPattern tbComPattern,
             @PathVariable("patternId") BigInteger patternId) {
         TbComPattern updatedTbComPattern = patternService.update(tbComPattern);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Modified Successfully", updatedTbComPattern, "/admin/pattern/viewupdate/" + updatedTbComPattern.getPatternId()).getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Modified Successfully", updatedTbComPattern, "/admin/pattern/viewupdate/" + updatedTbComPattern.getPatternId()).getResultDto();
     }
 
     @DeleteMapping("/{patternId}")
     public ResultDto delete(@PathVariable("patternId") BigInteger patternId) {
         patternService.delete(patternId);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Deleted Successfully", null, "/admin/pattern/viewmain").getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Deleted Successfully", null, "/admin/pattern/viewmain").getResultDto();
     }
 
 }

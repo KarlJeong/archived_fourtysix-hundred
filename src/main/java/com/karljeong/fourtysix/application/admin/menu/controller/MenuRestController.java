@@ -35,19 +35,19 @@ public class MenuRestController {
     @PostMapping
     public ResultDto create(@RequestBody TbComMenu tbComMenu) {
         TbComMenu createdTbComMenu =  menuService.create(tbComMenu);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Saved Successfully", createdTbComMenu, "/admin/menu/viewmain").getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createdTbComMenu, "/admin/menu/viewmain").getResultDto();
     }
 
     @PostMapping("/{menuId}")
     public ResultDto update(@RequestBody TbComMenu tbComMenu, @PathVariable("menuId") BigInteger menuId) {
         TbComMenu updatedTbComMenu =  menuService.update(tbComMenu);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Modified Successfully", updatedTbComMenu, "/admin/menu/viewmain").getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Modified Successfully", updatedTbComMenu, "/admin/menu/viewmain").getResultDto();
     }
 
     @DeleteMapping("/{menuId}")
     public ResultDto delete(@PathVariable("menuId") BigInteger menuId) {
         menuService.delete(menuId);
-        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT, "Deleted Successfully", null, "/admin/menu/viewmain").getResultDto();
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Deleted Successfully", null, "/admin/menu/viewmain").getResultDto();
 
     }
 }

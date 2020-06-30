@@ -34,7 +34,7 @@ function facebookLogin() {
 	        PromiseUtil.post("/v1/api/login/f", params)
 	        .then(JSON.parse)
 	        .then(function(d){
-            	if (["SUCCESS_REDIRECT", "FAIL_REDIRECT"].indexOf(d.resultCd) >= 0) {
+            	if (["SUCCESS_REDIRECT_ALERT", "FAIL_REDIRECT_ALERT"].indexOf(d.resultCd) >= 0) {
             		window.location.href = d.linkUrl;
             		return;
             	}
