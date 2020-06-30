@@ -126,7 +126,7 @@ function uploadSummernoteFile(files, sNote, articleType) {
 		var formData = new FormData();
         formData.append("contentFile", file);
 
-    	let url = "/v1/api/file/r/" + (articleType !== '' ? articleType : "unknown");
+    	let url = "/v1/api/file/" + (articleType !== '' ? articleType : "unknown");
         PromiseUtil.postWithFile(url, formData)
         .then(JSON.parse)
         .then(function(d){

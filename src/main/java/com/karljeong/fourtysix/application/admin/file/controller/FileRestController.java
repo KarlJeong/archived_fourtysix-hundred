@@ -36,18 +36,18 @@ public class FileRestController {
 		return fileService.getFileInfo(fileId);
 	}
 
-	@GetMapping("/r/{fileRefId}")
+	@GetMapping("/f/{fileRefId}")
 	public List<TbComFile> getFileListByKey(@PathVariable BigInteger fileRefId, HttpServletRequest req)
 			throws FileNotFoundException {
 		return fileService.getFileListByRefId(fileRefId);
 	}
 
-	@PostMapping("/r/{fileType}")
+	@PostMapping("/{fileType}")
 	public List<TbComFile> uploadFile(@PathVariable String fileType, MultipartHttpServletRequest req) {
 		return fileService.uploadFiles(fileType, req);
 	}
 
-	@PostMapping("/r/{fileRefId}/{fileType}")
+	@PostMapping("/{fileRefId}/{fileType}")
 	public List<TbComFile> uploadFile(@PathVariable BigInteger fileRefId, @PathVariable String fileType,
 			MultipartHttpServletRequest req) {
 		return fileService.uploadFiles(fileRefId, fileType, req);
