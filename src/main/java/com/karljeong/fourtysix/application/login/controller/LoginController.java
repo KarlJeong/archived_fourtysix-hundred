@@ -33,7 +33,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String viewMain(Model model) {
-        return "view/login/login";
+        return "view/login/Login";
     }
 
     @GetMapping("/login/success")
