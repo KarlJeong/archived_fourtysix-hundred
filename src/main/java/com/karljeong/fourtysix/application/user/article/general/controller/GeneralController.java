@@ -52,14 +52,14 @@ public class GeneralController {
 		model.addAttribute("articleNumber", articleNumberList);
 		model.addAttribute("paging",
 				PagingUtil.getPageList(articleGeneralList.getTotalPages(), articleGeneralList.getNumber()));
-		return "/view/article/general/general";
+		return "view/article/general/general";
 	}
 
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
         List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");
         model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
-		return "/view/article/general/generalC";
+		return "view/article/general/generalC";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -87,6 +87,6 @@ public class GeneralController {
 		System.out.println(">>>" + generalService.findById(tbArticleGeneralLikePK).getLikeYn());
 		model.addAttribute("articleLike", generalService.findById(tbArticleGeneralLikePK));
 
-		return "/view/article/general/generalR";
+		return "view/article/general/generalR";
 	}
 }

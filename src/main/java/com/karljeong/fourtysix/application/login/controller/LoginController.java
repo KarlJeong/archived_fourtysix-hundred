@@ -33,7 +33,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String viewMain(Model model) {
-        return "/view/login/login";
+        return "view/login/login";
     }
 
     @GetMapping("/login/success")
@@ -44,7 +44,7 @@ public class LoginController {
 
     @GetMapping("/login/f")
     public String viewFMain(Model model) {
-        return "/view/login/FacebookLogin";
+        return "view/login/FacebookLogin";
     }
 
     @GetMapping("/logout")

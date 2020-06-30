@@ -30,7 +30,7 @@ public class ArticleController {
 
 	@GetMapping("/viewmain")
 	public String viewMain(Model model) {
-		return "/view/admin/article/article";
+		return "view/admin/article/article";
 	}
 
 	@GetMapping("/viewcreate")
@@ -38,7 +38,7 @@ public class ArticleController {
 	    model.addAttribute("allBoardList", boardService.findAll());
 	    model.addAttribute("publishYn", loadStatic.getSystemCode().get("PUBLISH_YN").get("code"));
         model.addAttribute("deletedYn", loadStatic.getSystemCode().get("DELETED_YN").get("code"));
-		return "/view/admin/article/articleC";
+		return "view/admin/article/articleC";
 	}
 
 	@GetMapping("/viewupdate/{articleId}")
@@ -47,6 +47,6 @@ public class ArticleController {
         model.addAttribute("allBoardList", boardService.findAll());
         model.addAttribute("publishYn", loadStatic.getSystemCode().get("PUBLISH_YN").get("code"));
         model.addAttribute("deletedYn", loadStatic.getSystemCode().get("DELETED_YN").get("code"));
-		return "/view/admin/article/articleU";
+		return "view/admin/article/articleU";
 	}
 }

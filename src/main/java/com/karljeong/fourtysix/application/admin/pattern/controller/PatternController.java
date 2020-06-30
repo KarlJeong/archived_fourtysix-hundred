@@ -32,14 +32,14 @@ public class PatternController {
 
 	@GetMapping("/viewmain")
 	public String viewMain(Model model) {
-		return "/view/admin/pattern/pattern";
+		return "view/admin/pattern/pattern";
 	}
 
     @GetMapping("/viewcreate")
     public String viewCreate(Model model) {
         model.addAttribute("authList", authService.findAll());
         model.addAttribute("reqMethods", loadStatic.getSystemCode().get("REQ_METHOD").get("code"));
-        return "/view/admin/pattern/patternC";
+        return "view/admin/pattern/patternC";
     }
 
     @GetMapping("/viewupdate/{patternId}")
@@ -50,7 +50,7 @@ public class PatternController {
         model.addAttribute("selectedAuths", tbComPattern.getTbComAuths().stream().map(d -> d.getAuthId()).collect(Collectors.toList()));
         model.addAttribute("reqMethods", loadStatic.getSystemCode().get("REQ_METHOD").get("code"));
         model.addAttribute("selectedMethods", tbComPattern.getTbMappPatternAuths().stream().map(d -> d.getId().getMethod()).collect(Collectors.toList()));
-        return "/view/admin/pattern/patternU";
+        return "view/admin/pattern/patternU";
     }
 
 

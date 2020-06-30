@@ -31,14 +31,14 @@ public class CodeGroupController {
 	@GetMapping("/viewmain")
 	public String viewMain(Model model) {
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/codeGroup/codeGroup";
+		return "view/admin/codeGroup/codeGroup";
 	}
 
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
 		model.addAttribute("unselectedCodeList", codeService.findByCodeGroupIdNull());
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/codeGroup/codeGroupC";
+		return "view/admin/codeGroup/codeGroupC";
 	}
 
 	@GetMapping("/viewupdate/{codeGroupId}")
@@ -46,7 +46,7 @@ public class CodeGroupController {
 		model.addAttribute("mainInfo", codeGroupService.findById(codeGroupId));
 		model.addAttribute("unselectedCodeList", codeService.findByCodeGroupIdNull());
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/codeGroup/codeGroupU";
+		return "view/admin/codeGroup/codeGroupU";
 	}
 
 }

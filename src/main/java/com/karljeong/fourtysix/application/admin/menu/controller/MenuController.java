@@ -25,7 +25,7 @@ public class MenuController {
 	public String viewMain(Model model) {
 		model.addAttribute("codeMenuType", loadStatic.getSystemCode().get("MENU_TYPE").get("code"));
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/menu/menuCRU";
+		return "view/admin/menu/menuCRU";
 	}
 
 }

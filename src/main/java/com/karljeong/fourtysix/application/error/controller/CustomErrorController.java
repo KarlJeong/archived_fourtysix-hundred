@@ -47,27 +47,27 @@ public class CustomErrorController implements ErrorController {
 
 	@GetMapping("/400")
 	public String view400() {
-		return "/view/error/error-400";
+		return "view/error/error-400";
 	}
 
     @GetMapping("/403")
     public String view403() {
-        return "/view/error/error-403";
+        return "view/error/error-403";
     }
 
     @GetMapping("/404")
     public String view404() {
-        return "/view/error/error-404";
+        return "view/error/error-404";
     }
 
     @GetMapping("/500")
     public String view500() {
-        return "/view/error/error-500";
+        return "view/error/error-500";
     }
 
     @GetMapping("/505")
     public String view505() {
-        return "/view/error/error-505";
+        return "view/error/error-505";
     }
 
 }

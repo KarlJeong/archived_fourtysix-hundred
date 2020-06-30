@@ -31,7 +31,7 @@ public class BoardController {
 
 	@GetMapping("/viewmain")
 	public String viewMain() {
-		return "/view/admin/board/board";
+		return "view/admin/board/board";
 	}
 
 	@GetMapping("/viewcreate")
@@ -39,7 +39,7 @@ public class BoardController {
 		model.addAttribute("allAuthList", authService.findAll());
 		model.addAttribute("systemBoardYn", loadStatic.getSystemCode().get("SYSTEM_BOARD_YN").get("code"));
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/board/boardC";
+		return "view/admin/board/boardC";
 	}
 
 	@GetMapping("/viewupdate/{boardId}")
@@ -51,6 +51,6 @@ public class BoardController {
         model.addAttribute("selectedReadableList", tbComBoard.getTbComAuthReadable().stream().map(d -> d.getId().getAuthId()).collect(Collectors.toList()));
         model.addAttribute("systemBoardYn", loadStatic.getSystemCode().get("SYSTEM_BOARD_YN").get("code"));
 	    model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/board/boardU";
+		return "view/admin/board/boardU";
 	}
 }

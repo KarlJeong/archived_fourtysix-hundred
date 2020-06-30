@@ -52,14 +52,14 @@ public class BlogController {
         model.addAttribute("articleNumber", articleNumberList);
         model.addAttribute("paging", PagingUtil.getPageList(articleBlogList.getTotalPages(), articleBlogList.getNumber()));
 
-        return "/view/article/blog/blog";
+        return "view/article/blog/blog";
     }
 
     @GetMapping("/viewcreate")
     public String viewCreate(Model model) {
         List<Map<String, Object>> blogArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_BLOG_CATEGORY").get("code");
         model.addAttribute("blogArticleCategoryList", blogArticleCategoryList);
-        return "/view/article/blog/blogC";
+        return "view/article/blog/blogC";
     }
 
     @GetMapping("/viewdetail/{articleId}")
@@ -70,7 +70,7 @@ public class BlogController {
         tbArticleBlogLikePK.setArticleId(articleId);
         tbArticleBlogLikePK.setUserInfo(request);
         model.addAttribute("articleLike", blogService.findById(tbArticleBlogLikePK));
-        return "/view/article/blog/blogR";
+        return "view/article/blog/blogR";
     }
 
 }

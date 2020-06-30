@@ -56,7 +56,7 @@ public class MainController {
 		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");
 		model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
 		model.addAttribute("generalArticleList", generalService.readList(new HashMap<String, Object>(), PageRequest.of(0, 10)));
-		return "/view/main/main";
+		return "view/main/main";
 	}
 
 }

@@ -33,14 +33,14 @@ public class AuthController {
 	@GetMapping("/viewmain")
 	public String viewMain(Model model) {
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/auth/auth";
+		return "view/admin/auth/auth";
 	}
 
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
 		model.addAttribute("allUserList", userService.findAll());
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/auth/authC";
+		return "view/admin/auth/authC";
 	}
 
 	@GetMapping("/viewupdate/{authId}")
@@ -50,6 +50,6 @@ public class AuthController {
 		model.addAttribute("allUserList", userService.findAll());
 		model.addAttribute("selectedUserList", tbComAuth.getTbComUsers().stream().map(d -> d.getUserId()).collect(Collectors.toList()));
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/auth/authU";
+		return "view/admin/auth/authU";
 	}
 }

@@ -48,12 +48,12 @@ public class NoticeController {
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("articleNumber", articleNumberList);
 		model.addAttribute("paging", PagingUtil.getPageList(noticeList.getTotalPages(), noticeList.getNumber()));
-		return "/view/article/notice/notice";
+		return "view/article/notice/notice";
 	}
 
 	@GetMapping("/viewdetail/{articleId}")
 	public String viewUpdate(Model model, @PathVariable("articleId") BigInteger articleId) {
 		model.addAttribute("articleInfo", noticeService.findById(articleId));
-		return "/view/article/notice/noticeR";
+		return "view/article/notice/noticeR";
 	}
 }

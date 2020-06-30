@@ -30,14 +30,14 @@ public class CodeController {
 	@GetMapping("/viewmain")
 	public String viewMain(Model model) {
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/code/code";
+		return "view/admin/code/code";
 	}
 
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
 		model.addAttribute("codeGroupList", codeGroupService.findAll());
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/code/codeC";
+		return "view/admin/code/codeC";
 	}
 
 	@GetMapping("/viewupdate/{codeId}")
@@ -45,6 +45,6 @@ public class CodeController {
 		model.addAttribute("mainInfo", codeService.findById(codeId));
 		model.addAttribute("codeGroupList", codeGroupService.findAll());
 		model.addAttribute("codeUseYn", loadStatic.getSystemCode().get("USE_YN").get("code"));
-		return "/view/admin/code/codeU";
+		return "view/admin/code/codeU";
 	}
 }
