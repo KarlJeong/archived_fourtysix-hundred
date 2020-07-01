@@ -70,8 +70,7 @@ public class BlogService {
 
     public TbArticleBlog findById(BigInteger articleId) {
         TbArticleBlog tbArticleBlog = tbArticleBlogRepository.findById(articleId).get();
-        tbArticleBlog.setArticleWriterUserName(
-                tbArticleBlogRepository.findArticleWriterName(tbArticleBlog.getArticleWriterId()));
+        //tbArticleBlog.setArticleWriterUserName(tbArticleBlogRepository.findArticleWriterName(tbArticleBlog.getArticleWriterId()));
         return tbArticleBlog;
     }
 

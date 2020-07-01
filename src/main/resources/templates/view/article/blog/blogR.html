@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/ThymeleafCommonLayout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}" xmlns:sec="http://www.thymeleaf.org">
 
 <head>
     <script defer th:src="@{/vendors/summernote/dist/summernote-bs4.min.js}"></script>
@@ -19,7 +18,7 @@
                                 </div>
                                 <h2 class="pt-3" th:text="${articleInfo.articleTitle}"></h2>
                                 <div class="header wrapper d-flex align-items-center py-2">
-                                    <img class="img-sm rounded-circle" src="https://placehold.it/100x100" alt="profile">
+                                    <img class="img-sm rounded-circle" th:src="@{${'//graph.facebook.com/' + articleInfo.snsId + '/picture'}}" alt="profile">
                                     <div class="wrapper ml-3">
                                         <div class="ml-1">
                                             <h6 th:text="${articleInfo.articleWriterUserName}"></h6>
@@ -39,31 +38,24 @@
                                 <div class="body pt-5">
                                     <div style="white-space:pre-line;" th:utext="${articleInfo.articleContents}"></div>
                                     <div class="d-flex flex-row align-items-center justify-content-center">
+                                    
                                         <a href="javascript:void(0);" onclick="fnToggleLike()">
-                                            <span class="p-3 badge badge-info">
-                                                <i class="fa fa-heart-o fa-2x font-weight-bold"></i>
+                                            <span class="py-3 article-box badge badge-info">
+                                                <i class="mdi mdi-24px font-weight-bold" th:classappend="${articleLike.likeYn == 0 ? 'mdi-heart-outline'  : 'mdi-heart'}"></i><br>
+                                                <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleLikeCount)}"></span>
                                             </span>
                                         </a>
-                                        <div class="ml-3 px-2">
-                                            <h6 class="text-info" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleLikeCount) + ' Likes'}"></h6>
-                                            <p class="mt-2 text-muted card-text" th:if="${articleLike.likeYn == 1}">Thank you for loving the article!</p>
-                                            <p class="mt-2 text-muted card-text" th:unless="${articleLike.likeYn == 1}">Would you like to give a Like to the article?</p>
-                                        </div>
                                         <a href="#reply-area">
-                                            <span class="p-3 badge badge-success">
-                                                <i class="fa fa-comments-o fa-2x font-weight-bold"></i>
+                                            <span class="py-3 ml-3 article-box badge badge-success">
+                                                <i class="mdi mdi-24px mdi-comment-multiple-outline font-weight-bold"></i><br>
+                                                <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleReplyCount)}"></span>
                                             </span>
                                         </a>
-                                        <div class="ml-3">
-                                            <h6 class="text-success" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleReplyCount) + ' Comments'}"></h6>
-                                            <p class="mt-2 text-muted card-text">Check comments on this article!</p>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="separator"></div>
                                 <div class="header wrapper d-flex align-items-center py-2">
-                                    <img class="img-lg rounded-circle"
-                                        src="https://placehold.it/100x100" alt="profile">
+                                    <img class="img-lg rounded-circle" th:src="@{${'//graph.facebook.com/' + articleInfo.snsId + '/picture?type=large'}}"  alt="profile">
                                     <div class="wrapper ml-3">
                                         <div class="ml-1 mb-1">
                                             <span>WRITTEN BY</span>
@@ -74,6 +66,8 @@
                                         <div class="ml-1 mb-1">
                                             <small class="text-muted mb-0"><span>Short
                                                     description</span></small>
+                                                        
+                                                    
                                         </div>
                                     </div>
                                 </div>

@@ -98,8 +98,11 @@ public class TbArticleBlog implements Serializable {
     @Column(name="PUBLISH_YN")
     private byte publishYn;
 
-    @Transient
+    @Column(name="ARTICLE_WRITER_USER_NAME", insertable = false, updatable = false)
     private String articleWriterUserName;
+    
+    @Column(name="SNS_ID", insertable = false, updatable = false)
+    private String snsId;
 
     @Transient
     private String articleCategoryName;
@@ -298,8 +301,16 @@ public class TbArticleBlog implements Serializable {
     public void setArticleCategoryName(String articleCategoryName) {
         this.articleCategoryName = articleCategoryName;
     }
+    
+    public String getSnsId() {
+		return snsId;
+	}
 
-    public void setUserInfo(HttpServletRequest request) {
+	public void setSnsId(String snsId) {
+		this.snsId = snsId;
+	}
+
+	public void setUserInfo(HttpServletRequest request) {
         BigInteger userId = UserUtil.getUserId(request);
         this.createUserId = userId;
         this.updateUserId = userId;
