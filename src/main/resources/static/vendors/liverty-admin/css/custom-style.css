@@ -446,3 +446,16 @@ select.form-control:not([size]):not([multiple]) {
 .blog-header-img {
     margin: -1.3em -1rem 0rem -1rem !important;
 }
+
+.card-summary {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* 여러 줄 자르기 추가 스타일 */
+    white-space: normal;
+    line-height: 1.2;
+    height: 3.6em;
+
+}
