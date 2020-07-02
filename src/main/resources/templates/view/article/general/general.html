@@ -46,14 +46,14 @@
                                                 <a th:href="@{/b/general/viewdetail/{articleId}(articleId = ${article.articleId}, size=${articleList.size}, page=${articleList.number})}" th:text="${article.articleTitle}"></a>
                                             </span>
                                             <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="" th:text="${article.articleWriterUserName}"></span>
+                                                <span class="" th:text="${article.articleGeneralWriter.userName}"></span>
                                                 <span class="text-muted">|</span>
                                                 <span class="" th:text="${#dates.format(article.articleWriteDatetime, 'yyyy-MM-dd')}"></span>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center"><div class="table-sm-td-content" th:text="${article.articleWriterUserName}"></div></div>
+                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center"><div class="table-sm-td-content" th:text="${article.articleGeneralWriter.userName}"></div></div>
                                     <div class="table-sm-td col-lg-1 table-sm-td-sep d-none d-lg-block d-xl-block text-center"><div class="table-sm-td-content" th:text="${#dates.format(article.articleWriteDatetime, 'yyyy-MM-dd')}"></div></div>
                                 </div>
                             </div>

@@ -3,14 +3,22 @@ package com.karljeong.fourtysix.database.entity;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
@@ -74,6 +82,10 @@ public class TbArticleGeneral implements Serializable {
 	@Column(name = "ARTICLE_WRITER_ID", updatable = false)
 	private BigInteger articleWriterId;
 
+    @ManyToOne(targetEntity=TbComUser.class, fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="ARTICLE_WRITER_ID", insertable = false, updatable = false)
+    private TbComUser articleGeneralWriter;
+
 	@Column(name = "CREATE_DATETIME", updatable = false)
 	private Timestamp createDatetime = DateUtil.getTimestamp();
 
@@ -85,9 +97,6 @@ public class TbArticleGeneral implements Serializable {
 
 	@Column(name = "UPDATE_USER_ID", insertable = false)
 	private BigInteger updateUserId;
-
-	@Transient
-	private String articleWriterUserName;
 
 	@Transient
 	private String articleCategoryName;
@@ -193,11 +202,19 @@ public class TbArticleGeneral implements Serializable {
 	}
 
 	public BigInteger getArticleWriterId() {
-		return this.articleWriterId;
+		return articleWriterId;
 	}
 
 	public void setArticleWriterId(BigInteger articleWriterId) {
 		this.articleWriterId = articleWriterId;
+	}
+
+	public TbComUser getArticleGeneralWriter() {
+		return articleGeneralWriter;
+	}
+
+	public void setArticleGeneralWriter(TbComUser articleGeneralWriter) {
+		this.articleGeneralWriter = articleGeneralWriter;
 	}
 
 	public Timestamp getCreateDatetime() {
@@ -230,14 +247,6 @@ public class TbArticleGeneral implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
-	}
-
-	public String getArticleWriterUserName() {
-		return articleWriterUserName;
-	}
-
-	public void setArticleWriterUserName(String articleWriterUserName) {
-		this.articleWriterUserName = articleWriterUserName;
 	}
 
 	public String getArticleCategoryCv() {

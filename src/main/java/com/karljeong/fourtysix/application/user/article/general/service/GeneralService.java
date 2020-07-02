@@ -58,8 +58,6 @@ public class GeneralService {
 				: tbArticleGeneralRepository.findAll(TbArticleGeneralSpec.searchWithKeys(searchKeys), pageable);
 
 		for (TbArticleGeneral tbArticleGeneral : tbArticleGeneralList) {
-			tbArticleGeneral.setArticleWriterUserName(
-					tbArticleGeneralRepository.findArticleWriterName(tbArticleGeneral.getArticleWriterId()));
 		}
 
 
@@ -86,8 +84,6 @@ public class GeneralService {
 
 	public TbArticleGeneral findById(BigInteger articleId) {
 		TbArticleGeneral tbArticleGeneral = tbArticleGeneralRepository.findById(articleId).get();
-		tbArticleGeneral.setArticleWriterUserName(
-				tbArticleGeneralRepository.findArticleWriterName(tbArticleGeneral.getArticleWriterId()));
 		this.updateViewCount(articleId);
 		return tbArticleGeneral;
 	}

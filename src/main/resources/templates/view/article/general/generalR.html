@@ -153,7 +153,7 @@
                                     </div>
                                     <div class="d-flex align-items-center article-info py-2">
                                         <div class="">
-                                            <i class="fa fa-user-circle-o pr-2 text-dark"></i><span class="pr-2" th:text="${articleInfo.articleWriterUserName}"></span>
+                                            <i class="fa fa-user-circle-o pr-2 text-dark"></i><span class="pr-2" th:text="${articleInfo.articleGeneralWriter.userName}"></span>
                                             <i class="fa fa-clock-o pr-2 text-dark"></i><span class="pr-2" th:text="${#dates.format(articleInfo.articleWriteDatetime, 'yyyy-MM-dd HH:mm:ss')}"></span>
                                         </div>
                                         <div class="ml-auto px-1 py-1 d-none d-lg-block d-xl-block">
@@ -217,14 +217,14 @@
                                                         <a th:href="@{/b/general/viewdetail/{articleId}(articleId = ${article.articleId}, size=${articleList.size}, page=${articleList.number})}" th:text="${article.articleTitle}"></a>
                                                     </span>
                                                     <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                        <span class="" th:text="${article.articleWriterUserName}"></span>
+                                                        <span class="" th:text="${article.articleGeneralWriter.userName}"></span>
                                                         <span class="text-muted">|</span>
                                                         <span class="" th:text="${#dates.format(article.articleWriteDatetime, 'yyyy-MM-dd')}"></span>
                                                     </div>
                                                 </div>
 
                                             </div>
-                                            <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${article.articleWriterUserName}"></div></div>
+                                            <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${article.articleGeneralWriter.userName}"></div></div>
                                             <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block"><div class="table-sm-td-content" th:text="${#dates.format(article.articleWriteDatetime, 'yyyy-MM-dd')}"></div></div>
                                         </div>
                                     </div>

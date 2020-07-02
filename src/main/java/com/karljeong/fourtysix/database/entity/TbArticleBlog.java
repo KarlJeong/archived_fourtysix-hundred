@@ -3,14 +3,22 @@ package com.karljeong.fourtysix.database.entity;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +61,10 @@ public class TbArticleBlog implements Serializable {
 	@Column(name = "ARTICLE_MODIFIER_ID", insertable = false)
 	private BigInteger articleModifierId;
 
+    @ManyToOne(targetEntity=TbComUser.class, fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="ARTICLE_MODIFIER_ID", insertable = false, updatable = false)
+    private TbComUser articleBlogModifier;
+
 	@Column(name = "ARTICLE_MODIFY_DATETIME", insertable = false)
     private Timestamp articleModifyDatetime = DateUtil.getTimestamp();
 
@@ -77,6 +89,11 @@ public class TbArticleBlog implements Serializable {
     @Column(name = "ARTICLE_WRITER_ID", updatable = false)
     private BigInteger articleWriterId;
 
+    @ManyToOne(targetEntity=TbComUser.class, fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="ARTICLE_WRITER_ID", insertable = false, updatable = false)
+    private TbComUser articleBlogWriter;
+
+
 	@Column(name="CREATE_DATETIME", updatable = false)
 	private Timestamp createDatetime = DateUtil.getTimestamp();
 
@@ -97,12 +114,6 @@ public class TbArticleBlog implements Serializable {
 
     @Column(name="PUBLISH_YN")
     private byte publishYn;
-
-    @Column(name="ARTICLE_WRITER_USER_NAME", insertable = false, updatable = false)
-    private String articleWriterUserName;
-    
-    @Column(name="SNS_ID", insertable = false, updatable = false)
-    private String snsId;
 
     @Transient
     private String articleCategoryName;
@@ -286,14 +297,6 @@ public class TbArticleBlog implements Serializable {
         this.publishYn = publishYn;
     }
 
-    public String getArticleWriterUserName() {
-        return articleWriterUserName;
-    }
-
-    public void setArticleWriterUserName(String articleWriterUserName) {
-        this.articleWriterUserName = articleWriterUserName;
-    }
-
     public String getArticleCategoryName() {
         return articleCategoryName;
     }
@@ -302,12 +305,20 @@ public class TbArticleBlog implements Serializable {
         this.articleCategoryName = articleCategoryName;
     }
     
-    public String getSnsId() {
-		return snsId;
+	public TbComUser getArticleBlogModifier() {
+		return articleBlogModifier;
 	}
 
-	public void setSnsId(String snsId) {
-		this.snsId = snsId;
+	public void setArticleBlogModifier(TbComUser articleBlogModifier) {
+		this.articleBlogModifier = articleBlogModifier;
+	}
+
+	public TbComUser getArticleBlogWriter() {
+		return articleBlogWriter;
+	}
+
+	public void setArticleBlogWriter(TbComUser articleBlogWriter) {
+		this.articleBlogWriter = articleBlogWriter;
 	}
 
 	public void setUserInfo(HttpServletRequest request) {

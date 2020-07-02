@@ -276,14 +276,14 @@
                                             <a href="/b/general/viewdetail/3?size=20&amp;page=0" th:text="${generalArticle.articleTitle}"></a>
                                         </span>
                                         <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                            <span th:text=${generalArticle.articleWriterUserName}></span>
+                                            <span th:text=${generalArticle.articleGeneralWriter.userName}></span>
                                             <span class="text-muted">|</span>
                                             <i class="fa fa-image mr-2 ml-auto"></i><span class="text-danger dashboard-count">3k</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
-                                    <div class="table-sm-td-content" th:text=${generalArticle.articleWriterUserName}></div>
+                                    <div class="table-sm-td-content" th:text=${generalArticle.articleGeneralWriter.userName}></div>
                                 </div>
                                 <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
                                     <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>

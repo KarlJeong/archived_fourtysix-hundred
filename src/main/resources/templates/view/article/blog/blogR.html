@@ -18,15 +18,14 @@
                                 </div>
                                 <h2 class="pt-3" th:text="${articleInfo.articleTitle}"></h2>
                                 <div class="header wrapper d-flex align-items-center py-2">
-                                    <img class="img-sm rounded-circle" th:src="@{${'//graph.facebook.com/' + articleInfo.snsId + '/picture'}}" alt="profile">
+                                    <img class="img-sm rounded-circle" th:src="@{${'//graph.facebook.com/' + articleInfo.articleBlogWriter.snsId + '/picture'}}" alt="profile">
                                     <div class="wrapper ml-3">
                                         <div class="ml-1">
-                                            <h6 th:text="${articleInfo.articleWriterUserName}"></h6>
-                                        </div>
+											<h6 th:text="${articleInfo.articleBlogWriter.userName}"></h6>
+										</div>
                                         <div class="ml-1">
                                             <small class="text-muted mb-0"><i class="fa fa-calendar-o pr-2"></i><span th:text="${#fourtysixFormat.dateConverterToDateOrDateTime(articleInfo.articleWriteDatetime)}"></span></small>
-                                            <small class="text-muted mb-0"><i class="fa fa-clock-o pr-2"></i><span>3 mins ago</span></small>
-                                            <small class="text-muted mb-0"><i class="fa fa-map-marker mr-1"></i><span>South Korea</span></small>
+                                            <small class="text-muted mb-0"><i class="fa fa-clock-o pr-2"></i><span th:text="${#fourtysixFormat.dateConverToTimeOrDate(articleInfo.articleWriteDatetime)}"></span></small>
                                         </div>
                                     </div>
                                     <div class="ml-auto px-1 py-1">
@@ -55,13 +54,13 @@
                                 </div>
                                 <div class="separator"></div>
                                 <div class="header wrapper d-flex align-items-center py-2">
-                                    <img class="img-lg rounded-circle" th:src="@{${'//graph.facebook.com/' + articleInfo.snsId + '/picture?type=large'}}"  alt="profile">
+                                    <img class="img-lg rounded-circle" th:src="@{${'//graph.facebook.com/' + articleInfo.articleBlogWriter.snsId + '/picture?type=large'}}"  alt="profile">
                                     <div class="wrapper ml-3">
                                         <div class="ml-1 mb-1">
                                             <span>WRITTEN BY</span>
                                         </div>
                                         <div class="ml-1 mb-1">
-                                            <h4 th:text="${articleInfo.articleWriterUserName}"></h4>
+                                            <h4 th:text="${articleInfo.articleBlogWriter.userName}"></h4>
                                         </div>
                                         <div class="ml-1 mb-1">
                                             <small class="text-muted mb-0"><span>Short

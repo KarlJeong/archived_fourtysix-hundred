@@ -50,12 +50,6 @@ public class BlogService {
                 ? tbArticleBlogRepository.findAll(pageable)
                 : tbArticleBlogRepository.findAll(TbArticleBlogSpec.searchWithKeys(searchKeys), pageable);
 
-        for (TbArticleBlog tbArticleBlog : tbArticleBlogList) {
-            tbArticleBlog.setArticleWriterUserName(
-                    tbArticleBlogRepository.findArticleWriterName(tbArticleBlog.getArticleWriterId()));
-        }
-
-
         return tbArticleBlogList;
     }
 

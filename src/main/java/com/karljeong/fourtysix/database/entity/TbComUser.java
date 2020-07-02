@@ -3,13 +3,18 @@ package com.karljeong.fourtysix.database.entity;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.karljeong.fourtysix.utils.DateUtil;
@@ -77,7 +82,7 @@ public class TbComUser implements Serializable {
 
 	@Column(name="USER_NICKNAME")
 	private String userNickname;
-
+	
 	public TbComUser() {
 	}
 
@@ -219,5 +224,6 @@ public class TbComUser implements Serializable {
 	public void setUserNickname(String userNickname) {
 		this.userNickname = userNickname;
 	}
+
 
 }
