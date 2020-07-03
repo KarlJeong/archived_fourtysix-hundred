@@ -67,7 +67,7 @@ public class GeneralController {
 	public String viewUpdate(Model model, @PathVariable("articleId") BigInteger articleId,
 			@RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable,
 			HttpServletRequest request) {
-		model.addAttribute("articleInfo", generalService.findById(articleId));
+		model.addAttribute("articleInfo", generalService.findById(articleId, request));
 
 		List<Map<String, Object>> articleNumberList = (List<Map<String, Object>>) loadStatic.getSystemCode()
 				.get("ARTICLE_NUMBER").get("code");

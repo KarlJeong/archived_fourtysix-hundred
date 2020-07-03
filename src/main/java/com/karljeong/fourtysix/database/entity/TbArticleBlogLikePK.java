@@ -73,7 +73,7 @@ public class TbArticleBlogLikePK implements Serializable {
 	}
 
     public void setUserInfo(HttpServletRequest request) {
-        BigInteger userId = UserUtil.getUserId(request);
+        BigInteger userId = UserUtil.getUserId();
         this.userId = userId;
     }
 }

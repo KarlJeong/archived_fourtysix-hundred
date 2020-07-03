@@ -13,7 +13,9 @@ import com.karljeong.fourtysix.database.entity.TbComUser;
 
 public class UserUtil {
 
-	public static TbComUser getUserInfo(HttpServletRequest request) {
+	public static TbComUser getUserInfo() {
+		HttpServletRequest request = RequestContextUtil.getRequest();
+		
 		HttpSession session = request.getSession();
 		SecurityContext sc = (SecurityContext) session
 				.getAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
@@ -27,9 +29,14 @@ public class UserUtil {
 		return (TbComUser) authentication.getPrincipal();
 
 	}
+	
+	public static HttpSession getSession() {
+		HttpServletRequest request = RequestContextUtil.getRequest();
+		return request.getSession();
+	}
 
-	public static BigInteger getUserId(HttpServletRequest request) {
-		TbComUser tbComUser = getUserInfo(request);
+	public static BigInteger getUserId() {
+		TbComUser tbComUser = getUserInfo();
 		return tbComUser.getUserId();
 	}
 }

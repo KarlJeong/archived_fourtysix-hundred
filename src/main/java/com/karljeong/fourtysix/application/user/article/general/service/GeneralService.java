@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +23,7 @@ import com.karljeong.fourtysix.database.repository.TbArticleGeneralReplyReposito
 import com.karljeong.fourtysix.database.repository.TbArticleGeneralRepository;
 import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec;
 import com.karljeong.fourtysix.database.specification.TbArticleGeneralSpec.SearchKey;
+import com.karljeong.fourtysix.utils.ArticleUtil;
 
 @Service
 public class GeneralService {
@@ -82,9 +85,11 @@ public class GeneralService {
 		return tbArticleGeneralReplyRepository.findByArticleId(articleId, pageable);
 	}
 
-	public TbArticleGeneral findById(BigInteger articleId) {
+	public TbArticleGeneral findById(BigInteger articleId, HttpServletRequest request) {
 		TbArticleGeneral tbArticleGeneral = tbArticleGeneralRepository.findById(articleId).get();
-		this.updateViewCount(articleId);
+		if (ArticleUtil.readArticleFirst("blog", articleId)) {
+			this.updateViewCount(articleId);
+		}
 		return tbArticleGeneral;
 	}
 
@@ -114,6 +119,8 @@ public class GeneralService {
 
 	public int replyDynamic(TbArticleGeneralReply tbArticleGeneralReply) {
 	    int result = tbArticleGeneralReplyRepository.saveReplyDynamic(tbArticleGeneralReply);
+	    
+	    
         this.updateReplyCount(tbArticleGeneralReply.getArticleId());
 		return result;
 

@@ -19,6 +19,7 @@ import com.karljeong.fourtysix.database.repository.TbArticleBlogLikeRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleBlogRepository;
 import com.karljeong.fourtysix.database.specification.TbArticleBlogSpec;
 import com.karljeong.fourtysix.database.specification.TbArticleBlogSpec.SearchKey;
+import com.karljeong.fourtysix.utils.ArticleUtil;
 
 @Service
 public class BlogService {
@@ -64,6 +65,10 @@ public class BlogService {
 
     public TbArticleBlog findById(BigInteger articleId) {
         TbArticleBlog tbArticleBlog = tbArticleBlogRepository.findById(articleId).get();
+		if (ArticleUtil.readArticleFirst("blog", articleId)) {
+			this.updateViewCount(articleId);
+		}
+		
         //tbArticleBlog.setArticleWriterUserName(tbArticleBlogRepository.findArticleWriterName(tbArticleBlog.getArticleWriterId()));
         return tbArticleBlog;
     }
@@ -73,5 +78,9 @@ public class BlogService {
 
         return tbArticleBlogLike.isPresent() ? tbArticleBlogLike.get() : new TbArticleBlogLike();
     }
+
+	private void updateViewCount(BigInteger articleId) {
+		tbArticleBlogRepository.saveViewCount(articleId);
+	}
 
 }

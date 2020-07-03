@@ -242,7 +242,7 @@
                                     <div class="table-sm-td-content">
                                         <span th:each="noticeArticleCategory : ${noticeArticleCategoryList}" th:object="${noticeArticleCategory}" th:if="${noticeArticleCategory.codeValue == noticeArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${noticeArticleCategory.codeName}"></span>
                                         <span class="table-sm-td-content">
-                                            <a href="/b/general/viewdetail/3?size=20&amp;page=0" th:text="${noticeArticle.articleTitle}"></a>
+                                            <a th:href="@{/notice/viewdetail/{articleId}(articleId = ${noticeArticle.articleId}, size=${${noticeArticleList}.size}, page=${${noticeArticleList}.number})}" th:text="${noticeArticle.articleTitle}"></a>
                                         </span>
                                         <div class="text-right pt-2 d-block d-lg-none d-xl-none">
                                             <span class="text-muted dashboard-count" th:text="${#dates.format(noticeArticle.articleWriteDatetime, 'yyyy-MM-dd')}"></span>
@@ -279,6 +279,7 @@
                                         <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == generalArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${generalArticleCategory.codeName}"></span>
                                         <span class="table-sm-td-content">
                                             <a href="/b/general/viewdetail/3?size=20&amp;page=0" th:text="${generalArticle.articleTitle}"></a>
+                                            <a th:href="@{/b/general/viewdetail/{articleId}(articleId = ${generalArticle.articleId}, size=${generalArticleList.size}, page=${generalArticleList.number})}" th:text="${generalArticle.articleTitle}"></a>
                                         </span>
                                         <div class="text-right pt-2 d-block d-lg-none d-xl-none">
                                             <span th:text=${generalArticle.articleGeneralWriter.userName}></span>

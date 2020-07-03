@@ -37,8 +37,7 @@ public class LoginController {
     }
 
     @GetMapping("/login/success")
-    public void redirectLoginSuccess(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        TbComUser tbComUser = UserUtil.getUserInfo(request);
+    public void redirectLoginSuccess(HttpServletResponse response) throws IOException {
         response.sendRedirect(servletContext.getContextPath() + "/admin/menu/viewmain");
     }
 

@@ -244,7 +244,7 @@ public class TbArticleGeneralReply implements Serializable {
 	}
 
 	public void setUserInfo(HttpServletRequest request) {
-		BigInteger userId = UserUtil.getUserId(request);
+		BigInteger userId = UserUtil.getUserId();
 		this.createUserId = userId;
 		this.updateUserId = userId;
 		this.replyWriterId = userId;

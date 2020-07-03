@@ -7,15 +7,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
-import java.util.Date;
-
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Hours;
-import org.joda.time.Minutes;
-import org.joda.time.Months;
-import org.joda.time.Seconds;
-import org.joda.time.Years;
 
 public class ThymeleafDialectUtil {
 	private static String[] suffix = new String[] { "", "k", "m", "b", "t" };
