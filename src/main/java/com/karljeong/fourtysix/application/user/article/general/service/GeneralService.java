@@ -60,10 +60,6 @@ public class GeneralService {
 				? tbArticleGeneralRepository.findAll(pageable)
 				: tbArticleGeneralRepository.findAll(TbArticleGeneralSpec.searchWithKeys(searchKeys), pageable);
 
-		for (TbArticleGeneral tbArticleGeneral : tbArticleGeneralList) {
-		}
-
-
 		return tbArticleGeneralList;
 	}
 
@@ -75,13 +71,6 @@ public class GeneralService {
 			pageNumber = (totalCount - 1) / pageSize;
 		}
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		Page<TbArticleGeneralReply> retrievedReplyList = tbArticleGeneralReplyRepository.findByArticleId(articleId,
-				pageable);
-		for (TbArticleGeneralReply tbArticleGeneralReply : retrievedReplyList) {
-			tbArticleGeneralReply.setReplyWriterUserName(
-					tbArticleGeneralReplyRepository.findReplyWriterName(tbArticleGeneralReply.getReplyWriterId()));
-
-		}
 		return tbArticleGeneralReplyRepository.findByArticleId(articleId, pageable);
 	}
 

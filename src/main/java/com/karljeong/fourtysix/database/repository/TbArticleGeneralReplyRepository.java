@@ -24,9 +24,9 @@ public interface TbArticleGeneralReplyRepository extends PagingAndSortingReposit
 	@Query(value = "SELECT FN_GET_USER_NAME(:userId)", nativeQuery = true)
 	String findReplyWriterName(@Param("userId") BigInteger userId);
 
-	@Query(value = "WITH RECURSIVE tmp1 AS " + "(" + "    SELECT *, CONCAT(IFNULL(REPLY_ID, 0)) AS PATH "
+	@Query(value = "WITH RECURSIVE tmp1	 AS " + "(" + "    SELECT *, CONCAT(IFNULL(REPLY_ID, 0)) AS PATH, (SELECT TCU.USER_NAME FROM TB_COM_USER TCU WHERE TCU.USER_ID = REPLY_WRITER_ID) AS REPLY_WRITER_USER_NAME "
 			+ "    FROM TB_ARTICLE_GENERAL_REPLY WHERE PRIOR_REPLY_ID IS NULL AND ARTICLE_ID = :articleId "
-			+ "    UNION ALL " + "    SELECT e.*, CONCAT(t.PATH, ',', e.REPLY_ORDER) AS PATH "
+			+ "    UNION ALL " + "    SELECT e.*, CONCAT(t.PATH, ',', e.REPLY_ORDER) AS PATH, (SELECT TCU.USER_NAME FROM TB_COM_USER TCU WHERE TCU.USER_ID = e.REPLY_WRITER_ID) AS  REPLY_WRITER_USER_NAME "
 			+ "    FROM tmp1 t JOIN TB_ARTICLE_GENERAL_REPLY e ON t.REPLY_ID = e.PRIOR_REPLY_ID WHERE e.ARTICLE_ID = t.ARTICLE_ID "
 			+ ") " + "SELECT * " + "FROM tmp1 " + "ORDER BY PATH", countQuery = "WITH RECURSIVE tmp1 AS " + "("
 					+ "    SELECT *, CONCAT(IFNULL(REPLY_ORDER, 0)) AS PATH "

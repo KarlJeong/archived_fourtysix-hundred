@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -79,10 +83,14 @@ public class TbArticleGeneralReply implements Serializable {
 	@Column(name = "REPLY_WRITER_ID", updatable = false)
 	private BigInteger replyWriterId;
 
+    @ManyToOne(targetEntity=TbComUser.class, fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="REPLY_WRITER_ID", insertable = false, updatable = false)
+    private TbComUser replyWriter;
+
 	@Column(name = "REPLY_WRITE_DATETIME", updatable = false)
 	private Timestamp replyWriteDatetime = DateUtil.getTimestamp();
 
-	@Transient
+	@Column(name = "REPLY_WRITER_USER_NAME", insertable = false, updatable = false)
 	private String replyWriterUserName;
 
 	@Transient

@@ -84,7 +84,6 @@ public class GeneralController {
 		TbArticleGeneralLikePK tbArticleGeneralLikePK = new TbArticleGeneralLikePK();
 		tbArticleGeneralLikePK.setArticleId(articleId);
 		tbArticleGeneralLikePK.setUserInfo(request);
-		System.out.println(">>>" + generalService.findById(tbArticleGeneralLikePK).getLikeYn());
 		model.addAttribute("articleLike", generalService.findById(tbArticleGeneralLikePK));
 
 		return "view/article/general/generalR";

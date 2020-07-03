@@ -22,11 +22,13 @@
     }
 
     function fnCreateReplyArea(rData) {
+    	console.log(rData);
         var $replArea = $(".reply-area");
         $replArea.empty();
         var writable = /*<![CDATA[*//*[[${#authorization.expression('hasAnyRole(''ROLE_MEMBER'',''ROLE_AUTHOR'',''ROLE_ADMIN'')')} ? ${true} : ${false} ]]*//*]]>*/;
         for (var i = 0 ; i < rData.content.length ; i++) {
             var d = rData.content[i];
+        	console.log(d);
             var html = [];
             var isReplyHeaderOwner = /*<![CDATA[*//*[[ ${articleInfo.articleWriterId} ]]*//*]]>*/ === d.replyWriterId ? true : false;
             html.push('<div class="d-flex align-items-center">');
