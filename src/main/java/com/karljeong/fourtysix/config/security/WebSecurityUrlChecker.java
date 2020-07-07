@@ -34,7 +34,7 @@ public class WebSecurityUrlChecker extends AntPathMatcher{
 
 	public boolean check(HttpServletRequest req, Authentication authentication) {
 	    if (!((authentication.getPrincipal()) instanceof TbComUser)) {
-	        System.out.println("GetPrincipal is not TbComUser");
+	    	logger.debug("GetPrincipal is not TbComUser");
 	        authentication = webSecurityProvider.visitorAuthenticate(req).getAuthentication();
 	    }
 
