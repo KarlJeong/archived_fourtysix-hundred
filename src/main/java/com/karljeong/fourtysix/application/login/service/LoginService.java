@@ -1,6 +1,7 @@
 package com.karljeong.fourtysix.application.login.service;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,9 @@ public class LoginService {
         tbComUser.setUserName(faebookUser.getName());
         tbComUser.setUserNickname(faebookUser.getName());
         tbComUser.setSnsId(faebookUser.getId());
+        tbComUser.setBirthday(new Timestamp(faebookUser.getBirthdayAsDate().getTime()));
+        tbComUser.setLocationId(faebookUser.getLocation().getId());
+        tbComUser.setLocationName(faebookUser.getLocation().getName());
         return tbComUserRepository.save(tbComUser);
     }
 

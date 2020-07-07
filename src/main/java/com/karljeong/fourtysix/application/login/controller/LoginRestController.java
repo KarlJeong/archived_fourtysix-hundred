@@ -42,7 +42,7 @@ public class LoginRestController {
 		FacebookClient facebookClient = new DefaultFacebookClient(accessToken, Version.VERSION_2_12);
 		try {
 			User faebookUser = facebookClient.fetchObject("me", User.class,
-					Parameter.with("fields", "email, name, id, picture, locale"));
+					Parameter.with("fields", "email, name, id, picture, locale, location, gender, birthday"));
 			if (faebookUser != null) {
 				resultDto = webSecurityProvider.facebookAuthenticate(faebookUser, req);
 			}
