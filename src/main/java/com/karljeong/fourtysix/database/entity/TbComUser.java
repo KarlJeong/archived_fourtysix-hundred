@@ -87,6 +87,9 @@ public class TbComUser implements Serializable {
     @Column(name="LOCATION_NAME")
     private String locationName;
 
+    @Column(name="GENDER")
+    private String gender;
+
 	public TbComUser() {
 	}
 
@@ -260,5 +263,13 @@ public class TbComUser implements Serializable {
     }
 
 
+    public String getGender() {
+        return gender;
+    }
+
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
 }

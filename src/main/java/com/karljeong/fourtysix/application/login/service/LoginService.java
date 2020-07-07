@@ -42,22 +42,23 @@ public class LoginService {
         return tbComUserRepository.findByLoginId(loginId);
     }
 
-    public TbComUser save(User faebookUser) {
+    public TbComUser save(User facebookUser) {
         TbComUser tbComUser = new TbComUser();
         tbComUser.setCreateUserId(BigInteger.valueOf(11111));
-        tbComUser.setLoginId(faebookUser.getEmail());
-        tbComUser.setLoginPassword(faebookUser.getEmail());
+        tbComUser.setLoginId(facebookUser.getEmail());
+        tbComUser.setLoginPassword(facebookUser.getEmail());
         tbComUser.setActivateYn((byte)1);
         tbComUser.setActivateDatetime(DateUtil.getTimestamp());
-        tbComUser.setUserLocale(faebookUser.getLocale());
+        tbComUser.setUserLocale(facebookUser.getLocale());
         tbComUser.setLastLoginDatetime(DateUtil.getTimestamp());
-        tbComUser.setEmail(faebookUser.getEmail());
-        tbComUser.setUserName(faebookUser.getName());
-        tbComUser.setUserNickname(faebookUser.getName());
-        tbComUser.setSnsId(faebookUser.getId());
-        tbComUser.setBirthday(new Timestamp(faebookUser.getBirthdayAsDate().getTime()));
-        tbComUser.setLocationId(faebookUser.getLocation().getId());
-        tbComUser.setLocationName(faebookUser.getLocation().getName());
+        tbComUser.setEmail(facebookUser.getEmail());
+        tbComUser.setUserName(facebookUser.getName());
+        tbComUser.setUserNickname(facebookUser.getName());
+        tbComUser.setSnsId(facebookUser.getId());
+        tbComUser.setBirthday(new Timestamp(facebookUser.getBirthdayAsDate().getTime()));
+        tbComUser.setLocationId(facebookUser.getLocation().getId());
+        tbComUser.setLocationName(facebookUser.getLocation().getName().toUpperCase());
+        tbComUser.setGender(facebookUser.getGender().toUpperCase());
         return tbComUserRepository.save(tbComUser);
     }
 
