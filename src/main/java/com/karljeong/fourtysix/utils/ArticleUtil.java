@@ -19,21 +19,14 @@ public class ArticleUtil {
     		articles.add(articleId);
     		readArticles.put(type, articles);
     		session.setAttribute("readArticle", readArticles);
-    		System.out.println("!!!!! true");
     		return true;
     	}
     	
     	Map<String, List<BigInteger>> readArticles = (Map<String, List<BigInteger>>) readArticle;
     	List<BigInteger> articles = readArticles.get(type);
-    	for (BigInteger i : articles) {
-    		System.out.println("}}}}} " + i);
-    	}
-    	System.out.println(">>> " + articleId);
     	if (articles.contains(articleId)) {
-    		System.out.println("@@@@@ false");
     		return false;
     	} else {
-    		System.out.println("#### true");
     		articles.add(articleId);
     		return true;
     	}

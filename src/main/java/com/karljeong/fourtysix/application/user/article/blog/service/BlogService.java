@@ -63,14 +63,17 @@ public class BlogService {
         return save;
     }
 
+    public TbArticleBlog update(TbArticleBlog tbArticleBlog) {
+        TbArticleBlog save = tbArticleBlogRepository.save(tbArticleBlog);
+        return save;
+    }
+
     public TbArticleBlog findById(BigInteger articleId) {
-        TbArticleBlog tbArticleBlog = tbArticleBlogRepository.findById(articleId).get();
 		if (ArticleUtil.readArticleFirst("blog", articleId)) {
 			this.updateViewCount(articleId);
 		}
 		
-        //tbArticleBlog.setArticleWriterUserName(tbArticleBlogRepository.findArticleWriterName(tbArticleBlog.getArticleWriterId()));
-        return tbArticleBlog;
+        return tbArticleBlogRepository.findById(articleId).get();
     }
 
     public TbArticleBlogLike findById(TbArticleBlogLikePK tbArticleBlogLikePK) {

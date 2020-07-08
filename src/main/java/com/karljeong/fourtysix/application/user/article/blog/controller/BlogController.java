@@ -1,10 +1,12 @@
 package com.karljeong.fourtysix.application.user.article.blog.controller;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.karljeong.fourtysix.application.admin.file.service.FileService;
 import com.karljeong.fourtysix.application.user.article.blog.service.BlogService;
 import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
 import com.karljeong.fourtysix.database.entity.TbArticleBlog;
 import com.karljeong.fourtysix.database.entity.TbArticleBlogLikePK;
 import com.karljeong.fourtysix.utils.PagingUtil;
+import com.karljeong.fourtysix.utils.RequestContextUtil;
 import com.karljeong.fourtysix.utils.ValidationUtil;
 
 @Controller
@@ -31,11 +35,13 @@ public class BlogController {
 
     private final LoadStatic loadStatic;
     private final BlogService blogService;
+    private final FileService fileService;
 
     @Autowired
-    BlogController(LoadStatic loadStatic, BlogService blogService) {
+    BlogController(LoadStatic loadStatic, BlogService blogService, FileService fileService) {
         this.loadStatic = loadStatic;
         this.blogService = blogService;
+        this.fileService = fileService;
     }
 
     @GetMapping("/viewmain")
@@ -60,6 +66,21 @@ public class BlogController {
         List<Map<String, Object>> blogArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_BLOG_CATEGORY").get("code");
         model.addAttribute("blogArticleCategoryList", blogArticleCategoryList);
         return "view/article/blog/blogC";
+    }
+
+    @GetMapping("/viewupdate/{articleId}")
+    public String viewupdate(Model model, @PathVariable("articleId") BigInteger articleId, HttpServletResponse response) throws IOException {
+    	TbArticleBlog tbArticleBlog = blogService.findById(articleId);
+    	if (tbArticleBlog.getPublishYn() == 1) {
+    		response.sendRedirect(RequestContextUtil.getContextpath() + "/blog/viewdetail/" + articleId);
+    		return null;
+    	}
+    	model.addAttribute("articleInfo", tbArticleBlog);
+    	model.addAttribute("thumbnailInfo", fileService.getFileInfo(tbArticleBlog.getThumbnailFileId()));
+    	
+        List<Map<String, Object>> blogArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_BLOG_CATEGORY").get("code");
+        model.addAttribute("blogArticleCategoryList", blogArticleCategoryList);
+        return "view/article/blog/blogU";
     }
 
     @GetMapping("/viewdetail/{articleId}")

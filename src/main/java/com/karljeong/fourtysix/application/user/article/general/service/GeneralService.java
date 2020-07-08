@@ -75,11 +75,10 @@ public class GeneralService {
 	}
 
 	public TbArticleGeneral findById(BigInteger articleId, HttpServletRequest request) {
-		TbArticleGeneral tbArticleGeneral = tbArticleGeneralRepository.findById(articleId).get();
 		if (ArticleUtil.readArticleFirst("blog", articleId)) {
 			this.updateViewCount(articleId);
 		}
-		return tbArticleGeneral;
+		return tbArticleGeneralRepository.findById(articleId).get();
 	}
 
 	public TbArticleGeneralLike findById(TbArticleGeneralLikePK tbArticleGeneralLikePK) {

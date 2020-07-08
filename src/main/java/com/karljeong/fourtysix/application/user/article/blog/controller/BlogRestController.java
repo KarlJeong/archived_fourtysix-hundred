@@ -34,10 +34,18 @@ public class BlogRestController {
     }
 
     @PostMapping
-    public ResultDto save(@RequestBody TbArticleBlog tbArticleBlog, HttpServletRequest request) {
+    public ResultDto create(@RequestBody TbArticleBlog tbArticleBlog, HttpServletRequest request) {
         tbArticleBlog.setUserInfo(request);
         TbArticleBlog createTbArticleBlog = blogService.create(tbArticleBlog);
         return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleBlog,
-                "/blog/viewdetail/" + createTbArticleBlog.getArticleId()).getResultDto();
+                "/blog/viewupdate/" + createTbArticleBlog.getArticleId()).getResultDto();
+    }
+
+    @PostMapping("/{articleId}")
+    public ResultDto update(@RequestBody TbArticleBlog tbArticleBlog, HttpServletRequest request) {
+        tbArticleBlog.setUserInfo(request);
+        TbArticleBlog createTbArticleBlog = blogService.update(tbArticleBlog);
+        return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleBlog,
+                "/blog/viewupdate/" + createTbArticleBlog.getArticleId()).getResultDto();
     }
 }
