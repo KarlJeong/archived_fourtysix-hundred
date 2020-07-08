@@ -9,6 +9,10 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.servlet.http.HttpServletRequest;
+
+import com.karljeong.fourtysix.utils.DateUtil;
+import com.karljeong.fourtysix.utils.UserUtil;
 
 
 /**
@@ -24,20 +28,21 @@ public class TbArticleBlogLike implements Serializable {
 	@EmbeddedId
 	private TbArticleBlogLikePK id;
 
-	@Column(name="CREATE_DATETIME")
-	private Timestamp createDatetime;
+	@Column(name = "CREATE_DATETIME", updatable = false)
+	private Timestamp createDatetime = DateUtil.getTimestamp();
 
-	@Column(name="CREATE_USER_ID")
+	@Column(name = "CREATE_USER_ID", updatable = false)
 	private BigInteger createUserId;
 
-	@Column(name="LIKE_YN")
-	private byte likeYn;
-
-	@Column(name="UPDATE_DATETIME")
+	@Column(name = "UPDATE_DATETIME", insertable = false)
 	private Timestamp updateDatetime;
 
-	@Column(name="UPDATE_USER_ID")
+	@Column(name = "UPDATE_USER_ID", insertable = false)
 	private BigInteger updateUserId;
+
+	@Column(name = "LIKE_YN")
+	private byte likeYn;
+
 
 	public TbArticleBlogLike() {
 	}
@@ -88,6 +93,12 @@ public class TbArticleBlogLike implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
+	}
+
+	public void setUserInfo(HttpServletRequest request) {
+		BigInteger userId = UserUtil.getUserId();
+		this.createUserId = userId;
+		this.updateUserId = userId;
 	}
 
 }

@@ -42,7 +42,7 @@
 	            params.thumbnailFileId = d[0].fileId;
             }
             params.requestPublishYn = requestPublish;
-            PromiseUtil.post("/v1/api/blogs/"+/*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/, params)
+            PromiseUtil.post("/v1/api/blog/"+/*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/, params)
             .then(JSON.parse)
             .then(function(d){
             });

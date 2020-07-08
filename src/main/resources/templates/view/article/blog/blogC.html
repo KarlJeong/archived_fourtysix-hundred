@@ -30,7 +30,7 @@
             params.articleContents = $("#articleContents").summernote('code');
             params.thumbnailFileId = d[0].fileId;
             params.requestPublishYn = requestPublish;
-            PromiseUtil.post("/v1/api/blogs", params)
+            PromiseUtil.post("/v1/api/blog", params)
             .then(JSON.parse)
             .then(function(d){
             });

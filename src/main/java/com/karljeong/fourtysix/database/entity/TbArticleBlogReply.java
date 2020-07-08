@@ -4,14 +4,22 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.servlet.http.HttpServletRequest;
+
+import com.karljeong.fourtysix.utils.DateUtil;
+import com.karljeong.fourtysix.utils.UserUtil;
 
 
 /**
@@ -32,51 +40,58 @@ public class TbArticleBlogReply implements Serializable {
 	@Column(name="ARTICLE_ID")
 	private BigInteger articleId;
 
-	@Column(name="CREATE_DATETIME")
-	private Timestamp createDatetime;
+	@Column(name = "CREATE_DATETIME", updatable = false)
+	private Timestamp createDatetime = DateUtil.getTimestamp();
 
-	@Column(name="CREATE_USER_ID")
+	@Column(name = "CREATE_USER_ID", updatable = false)
 	private BigInteger createUserId;
+
+	@Column(name = "UPDATE_DATETIME", insertable = false)
+	private Timestamp updateDatetime;
+
+	@Column(name = "UPDATE_USER_ID", insertable = false)
+	private BigInteger updateUserId;
 
 	@Column(name="PRIOR_REPLY_ID")
 	private BigInteger priorReplyId;
 
-	@Column(name="REPLY_BAN_YN")
-	private byte replyBanYn;
+	@Column(name = "REPLY_BAN_YN")
+	private byte replyBanYn = 0;
 
 	@Lob
 	@Column(name="REPLY_CONTENTS")
 	private String replyContents;
 
 	@Column(name="REPLY_DELETE_YN")
-	private byte replyDeleteYn;
+	private byte replyDeleteYn = 0;
 
-	@Column(name="REPLY_LEVEL")
-	private int replyLevel;
+	@Column(name = "REPLY_LEVEL", updatable = false)
+	private int replyLevel = 1;
 
-	@Column(name="REPLY_MODIFIER_ID")
+	@Column(name = "REPLY_MODIFIER_ID", insertable = false)
 	private BigInteger replyModifierId;
 
-	@Column(name="REPLY_MODIFY_DATETIME")
+	@Column(name = "REPLY_MODIFY_DATETIME", insertable = false)
 	private Timestamp replyModifyDatetime;
 
-	@Column(name="REPLY_ORDER")
-	private int replyOrder;
+	@Column(name = "REPLY_ORDER", updatable = false)
+	private int replyOrder = 1;
 
-	@Column(name="REPLY_REPORT_COUNT")
-	private int replyReportCount;
+	@Column(name = "REPLY_REPORT_COUNT", updatable = false)
+	private int replyReportCount = 0;
 
-	@Column(name="REPLY_WRITER_ID")
+	@Column(name = "REPLY_WRITER_ID", updatable = false)
 	private BigInteger replyWriterId;
 
-	@Column(name="REPYL_WRITE_DATETIME")
-	private Timestamp repylWriteDatetime;
+    @ManyToOne(targetEntity=TbComUser.class, fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="REPLY_WRITER_ID", insertable = false, updatable = false)
+    private TbComUser replyWriter;
 
-	@Column(name="UPDATE_DATETIME")
-	private Timestamp updateDatetime;
+	@Column(name = "REPLY_WRITE_DATETIME", updatable = false)
+	private Timestamp replyWriteDatetime = DateUtil.getTimestamp();
 
-	@Column(name="UPDATE_USER_ID")
-	private BigInteger updateUserId;
+	@Column(name = "REPLY_WRITER_USER_NAME", insertable = false, updatable = false)
+	private String replyWriterUserName;
 
 	public TbArticleBlogReply() {
 	}
@@ -193,12 +208,28 @@ public class TbArticleBlogReply implements Serializable {
 		this.replyWriterId = replyWriterId;
 	}
 
-	public Timestamp getRepylWriteDatetime() {
-		return this.repylWriteDatetime;
+	public TbComUser getReplyWriter() {
+		return replyWriter;
 	}
 
-	public void setRepylWriteDatetime(Timestamp repylWriteDatetime) {
-		this.repylWriteDatetime = repylWriteDatetime;
+	public void setReplyWriter(TbComUser replyWriter) {
+		this.replyWriter = replyWriter;
+	}
+
+	public Timestamp getReplyWriteDatetime() {
+		return replyWriteDatetime;
+	}
+
+	public void setReplyWriteDatetime(Timestamp replyWriteDatetime) {
+		this.replyWriteDatetime = replyWriteDatetime;
+	}
+
+	public String getReplyWriterUserName() {
+		return replyWriterUserName;
+	}
+
+	public void setReplyWriterUserName(String replyWriterUserName) {
+		this.replyWriterUserName = replyWriterUserName;
 	}
 
 	public Timestamp getUpdateDatetime() {
@@ -215,6 +246,14 @@ public class TbArticleBlogReply implements Serializable {
 
 	public void setUpdateUserId(BigInteger updateUserId) {
 		this.updateUserId = updateUserId;
+	}
+
+	public void setUserInfo(HttpServletRequest request) {
+		BigInteger userId = UserUtil.getUserId();
+		this.createUserId = userId;
+		this.updateUserId = userId;
+		this.replyWriterId = userId;
+		this.replyModifierId = userId;
 	}
 
 }

@@ -15,7 +15,11 @@ import com.karljeong.fourtysix.application.admin.file.service.FileService;
 import com.karljeong.fourtysix.database.entity.TbArticleBlog;
 import com.karljeong.fourtysix.database.entity.TbArticleBlogLike;
 import com.karljeong.fourtysix.database.entity.TbArticleBlogLikePK;
+import com.karljeong.fourtysix.database.entity.TbArticleBlogReply;
+import com.karljeong.fourtysix.database.entity.TbArticleGeneralLike;
+import com.karljeong.fourtysix.database.entity.TbArticleGeneralReply;
 import com.karljeong.fourtysix.database.repository.TbArticleBlogLikeRepository;
+import com.karljeong.fourtysix.database.repository.TbArticleBlogReplyRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleBlogRepository;
 import com.karljeong.fourtysix.database.specification.TbArticleBlogSpec;
 import com.karljeong.fourtysix.database.specification.TbArticleBlogSpec.SearchKey;
@@ -31,6 +35,9 @@ public class BlogService {
 
     @Autowired
     TbArticleBlogLikeRepository tbArticleBlogLikeRepository;
+    
+    @Autowired
+    TbArticleBlogReplyRepository tbArticleBlogReplyRepository;
 
     public Page<TbArticleBlog> readList(Map<String, Object> searchRequest, Pageable pageable) {
         Map<SearchKey, Object> searchKeys = new HashMap<>();
@@ -81,6 +88,27 @@ public class BlogService {
 
         return tbArticleBlogLike.isPresent() ? tbArticleBlogLike.get() : new TbArticleBlogLike();
     }
+
+	public TbArticleBlogReply reply(TbArticleBlogReply tbArticleBlogReply) {
+		TbArticleBlogReply createdTbArticleBlogReply= tbArticleBlogReplyRepository.save(tbArticleBlogReply);
+	    this.updateReplyCount(createdTbArticleBlogReply.getArticleId());
+		return createdTbArticleBlogReply;
+
+	}
+
+	public TbArticleBlogLike toggleLike(TbArticleBlogLike tbArticleBlogLike) {
+		TbArticleBlogLike createdTbArticleBlogLike = tbArticleBlogLikeRepository.save(tbArticleBlogLike);
+	    this.updateLikeCount(createdTbArticleBlogLike.getId().getArticleId());
+	    return createdTbArticleBlogLike;
+	}
+
+	private void updateLikeCount(BigInteger articleId) {
+		tbArticleBlogLikeRepository.saveLikeCount(articleId);
+	}
+
+	private void updateReplyCount(BigInteger articleId) {
+		tbArticleBlogLikeRepository.saveReplyCount(articleId);
+	}
 
 	private void updateViewCount(BigInteger articleId) {
 		tbArticleBlogRepository.saveViewCount(articleId);
