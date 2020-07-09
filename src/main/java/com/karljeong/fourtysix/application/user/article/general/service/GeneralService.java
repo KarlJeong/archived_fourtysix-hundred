@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -89,6 +91,14 @@ public class GeneralService {
 	}
 
 	public TbArticleGeneral create(TbArticleGeneral tbArticleGeneral) {
+		String articleContents = tbArticleGeneral.getArticleContents();
+		Pattern pattern = Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+        Matcher matcher = pattern.matcher(articleContents);
+         
+        if(matcher.find()){
+        	tbArticleGeneral.setContainImage((byte) 1);
+        }
+
 		return tbArticleGeneralRepository.save(tbArticleGeneral);
 
 	}

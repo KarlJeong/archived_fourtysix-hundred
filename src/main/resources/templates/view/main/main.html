@@ -274,24 +274,28 @@
                     <div class="row table-sm" th:each="generalArticle: ${generalArticleList}">
                         <div class="col-12 pl-1 table-sm-tbody">
                             <div class="row table-sm-tr">
-                                <div class="table-sm-td col-lg-8">
+                                <div class="table-sm-td col-lg-7">
                                     <div class="table-sm-td-content">
                                         <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == generalArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${generalArticleCategory.codeName}"></span>
                                         <span class="table-sm-td-content">
+	                                        <i th:if="${generalArticle.containImage == 1}" class="fa fa-image mr-2"></i>
                                             <a th:href="@{/b/general/viewdetail/{articleId}(articleId = ${generalArticle.articleId}, size=${generalArticleList.size}, page=${generalArticleList.number})}" th:text="${generalArticle.articleTitle}"></a>
                                         </span>
                                         <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                            <span th:text=${generalArticle.articleGeneralWriter.userName}></span>
-                                            <span class="text-muted">|</span>
-                                            <i class="fa fa-image mr-2 ml-auto"></i><span class="text-danger dashboard-count">3k</span>
+                                        	<span class="dashboard-count" th:text="${generalArticle.articleGeneralWriter.userName} + ' | '"></span>
+                                        	<span class="text-muted dashboard-count" th:text="${#fourtysixFormat.dateConverterToDateOrDateTime(generalArticle.articleWriteDatetime)} + ' | '"></span>
+                                        	<span class="text-muted dashboard-count" th:text="'view : ' + ${#fourtysixFormat.convertNumberFormat(generalArticle.articleViewCount)}"></span>  
                                         </div>
                                     </div>
                                 </div>
                                 <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
-                                    <div class="table-sm-td-content" th:text=${generalArticle.articleGeneralWriter.userName}></div>
+                                    <div class="text-muted table-sm-td-content" th:text=${generalArticle.articleGeneralWriter.userName}></div>
                                 </div>
                                 <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
-                                    <div class="table-sm-td-content"><i class="fa fa-image mr-2"></i><span class="text-danger dashboard-count">3k</span></div>
+                                    <div class="text-muted table-sm-td-content" th:text="${#fourtysixFormat.dateConverterToDateOrDateTime(generalArticle.articleWriteDatetime)}"></div>
+                                </div>
+                                <div class="table-sm-td col-lg-1 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+                                    <div class="text-muted table-sm-td-content" th:text="${#fourtysixFormat.convertNumberFormat(generalArticle.articleViewCount)}"></div>
                                 </div>
                             </div>
                         </div>
