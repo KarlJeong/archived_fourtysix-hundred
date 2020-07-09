@@ -19,6 +19,7 @@ import com.karljeong.fourtysix.database.repository.TbComAuthRepository;
 import com.karljeong.fourtysix.database.repository.TbMappUserAuthRepository;
 import com.karljeong.fourtysix.database.specification.TbComAuthSpec;
 import com.karljeong.fourtysix.database.specification.TbComAuthSpec.SearchKey;
+import com.restfb.types.User;
 
 @Service
 public class AuthService {
@@ -62,6 +63,10 @@ public class AuthService {
         return tbComAuth;
     }
 
+    public TbComAuth findByAuthCode(String authCode) {
+    	return tbComAuthRepository.findByAuthCode(authCode);
+    }
+
     public TbComAuth create(TbComAuth tbComAuth) {
         tbComAuth.setCreateUserId(BigInteger.valueOf(11111));
         TbComAuth save = tbComAuthRepository.save(tbComAuth);
@@ -69,18 +74,7 @@ public class AuthService {
         List<TbComUser> tbComUsers = tbComAuth.getTbComUsers();
         if (tbComUsers != null && !tbComUsers.isEmpty()) {
             for (TbComUser tbComUser : tbComUsers) {
-                TbMappUserAuth tbMappUserAuth = new TbMappUserAuth();
-                tbMappUserAuth.setCreateUserId(BigInteger.valueOf(11111));
-                tbMappUserAuth.setDeleteYn((byte) 0);
-
-                TbMappUserAuthPK tbMappUserAuthPK = new TbMappUserAuthPK();
-                tbMappUserAuthPK.setUserId(tbComUser.getUserId());
-                tbMappUserAuthPK.setAuthId(save.getAuthId());
-                tbMappUserAuth.setId(tbMappUserAuthPK);
-
-                tbMappUserAuth.setDeleteYn((byte) 0);
-
-                tbMappUserAuthRepository.save(tbMappUserAuth);
+            	this.addUserAuth(tbComUser.getUserId(), tbComAuth.getAuthId());
             }
         }
 
@@ -96,18 +90,7 @@ public class AuthService {
             tbMappUserAuthRepository.deleteByAuthId(tbComAuth.getAuthId());
 
             for (TbComUser tbComUser : tbComUsers) {
-                TbMappUserAuth tbMappUserAuth = new TbMappUserAuth();
-                tbMappUserAuth.setCreateUserId(BigInteger.valueOf(11111));
-                tbMappUserAuth.setDeleteYn((byte) 0);
-
-                TbMappUserAuthPK tbMappUserAuthPK = new TbMappUserAuthPK();
-                tbMappUserAuthPK.setUserId(tbComUser.getUserId());
-                tbMappUserAuthPK.setAuthId(tbComAuth.getAuthId());
-                tbMappUserAuth.setId(tbMappUserAuthPK);
-
-                tbMappUserAuth.setDeleteYn((byte) 0);
-
-                tbMappUserAuthRepository.save(tbMappUserAuth);
+            	this.addUserAuth(tbComUser.getUserId(), tbComAuth.getAuthId());
             }
         }
         return save;
@@ -118,5 +101,27 @@ public class AuthService {
         tbMappUserAuthRepository.deleteByAuthId(authId);
         return tbComAuthRepository.deleteByAuthId(authId);
     }
+    
+    public TbMappUserAuth createUserAuthMember(BigInteger userId) {
+    	TbComAuth tbComAuth = this.findByAuthCode("MEMBER");
+    	return this.addUserAuth(userId, tbComAuth.getAuthId());
+    }
+    
+    public TbMappUserAuth addUserAuth (BigInteger userId, BigInteger authId) {
+    	TbMappUserAuth tbMappUserAuth = new TbMappUserAuth();
+        tbMappUserAuth.setCreateUserId(BigInteger.valueOf(11111));
+        tbMappUserAuth.setDeleteYn((byte) 0);
+        
+    	TbMappUserAuthPK tbMappUserAuthPK = new TbMappUserAuthPK();
+    	tbMappUserAuthPK.setUserId(userId);
+	    tbMappUserAuthPK.setAuthId(authId);
+	    tbMappUserAuth.setId(tbMappUserAuthPK);
+	
+	    tbMappUserAuth.setDeleteYn((byte) 0);
+	
+	    return tbMappUserAuthRepository.save(tbMappUserAuth);
+    }
+    
+    
 
 }
