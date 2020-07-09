@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -61,9 +62,16 @@ public class BlogService {
         return tbArticleBlogList;
     }
 
-    public TbArticleBlog getBlog(String articleId) {
-        return tbArticleBlogRepository.findById(new BigInteger(articleId)).orElseGet(() -> new TbArticleBlog());
-    }
+	public Page<TbArticleBlogReply> readReplyList(BigInteger articleId, int pageNumber) {
+		final int pageSize = 20;
+
+		if (pageNumber < 0) {
+			int totalCount = tbArticleBlogReplyRepository.countByArticleId(articleId).intValue();
+			pageNumber = (totalCount - 1) / pageSize;
+		}
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		return tbArticleBlogReplyRepository.findByArticleId(articleId, pageable);
+	}
 
     public TbArticleBlog create(TbArticleBlog tbArticleBlog) {
         TbArticleBlog save = tbArticleBlogRepository.save(tbArticleBlog);
@@ -93,6 +101,12 @@ public class BlogService {
 		TbArticleBlogReply createdTbArticleBlogReply= tbArticleBlogReplyRepository.save(tbArticleBlogReply);
 	    this.updateReplyCount(createdTbArticleBlogReply.getArticleId());
 		return createdTbArticleBlogReply;
+	}
+
+	public int replyDynamic(TbArticleBlogReply tbArticleBlogReply) {
+	    int result = tbArticleBlogReplyRepository.saveReplyDynamic(tbArticleBlogReply);
+        this.updateReplyCount(tbArticleBlogReply.getArticleId());
+		return result;
 
 	}
 

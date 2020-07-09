@@ -155,7 +155,8 @@ function fnReply(subpath, articleId) {
     .then(function(d){
     });
 }
-    
+
+
 Number.prototype.format = function(){
     if(this==0) return 0;
 

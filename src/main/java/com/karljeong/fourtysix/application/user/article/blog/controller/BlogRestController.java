@@ -1,10 +1,13 @@
 package com.karljeong.fourtysix.application.user.article.blog.controller;
 
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +25,7 @@ import com.karljeong.fourtysix.database.entity.TbArticleGeneralLikePK;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneralReply;
 import com.karljeong.fourtysix.resulthandler.ResultDto;
 import com.karljeong.fourtysix.resulthandler.ResultDto.ResultCodeEnum;
+import com.karljeong.fourtysix.utils.PagingUtil;
 import com.karljeong.fourtysix.resulthandler.ResultSetter;
 
 @RestController
@@ -36,10 +40,19 @@ public class BlogRestController {
         return null;
     }
 
-    @GetMapping("/{articleId}")
-    public TbArticleBlog getBlog(@PathVariable String articleId) {
-        return blogService.getBlog(articleId);
-    }
+	@GetMapping("/{articleId}/reply/{pageNumber}")
+	public ResultDto readReplyList(@PathVariable("articleId") BigInteger articleId,
+			@PathVariable("pageNumber") int pageNumber) {
+		Page<TbArticleBlogReply> retrievedTbArticleBlogReply = blogService.readReplyList(articleId,
+				pageNumber);
+
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("replyList", retrievedTbArticleBlogReply);
+		data.put("paging", PagingUtil.getPageList(retrievedTbArticleBlogReply.getTotalPages(),
+				retrievedTbArticleBlogReply.getNumber()));
+
+		return new ResultSetter(ResultCodeEnum.SUCCESS, data).getResultDto();
+	}
 
     @PostMapping
     public ResultDto create(@RequestBody TbArticleBlog tbArticleBlog, HttpServletRequest request) {
@@ -65,6 +78,16 @@ public class BlogRestController {
 		TbArticleBlogReply createTbArticleReplyGeneral = blogService.reply(tbArticleBlogReply);
 		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleReplyGeneral,
 				"/blog/viewdetail/" + createTbArticleReplyGeneral.getArticleId()).getResultDto();
+	}
+
+	@PostMapping("/{articleId}/replydynamic")
+	public ResultDto replyDynamic(@RequestBody TbArticleBlogReply tbArticleBlogReply,
+			@PathVariable("articleId") BigInteger articleId, HttpServletRequest request) {
+		tbArticleBlogReply.setUserInfo(request);
+		tbArticleBlogReply.setArticleId(articleId);
+		int createTbArticleReplyGeneral = blogService.replyDynamic(tbArticleBlogReply);
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleReplyGeneral,
+				"/blog/viewdetail/" + tbArticleBlogReply.getArticleId()).getResultDto();
 	}
 
 	@PostMapping("/{articleId}/like/{likeYn}")

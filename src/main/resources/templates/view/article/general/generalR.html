@@ -4,16 +4,13 @@
 <title>General Discussion Forum</title>
 <script defer src="//cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script defer type="text/javascript" th:inline="javascript">
-
-
     $(function() {
         fnRetrieveReply(-1);
     });
 
     function fnRetrieveReply(pageNumber) {
         let url = "/v1/api/b/general/" + /*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/ + "/reply/" + pageNumber;
-        var params = $("#baseForm").serializeObject();
-        PromiseUtil.get(url, params)
+        PromiseUtil.get(url)
         .then(JSON.parse)
         .then(function(d){
             fnCreateReplyArea(d.data.replyList);
