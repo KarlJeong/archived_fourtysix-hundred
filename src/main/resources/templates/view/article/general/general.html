@@ -23,13 +23,14 @@
                                 <div class="form-group row col-12 col-md-6">
                                     <div class="col-4 pr-1">
                                         <label>Category</label>
-                                        <select class="form-control" id="categoryId">
-                                            <option value="" selected>All</option>
+                                        <select class="form-control" name="articleCategoryCv" id="articleCategoryCv" th:onchange="'searchArticleByCategory(\'b/general\', this.value)'">
+                                        	<option value="" selected>ALL</option>
+                                            <option th:each="generalArticleCategory : ${generalArticleCategoryList}" th:value="${generalArticleCategory.codeValue}" th:text="${generalArticleCategory.codeName}" th:selected="${generalArticleCategory.codeValue == ARTICLECATEGORYCV}"></option>
                                         </select>
                                     </div>
                                     <div class="col-4 pl-1">
                                         <label>Show</label>
-                                        <select class="form-control" id="size" name="size" th:field="${articleList.size}" onchange="fnReadList()">
+                                        <select class="form-control" id="size" name="size" th:field="${articleList.size}" th:onchange="'searchArticleBySize(\'b/general\', this.value)'">
                                             <option th:each="articleNumber : ${articleNumber}" th:value="${articleNumber.codeValue}" th:text="${articleNumber.codeName}"></option>
                                         </select>
                                     </div>
@@ -41,7 +42,7 @@
                                 <div class="row table-sm-tr">
                                     <div class="table-sm-td col-lg-8">
                                         <div class="table-sm-td-content">
-                                            <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
+                                            <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == article.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${generalArticleCategory.codeName}"></span>
                                             <span class="table-sm-td-content">
                                                 <a th:href="@{/b/general/viewdetail/{articleId}(articleId = ${article.articleId}, size=${articleList.size}, page=${articleList.number})}" th:text="${article.articleTitle}"></a>
                                             </span>
@@ -80,6 +81,7 @@
                                 <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-right"></i></a></li>
                             </ul>
                         </nav>
+                        <!-- 
                         <div class="wrapper d-flex align-items-center">
                             <form class="forms-sample w-100" id="showForm">
                                 <div class="form-group row">
@@ -99,6 +101,7 @@
                                 </div>
                             </form>
                         </div>
+                         -->
                         <div sec:authorize="hasRole('ROLE_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_ADMIN')" class="d-flex justify-content-end">
                             <a href="/b/general/viewcreate" class="btn btn-sm btn-outline-info btn-fw mt-3"><i class="fa fa-pencil pr-2"></i>Write</a>
                         </div>

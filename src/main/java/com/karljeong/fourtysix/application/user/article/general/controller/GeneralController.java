@@ -54,9 +54,15 @@ public class GeneralController {
 		model.addAttribute("articleNumber", articleNumberList);
 		model.addAttribute("paging",
 				PagingUtil.getPageList(articleGeneralList.getTotalPages(), articleGeneralList.getNumber()));
+		
+		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");
+        model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
+        model.addAttribute("ARTICLECATEGORYCV", searchRequest.get("ARTICLECATEGORYCV"));
+        
 		return "view/article/general/general";
 	}
 
+	@SuppressWarnings("unchecked")
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
         List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");

@@ -15,7 +15,7 @@ import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
 public class TbArticleGeneralSpec {
 
 	public enum SearchKey {
-		ARTICLEDELETEYN("articleDeleteYn"), ARTICLEBANYN("articleBanYn");
+		ARTICLEDELETEYN("articleDeleteYn"), ARTICLEBANYN("articleBanYn"), ARTICLECATEGORYCV("articleCategoryCv");
 
 		private final String value;
 
@@ -44,6 +44,9 @@ public class TbArticleGeneralSpec {
 				predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
 				break;
 			case ARTICLEBANYN:
+				predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
+				break;
+			case ARTICLECATEGORYCV:
 				predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
 				break;
 			default:

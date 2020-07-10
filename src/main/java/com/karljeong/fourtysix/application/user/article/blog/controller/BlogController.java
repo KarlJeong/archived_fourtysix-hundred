@@ -44,7 +44,8 @@ public class BlogController {
         this.fileService = fileService;
     }
 
-    @GetMapping("/viewmain")
+    @SuppressWarnings("unchecked")
+	@GetMapping("/viewmain")
     public String viewMain(Model model, @RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable) {
         List<Map<String, Object>> articleNumberList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ARTICLE_NUMBER").get("code");
         if (!ValidationUtil.isValidPageSize(pageable.getPageSize(), articleNumberList)) {
@@ -57,18 +58,24 @@ public class BlogController {
         model.addAttribute("articleList", articleBlogList);
         model.addAttribute("articleNumber", articleNumberList);
         model.addAttribute("paging", PagingUtil.getPageList(articleBlogList.getTotalPages(), articleBlogList.getNumber()));
-
+        
+        List<Map<String, Object>> blogArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_BLOG_CATEGORY").get("code");
+        model.addAttribute("blogArticleCategoryList", blogArticleCategoryList);
+        model.addAttribute("ARTICLECATEGORYCV", searchRequest.get("ARTICLECATEGORYCV"));
+        
         return "view/article/blog/blog";
     }
 
-    @GetMapping("/viewcreate")
+    @SuppressWarnings("unchecked")
+	@GetMapping("/viewcreate")
     public String viewCreate(Model model) {
         List<Map<String, Object>> blogArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_BLOG_CATEGORY").get("code");
         model.addAttribute("blogArticleCategoryList", blogArticleCategoryList);
         return "view/article/blog/blogC";
     }
 
-    @GetMapping("/viewupdate/{articleId}")
+    @SuppressWarnings("unchecked")
+	@GetMapping("/viewupdate/{articleId}")
     public String viewupdate(Model model, @PathVariable("articleId") BigInteger articleId, HttpServletResponse response) throws IOException {
     	TbArticleBlog tbArticleBlog = blogService.findById(articleId);
     	if (tbArticleBlog.getPublishYn() == 1) {

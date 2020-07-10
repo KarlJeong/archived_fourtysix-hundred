@@ -14,4 +14,22 @@ function fnReply(subpath, articleId) {
     .then(function(d){
     });
 }
+    
+function searchArticleByCategory(subpath, articleCategoryCv) {
+	let url = "/"+subpath+"/viewmain";
+	if (articleCategoryCv != null && articleCategoryCv !== "") {
+		url = url+"?ARTICLECATEGORYCV="+articleCategoryCv;
+	}
+	window.location.href=url;
+}
+    
+function searchArticleBySize(subpath, size) {
+	let url = "/"+subpath+"/viewmain";
+	if (articleCategoryCv != null && size !== "") {
+		url = url+"?size="+size;
+	}
+	window.location.href=url;
+}
+
+
 
