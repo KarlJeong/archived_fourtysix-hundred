@@ -459,3 +459,7 @@ select.form-control:not([size]):not([multiple]) {
     height: 3.6em;
 
 }
+
+.text-etc {
+	color: #8C8C8C !important
+}

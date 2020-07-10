@@ -39,22 +39,30 @@
                         <div class="row table-sm" th:each="article : ${articleList}">
                             <div class="col-12 table-sm-tbody">
                                 <div class="row table-sm-tr">
-                                    <div class="table-sm-td col-lg-9">
+                                    <div class="table-sm-td col-lg-8">
                                         <div class="table-sm-td-content">
                                             <span class="badge badge-info fixed-badge align-middle">NOTICE</span>
                                             <span class="table-sm-td-content">
                                                 <a th:href="@{/b/general/viewdetail/{articleId}(articleId = ${article.articleId}, size=${articleList.size}, page=${articleList.number})}" th:text="${article.articleTitle}"></a>
                                             </span>
-                                            <div class="text-right pt-2 d-block d-lg-none d-xl-none">
-                                                <span class="" th:text="${article.articleGeneralWriter.userName}"></span>
-                                                <span class="text-muted">|</span>
-                                                <span class="" th:text="${#dates.format(article.articleWriteDatetime, 'yyyy-MM-dd')}"></span>
+                                            <div class="text-left pt-2 d-block d-lg-none d-xl-none">
+	                                        	<span class="text-etc dashboard-count ml-2"><i th:if="${article.containImage == 1}" class="fa fa-image" th:text="${' | '}"></i></span>
+	                                        	<span class="text-etc dashboard-count" th:text="${article.articleGeneralWriter.userName} + ' | '"></span>
+	                                        	<span class="text-etc dashboard-count" th:text="${#fourtysixFormat.dateConverterToDateOrDateTime(article.articleWriteDatetime)} + ' | '"></span>
+	                                        	<span class="text-etc dashboard-count" th:text="'view : ' + ${#fourtysixFormat.convertNumberFormat(article.articleViewCount)}"></span>  
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center"><div class="table-sm-td-content" th:text="${article.articleGeneralWriter.userName}"></div></div>
-                                    <div class="table-sm-td col-lg-1 table-sm-td-sep d-none d-lg-block d-xl-block text-center"><div class="table-sm-td-content" th:text="${#dates.format(article.articleWriteDatetime, 'yyyy-MM-dd')}"></div></div>
+	                                <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+	                                    <div class="text-etc table-sm-td-content" th:text=${article.articleGeneralWriter.userName}></div>
+	                                </div>
+	                                <div class="table-sm-td col-lg-1 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+	                                    <div class="text-etc table-sm-td-content" th:text="${#fourtysixFormat.dateConverterToDateOrDateTime(article.articleWriteDatetime)}"></div>
+	                                </div>
+	                                <div class="table-sm-td col-lg-1 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+	                                    <div class="text-etc text-right table-sm-td-content" th:text="'view : ' + ${#fourtysixFormat.convertNumberFormat(article.articleViewCount)}"></div>
+	                                </div>
                                 </div>
                             </div>
                         </div>
