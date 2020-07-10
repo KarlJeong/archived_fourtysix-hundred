@@ -23,10 +23,6 @@ a.card-title-link {
     text-align: center;
   }
 
-.fixed-badge {
-  width: 65px;
-}
-
 .dashboard-ellipsis {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -462,4 +458,98 @@ select.form-control:not([size]):not([multiple]) {
 
 .text-etc {
 	color: #8C8C8C !important
+}
+
+/** Badge **/
+
+.fixed-badge {
+  width: 65px;
+}
+
+.badge-LIFE, .badge-NOTICE {
+	color: #fff !important;
+	background-color: #464de4 !important; 
+	border: 1px solid #464de4 !important;
+}
+.badge-LIFE[href]:hover, .badge-LIFE[href]:focus, .badge-NOTICE[href]:hover, .badge-NOTICE[href]:focus {
+	color: #fff !important;
+    text-decoration: none !important;
+    background-color: #1f28d8 !important;
+}
+
+.badge-LANGUAGE {
+	color: #212529 !important;
+	background-color: #dfe8fb !important; 
+	border: 1px solid #dfe8fb !important;
+}
+.badge-LANGUAGE[href]:hover, .badge-LANGUAGE[href]:focus {
+    color: #212529 !important;
+    text-decoration: none !important;
+    background-color: #b2c7f5 !important; 
+}
+
+.badge-FOOD {
+	color: #212529 !important;
+	background-color: #4CCEAC !important; 
+	border: 1px solid #4CCEAC !important;
+}
+.badge-FOOD[href]:hover, .badge-FOOD[href]:focus {
+    color: #212529 !important;
+    text-decoration: none !important;
+    background-color: #32b593 !important; 
+}
+
+.badge-info {
+	color: #fff;
+	background-color: #857bff; 
+	border: 1px solid #857bff;
+}
+.badge-info[href]:hover, .badge-info[href]:focus {
+    color: #fff;
+    text-decoration: none;
+    background-color: #5648ff; 
+}
+
+.badge-warning {
+	color: #212529 !important;
+	background-color: #FF6F59 !important; 
+	border: 1px solid #FF6F59 !important;
+}
+.badge-warning[href]:hover, .badge-warning[href]:focus {
+    color: #212529 !important;
+    text-decoration: none !important;
+    background-color: #ff4326 !important; 
+}
+
+.badge-danger {
+  color: #fff !important;
+  background-color: #DB504A !important; 
+	border: 1px solid #DB504A !important;
+}
+.badge-danger[href]:hover, .badge-danger[href]:focus {
+    color: #fff !important;
+    text-decoration: none !important;
+    background-color: #ca2f28 !important; 
+}
+
+.badge-light {
+	color: #212529 !important;
+	background-color: #f3f5f6 !important; 
+	border: 1px solid #f3f5f6 !important;
+}
+.badge-light[href]:hover, .badge-light[href]:focus {
+    color: #212529 !important;
+    text-decoration: none !important;
+    background-color: #d6dde0 !important; 
+}
+
+.badge-dark {
+	color: #fff !important;
+	background-color: #223C61 !important; 
+	border: 1px solid #223C61 !important;
+}
+.badge-dark[href]:hover, .badge-dark[href]:focus {
+    color: #fff !important;
+    text-decoration: none !important;
+    background-color: #15253b !important; 
 }

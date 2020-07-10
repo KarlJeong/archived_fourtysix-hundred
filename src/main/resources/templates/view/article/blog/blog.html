@@ -52,7 +52,7 @@
                                         <img class="w-100" th:src="@{${'/v1/api/file/img/' + blog.thumbnailFileId}}" alt="tab Preview">
 	                                    <div class="card-img-overlay d-flex">
 	                                        <div class="w-100">
-	                                            <div class="badge badge-pill badge-warning fixed-badge align-middle"  th:each="blogArticleCategory : ${blogArticleCategoryList}" th:object="${blogArticleCategory}" th:if="${blogArticleCategory.codeValue == blog.articleCategoryCv}" th:text="${blogArticleCategory.codeName}" style="padding: 0.2rem 0.5rem; font-size:0.8rem;"></div>
+	                                            <div class="badge badge-pill badge-info fixed-badge align-middle"  th:each="blogArticleCategory : ${blogArticleCategoryList}" th:object="${blogArticleCategory}" th:if="${blogArticleCategory.codeValue == blog.articleCategoryCv}" th:classappend="${'badge-'+blogArticleCategory.codeValue}" th:text="${blogArticleCategory.codeName}" style="padding: 0.2rem 0.5rem; font-size:0.8rem;"></div>
 	                                        </div>
 	                                    </div>
                                     </div>

@@ -28,7 +28,7 @@
                                     <img class="card-img" th:src="@{${'/v1/api/file/img/' + blogArticle.thumbnailFileId}}" alt="Card image" style="width:100%; max-height:300px;">
                                     <div class="card-img-overlay d-flex">
                                         <div class="w-100">
-                                            <div class="badge badge-pill badge-warning fixed-badge align-middle"  th:each="blogArticleCategory : ${blogArticleCategoryList}" th:object="${blogArticleCategory}" th:if="${blogArticleCategory.codeValue == blogArticle.articleCategoryCv}" th:text="${blogArticleCategory.codeName}" style="padding: 0.2rem 0.5rem; font-size:0.8rem;"></div>
+                                            <div class="badge badge-pill badge-info fixed-badge align-middle"  th:each="blogArticleCategory : ${blogArticleCategoryList}" th:object="${blogArticleCategory}" th:classappend="${'badge-'+blogArticleCategory.codeValue}" th:if="${blogArticleCategory.codeValue == blogArticle.articleCategoryCv}" th:text="${blogArticleCategory.codeName}" style="padding: 0.2rem 0.5rem; font-size:0.8rem;"></div>
                                         </div>
                                     </div>
                                     <div class="">
@@ -240,7 +240,7 @@
                             <div class="row table-sm-tr">
                                 <div class="table-sm-td col-lg-10">
                                     <div class="table-sm-td-content">
-                                        <span th:each="noticeArticleCategory : ${noticeArticleCategoryList}" th:object="${noticeArticleCategory}" th:if="${noticeArticleCategory.codeValue == noticeArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${noticeArticleCategory.codeName}"></span>
+                                        <span th:each="noticeArticleCategory : ${noticeArticleCategoryList}" th:object="${noticeArticleCategory}" th:if="${noticeArticleCategory.codeValue == noticeArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:classappend="${'badge-'+noticeArticleCategory.codeValue}" th:text="${noticeArticleCategory.codeName}"></span>
                                         <span class="table-sm-td-content">
                                             <a th:href="@{/notice/viewdetail/{articleId}(articleId = ${noticeArticle.articleId})}" th:text="${noticeArticle.articleTitle}"></a>
                                         </span>
@@ -276,7 +276,7 @@
                             <div class="row table-sm-tr">
                                 <div class="table-sm-td col-lg-7">
                                     <div class="table-sm-td-content">
-                                        <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == generalArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:text="${generalArticleCategory.codeName}"></span>
+                                        <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == generalArticle.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:classappend="${'badge-'+generalArticleCategory.codeValue}" th:text="${generalArticleCategory.codeName}"></span>
                                         <span class="table-sm-td-content">
                                             <a th:href="@{/b/general/viewdetail/{articleId}(articleId = ${generalArticle.articleId}, size=${generalArticleList.size}, page=${generalArticleList.number})}" th:text="${generalArticle.articleTitle}"></a>
                                         </span>
