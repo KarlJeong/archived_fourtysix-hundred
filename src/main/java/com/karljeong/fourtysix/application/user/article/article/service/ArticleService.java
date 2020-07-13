@@ -1,7 +1,10 @@
 package com.karljeong.fourtysix.application.user.article.article.service;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,20 @@ public class ArticleService {
                 : tbArticleRepository.findAll(TbArticleSpec.searchWithKeys(searchKeys), pageable);
 
         return tbArticleBlogList;
+    }
+    
+    public List<HashMap<String, Object>> getArticleCodes(BigInteger userId) {
+    	List<Object[]> result = tbArticleRepository.getArticleCodes(userId);
+    	List<HashMap<String, Object>> codeList = new ArrayList<HashMap<String, Object>>();
+    	for (Object[] o : result) {
+    		System.out.println(o[0]);
+    		System.out.println(o[1]);
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("articleCode", (String) o[0]);
+			m.put("articleCodeCount", ((BigInteger) o[1]).intValue());
+			codeList.add(m);
+    	}
+    	return codeList;
     }
 
     public TbArticle create(TbArticle tbArticle) {

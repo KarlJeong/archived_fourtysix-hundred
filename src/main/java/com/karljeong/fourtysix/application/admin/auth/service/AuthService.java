@@ -107,6 +107,13 @@ public class AuthService {
     	return this.addUserAuth(userId, tbComAuth.getAuthId());
     }
     
+    public TbMappUserAuth findUserAuth (BigInteger userId, BigInteger authId) {
+    	TbMappUserAuthPK tbMappUserAuthPK = new TbMappUserAuthPK();
+    	tbMappUserAuthPK.setUserId(userId);
+	    tbMappUserAuthPK.setAuthId(authId);
+	    return tbMappUserAuthRepository.findById(tbMappUserAuthPK).get();
+    }
+    
     public TbMappUserAuth addUserAuth (BigInteger userId, BigInteger authId) {
     	TbMappUserAuth tbMappUserAuth = new TbMappUserAuth();
         tbMappUserAuth.setCreateUserId(BigInteger.valueOf(11111));

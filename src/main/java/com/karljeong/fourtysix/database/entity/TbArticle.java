@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.servlet.http.HttpServletRequest;
 
 import com.karljeong.fourtysix.utils.DateUtil;
@@ -73,6 +74,9 @@ public class TbArticle implements Serializable {
 
 	@Column(name = "ARTICLE_MODIFY_DATETIME", insertable = false)
     private Timestamp articleModifyDatetime = DateUtil.getTimestamp();
+	
+	@Transient
+	private int articleCodeCount;
 	
 	public TbArticle() {
 	}
@@ -205,6 +209,15 @@ public class TbArticle implements Serializable {
 
 	public void setArticleModifyDatetime(Timestamp articleModifyDatetime) {
 		this.articleModifyDatetime = articleModifyDatetime;
+	}
+	
+	public int getArticleCodeCount() {
+		return articleCodeCount;
+	}
+
+
+	public void setArticleCodeCount(int articleCodeCount) {
+		this.articleCodeCount = articleCodeCount;
 	}
 
 
