@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}" xmlns:sec="http://www.thymeleaf.org">
+<head>
+<title>My Articles</title>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card px-2">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <h2>My Articles</h2>
+                                <div class="separator-2"></div>
+                            </div>
+                        </div>
+                        <div class="row table-sm" th:each="article : ${articleList}">
+                            <div class="col-12 table-sm-tbody">
+                                <div class="row table-sm-tr">
+                                    <div class="table-sm-td col-lg-8">
+                                        <div class="table-sm-td-content">
+                                            <span th:each="generalArticleCategory : ${generalArticleCategoryList}" th:object="${generalArticleCategory}" th:if="${generalArticleCategory.codeValue == article.articleCategoryCv}" class="badge badge-info fixed-badge align-middle" th:classappend="${'badge-'+generalArticleCategory.codeValue}" th:text="${generalArticleCategory.codeName}"></span>
+                                            <span class="table-sm-td-content">
+                                                <a th:href="@{/b/general/viewdetail/{articleId}(articleId = ${article.articleId}, size=${articleList.size}, page=${articleList.number})}" th:text="${article.articleTitle}"></a>
+                                            </span>
+                                            <div class="text-left pt-2 d-block d-lg-none d-xl-none">
+	                                        	<span class="text-etc dashboard-count ml-2"><i th:if="${article.containImage == 1}" class="fa fa-image" th:text="${' | '}"></i></span>
+	                                        	<span class="text-etc dashboard-count" th:text="${article.articleGeneralWriter.userName} + ' | '"></span>
+	                                        	<span class="text-etc dashboard-count" th:text="${#fourtysixFormat.dateConverterToDateOrDateTime(article.articleWriteDatetime)} + ' | '"></span>
+	                                        	<span class="text-etc dashboard-count" th:text="'view : ' + ${#fourtysixFormat.convertNumberFormat(article.articleViewCount)}"></span>  
+                                            </div>
+                                        </div>
+
+                                    </div>
+	                                <div class="table-sm-td col-lg-2 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+	                                    <div class="text-etc table-sm-td-content" th:text=${article.articleGeneralWriter.userName}></div>
+	                                </div>
+	                                <div class="table-sm-td col-lg-1 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+	                                    <div class="text-etc table-sm-td-content" th:text="${#fourtysixFormat.dateConverterToDateOrDateTime(article.articleWriteDatetime)}"></div>
+	                                </div>
+	                                <div class="table-sm-td col-lg-1 table-sm-td-sep d-none d-lg-block d-xl-block text-center">
+	                                    <div class="text-etc text-right table-sm-td-content" th:text="'view : ' + ${#fourtysixFormat.convertNumberFormat(article.articleViewCount)}"></div>
+	                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <nav>
+                            <ul
+                                class="py-4 pagination rounded-flat d-flex justify-content-center pagination-primary">
+                                <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-left"></i></a></li>
+
+                                <th:block th:if="${articleList.totalPages > 0}" th:each="pageNumber : ${paging}">
+                                <li class="page-item" th:classappend="${pageNumber==articleList.number +1} ? active">
+                                    <a class="page-link" th:href="@{/b/general/viewmain(size=${articleList.size}, page=${pageNumber -1})}" th:text="${pageNumber}" ></a>
+                                </li>
+                                </th:block>
+
+                                <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-right"></i></a></li>
+                            </ul>
+                        </nav>
+                        <!-- 
+                        <div class="wrapper d-flex align-items-center">
+                            <form class="forms-sample w-100" id="showForm">
+                                <div class="form-group row">
+                                    <div class="col-8 col-md-5 row mx-auto">
+                                        <div class="col-4 px-0">
+                                            <select class="form-control" name="category">
+                                                <option value="title">Title</option>
+                                                <option value="writer">Writer</option>
+                                                <option value="contents">Title+Writer</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5 px-0">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <button class="btn btn-info col-3 px-0" type="button">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                         -->
+                        <div sec:authorize="hasRole('ROLE_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_ADMIN')" class="d-flex justify-content-end">
+                            <a href="/b/general/viewcreate" class="btn btn-sm btn-outline-info btn-fw mt-3"><i class="fa fa-pencil pr-2"></i>Write</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.karljeong.fourtysix.application.user.article.article.service.ArticleService;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneralLike;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneralLikePK;
@@ -33,14 +34,17 @@ public class GeneralService {
 	private final TbArticleGeneralRepository tbArticleGeneralRepository;
 	private final TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository;
 	private final TbArticleGeneralLikeRepository tbArticleGeneralLikeRepository;
-
+	private final ArticleService articleService;
+    
 	@Autowired
 	GeneralService(TbArticleGeneralRepository tbArticleGeneralRepository,
 			TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository,
-			TbArticleGeneralLikeRepository tbArticleGeneralLikeRepository) {
+			TbArticleGeneralLikeRepository tbArticleGeneralLikeRepository,
+			ArticleService articleService) {
 		this.tbArticleGeneralRepository = tbArticleGeneralRepository;
 		this.tbArticleGeneralReplyRepository = tbArticleGeneralReplyRepository;
 		this.tbArticleGeneralLikeRepository = tbArticleGeneralLikeRepository;
+		this.articleService = articleService;
 	}
 
 	public Page<TbArticleGeneral> readList(Map<String, Object> searchRequest, Pageable pageable) {
@@ -99,13 +103,25 @@ public class GeneralService {
         	tbArticleGeneral.setContainImage((byte) 1);
         }
 
-		return tbArticleGeneralRepository.save(tbArticleGeneral);
+        TbArticleGeneral save = tbArticleGeneralRepository.save(tbArticleGeneral);
+        articleService.create(articleService.convertToTbArticle(save));
+		return save;
 
 	}
 
 	public TbArticleGeneral update(TbArticleGeneral tbArticleGeneral) {
-		return tbArticleGeneralRepository.save(tbArticleGeneral);
+		String articleContents = tbArticleGeneral.getArticleContents();
+		Pattern pattern = Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+        Matcher matcher = pattern.matcher(articleContents);
+         
+        if(matcher.find()){
+        	tbArticleGeneral.setContainImage((byte) 1);
+        }
 
+
+        TbArticleGeneral save = tbArticleGeneralRepository.save(tbArticleGeneral);
+        articleService.update(articleService.convertToTbArticle(save));
+		return save;
 	}
 
 	public TbArticleGeneralReply reply(TbArticleGeneralReply tbArticleGeneralReply) {

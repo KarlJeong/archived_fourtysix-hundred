@@ -11,14 +11,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.karljeong.fourtysix.application.admin.file.service.FileService;
+import com.karljeong.fourtysix.application.user.article.article.service.ArticleService;
 import com.karljeong.fourtysix.database.entity.TbArticleBlog;
 import com.karljeong.fourtysix.database.entity.TbArticleBlogLike;
 import com.karljeong.fourtysix.database.entity.TbArticleBlogLikePK;
 import com.karljeong.fourtysix.database.entity.TbArticleBlogReply;
-import com.karljeong.fourtysix.database.entity.TbArticleGeneralLike;
-import com.karljeong.fourtysix.database.entity.TbArticleGeneralReply;
 import com.karljeong.fourtysix.database.repository.TbArticleBlogLikeRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleBlogReplyRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleBlogRepository;
@@ -30,6 +30,9 @@ import com.karljeong.fourtysix.utils.ArticleUtil;
 public class BlogService {
     @Autowired
     FileService fileService;
+    
+    @Autowired
+    ArticleService articleService;
 
     @Autowired
     TbArticleBlogRepository tbArticleBlogRepository;
@@ -73,13 +76,17 @@ public class BlogService {
 		return tbArticleBlogReplyRepository.findByArticleId(articleId, pageable);
 	}
 
+	@Transactional
     public TbArticleBlog create(TbArticleBlog tbArticleBlog) {
         TbArticleBlog save = tbArticleBlogRepository.save(tbArticleBlog);
+        articleService.create(articleService.convertToTbArticle(save));
         return save;
     }
 
+	@Transactional
     public TbArticleBlog update(TbArticleBlog tbArticleBlog) {
         TbArticleBlog save = tbArticleBlogRepository.save(tbArticleBlog);
+        articleService.update(articleService.convertToTbArticle(save));
         return save;
     }
 
