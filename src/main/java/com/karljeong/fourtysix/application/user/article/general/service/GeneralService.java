@@ -8,8 +8,6 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,12 +33,11 @@ public class GeneralService {
 	private final TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository;
 	private final TbArticleGeneralLikeRepository tbArticleGeneralLikeRepository;
 	private final ArticleService articleService;
-    
+
 	@Autowired
 	GeneralService(TbArticleGeneralRepository tbArticleGeneralRepository,
 			TbArticleGeneralReplyRepository tbArticleGeneralReplyRepository,
-			TbArticleGeneralLikeRepository tbArticleGeneralLikeRepository,
-			ArticleService articleService) {
+			TbArticleGeneralLikeRepository tbArticleGeneralLikeRepository, ArticleService articleService) {
 		this.tbArticleGeneralRepository = tbArticleGeneralRepository;
 		this.tbArticleGeneralReplyRepository = tbArticleGeneralReplyRepository;
 		this.tbArticleGeneralLikeRepository = tbArticleGeneralLikeRepository;
@@ -80,7 +77,7 @@ public class GeneralService {
 		return tbArticleGeneralReplyRepository.findByArticleId(articleId, pageable);
 	}
 
-	public TbArticleGeneral findById(BigInteger articleId, HttpServletRequest request) {
+	public TbArticleGeneral findById(BigInteger articleId) {
 		if (ArticleUtil.readArticleFirst("blog", articleId)) {
 			this.updateViewCount(articleId);
 		}
@@ -97,14 +94,14 @@ public class GeneralService {
 	public TbArticleGeneral create(TbArticleGeneral tbArticleGeneral) {
 		String articleContents = tbArticleGeneral.getArticleContents();
 		Pattern pattern = Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
-        Matcher matcher = pattern.matcher(articleContents);
-         
-        if(matcher.find()){
-        	tbArticleGeneral.setContainImage((byte) 1);
-        }
+		Matcher matcher = pattern.matcher(articleContents);
 
-        TbArticleGeneral save = tbArticleGeneralRepository.save(tbArticleGeneral);
-        articleService.create(articleService.convertToTbArticle(save));
+		if (matcher.find()) {
+			tbArticleGeneral.setContainImage((byte) 1);
+		}
+
+		TbArticleGeneral save = tbArticleGeneralRepository.save(tbArticleGeneral);
+		articleService.create(articleService.convertToTbArticle(save));
 		return save;
 
 	}
@@ -112,50 +109,49 @@ public class GeneralService {
 	public TbArticleGeneral update(TbArticleGeneral tbArticleGeneral) {
 		String articleContents = tbArticleGeneral.getArticleContents();
 		Pattern pattern = Pattern.compile("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
-        Matcher matcher = pattern.matcher(articleContents);
-         
-        if(matcher.find()){
-        	tbArticleGeneral.setContainImage((byte) 1);
-        }
+		Matcher matcher = pattern.matcher(articleContents);
 
+		if (matcher.find()) {
+			tbArticleGeneral.setContainImage((byte) 1);
+		}
 
-        TbArticleGeneral save = tbArticleGeneralRepository.save(tbArticleGeneral);
-        articleService.update(articleService.convertToTbArticle(save));
+		TbArticleGeneral save = tbArticleGeneralRepository.save(tbArticleGeneral);
+		articleService.update(articleService.convertToTbArticle(save));
 		return save;
 	}
 
 	public TbArticleGeneralReply reply(TbArticleGeneralReply tbArticleGeneralReply) {
-	    TbArticleGeneralReply createdTbArticleGeneralReply= tbArticleGeneralReplyRepository.save(tbArticleGeneralReply);
-	    this.updateReplyCount(createdTbArticleGeneralReply.getArticleId());
+		TbArticleGeneralReply createdTbArticleGeneralReply = tbArticleGeneralReplyRepository
+				.save(tbArticleGeneralReply);
+		this.updateReplyCount(createdTbArticleGeneralReply.getArticleId());
 		return createdTbArticleGeneralReply;
 
 	}
 
 	public int replyDynamic(TbArticleGeneralReply tbArticleGeneralReply) {
-	    int result = tbArticleGeneralReplyRepository.saveReplyDynamic(tbArticleGeneralReply);
-	    
-	    
-        this.updateReplyCount(tbArticleGeneralReply.getArticleId());
+		int result = tbArticleGeneralReplyRepository.saveReplyDynamic(tbArticleGeneralReply);
+
+		this.updateReplyCount(tbArticleGeneralReply.getArticleId());
 		return result;
 
 	}
 
 	public TbArticleGeneralLike toggleLike(TbArticleGeneralLike tbArticleGeneralLike) {
-	    TbArticleGeneralLike createdTbArticleGeneralLike = tbArticleGeneralLikeRepository.save(tbArticleGeneralLike);
-	    this.updateLikeCount(createdTbArticleGeneralLike.getId().getArticleId());
-	    return createdTbArticleGeneralLike;
+		TbArticleGeneralLike createdTbArticleGeneralLike = tbArticleGeneralLikeRepository.save(tbArticleGeneralLike);
+		this.updateLikeCount(createdTbArticleGeneralLike.getId().getArticleId());
+		return createdTbArticleGeneralLike;
 	}
 
 	private void updateLikeCount(BigInteger articleId) {
-	    tbArticleGeneralRepository.saveLikeCount(articleId);
+		tbArticleGeneralRepository.saveLikeCount(articleId);
 	}
 
 	private void updateReplyCount(BigInteger articleId) {
-	    tbArticleGeneralRepository.saveReplyCount(articleId);
+		tbArticleGeneralRepository.saveReplyCount(articleId);
 	}
 
 	private void updateViewCount(BigInteger articleId) {
-        tbArticleGeneralRepository.saveViewCount(articleId);
+		tbArticleGeneralRepository.saveViewCount(articleId);
 	}
 
 }

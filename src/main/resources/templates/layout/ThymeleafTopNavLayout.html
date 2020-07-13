@@ -84,7 +84,7 @@
                                     </div>
                                 </a>
                                 <a th:href="@{/blog/viewcreate}" class="dropdown-item mt-2"> Write Blog </a>
-                                <a th:href="@{/myarticle/{userId}/viewmain(userId=${#authentication.Principal.userId})}" class="dropdown-item"> My Articles </a>
+                                <a th:href="@{/myarticle/viewmain(userId=${#authentication.Principal.userId})}" class="dropdown-item"> My Articles </a>
                                 <a class="dropdown-item" th:text="${#authentication.Principal.userId}"> Manage Accounts </a>
                                 <a class="dropdown-item"> Change Password </a>
                                 <a href="/logout" class="dropdown-item"> Sign Out </a>

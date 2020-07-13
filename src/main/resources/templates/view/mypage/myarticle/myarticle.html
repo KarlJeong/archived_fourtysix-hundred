@@ -2,6 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}" xmlns:sec="http://www.thymeleaf.org">
 <head>
 <title>My Articles</title>
+<script defer type="text/javascript" th:inline="javascript">
+    $(function() {
+    	var articleCode = /*<![CDATA[*//*[[ ${articleCodeList[0].codeValue} ]]*//*]]>*/;
+    	fnRetrieveMyArticle(articleCode, 0);
+    });
+
+    function fnRetrieveMyArticle(articleCode, page) {
+    	let url = "/v1/api/myarticle";
+    	var params = {
+    			size : 20,
+    			page : page,
+    			articleCode : articleCode
+    	};
+        PromiseUtil.get(url, params)
+        .then(JSON.parse)
+        .then(function(d){
+        	console.log(d);
+        });
+    }
+
+</script>
 </head>
 
 <body>
@@ -26,9 +47,6 @@
 								<span th:text="${articleCode.codeValue}"></span>
 							</div>
 						</div>
-                        <div sec:authorize="hasRole('ROLE_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_ADMIN')" class="d-flex justify-content-end">
-                            <a href="/b/general/viewcreate" class="btn btn-sm btn-outline-info btn-fw mt-3"><i class="fa fa-pencil pr-2"></i>Write</a>
-                        </div>
                     </div>
                 </div>
             </div>

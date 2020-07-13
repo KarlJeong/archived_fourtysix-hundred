@@ -49,24 +49,27 @@ public class GeneralController {
 			throw new RuntimeException("Invalid Paging Request.");
 		}
 
-		Page<TbArticleGeneral> articleGeneralList = generalService.readList(searchRequest, PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("articleWriteDatetime").descending()));
+		Page<TbArticleGeneral> articleGeneralList = generalService.readList(searchRequest, PageRequest
+				.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("articleWriteDatetime").descending()));
 		model.addAttribute("articleList", articleGeneralList);
 		model.addAttribute("articleNumber", articleNumberList);
 		model.addAttribute("paging",
 				PagingUtil.getPageList(articleGeneralList.getTotalPages(), articleGeneralList.getNumber()));
-		
-		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");
-        model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
-        model.addAttribute("ARTICLECATEGORYCV", searchRequest.get("ARTICLECATEGORYCV"));
-        
+
+		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode()
+				.get("ART_GENERAL_CATEGORY").get("code");
+		model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
+		model.addAttribute("ARTICLECATEGORYCV", searchRequest.get("ARTICLECATEGORYCV"));
+
 		return "view/article/general/general";
 	}
 
 	@SuppressWarnings("unchecked")
 	@GetMapping("/viewcreate")
 	public String viewCreate(Model model) {
-        List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");
-        model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
+		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode()
+				.get("ART_GENERAL_CATEGORY").get("code");
+		model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
 		return "view/article/general/generalC";
 	}
 
@@ -75,7 +78,7 @@ public class GeneralController {
 	public String viewUpdate(Model model, @PathVariable("articleId") BigInteger articleId,
 			@RequestParam(required = false) Map<String, Object> searchRequest, final Pageable pageable,
 			HttpServletRequest request) {
-		model.addAttribute("articleInfo", generalService.findById(articleId, request));
+		model.addAttribute("articleInfo", generalService.findById(articleId));
 
 		List<Map<String, Object>> articleNumberList = (List<Map<String, Object>>) loadStatic.getSystemCode()
 				.get("ARTICLE_NUMBER").get("code");

@@ -15,7 +15,7 @@ import com.karljeong.fourtysix.database.entity.TbArticle;
 public class TbArticleSpec {
 
 	public enum SearchKey {
-		ARTICLEDELETEYN("articleDeleteYn"), ARTICLEBANYN("articleBanYn"), REQUESTPUBLISHYN("requestPublishYn"), PUBLISHYN("publishYn"), ARTICLECATEGORYCV("articleCategoryCv");
+		ARTICLECODE("articleCode"), ARTICLEWRITERID("articleWriterId");
 
 		private final String value;
 
@@ -35,26 +35,17 @@ public class TbArticleSpec {
 		});
 	}
 
-	private static List<Predicate> getPredicateWithKeyword(Map<SearchKey, Object> searchKeyword,
-			Root<TbArticle> root, CriteriaBuilder builder) {
+	private static List<Predicate> getPredicateWithKeyword(Map<SearchKey, Object> searchKeyword, Root<TbArticle> root,
+			CriteriaBuilder builder) {
 		List<Predicate> predicate = new ArrayList<>();
 		for (SearchKey key : searchKeyword.keySet()) {
 			switch (key) {
-			case ARTICLEDELETEYN:
+			case ARTICLECODE:
 				predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
 				break;
-			case ARTICLEBANYN:
+			case ARTICLEWRITERID:
 				predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
 				break;
-            case REQUESTPUBLISHYN:
-                predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
-                break;
-            case PUBLISHYN:
-                predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
-                break;
-            case ARTICLECATEGORYCV:
-                predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
-                break;
 			default:
 				break;
 			}
