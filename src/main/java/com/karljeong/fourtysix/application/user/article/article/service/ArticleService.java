@@ -47,8 +47,6 @@ public class ArticleService {
     	List<Object[]> result = tbArticleRepository.getArticleCodes(userId);
     	List<HashMap<String, Object>> codeList = new ArrayList<HashMap<String, Object>>();
     	for (Object[] o : result) {
-    		System.out.println(o[0]);
-    		System.out.println(o[1]);
 			HashMap<String, Object> m = new HashMap<String, Object>();
 			m.put("articleCode", (String) o[0]);
 			m.put("articleCodeCount", ((BigInteger) o[1]).intValue());
@@ -92,6 +90,7 @@ public class ArticleService {
     	tbArticle.setArticleModifyDatetime(tbArticleBlog.getArticleModifyDatetime());
     	tbArticle.setCreateUserId(tbArticleBlog.getCreateUserId());
     	tbArticle.setCreateDatetime(tbArticleBlog.getCreateDatetime());
+    	tbArticle.setPublishYn(tbArticleBlog.getPublishYn());
     	return tbArticle;
     }
 }

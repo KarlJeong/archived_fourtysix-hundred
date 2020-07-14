@@ -18,8 +18,84 @@
         PromiseUtil.get(url, params)
         .then(JSON.parse)
         .then(function(d){
-        	console.log(d);
+        	if (articleCode === "BLOG") {
+        		fnCreateBlogTableArea(d.data.articleList);
+        	} else {
+	        	fnCreateTableArea(articleCode, d.data.articleList);
+        	}
         });
+    }
+    
+    function fnCreateTableArea(articleCode, rData) {
+    	let html = [];
+    	console.log(rData);
+    	html.push('<div class="table-responsive">');
+    	html.push('<table class="table table-hover">');
+    	html.push('<thead>');
+    	html.push('<tr>');
+    	html.push('<th width="70%">Article Title</th>');
+    	html.push('<th width="15%">Writer Name</th>');
+    	html.push('<th width="15%">Written Datetime</th>');
+    	html.push('</tr>');
+    	html.push('</thead>');
+    	html.push('<tbody>');
+    	if (rData.content.length == 0) {
+    		html.push('<tr>');
+    		html.push('<td>No contents</td>');
+    		html.push('</tr>');
+    	} else {
+	    	for (var i = 0 ; i < rData.content.length ; i++) {
+	    		var d = rData.content[i];
+	    		html.push('<tr>');
+	    		html.push('<td><a href="/b/general/viewdetail/'+d.articleId+'">'+d.articleTitle+'</a></td>');
+	    		html.push('<td>'+d.articleBlogWriter.userName+'</td>');
+	    		html.push('<td>'+dateConverterToDateOrDateTime(d.articleWriteDatetime)+'</td>');
+	    		html.push('</tr>');
+	    	}
+    	}
+    	html.push('</tbody>');
+    	html.push('</table>');
+    	html.push('</div>');
+    	let $tableDiv = $("#div-"+articleCode);
+        $tableDiv.empty();
+    	$tableDiv.append(html.join(''));
+    }
+    
+    function fnCreateBlogTableArea(rData) {
+    	let html = [];
+    	html.push('<div class="table-responsive">');
+    	html.push('<table class="table table-hover">');
+    	html.push('<thead>');
+    	html.push('<tr>');
+    	html.push('<th width="50%">Article Title</th>');
+    	html.push('<th width="15%">Status</th>');
+    	html.push('<th width="25%">Writer Name</th>');
+    	html.push('<th width="20%">Written Datetime</th>');
+    	html.push('</tr>');
+    	html.push('</thead>');
+    	html.push('<tbody>');
+    	if (rData.content.length == 0) {
+    		html.push('<tr>');
+    		html.push('<td>No contents</td>');
+    		html.push('</tr>');
+    	} else {
+	    	for (var i = 0 ; i < rData.content.length ; i++) {
+	    		var d = rData.content[i];
+	    		html.push('<tr>');
+	    		html.push('<td><a href="/blog/viewdetail/'+d.articleId+'">'+d.articleTitle+'</a></td>');
+	    		html.push('<td>'+d.articleBlogWriter.userName+'</td>');
+	    		html.push('<td>'+(d.publishYn == 0 ? '<label class="badge badge-info">Draft</label>' : '<label class="badge badge-warning">Published</label>')+'</label></td>');
+	    		html.push('<td>'+dateConverterToDateOrDateTime(d.articleWriteDatetime)+'</td>');
+	    		html.push('</tr>');
+	    	}
+    	}
+    	html.push('</tbody>');
+    	html.push('</table>');
+    	html.push('</div>');
+    	let $tableDiv = $("#div-BLOG");
+        $tableDiv.empty();
+    	$tableDiv.append(html.join(''));
+    	
     }
 
 </script>
@@ -39,7 +115,7 @@
                         </div>
 						<ul class="nav nav-tabs tab-solid tab-solid-danger" role="tablist">
 							<li class="nav-item" th:each="articleCode, index : ${articleCodeList}">
-								<a class="nav-link" th:id="'tab-' + ${articleCode.codeValue}" th:classappend="${index.index} == 0 ? active" th:attrappend="aria-selected=${index.index == 0}?'true':'false'" data-toggle="tab" th:href="@{|#div-|+${articleCode.codeValue}}" role="tab" th:aria-controls="'#div-' + ${articleCode.codeValue}" th:text="${articleCode.codeName}"></a>
+								<a class="nav-link" th:id="'tab-' + ${articleCode.codeValue}" th:classappend="${index.index} == 0 ? active" th:attrappend="aria-selected=${index.index == 0}?'true':'false'" data-toggle="tab" th:href="@{|#div-|+${articleCode.codeValue}}" th:onclick="fnRetrieveMyArticle([[${articleCode.codeValue}]], 0)" role="tab" th:aria-controls="'#div-' + ${articleCode.codeValue}" th:text="${articleCode.codeName}"></a>
 							</li>
 						</ul>
 						<div class="tab-content tab-content-solid">
