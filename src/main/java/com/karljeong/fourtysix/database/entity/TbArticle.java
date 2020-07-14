@@ -92,6 +92,9 @@ public class TbArticle implements Serializable {
 	@Transient
 	private String articleCategoryCv;
 
+	@Transient
+	private Byte publishYn;
+
 	public TbArticle() {
 	}
 
@@ -245,6 +248,15 @@ public class TbArticle implements Serializable {
 
 	public void setArticleCategoryCv(String articleCategoryCv) {
 		this.articleCategoryCv = articleCategoryCv;
+	}
+	
+	
+	public Byte getPublishYn() {
+		return publishYn;
+	}
+
+	public void setPublishYn(Byte publishYn) {
+		this.publishYn = publishYn;
 	}
 
 	public void setUserInfo(HttpServletRequest request) {
