@@ -98,6 +98,9 @@ public class TbArticleGeneral implements Serializable {
 	@Column(name = "UPDATE_USER_ID", insertable = false)
 	private BigInteger updateUserId;
 
+	@Column(name = "CONTAIN_IMAGE")
+	private byte containImage = 0;
+
 	@Transient
 	private String articleCategoryName;
 
@@ -264,8 +267,16 @@ public class TbArticleGeneral implements Serializable {
     public void setArticleCategoryName(String articleCategoryName) {
         this.articleCategoryName = articleCategoryName;
     }
+    
+    public byte getContainImage() {
+		return containImage;
+	}
 
-    public void setUserInfo(HttpServletRequest request) {
+	public void setContainImage(byte containImage) {
+		this.containImage = containImage;
+	}
+
+	public void setUserInfo(HttpServletRequest request) {
 		BigInteger userId = UserUtil.getUserId();
 		this.createUserId = userId;
 		this.updateUserId = userId;

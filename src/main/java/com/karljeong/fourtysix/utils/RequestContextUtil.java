@@ -78,6 +78,22 @@ public class RequestContextUtil {
         return true;
     }
 
+    public static String getContextpath() {
+        HttpServletRequest request = getRequest();
+
+        if (request == null) {
+            return null;
+        }
+
+        ServletContext servletContext = request.getServletContext();
+
+        if (servletContext == null) {
+            return null;
+        }
+
+        return servletContext.getContextPath();
+    }
+
     public static String getRealPath(String path) {
         HttpServletRequest request = getRequest();
 

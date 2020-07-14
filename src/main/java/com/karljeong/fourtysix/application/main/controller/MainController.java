@@ -44,7 +44,7 @@ public class MainController {
 	public String viewMain(Model model) {
 	    List<Map<String, Object>> noticeArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_NOTICE_CATEGORY").get("code");
 	    model.addAttribute("noticeArticleCategoryList", noticeArticleCategoryList);
-		model.addAttribute("noticeArticleList", noticeService.findArticyeForDashboardByBoardCode("NOTICE"));
+		model.addAttribute("noticeArticleList", noticeService.readList(new HashMap<String, Object>(), PageRequest.of(0, 3, Sort.by("articleWriteDatetime").descending())));
 
 
         List<Map<String, Object>> blogArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_BLOG_CATEGORY").get("code");
@@ -55,7 +55,7 @@ public class MainController {
 
 		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode().get("ART_GENERAL_CATEGORY").get("code");
 		model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
-		model.addAttribute("generalArticleList", generalService.readList(new HashMap<String, Object>(), PageRequest.of(0, 10)));
+		model.addAttribute("generalArticleList", generalService.readList(new HashMap<String, Object>(), PageRequest.of(0, 10, Sort.by("articleWriteDatetime").descending())));
 		return "view/main/main";
 	}
 

@@ -10,12 +10,12 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
+import com.karljeong.fourtysix.database.entity.TbArticle;
 
-public class TbArticleGeneralSpec {
+public class TbArticleSpec {
 
 	public enum SearchKey {
-		ARTICLEDELETEYN("articleDeleteYn"), ARTICLEBANYN("articleBanYn"), ARTICLECATEGORYCV("articleCategoryCv");
+		ARTICLECODE("articleCode"), ARTICLEWRITERID("articleWriterId");
 
 		private final String value;
 
@@ -28,25 +28,22 @@ public class TbArticleGeneralSpec {
 		}
 	}
 
-	public static Specification<TbArticleGeneral> searchWithKeys(Map<SearchKey, Object> searchKeys) {
-		return (Specification<TbArticleGeneral>) ((root, query, builder) -> {
+	public static Specification<TbArticle> searchWithKeys(Map<SearchKey, Object> searchKeys) {
+		return (Specification<TbArticle>) ((root, query, builder) -> {
 			List<Predicate> predicate = getPredicateWithKeyword(searchKeys, root, builder);
 			return builder.and(predicate.toArray(new Predicate[0]));
 		});
 	}
 
-	private static List<Predicate> getPredicateWithKeyword(Map<SearchKey, Object> searchKeyword,
-			Root<TbArticleGeneral> root, CriteriaBuilder builder) {
+	private static List<Predicate> getPredicateWithKeyword(Map<SearchKey, Object> searchKeyword, Root<TbArticle> root,
+			CriteriaBuilder builder) {
 		List<Predicate> predicate = new ArrayList<>();
 		for (SearchKey key : searchKeyword.keySet()) {
 			switch (key) {
-			case ARTICLEDELETEYN:
+			case ARTICLECODE:
 				predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
 				break;
-			case ARTICLEBANYN:
-				predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
-				break;
-			case ARTICLECATEGORYCV:
+			case ARTICLEWRITERID:
 				predicate.add(builder.equal(root.get(key.value), searchKeyword.get(key)));
 				break;
 			default:

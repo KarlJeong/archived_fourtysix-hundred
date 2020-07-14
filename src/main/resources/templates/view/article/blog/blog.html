@@ -5,8 +5,11 @@
     <title>Blog</title>
     <script defer th:src="@{/vendors/isotope/imagesloaded.pkgd.min.js}"></script>
     <script defer th:src="@{/vendors/isotope/isotope.pkgd.min.js}"></script>
-    <script defer th:src="@{/vendors/liverty-admin/js/owl-carousel.js}"></script>
-    <script defer th:src="@{/vendors/liverty-admin/js/template.js}"></script>
+    <script defer type="text/javascript">
+    $(function() {
+    });
+    
+	</script>
 </head>
 
 <body>
@@ -18,41 +21,28 @@
                         <div class="row mb-5">
                             <div class="col-12">
                                 <h2>BLOG</h2>
+                                <p class="lead">Meet real experience and daily life of Malaysian-Korean Couples.</p>
                                 <div class="separator-2"></div>
-                                <p class="lead">Meet real experience and daily life of
-                                    Malaysian-Korean Couples.</p>
                             </div>
                         </div>
-                        <div class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="order-listing_length">
-                                        <label>Show</label>
-                                        <select class="form-control" id="size" name="size" th:field="${articleList.size}" onchange="fnReadList()">
-                                            <option th:each="articleNumber : ${articleNumber}" th:value="${articleNumber.codeValue}" th:text="${articleNumber.codeName}"></option>
-                                        </select> <label> entries</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <div id="order-listing_filter"
-                                        class="dataTables_filter form-group row">
-                                        <label class="col-4"> <select
-                                            name="order-listing_length"
-                                            aria-controls="order-listing" class="form-control">
-                                                <option value="title">제목</option>
-                                                <option value="writer">작성자</option>
-                                                <option value="contents">제목+내용</option>
+                        <div class="wrapper d-flex align-items-center py-2">
+                            <form class="forms-sample w-100 mr-5" id="searchForm">
+                                <div class="form-group row col-12 col-md-6">
+                                    <div class="col-4 pr-1">
+                                        <label>Category</label>
+                                        <select class="form-control" name="articleCategoryCv" id="articleCategoryCv" th:onchange="'searchArticleByCategory(\'blog\', this.value)'">
+                                        	<option value="" selected>ALL</option>
+                                            <option th:each="blogArticleCategory : ${blogArticleCategoryList}" th:value="${blogArticleCategory.codeValue}" th:text="${blogArticleCategory.codeName}" th:selected="${blogArticleCategory.codeValue == ARTICLECATEGORYCV}"></option>
                                         </select>
-                                        </label>
-                                        <div class="input-group col-8">
-                                            <input type="text" class="form-control"> <span
-                                                class="input-group-append">
-                                                <button class="btn btn-info" type="button">Search</button>
-                                            </span>
-                                        </div>
+                                    </div>
+                                    <div class="col-4 pl-1">
+                                        <label>Show</label>
+                                        <select class="form-control" id="size" name="size" th:field="${articleList.size}" th:onchange="'searchArticleBySize(\'blog\', this.value)'">
+                                            <option th:each="articleNumber : ${articleNumber}" th:value="${articleNumber.codeValue}" th:text="${articleNumber.codeName}"></option>
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                         <div class="masonry-grid row">
                             <div class="masonry-grid-item col-md-6 col-lg-4" th:each="blog : ${articleList}">
@@ -60,6 +50,11 @@
                                 <article class="blogpost shadow-2 light-gray-bg bordered">
                                     <div class="overlay-container">
                                         <img class="w-100" th:src="@{${'/v1/api/file/img/' + blog.thumbnailFileId}}" alt="tab Preview">
+	                                    <div class="card-img-overlay d-flex">
+	                                        <div class="w-100">
+	                                            <div class="badge badge-pill badge-info fixed-badge align-middle"  th:each="blogArticleCategory : ${blogArticleCategoryList}" th:object="${blogArticleCategory}" th:if="${blogArticleCategory.codeValue == blog.articleCategoryCv}" th:classappend="${'badge-'+blogArticleCategory.codeValue}" th:text="${blogArticleCategory.codeName}" style="padding: 0.2rem 0.5rem; font-size:0.8rem;"></div>
+	                                        </div>
+	                                    </div>
                                     </div>
                                     <header>
                                         <h2>

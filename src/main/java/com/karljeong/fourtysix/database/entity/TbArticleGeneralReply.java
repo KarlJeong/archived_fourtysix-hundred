@@ -63,7 +63,7 @@ public class TbArticleGeneralReply implements Serializable {
 	private String replyContents;
 
 	@Column(name = "REPLY_DELETE_YN")
-	private byte replyDeleteYn;
+	private byte replyDeleteYn = 0;
 
 	@Column(name = "REPLY_LEVEL", updatable = false)
 	private int replyLevel = 1;

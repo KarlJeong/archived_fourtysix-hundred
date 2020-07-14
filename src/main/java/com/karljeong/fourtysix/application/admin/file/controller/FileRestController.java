@@ -65,6 +65,12 @@ public class FileRestController {
 		return fileService.getImageResource(fileId);
 	}
 
+	@GetMapping("/img/{fileId}/{fileName}")
+	public ResponseEntity<Resource> getImageResource(@PathVariable BigInteger fileId, @PathVariable String fileName, HttpServletRequest req)
+			throws FileNotFoundException {
+		return fileService.getImageResource(fileId);
+	}
+
 	@DeleteMapping("/{fileId}")
 	public int removeFile(@PathVariable BigInteger fileId) {
 		return fileService.removeFile(fileId);

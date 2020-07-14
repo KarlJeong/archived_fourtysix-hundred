@@ -1,5 +1,6 @@
 package com.karljeong.fourtysix.application.admin.user.service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class UserService {
 
 	public List<TbComUser> findAll() {
 		return tbComUserRepository.findAll();
+	}
+	
+	public TbComUser findById(BigInteger userId) {
+		return tbComUserRepository.findById(userId).get();
 	}
 
 }

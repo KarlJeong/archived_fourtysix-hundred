@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()//
-		.antMatchers("/", "/login/**", "/v1/api/login/**", "/error/**", "/favicon.ico").permitAll()
+		.antMatchers("/", "/main/**", "/login/**", "/policy/**", "/v1/api/login/**", "/error/**", "/favicon.ico").permitAll()
         .anyRequest().access("@webSecurityUrlChecker.check(request, authentication)");
 		//.anyRequest().permitAll();
 

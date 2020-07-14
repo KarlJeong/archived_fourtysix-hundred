@@ -157,81 +157,19 @@ String.prototype.format = function(){
     return num.format();
 };
 
-function ISOdateToYYYYMMDD(givenDateTime){
-    if (givenDateTime == null || givenDateTime == '') {
-        return '';
-    }
-    const givenDateTimeFormat = givenDateTime.split("T");
-    const givenDate = givenDateTimeFormat[0];
-    const gDate = givenDate.split("-");
-    const givenTime= givenDateTimeFormat[1];
-    if (givenTime == null){
-        var pDate = new Date(gDate[0], gDate[1], gDate[2]);
-        var yyyy = pDate.getFullYear();
-        var mm = pDate.getMonth() < 10 ? "0" + pDate.getMonth() : pDate.getMonth(); // getMonth() is zero-based
-        var dd  = pDate.getDate() < 10 ? "0" + pDate.getDate() : pDate.getDate();
-        return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd);
-    } else {
-        const gTime = givenTime.split(".")[0].split(":");
-        var pDate = new Date(gDate[0], gDate[1], gDate[2], gTime[0], gTime[1], gTime[2]);
-        var yyyy = pDate.getFullYear();
-        var mm = pDate.getMonth() < 10 ? "0" + pDate.getMonth() : pDate.getMonth(); // getMonth() is zero-based
-        var dd  = pDate.getDate() < 10 ? "0" + pDate.getDate() : pDate.getDate();
-        var hh = pDate.getHours() < 10 ? "0" + pDate.getHours() : pDate.getHours();
-        var min = pDate.getMinutes() < 10 ? "0" + pDate.getMinutes() : pDate.getMinutes();
-        return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd);
-    }
-
-}
-
-function ISOdateToYYYYMMDDHH24MI(givenDateTime) {
-    if (givenDateTime == null || givenDateTime == '') {
-        return '';
-    }
-    const givenDateTimeFormat = givenDateTime.split("T");
-    const givenDate = givenDateTimeFormat[0];
-    const gDate = givenDate.split("-");
-    const givenTime= givenDateTimeFormat[1];
-    if (givenTime == null){
-        var pDate = new Date(gDate[0], gDate[1], gDate[2]);
-        var yyyy = pDate.getFullYear();
-        var mm = pDate.getMonth() < 10 ? "0" + pDate.getMonth() : pDate.getMonth(); // getMonth() is zero-based
-        var dd  = pDate.getDate() < 10 ? "0" + pDate.getDate() : pDate.getDate();
-        return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd).concat(" ").concat("00").concat(":").concat("00");
-    } else {
-        const gTime = givenTime.split(".")[0].split(":");
-        var pDate = new Date(gDate[0], gDate[1], gDate[2], gTime[0], gTime[1], gTime[2]);
-        var yyyy = pDate.getFullYear();
-        var mm = pDate.getMonth() < 10 ? "0" + pDate.getMonth() : pDate.getMonth(); // getMonth() is zero-based
-        var dd  = pDate.getDate() < 10 ? "0" + pDate.getDate() : pDate.getDate();
-        var hh = pDate.getHours() < 10 ? "0" + pDate.getHours() : pDate.getHours();
-        var min = pDate.getMinutes() < 10 ? "0" + pDate.getMinutes() : pDate.getMinutes();
-        var sec = pDate.getSeconds() < 10 ? "0" + pDate.getSeconds() : pDate.getSeconds();
-        return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd).concat(" ").concat(hh).concat(":").concat(min).concat(":").concat(sec);
-    }
-};
-
 function dateConverterToDateOrDateTime(givenDateTime) {
     if (givenDateTime == null || givenDateTime == '') {
         return '';
     }
-    var dateTime = new Date(givenDateTime);
-    var today = new Date();
 
-    var yyyy = dateTime.getFullYear();
-    var mm = dateTime.getMonth() +1;
-    mm = mm < 10 ? '0' + dateTime.getMonth() : dateTime.getMonth();
-    var dd = dateTime.getDate() < 10 ? '0' + dateTime.getDate() : dateTime.getDate();
-    var hh = dateTime.getHours() < 10 ? "0" + dateTime.getHours() : dateTime.getHours();
-    var min = dateTime.getMinutes() < 10 ? "0" + dateTime.getMinutes() : dateTime.getMinutes();
-    var sec = dateTime.getSeconds() < 10 ? "0" + dateTime.getSeconds() : dateTime.getSeconds();
-
-    if (dateTime.getDate() === today.getDate() && dateTime.getMonth() === today.getMonth() && dateTime.getFullYear() === today.getFullYear()) {
-        return "".concat(hh).concat(":").concat(min).concat(":").concat(sec);
+    var dateTime = moment(givenDateTime, moment.ISO_8601);
+    var today = moment(new Date());
+    if (dateTime.format('YYYY') === today.format('YYYY') && dateTime.format('MM') === today.format('MM') && dateTime.format('DD') === today.format('DD')) {
+        return dateTime.format('HH:mm:ss');
     } else {
-        return "".concat(yyyy).concat("-").concat(mm).concat("-").concat(dd);
+        return dateTime.format('YYYY-MM-DD');
     }
-}
+};
 
 $('.mainblog').on('click', function(event){
     var $this = $(this);

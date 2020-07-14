@@ -55,10 +55,16 @@ public class LoginService {
         tbComUser.setUserName(facebookUser.getName());
         tbComUser.setUserNickname(facebookUser.getName());
         tbComUser.setSnsId(facebookUser.getId());
-        tbComUser.setBirthday(new Timestamp(facebookUser.getBirthdayAsDate().getTime()));
-        tbComUser.setLocationId(facebookUser.getLocation().getId());
-        tbComUser.setLocationName(facebookUser.getLocation().getName().toUpperCase());
-        tbComUser.setGender(facebookUser.getGender().toUpperCase());
+        if (facebookUser.getBirthdayAsDate() != null) {
+        	tbComUser.setBirthday(new Timestamp(facebookUser.getBirthdayAsDate().getTime()));
+        }
+        if (facebookUser.getLocation() != null) {
+        	tbComUser.setLocationId(facebookUser.getLocation().getId());
+        	tbComUser.setLocationName(facebookUser.getLocation().getName().toUpperCase());
+        }
+        if (facebookUser.getGender() != null) {
+        	tbComUser.setGender(facebookUser.getGender().toUpperCase());
+        }
         return tbComUserRepository.save(tbComUser);
     }
 

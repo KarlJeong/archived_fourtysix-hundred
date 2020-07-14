@@ -2,7 +2,116 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}" xmlns:sec="http://www.thymeleaf.org">
 
 <head>
-    <script defer th:src="@{/vendors/summernote/dist/summernote-bs4.min.js}"></script>
+    <script defer type="text/javascript" th:inline="javascript">
+    $(function() {
+        fnRetrieveReply(-1);
+    });
+
+    function fnRetrieveReply(pageNumber) {
+        let url = "/v1/api/blog/" + /*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/ + "/reply/" + pageNumber;
+        PromiseUtil.get(url)
+        .then(JSON.parse)
+        .then(function(d){
+            fnCreateReplyArea(d.data.replyList);
+            fnCreatePaingArea(d.data.paging, d.data.replyList.number);
+        });
+    }
+
+    function fnCreateReplyArea(rData) {
+    	console.log(rData);
+        var $replArea = $(".reply-area");
+        $replArea.empty();
+        var writable = /*<![CDATA[*//*[[${#authorization.expression('hasAnyRole(''ROLE_MEMBER'',''ROLE_AUTHOR'',''ROLE_ADMIN'')')} ? ${true} : ${false} ]]*//*]]>*/;
+        for (var i = 0 ; i < rData.content.length ; i++) {
+            var d = rData.content[i];
+        	console.log(d);
+            var html = [];
+            var isReplyHeaderOwner = /*<![CDATA[*//*[[ ${articleInfo.articleWriterId} ]]*//*]]>*/ === d.replyWriterId ? true : false;
+            html.push('<div class="d-flex align-items-center">');
+            if (d.replyLevel > 1) {
+                html.push('  <img src="/vendors/images/reply.png" style="padding-left:'+12 * (d.replyLevel -1)+'px;"></img>');
+            }
+            html.push('  <div class="reply pt-2">');
+            html.push('    <div class="reply-header ' + (isReplyHeaderOwner ? 'reply-header-owner' : '') + ' container-fluid d-flex justify-content-between">');
+            html.push('      <span class="reply-writer font-weight-bold">'+d.replyWriterUserName+'</span>');
+            html.push('      <span class="font-weight-bold" style="margin-left:auto;"></span>');
+            html.push('      <span class="reply-datetime font-weight-bold text-gray pl-3">'+dateConverterToDateOrDateTime(d.replyWriteDatetime)+'</span>');
+            html.push('    </div>');
+            html.push('    <div class="reply-body">');
+            html.push('      <p>'+d.replyContents+'</p>');
+            html.push('    </div>');
+            html.push('    <div class="reply-footer text-right pb-2">');
+            if (writable){
+                html.push('      <button class="btn btn-sm btn-outline-danger btn-reply font-weight-bold reportModalOpener mx-1" onclick="fnCallReportReplyModal(\'Reply\', \'BLOG\', \''+ /*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/ +'\', \''+d.replyId+'\')">');
+                html.push('      <i class="mdi mdi-alarm-light"></i>Report');
+                html.push('      </button>');
+                html.push('      <button class="btn btn-sm btn-outline-info btn-reply font-weight-bold" onclick="fnCreatingReplyTextArea(this, \''+d.replyId+'\', \''+d.articleId+'\')">');
+                html.push('      <i class="mdi mdi-comment-outline"></i>Reply');
+                html.push('      </button>');
+                html.push('    </div>');
+            }
+            html.push('  </div>');
+            html.push('</div>');
+            $replArea.append(html.join(''));
+        }
+        $replArea.append('<div class="clearfix"></div>');
+    }
+
+    function fnCreatePaingArea(pData, number){
+        var html = [];
+        html.push('<nav>');
+        html.push('  <ul class="pagination rounded-flat d-flex justify-content-center pagination-primary">');
+        html.push('    <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-left"></i></a></li>');
+        for (var i = 0 ; i < pData.length; i++) {
+            html.push('  <li class="page-item '+(pData[i] === number + 1 ? 'active' : '')+' ">');
+            html.push('    <a class="page-link" href="javascript:void(0);" onclick="fnRetrieveReply('+(pData[i] -1)+')">'+pData[i]+'</a>');
+            html.push('  </li>');
+        }
+        html.push('    <li class="page-item"><a class="page-link" href="#"><i class="mdi mdi-chevron-right"></i></a></li>');
+        html.push('  </ul>');
+        html.push('</nav>');
+        html.push('<div class="clearfix"></div>');
+        $(".reply-paging-area").html(html.join(''));
+    }
+
+    function fnCreatingReplyTextArea(ele, pReplyId, articleId){
+        var writable = /*<![CDATA[*//*[[${#authorization.expression('hasAnyRole(''ROLE_MEMBER'',''ROLE_AUTHOR'',''ROLE_ADMIN'')')} ? ${true} : ${false} ]]*//*]]>*/;
+        if (!writable) {
+            if (confirm("Login Required Service. Do you want to move to login page?")) {
+                window.location.href="/login/f";
+            }
+            return;
+        }
+
+        var $replyTextArea = $(ele).parents("div.reply");
+        var html = [];
+        $(".reply-dynamic-textarea").remove();
+        html.push('<div class="reply reply-dynamic-textarea pt-2">');
+        html.push('  <div class="reply-header container-fluid d-flex justify-content-between">');
+        html.push('    <span class="font-weight-bold">'+/*<![CDATA[*//*[[${#authentication.principal.userName} ]]*//*]]>*/+'</span>');
+        html.push('    <span style="margin-left:auto;"></span>');
+        html.push('  </div>');
+        html.push('  <form id="createDynamicReplyForm">');
+        html.push('  <div class="reply-body input-group">');
+        html.push('    <input type="hidden" name="priorReplyId" value="'+pReplyId+'"></input>');
+        html.push('    <textarea class="form-control col-md-10" name="replyContents" rows="3"></textarea>');
+        html.push('    <button onclick="fnReplyDynamic()" class="col-md-2 btn btn-sm btn-outline-info btn-fw"><i class="fa fa-pencil pr-2"></i>Reply</button>');
+        html.push('  </div>');
+        html.push('  </form>');
+        html.push('</div>');
+        $replyTextArea.append(html.join(''));
+    }
+
+    function fnReplyDynamic() {
+        let url = "/v1/api/blog/"+/*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/+"/replydynamic";
+        var params = $("#createDynamicReplyForm").serializeObject();
+        PromiseUtil.post(url, params)
+        .then(JSON.parse)
+        .then(function(d){
+        });
+    }
+    
+    </script>
 </head>
 
 <body>
@@ -34,11 +143,11 @@
                                         <i class="fa fa-comments-o font-weight-bold pr-2 text-dark"></i><span class="font-weight-bold pr-2" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleReplyCount)}"></span>
                                     </div>
                                 </div>
-                                <div class="body pt-5">
+                                <div class="contents-body pt-5">
                                     <div style="white-space:pre-line;" th:utext="${articleInfo.articleContents}"></div>
                                     <div class="d-flex flex-row align-items-center justify-content-center">
                                     
-                                        <a href="javascript:void(0);" onclick="fnToggleLike()">
+                                        <a href="javascript:void(0);" th:onclick="|fnToggleLike('blog', '${articleInfo.articleId}', '${articleLike.likeYn}')|">
                                             <span class="py-3 article-box badge badge-info">
                                                 <i class="mdi mdi-24px font-weight-bold" th:classappend="${articleLike.likeYn == 0 ? 'mdi-heart-outline'  : 'mdi-heart'}"></i><br>
                                                 <span class="text-white font-weight-bold" style="font-size:0.8rem;" th:text="${#fourtysixFormat.convertNumberFormat(articleInfo.articleLikeCount)}"></span>
@@ -63,12 +172,27 @@
                                             <h4 th:text="${articleInfo.articleBlogWriter.userName}"></h4>
                                         </div>
                                         <div class="ml-1 mb-1">
-                                            <small class="text-muted mb-0"><span>Short
-                                                    description</span></small>
-                                                        
-                                                    
+                                            <small class="text-muted mb-0"><span>Short description</span></small>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="contents-footer pt-5">
+                                    <div sec:authorize="hasRole('ROLE_MEMBER') or hasRole('ROLE_AUTHOR') or hasRole('ROLE_ADMIN')" class="reply-write-area">
+                                        <div class="reply pt-2">
+                                            <div class="reply-header container-fluid d-flex justify-content-between">
+                                                <span class="font-weight-bold" sec:authentication="principal.userName"></span>
+                                                <span style="margin-left:auto;"></span>
+                                            </div>
+                                            <form id="createReplyForm">
+                                            <div class="reply-body input-group">
+                                                <textarea class="form-control col-md-10" name="replyContents" id="replyContents" rows="3"></textarea>
+                                                <button th:onclick="|fnReply('blog', '${articleInfo.articleId}')|" class="col-md-2 btn btn-sm btn-outline-info btn-fw"><i class="fa fa-pencil pr-2"></i>Reply</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="reply-area" id="reply-area"></div>
+                                    <div class="reply-paging-area pt-3"></div>
                                 </div>
                             </div>
                         </div>

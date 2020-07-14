@@ -29,5 +29,7 @@ public interface TbComAuthRepository
 	@Query("DELETE FROM TbComAuth c WHERE c.authId = :authId")
 	int deleteByAuthId(@Param("authId") BigInteger authId);
 
+	TbComAuth findByAuthCode(String authCode);
+
 
 }

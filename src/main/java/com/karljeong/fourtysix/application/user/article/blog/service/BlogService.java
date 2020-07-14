@@ -8,14 +8,19 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.karljeong.fourtysix.application.admin.file.service.FileService;
+import com.karljeong.fourtysix.application.user.article.article.service.ArticleService;
 import com.karljeong.fourtysix.database.entity.TbArticleBlog;
 import com.karljeong.fourtysix.database.entity.TbArticleBlogLike;
 import com.karljeong.fourtysix.database.entity.TbArticleBlogLikePK;
+import com.karljeong.fourtysix.database.entity.TbArticleBlogReply;
 import com.karljeong.fourtysix.database.repository.TbArticleBlogLikeRepository;
+import com.karljeong.fourtysix.database.repository.TbArticleBlogReplyRepository;
 import com.karljeong.fourtysix.database.repository.TbArticleBlogRepository;
 import com.karljeong.fourtysix.database.specification.TbArticleBlogSpec;
 import com.karljeong.fourtysix.database.specification.TbArticleBlogSpec.SearchKey;
@@ -25,12 +30,18 @@ import com.karljeong.fourtysix.utils.ArticleUtil;
 public class BlogService {
     @Autowired
     FileService fileService;
+    
+    @Autowired
+    ArticleService articleService;
 
     @Autowired
     TbArticleBlogRepository tbArticleBlogRepository;
 
     @Autowired
     TbArticleBlogLikeRepository tbArticleBlogLikeRepository;
+    
+    @Autowired
+    TbArticleBlogReplyRepository tbArticleBlogReplyRepository;
 
     public Page<TbArticleBlog> readList(Map<String, Object> searchRequest, Pageable pageable) {
         Map<SearchKey, Object> searchKeys = new HashMap<>();
@@ -54,23 +65,37 @@ public class BlogService {
         return tbArticleBlogList;
     }
 
-    public TbArticleBlog getBlog(String articleId) {
-        return tbArticleBlogRepository.findById(new BigInteger(articleId)).orElseGet(() -> new TbArticleBlog());
-    }
+	public Page<TbArticleBlogReply> readReplyList(BigInteger articleId, int pageNumber) {
+		final int pageSize = 20;
 
+		if (pageNumber < 0) {
+			int totalCount = tbArticleBlogReplyRepository.countByArticleId(articleId).intValue();
+			pageNumber = (totalCount - 1) / pageSize;
+		}
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		return tbArticleBlogReplyRepository.findByArticleId(articleId, pageable);
+	}
+
+	@Transactional
     public TbArticleBlog create(TbArticleBlog tbArticleBlog) {
         TbArticleBlog save = tbArticleBlogRepository.save(tbArticleBlog);
+        articleService.create(articleService.convertToTbArticle(save));
+        return save;
+    }
+
+	@Transactional
+    public TbArticleBlog update(TbArticleBlog tbArticleBlog) {
+        TbArticleBlog save = tbArticleBlogRepository.save(tbArticleBlog);
+        articleService.update(articleService.convertToTbArticle(save));
         return save;
     }
 
     public TbArticleBlog findById(BigInteger articleId) {
-        TbArticleBlog tbArticleBlog = tbArticleBlogRepository.findById(articleId).get();
 		if (ArticleUtil.readArticleFirst("blog", articleId)) {
 			this.updateViewCount(articleId);
 		}
 		
-        //tbArticleBlog.setArticleWriterUserName(tbArticleBlogRepository.findArticleWriterName(tbArticleBlog.getArticleWriterId()));
-        return tbArticleBlog;
+        return tbArticleBlogRepository.findById(articleId).get();
     }
 
     public TbArticleBlogLike findById(TbArticleBlogLikePK tbArticleBlogLikePK) {
@@ -78,6 +103,33 @@ public class BlogService {
 
         return tbArticleBlogLike.isPresent() ? tbArticleBlogLike.get() : new TbArticleBlogLike();
     }
+
+	public TbArticleBlogReply reply(TbArticleBlogReply tbArticleBlogReply) {
+		TbArticleBlogReply createdTbArticleBlogReply= tbArticleBlogReplyRepository.save(tbArticleBlogReply);
+	    this.updateReplyCount(createdTbArticleBlogReply.getArticleId());
+		return createdTbArticleBlogReply;
+	}
+
+	public int replyDynamic(TbArticleBlogReply tbArticleBlogReply) {
+	    int result = tbArticleBlogReplyRepository.saveReplyDynamic(tbArticleBlogReply);
+        this.updateReplyCount(tbArticleBlogReply.getArticleId());
+		return result;
+
+	}
+
+	public TbArticleBlogLike toggleLike(TbArticleBlogLike tbArticleBlogLike) {
+		TbArticleBlogLike createdTbArticleBlogLike = tbArticleBlogLikeRepository.save(tbArticleBlogLike);
+	    this.updateLikeCount(createdTbArticleBlogLike.getId().getArticleId());
+	    return createdTbArticleBlogLike;
+	}
+
+	private void updateLikeCount(BigInteger articleId) {
+		tbArticleBlogLikeRepository.saveLikeCount(articleId);
+	}
+
+	private void updateReplyCount(BigInteger articleId) {
+		tbArticleBlogLikeRepository.saveReplyCount(articleId);
+	}
 
 	private void updateViewCount(BigInteger articleId) {
 		tbArticleBlogRepository.saveViewCount(articleId);

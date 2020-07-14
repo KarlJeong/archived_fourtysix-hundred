@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Component;
 
+import com.karljeong.fourtysix.application.admin.auth.service.AuthService;
 import com.karljeong.fourtysix.application.login.service.LoginService;
 import com.karljeong.fourtysix.database.entity.TbComAuth;
 import com.karljeong.fourtysix.database.entity.TbComUser;
@@ -37,10 +38,12 @@ public class WebSecurityProvider implements AuthenticationProvider {
 	private final int visitorMaxInactiveInterval = 60 * 5;
 
 	private final LoginService logininService;
+	private final AuthService authService;
 
 	@Autowired
-	WebSecurityProvider(LoginService logininService) {
+	WebSecurityProvider(LoginService logininService, AuthService authService) {
 		this.logininService = logininService;
+		this.authService = authService;
 	}
 
 	@Override
@@ -69,6 +72,7 @@ public class WebSecurityProvider implements AuthenticationProvider {
 		ResultDto resultDto = new ResultDto();
 		if (tbComUser == null) {
 		    tbComUser = this.createUserInfoViaFacebook(faebookUser);
+		    this.createUserAuthMember(tbComUser);
 		}
 
 		int isBanned = this.getUserBanInfo(tbComUser.getUserId());
@@ -134,6 +138,10 @@ public class WebSecurityProvider implements AuthenticationProvider {
 
 	private TbComUser createUserInfoViaFacebook(User faebookUser) {
 	    return logininService.save(faebookUser);
+	}
+	
+	private void createUserAuthMember(TbComUser tbComUser) {
+		authService.createUserAuthMember(tbComUser.getUserId());
 	}
 
 	private int getUserBanInfo(BigInteger userId) {
