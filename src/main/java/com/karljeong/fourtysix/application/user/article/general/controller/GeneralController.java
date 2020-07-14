@@ -1,10 +1,12 @@
 package com.karljeong.fourtysix.application.user.article.general.controller;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +25,8 @@ import com.karljeong.fourtysix.common.loadstatic.LoadStatic;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneral;
 import com.karljeong.fourtysix.database.entity.TbArticleGeneralLikePK;
 import com.karljeong.fourtysix.utils.PagingUtil;
+import com.karljeong.fourtysix.utils.RequestContextUtil;
+import com.karljeong.fourtysix.utils.UserUtil;
 import com.karljeong.fourtysix.utils.ValidationUtil;
 
 @Controller
@@ -71,6 +75,24 @@ public class GeneralController {
 				.get("ART_GENERAL_CATEGORY").get("code");
 		model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
 		return "view/article/general/generalC";
+	}
+
+	@SuppressWarnings("unchecked")
+	@GetMapping("/viewupdate/{articleId}")
+	public String viewupdate(Model model, @PathVariable("articleId") BigInteger articleId, HttpServletResponse response)
+			throws IOException {
+		TbArticleGeneral tbArticleGeneral = generalService.findById(articleId);
+
+		if (!tbArticleGeneral.getArticleWriterId().equals(UserUtil.getUserId())) {
+			response.sendRedirect(RequestContextUtil.getContextpath() + "/b/general/viewdetail/" + articleId);
+			return null;
+		}
+
+		model.addAttribute("articleInfo", tbArticleGeneral);
+		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode()
+				.get("ART_GENERAL_CATEGORY").get("code");
+		model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
+		return "view/article/general/generalU";
 	}
 
 	@SuppressWarnings("unchecked")

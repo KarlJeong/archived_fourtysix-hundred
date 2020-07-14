@@ -170,11 +170,3 @@ function dateConverterToDateOrDateTime(givenDateTime) {
         return dateTime.format('YYYY-MM-DD');
     }
 };
-
-$('.mainblog').on('click', function(event){
-    var $this = $(this);
-    if ($this.attr("data-link")) {
-        window.location.href = "/blog/viewdetail/"+$this.attr("data-link");
-    }
-
-  });

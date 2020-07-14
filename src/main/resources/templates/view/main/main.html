@@ -7,7 +7,7 @@
 <script defer th:src="@{/vendors/liverty-admin/js/owl-carousel.js}"></script>
 <script defer type="text/javascript">
     $(function() {});
-    
+
 </script>
 </head>
 
@@ -23,7 +23,7 @@
                           </div>
                         <div class="separator-2"></div>
                         <div class="owl-carousel owl-theme full-width">
-                            <div class="item mainblog" th:each="blogArticle : ${blogArticleList}" th:attr="data-link=${blogArticle.articleId}">
+                            <div class="item article-blog" th:each="blogArticle : ${blogArticleList}" th:attr="data-link=${blogArticle.articleId}">
                                 <div class="card text-gray">
                                     <img class="card-img" th:src="@{${'/v1/api/file/img/' + blogArticle.thumbnailFileId}}" alt="Card image" style="width:100%; max-height:300px;">
                                     <div class="card-img-overlay d-flex">

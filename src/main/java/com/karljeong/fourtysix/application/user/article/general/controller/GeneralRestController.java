@@ -58,14 +58,23 @@ public class GeneralRestController {
 				"/b/general/viewdetail/" + createTbArticleGeneral.getArticleId()).getResultDto();
 	}
 
+	@PostMapping("/{articleId}")
+	public ResultDto update(@RequestBody TbArticleGeneral tbArticleGeneral, HttpServletRequest request) {
+		tbArticleGeneral.setUserInfo(request);
+		TbArticleGeneral createTbArticleGeneral = generalService.update(tbArticleGeneral);
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleGeneral,
+				"/b/general/viewdetail/" + createTbArticleGeneral.getArticleId()).getResultDto();
+	}
+
 	@PostMapping("/{articleId}/reply")
 	public ResultDto reply(@RequestBody TbArticleGeneralReply tbArticleGeneralReply,
 			@PathVariable("articleId") BigInteger articleId, HttpServletRequest request) {
 		tbArticleGeneralReply.setUserInfo(request);
 		tbArticleGeneralReply.setArticleId(articleId);
 		TbArticleGeneralReply createTbArticleReplyGeneral = generalService.reply(tbArticleGeneralReply);
-		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleReplyGeneral,
-				"/b/general/viewdetail/" + createTbArticleReplyGeneral.getArticleId()).getResultDto();
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully",
+				createTbArticleReplyGeneral, "/b/general/viewdetail/" + createTbArticleReplyGeneral.getArticleId())
+						.getResultDto();
 	}
 
 	@PostMapping("/{articleId}/replydynamic")
@@ -74,12 +83,14 @@ public class GeneralRestController {
 		tbArticleGeneralReply.setUserInfo(request);
 		tbArticleGeneralReply.setArticleId(articleId);
 		int createTbArticleReplyGeneral = generalService.replyDynamic(tbArticleGeneralReply);
-		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createTbArticleReplyGeneral,
-				"/b/general/viewdetail/" + tbArticleGeneralReply.getArticleId()).getResultDto();
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully",
+				createTbArticleReplyGeneral, "/b/general/viewdetail/" + tbArticleGeneralReply.getArticleId())
+						.getResultDto();
 	}
 
 	@PostMapping("/{articleId}/like/{likeYn}")
-	public ResultDto toggleLike(@PathVariable("articleId") BigInteger articleId, @PathVariable("likeYn") byte likeYn, HttpServletRequest request) {
+	public ResultDto toggleLike(@PathVariable("articleId") BigInteger articleId, @PathVariable("likeYn") byte likeYn,
+			HttpServletRequest request) {
 		TbArticleGeneralLike tbArticleGeneralLike = new TbArticleGeneralLike();
 		TbArticleGeneralLikePK tbArticleGeneralLikePK = new TbArticleGeneralLikePK();
 		tbArticleGeneralLike.setUserInfo(request);
@@ -88,8 +99,8 @@ public class GeneralRestController {
 		tbArticleGeneralLikePK.setUserInfo(request);
 		tbArticleGeneralLike.setId(tbArticleGeneralLikePK);
 		TbArticleGeneralLike createdtbArticleGeneralLike = generalService.toggleLike(tbArticleGeneralLike);
-		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully", createdtbArticleGeneralLike,
-                "/b/general/viewdetail/" + articleId).getResultDto();
+		return new ResultSetter(ResultCodeEnum.SUCCESS_REDIRECT_ALERT, "Saved Successfully",
+				createdtbArticleGeneralLike, "/b/general/viewdetail/" + articleId).getResultDto();
 	}
 
 }

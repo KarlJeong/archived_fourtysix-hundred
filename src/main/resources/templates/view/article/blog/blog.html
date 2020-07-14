@@ -8,7 +8,7 @@
     <script defer type="text/javascript">
     $(function() {
     });
-    
+
 	</script>
 </head>
 
@@ -47,7 +47,7 @@
                         <div class="masonry-grid row">
                             <div class="masonry-grid-item col-md-6 col-lg-4" th:each="blog : ${articleList}">
                                 <!-- blogpost start -->
-                                <article class="blogpost shadow-2 light-gray-bg bordered">
+                                <article class="blogpost shadow-2 light-gray-bg bordered article-blog" th:attr="data-link=${blog.articleId}">
                                     <div class="overlay-container">
                                         <img class="w-100" th:src="@{${'/v1/api/file/img/' + blog.thumbnailFileId}}" alt="tab Preview">
 	                                    <div class="card-img-overlay d-flex">
@@ -57,9 +57,7 @@
 	                                    </div>
                                     </div>
                                     <header>
-                                        <h2>
-                                            <a class="diary-title-link" th:href="@{${'/blog/viewdetail/' + blog.articleId}}" th:text="${blog.articleTitle}"></a>
-                                        </h2>
+                                        <h2 th:text="${blog.articleTitle}"></h2>
                                         <div class="post-info">
                                             <span class="post-date"> <i class="fa fa-calendar-o pr-1"></i><span class="day" th:text="${#fourtysixFormat.dateConverterToDateOrDateTime(blog.articleWriteDatetime)}"></span></span>
                                             <span class="submitted"><i class="fa fa-user pr-1 pl-1"></i><span th:text="${blog.articleBlogWriter.userName}"></span></span>

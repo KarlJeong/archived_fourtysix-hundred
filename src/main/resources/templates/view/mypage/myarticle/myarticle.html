@@ -25,7 +25,7 @@
         	}
         });
     }
-    
+
     function fnCreateTableArea(articleCode, rData) {
     	let html = [];
     	console.log(rData);
@@ -60,7 +60,7 @@
         $tableDiv.empty();
     	$tableDiv.append(html.join(''));
     }
-    
+
     function fnCreateBlogTableArea(rData) {
     	let html = [];
     	html.push('<div class="table-responsive">');
@@ -82,7 +82,7 @@
 	    	for (var i = 0 ; i < rData.content.length ; i++) {
 	    		var d = rData.content[i];
 	    		html.push('<tr>');
-	    		html.push('<td><a href="/blog/viewdetail/'+d.articleId+'">'+d.articleTitle+'</a></td>');
+	    		html.push('<td><a href="/blog/viewupdate/'+d.articleId+'">'+d.articleTitle+'</a></td>');
 	    		html.push('<td>'+d.articleBlogWriter.userName+'</td>');
 	    		html.push('<td>'+(d.publishYn == 0 ? '<label class="badge badge-info">Draft</label>' : '<label class="badge badge-warning">Published</label>')+'</label></td>');
 	    		html.push('<td>'+dateConverterToDateOrDateTime(d.articleWriteDatetime)+'</td>');
@@ -95,7 +95,7 @@
     	let $tableDiv = $("#div-BLOG");
         $tableDiv.empty();
     	$tableDiv.append(html.join(''));
-    	
+
     }
 
 </script>

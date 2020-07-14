@@ -14,7 +14,7 @@ function fnReply(subpath, articleId) {
     .then(function(d){
     });
 }
-    
+
 function searchArticleByCategory(subpath, articleCategoryCv) {
 	let url = "/"+subpath+"/viewmain";
 	if (articleCategoryCv != null && articleCategoryCv !== "") {
@@ -22,7 +22,7 @@ function searchArticleByCategory(subpath, articleCategoryCv) {
 	}
 	window.location.href=url;
 }
-    
+
 function searchArticleBySize(subpath, size) {
 	let url = "/"+subpath+"/viewmain";
 	if (articleCategoryCv != null && size !== "") {
@@ -30,6 +30,13 @@ function searchArticleBySize(subpath, size) {
 	}
 	window.location.href=url;
 }
+
+$('.article-blog').on('click', function(event){
+    var $this = $(this);
+    if ($this.attr("data-link")) {
+        window.location.href = "/blog/viewdetail/"+$this.attr("data-link");
+    }
+});
 
 
 
