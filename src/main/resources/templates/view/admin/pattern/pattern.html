@@ -5,7 +5,8 @@
 <script defer th:src="@{/vendors/isotope/isotope.pkgd.min.js}"></script>
 <script defer type="text/javascript">
     $(function() {
-        fnRetrievePattern();
+        //fnRetrievePattern();
+    	fnCreatePatternTable();
     });
     var fnRetrievePattern = function() {
         let url = "/v1/api/admin/pattern";
@@ -20,8 +21,11 @@
     }
 
     var fnCreatePatternTable = function(data) {
-        $('#pattern-table').dataTable(
+        $('#pattern-table').DataTable(
                 {
+                	"processing": true,
+                    "serverSide": true,
+                    "ajax": "/v1/api/admin/pattern/datatable",
                     data : data,
                     "columns" : [ {
                         "data" : "uriPattern"
