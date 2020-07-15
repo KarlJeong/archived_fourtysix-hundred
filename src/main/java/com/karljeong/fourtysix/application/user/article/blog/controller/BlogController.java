@@ -86,7 +86,7 @@ public class BlogController {
 	public String viewupdate(Model model, @PathVariable("articleId") BigInteger articleId, HttpServletResponse response)
 			throws IOException {
 		TbArticleBlog tbArticleBlog = blogService.findById(articleId);
-		if (tbArticleBlog.getPublishYn() == 0 || !tbArticleBlog.getArticleWriterId().equals(UserUtil.getUserId())) {
+		if (tbArticleBlog.getPublishYn() == 1 || !tbArticleBlog.getArticleWriterId().equals(UserUtil.getUserId())) {
 			response.sendRedirect(RequestContextUtil.getContextpath() + "/blog/viewdetail/" + articleId);
 			return null;
 		}
