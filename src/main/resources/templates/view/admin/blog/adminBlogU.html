@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout/ThymeleafCommonLayout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}" xmlns:sec="http://www.thymeleaf.org">
+   
 
 <head>
     <link rel="stylesheet" th:href="@{/vendors/summernote/dist/summernote-bs4.css}">
@@ -48,6 +48,13 @@
             });
         });
     }
+
+    function fnPublish(publishYn) {
+        PromiseUtil.post("/v1/api/admin/blog/"+/*<![CDATA[*//*[[ ${articleInfo.articleId} ]]*//*]]>*/+"/"+publishYn)
+        .then(JSON.parse)
+        .then(function(d){
+        });
+    }
     </script>
 </head>
 
@@ -90,10 +97,11 @@
                                 </form>
 
                                 <div class="container-fluid w-100">
-                                    <a href="javascript:void(0);" class="btn btn-primary float-right mt-4 ml-2" onclick="fnSave(1)">Save & Request Publishing</a>
                                     <a href="javascript:void(0);" class="btn btn-success float-right mt-4 ml-2" onclick="fnSave(0)">Temporary Save</a>
+                                    <a th:if="${articleInfo.publishYn} == 0 " href="javascript:void(0);" onclick="fnPublish(1)" class="btn btn-warning float-right mt-4 ml-2">Publish</a>
+                                    <a th:unless="${articleInfo.publishYn} == 0 " href="javascript:void(0);" onclick="fnPublish(0)" class="btn btn-warning float-right mt-4 ml-2">Cancel Publish</a>
                                     <a th:href="@{/blog/viewdetail/} + ${articleInfo.articleId}" class="btn btn-warning float-right mt-4  ml-2">Preview</a>
-                                    <a href="/blog/viewmain" class="btn btn-secondary float-right mt-4">List</a>
+                                    <a href="/admin/blog/viewmain" class="btn btn-secondary float-right mt-4">List</a>
                                 </div>
                             </div>
                         </div>

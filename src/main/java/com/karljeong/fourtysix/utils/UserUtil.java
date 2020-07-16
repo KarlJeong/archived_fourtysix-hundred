@@ -58,4 +58,13 @@ public class UserUtil {
         
         return false;
 	}
+	
+	public static boolean hasEditingAuth(BigInteger userId) {
+		if (hasAuth("ROLE_ADMIN")) {
+			return true;
+		} else if (userId.equals(UserUtil.getUserId())) {
+			return true;
+		}
+		return false;
+	}
 }

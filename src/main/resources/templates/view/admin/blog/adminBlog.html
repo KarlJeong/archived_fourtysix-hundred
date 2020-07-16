@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/ThymeleafCommonLayout}">
+<head>
+<title>Auth List</title>
+<script defer th:src="@{/vendors/isotope/isotope.pkgd.min.js}"></script>
+<script defer type="text/javascript">
+    $(function() {
+    	fnCreateBlogTable();
+    });
+
+    var fnCreateBlogTable = function() {
+        var requestPublishYn = {
+            0 : [ 'Not Requested', 'danger' ],
+            1 : [ 'Requested', 'primary' ]
+        };
+        
+        var publishYn = {
+            0 : [ 'Not Published', 'warning' ],
+            1 : [ 'Published', 'success' ]
+        };
+        
+        $('#blog-table').DataTable(
+                {
+                	"processing": true,
+                    "serverSide": true,
+                    "ajax": "/v1/api/admin/blog/datatable",
+                    "columns" : [ {
+                        "data" : "articleCategoryCv"
+                    }, {
+                        "data" : "thumbnailFileId"
+                    }, {
+                        "data" : "articleTitle"
+                    }, {
+                        "data" : "articleBlogWriter"
+                    }, {
+                        "data" : "articleWriteDatetime"
+                    }, {
+                        "data" : "requestPublishYn"
+                    }, {
+                        "data" : "publishYn"
+                    } ],
+                    order : [ [ 5, 'asc' ], [ 4, 'desc' ] ],
+                    columnDefs : [ {
+                        targets : [ 3 ],
+                        width : 80,
+                        className : 'text-center'
+                    } ],
+                    searching : false,
+                    createdRow : function(row, data, index) {
+
+                        $('td', row).eq(0).html('').append(
+                        		data["articleCategoryCv"]);
+
+
+                        $('td', row).eq(1).html('').append(
+                        		'<img src="/v1/api/file/img/' + data["thumbnailFileId"]+ '" style="width: 90px; height: 50px; border-radius: 0%;">');
+
+
+                        $('td', row).eq(2).html('').append(
+                        		'<a class="dt-alink" href="/admin/blog/viewupdate/'+data["articleId"]+'">'
+                                + data["articleTitle"] + '</a>');
+
+                        $('td', row).eq(3).html('').append(
+                        		data["articleBlogWriter"]["userName"]);
+
+                        $('td', row).eq(4).html('').append(
+                        		dateConverterToDateOrDateTime(data["articleWriteDatetime"]));
+
+                        $('td', row).eq(5).html('').append(
+                                '<label class="badge badge-' + requestPublishYn[data["requestPublishYn"]][1] + '">'
+                                + requestPublishYn[data["requestPublishYn"]][0]
+                                + '</label>');
+
+                        $('td', row).eq(6).html('').append(
+                                '<label class="badge badge-' + publishYn[data["publishYn"]][1] + '">'
+                                + publishYn[data["publishYn"]][0]
+                                + '</label>');
+                    }
+                });
+    }
+</script>
+</head>
+
+<body>
+    <th:block layout:fragment="content">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <h2>BLOG LIST</h2>
+                                </div>
+                                <div class="separator-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-5">
+                            <div class="col-12 table-responsive">
+                                <table id="blog-table" class="display table table-hover table-condensed" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Thumbnail</th>
+                                            <th>Title</th>
+                                            <th>Writer Name</th>
+                                            <th>Written at</th>
+                                            <th>Publishing Requested</th>
+                                            <th>Published</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</body>
+
+</html>

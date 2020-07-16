@@ -86,18 +86,21 @@ public class BlogController {
 	public String viewupdate(Model model, @PathVariable("articleId") BigInteger articleId, HttpServletResponse response)
 			throws IOException {
 		TbArticleBlog tbArticleBlog = blogService.findById(articleId);
-		if (tbArticleBlog.getPublishYn() == 1 || !tbArticleBlog.getArticleWriterId().equals(UserUtil.getUserId())) {
-			response.sendRedirect(RequestContextUtil.getContextpath() + "/blog/viewdetail/" + articleId);
-			return null;
+		
+		if (UserUtil.hasEditingAuth(tbArticleBlog.getArticleWriterId()) && tbArticleBlog.getPublishYn() == 0) {
+			model.addAttribute("articleInfo", tbArticleBlog);
+			model.addAttribute("thumbnailInfo", fileService.getFileInfo(tbArticleBlog.getThumbnailFileId()));
+
+			List<Map<String, Object>> blogArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode()
+					.get("ART_BLOG_CATEGORY").get("code");
+			model.addAttribute("blogArticleCategoryList", blogArticleCategoryList);
+			return "view/article/blog/blogU";
 		}
+		
+		response.sendRedirect(RequestContextUtil.getContextpath() + "/blog/viewdetail/" + articleId);
+		return null;
 
-		model.addAttribute("articleInfo", tbArticleBlog);
-		model.addAttribute("thumbnailInfo", fileService.getFileInfo(tbArticleBlog.getThumbnailFileId()));
-
-		List<Map<String, Object>> blogArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode()
-				.get("ART_BLOG_CATEGORY").get("code");
-		model.addAttribute("blogArticleCategoryList", blogArticleCategoryList);
-		return "view/article/blog/blogU";
+		
 	}
 
 	@GetMapping("/viewdetail/{articleId}")

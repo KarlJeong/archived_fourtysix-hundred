@@ -33,4 +33,9 @@ public interface TbArticleBlogRepository extends PagingAndSortingRepository<TbAr
     @Modifying
     @Query(value = "UPDATE TB_ARTICLE_BLOG SET ARTICLE_VIEW_COUNT = ARTICLE_VIEW_COUNT + 1 WHERE ARTICLE_ID = :articleId", nativeQuery = true)
     int saveViewCount(@Param("articleId") BigInteger articleId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE TB_ARTICLE_BLOG SET PUBLISH_YN = :publishYn WHERE ARTICLE_ID = :articleId", nativeQuery = true)
+	int updatePublish(BigInteger articleId, int publishYn);
 }
