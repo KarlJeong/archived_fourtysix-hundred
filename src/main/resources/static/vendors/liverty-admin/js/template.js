@@ -42,13 +42,19 @@
     // Isotope filters
     //-----------------------------------------------
     if ($('.isotope-container').length>0 || $('.masonry-grid').length>0 || $('.masonry-grid-fitrows').length>0 || $('.isotope-container-fitrows').length>0) {
-      $('.masonry-grid').isotope({
-        itemSelector: '.masonry-grid-item',
-        layoutMode: 'masonry'
-      });
-      $('.masonry-grid-fitrows').isotope({
-        itemSelector: '.masonry-grid-item',
-        layoutMode: 'fitRows'
+      var $container = $('.masonry-grid').imagesLoaded( function() {
+	      $('.masonry-grid').isotope({
+	        itemSelector: '.masonry-grid-item',
+	        layoutMode: 'masonry',
+	        masonry: {
+			    columnWidth: 100%,
+			    horizontalOrder: true,
+			  }
+	      });
+	      $('.masonry-grid-fitrows').isotope({
+	        itemSelector: '.masonry-grid-item',
+	        layoutMode: 'fitRows'
+	      });
       });
       $('.isotope-container').fadeIn();
       var $container = $('.isotope-container').imagesLoaded( function() {
