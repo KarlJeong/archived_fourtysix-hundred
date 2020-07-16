@@ -83,16 +83,16 @@ public class GeneralController {
 			throws IOException {
 		TbArticleGeneral tbArticleGeneral = generalService.findById(articleId);
 
-		if (!tbArticleGeneral.getArticleWriterId().equals(UserUtil.getUserId())) {
-			response.sendRedirect(RequestContextUtil.getContextpath() + "/b/general/viewdetail/" + articleId);
-			return null;
+		if (UserUtil.hasEditingAuth(tbArticleGeneral.getArticleWriterId())) {
+			model.addAttribute("articleInfo", tbArticleGeneral);
+			List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode()
+					.get("ART_GENERAL_CATEGORY").get("code");
+			model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
+			return "view/article/general/generalU";
 		}
-
-		model.addAttribute("articleInfo", tbArticleGeneral);
-		List<Map<String, Object>> generalArticleCategoryList = (List<Map<String, Object>>) loadStatic.getSystemCode()
-				.get("ART_GENERAL_CATEGORY").get("code");
-		model.addAttribute("generalArticleCategoryList", generalArticleCategoryList);
-		return "view/article/general/generalU";
+		
+		response.sendRedirect(RequestContextUtil.getContextpath() + "/b/general/viewdetail/" + articleId);
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
