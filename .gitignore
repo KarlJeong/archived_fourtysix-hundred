@@ -5,6 +5,7 @@
 ### Eclipse ###
 .metadata
 config/
+src/main/resources/applicatin.yml
 bin/
 tmp/
 *.tmp
